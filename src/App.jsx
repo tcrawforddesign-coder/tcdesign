@@ -1,18 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowUpRight, Github, Linkedin, Mail, Menu, X, Megaphone, Camera, PenTool, Cpu } from "lucide-react";
+import { projects } from "./data/projects";
 
 const BRAND = {
   red: "#ff1a1a",
   black: "#0a0a0a",
 };
 
-const projects = [
-  { id: 1, tag: "Brand Identity", title: "Civil Goat Coffee — Conversational Brand System", cover: "/images/civil-goat-01.jpg" },
-  { id: 2, tag: "Destination Brand", title: "Sydney — Bound for Life's Adventure", cover: "/images/sydney-hero.jpg" },
-  { id: 3, tag: "Cultural Space", title: "Barbican Centre — Minimal Brutal Refresh", cover: "/images/barbican-hero.jpg" },
-  { id: 4, tag: "Tech / Concept", title: "Isolate — AI sample detective", cover: "/images/isolate-hero.jpg" },
-];
 
 export default function App() {
   const [open, setOpen] = useState(false);
