@@ -5,7 +5,7 @@ import { ArrowUpRight, Github, Linkedin, Mail, Menu, X, Megaphone, Camera, PenTo
 
 import { projects } from "../data/projects.js";
 
-const HEADSHOT = "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=1200&auto=format&fit=crop";
+const HEADSHOT = "/images/headshot.jpg";
 const BRAND = { red: "#ff1a1a", black: "#0a0a0a" };
 const MotionDiv = motion.div;
 

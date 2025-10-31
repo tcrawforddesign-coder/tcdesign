@@ -97,7 +97,7 @@ function Hero({ project }) {
         </div>
       </div>
       <div className="relative">
-        <img src={project.heroImage} alt="Project hero" className="w-full aspect-[16/7] object-cover" />
+        <img src={project.heroImage} alt="Project hero" className="w-full aspect-[16/6] object-cover" />
         <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent" />
       </div>
     </header>

@@ -9,7 +9,7 @@ export const projects = [
     roles: ["Art Direction", "Identity", "Packaging"],
     tools: ["Illustrator", "Photoshop", "Figma"],
     cover: "https://images.unsplash.com/photo-1470337458703-46ad1756a187?q=80&w=1600",
-    heroImage: "https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?q=80&w=1600&auto=format&fit=crop",
+    heroImage: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=1600&auto=format&fit=crop",
     textureImage: "https://images.unsplash.com/photo-1521123845560-14093637aa7d?q=80&w=1600&auto=format&fit=crop",
     textureCopy: "Quote marks, modular grids, and confident type — systemized into tokens teams can actually use.",
     challenge: {
@@ -76,7 +76,7 @@ export const projects = [
     roles: ["Creative Direction", "Experience Mapping", "Motion"],
     tools: ["Figma", "After Effects", "Cinema 4D"],
     cover: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=1600",
-    heroImage: "https://images.unsplash.com/photo-1506976785307-8732e854ad89?q=80&w=1600&auto=format&fit=crop",
+    heroImage: "https://images.unsplash.com/photo-1489515217757-5fd1be406fef?q=80&w=1600&auto=format&fit=crop",
     textureImage: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1600&auto=format&fit=crop",
     textureCopy: "Light trails, ocean gradients, and rhythmic typography chart out the city's pulse.",
     challenge: {
@@ -143,7 +143,7 @@ export const projects = [
     roles: ["Brand Strategy", "Identity", "Print"],
     tools: ["Figma", "InDesign", "Photoshop"],
     cover: "https://images.unsplash.com/photo-1520975922329-c0d95cbcf9ea?q=80&w=1600",
-    heroImage: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1600&auto=format&fit=crop",
+    heroImage: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=1600&auto=format&fit=crop",
     textureImage: "https://images.unsplash.com/photo-1489515217757-5fd1be406fef?q=80&w=1600&auto=format&fit=crop",
     textureCopy: "Concrete textures, modular grids, and typographic rhythm tuned for brutalist heritage.",
     challenge: {
@@ -210,7 +210,7 @@ export const projects = [
     roles: ["Product Design", "Brand", "UX Strategy"],
     tools: ["Figma", "Spline", "After Effects"],
     cover: "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1600",
-    heroImage: "https://images.unsplash.com/photo-1505740106531-4243f3831c78?q=80&w=1600&auto=format&fit=crop",
+    heroImage: "https://images.unsplash.com/photo-1468777675496-5782faaea55b?q=80&w=1600&auto=format&fit=crop",
     textureImage: "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1600&auto=format&fit=crop",
     textureCopy: "Spectral scans, neon accents, and dark-mode UI framing investigative insight.",
     challenge: {
