@@ -8,7 +8,7 @@ export const projects = [
     summary: "An editorial deep-dive into a dialogue-driven identity. Minimal color, maximum clarity.",
     roles: ["Art Direction", "Identity", "Packaging"],
     tools: ["Illustrator", "Photoshop", "Figma"],
-    cover: "https://images.unsplash.com/photo-1470337458703-46ad1756a187?q=80&w=1600",
+    cover: "/images/cg_cover.jpg",
     heroImage: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=1600&auto=format&fit=crop",
     textureImage: "https://images.unsplash.com/photo-1521123845560-14093637aa7d?q=80&w=1600&auto=format&fit=crop",
     textureCopy: "Quote marks, modular grids, and confident type — systemized into tokens teams can actually use.",
