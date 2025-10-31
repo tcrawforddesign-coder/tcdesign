@@ -75,8 +75,8 @@ export const projects = [
     summary: "A kinetic identity for Sydney's tourism board, celebrating the collision of coast, culture, and city light.",
     roles: ["Creative Direction", "Experience Mapping", "Motion"],
     tools: ["Figma", "After Effects", "Cinema 4D"],
-    cover: "/images/sydney_logo.png.webp",
-    heroImage: "/images/sydney_logo.png.webp",
+    cover: "/images/Syd_cover.jpg",
+    heroImage: "/images/Syd_cover.jpg",
     textureImage: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1600&auto=format&fit=crop",
     textureCopy: "Light trails, ocean gradients, and rhythmic typography chart out the city's pulse.",
     challenge: {
