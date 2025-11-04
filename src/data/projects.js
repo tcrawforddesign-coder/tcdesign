@@ -355,8 +355,8 @@ export const projects = [
     summary: "A playful-yet-reliable analytics suite helping retail teams forecast trends with confidence and speed.",
     roles: ["Brand Design", "Product Design", "Motion"],
     tools: ["Figma", "Illustrator", "After Effects"],
-    cover: "/images/Dd-cover.jpg",
-    heroImage: "/images/datadog/hero.jpg",
+    cover: "/images/datadog/card.jpg",
+    heroImage: "/images/datadog/hero-main.jpg",
     textureImage: "/images/datadog/gallery-2.jpg",
     textureCopy: "Bold pups, modular charts, and bright gradients communicate a friendly intelligence across product and campaign.",
     challenge: {
