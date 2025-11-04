@@ -356,8 +356,8 @@ export const projects = [
     roles: ["Brand Design", "Product Design", "Motion"],
     tools: ["Figma", "Illustrator", "After Effects"],
     cover: "/images/Dd-cover.jpg",
-    heroImage: "/images/Data_cover_photo.jpg",
-    textureImage: "/images/DD_11.jpg",
+    heroImage: "/images/datadog/hero.jpg",
+    textureImage: "/images/datadog/gallery-2.jpg",
     textureCopy: "Bold pups, modular charts, and bright gradients communicate a friendly intelligence across product and campaign.",
     challenge: {
       kicker: "Challenge",
@@ -405,6 +405,9 @@ export const projects = [
       },
     ],
     gallery: [
+      "/images/datadog/gallery-1.jpg",
+      "/images/datadog/gallery-2.jpg",
+      "/images/datadog/gallery-3.jpg",
       "/images/DD_1.png",
       "/images/DD_2.png",
       "/images/DD_3.png",
