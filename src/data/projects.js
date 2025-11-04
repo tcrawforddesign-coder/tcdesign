@@ -346,6 +346,79 @@ export const projects = [
       "/images/A_13.png",
     ],
   },
+  {
+    id: 6,
+    slug: "data-dog-analytics",
+    title: "Data Dog — Retail Analytics Platform",
+    tag: "Product Brand",
+    timeframe: "2023",
+    summary: "A playful-yet-reliable analytics suite helping retail teams forecast trends with confidence and speed.",
+    roles: ["Brand Design", "Product Design", "Motion"],
+    tools: ["Figma", "Illustrator", "After Effects"],
+    cover: "/images/Dd-cover.jpg",
+    heroImage: "/images/Data_cover_photo.jpg",
+    textureImage: "/images/DD_11.jpg",
+    textureCopy: "Bold pups, modular charts, and bright gradients communicate a friendly intelligence across product and campaign.",
+    challenge: {
+      kicker: "Challenge",
+      title: "Humanizing data without losing rigor",
+      paragraphs: [
+        "Data Dog needed to feel approachable to store teams while assuring leadership of its analytical power.",
+        "The identity had to translate seamlessly from dashboards to launch collateral and social storytelling.",
+      ],
+    },
+    approach: {
+      kicker: "Approach",
+      title: "Designing a playful intelligence system",
+      paragraphs: [
+        "We built a mascot-driven brand anchored by geometric pups, flexible chart motifs, and an energetic color system.",
+        "Product UI tokens, animation guidelines, and campaign templates keep everything aligned from app onboarding to investor decks.",
+      ],
+    },
+    outcomes: {
+      kicker: "Outcomes",
+      title: "Friendly data, serious impact",
+      paragraphs: [
+        "Early adopters reported 2.5x faster reporting cycles, site traffic doubled post-launch, and the brand rollout raised a successful Series A.",
+      ],
+    },
+    highlights: [
+      {
+        icon: "PenTool",
+        title: "Mascot System",
+        copy: "Vector pups expressing key product benefits across touchpoints.",
+      },
+      {
+        icon: "Cpu",
+        title: "Dashboard Tokens",
+        copy: "Chart styles, color ramps, and glyphs standardized for engineering handoff.",
+      },
+      {
+        icon: "Camera",
+        title: "Art Direction",
+        copy: "Vibrant stills balancing product UI with illustration-led storytelling.",
+      },
+      {
+        icon: "Megaphone",
+        title: "Launch Campaign",
+        copy: "Out-of-home, paid social, and experiential activations built from the same modular kit.",
+      },
+    ],
+    gallery: [
+      "/images/DD_1.png",
+      "/images/DD_2.png",
+      "/images/DD_3.png",
+      "/images/DD_4.png",
+      "/images/DD_5.png",
+      "/images/DD_6.jpg",
+      "/images/DD_7.png",
+      "/images/DD_8.png",
+      "/images/DD_9.png",
+      "/images/DD_10.png",
+      "/images/DD_11.jpg",
+      "/images/DD_12.png",
+    ],
+  },
 ];
 
 export function findProjectBySlug(slug) {
