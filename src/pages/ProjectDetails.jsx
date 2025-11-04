@@ -28,6 +28,10 @@ export default function ProjectDetailsPage() {
     root.style.setProperty("--brand-black", BRAND.black);
   }, []);
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "auto" });
+  }, [slug]);
+
   if (!project) {
     return (
       <div className="min-h-screen bg-[#0a0a0a] text-white grid place-items-center px-6">
