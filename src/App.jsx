@@ -1,12 +1,14 @@
 import { Routes, Route } from "react-router-dom";
 
 import Home from "./pages/Home.jsx";
+import ProjectsPage from "./pages/Projects.jsx";
 import ProjectDetailsPage from "./pages/ProjectDetails.jsx";
 
 export default function App() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
+      <Route path="/projects" element={<ProjectsPage />} />
       <Route path="/projects/:slug" element={<ProjectDetailsPage />} />
       <Route path="*" element={<NotFound />} />
     </Routes>

@@ -130,9 +130,9 @@ export default function Home() {
           <div className="max-w-7xl mx-auto px-4 py-14 md:py-24">
             <div className="flex items-end justify-between mb-8">
               <h2 className="text-2xl md:text-4xl font-black tracking-tight">Selected Work</h2>
-              <a href="#" className="inline-flex items-center gap-2 text-white/70 hover:text-white">
+              <Link to="/projects" className="inline-flex items-center gap-2 text-white/70 hover:text-white">
                 See all <ArrowUpRight className="w-4 h-4" />
-              </a>
+              </Link>
             </div>
             <ul className="grid md:grid-cols-12 gap-6">
               {projects.map((project, index) => (
@@ -240,7 +240,7 @@ export default function Home() {
   );
 }
 
-function ProjectCard({ project }) {
+export function ProjectCard({ project }) {
   return (
     <Link to={`/projects/${project.slug}`} className="block group" aria-label={project.title}>
       <MotionDiv

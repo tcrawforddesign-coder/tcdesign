@@ -57,9 +57,10 @@ export default function ProjectDetailsPage() {
 
             <nav aria-label="Primary" className="hidden md:flex items-center gap-3 absolute left-1/2 -translate-x-1/2">
               {[
-                { label: "Work", hash: "#work" },
-                { label: "About", hash: "#about" },
-                { label: "Contact", hash: "#contact" },
+                { label: "Work", to: { pathname: "/", hash: "#work" } },
+                { label: "Projects", to: "/projects" },
+                { label: "About", to: { pathname: "/", hash: "#about" } },
+                { label: "Contact", to: { pathname: "/", hash: "#contact" } },
               ].map((item) => (
                 <Link
                   key={item.label}
@@ -96,6 +97,7 @@ export default function ProjectDetailsPage() {
               <ul className="space-y-6 text-center text-2xl">
                 {[
                   { label: "Work", to: { pathname: "/", hash: "#work" } },
+                  { label: "Projects", to: "/projects" },
                   { label: "About", to: { pathname: "/", hash: "#about" } },
                   { label: "Contact", to: { pathname: "/", hash: "#contact" } },
                 ].map((item) => (
