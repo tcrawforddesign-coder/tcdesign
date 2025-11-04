@@ -9,6 +9,10 @@ const HEADSHOT = "/images/headshot.jpg";
 const BRAND = { red: "#ff1a1a", black: "#0a0a0a" };
 const MotionDiv = motion.div;
 
+const FEATURED_SLUGS = ["civil-goat-coffee", "aluma-skincare", "barbican-refresh", "mntwire"];
+const FEATURED_COL_SPANS = ["md:col-span-7", "md:col-span-5", "md:col-span-5", "md:col-span-7"];
+const featuredProjects = FEATURED_SLUGS.map((slug) => projects.find((project) => project.slug === slug)).filter(Boolean);
+
 export default function Home() {
   const [open, setOpen] = useState(false);
   const { scrollYProgress } = useScroll();
@@ -135,10 +139,10 @@ export default function Home() {
               </Link>
             </div>
             <ul className="grid md:grid-cols-12 gap-6">
-              {projects.map((project, index) => (
+              {featuredProjects.map((project, index) => (
                 <li
                   key={project.id}
-                  className={`group col-span-12 ${index % 3 === 0 ? "md:col-span-7" : "md:col-span-5"}`}
+                  className={`group col-span-12 ${FEATURED_COL_SPANS[index] ?? "md:col-span-5"}`}
                 >
                   <ProjectCard project={project} />
                 </li>
