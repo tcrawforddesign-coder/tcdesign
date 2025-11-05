@@ -6,6 +6,13 @@ import { projects } from "../data/projects.js";
 import { ProjectCard } from "./Home.jsx";
 
 const BRAND = { red: "#ff1a1a", black: "#0a0a0a" };
+const PRIORITY_SLUGS = ["data-dog-analytics"];
+
+const orderedProjects = [
+  ...PRIORITY_SLUGS.map((slug) => projects.find((project) => project.slug === slug)).filter(Boolean),
+  ...projects.filter((project) => !PRIORITY_SLUGS.includes(project.slug)),
+];
+const spanForIndex = (index) => (Math.floor(index / 2) % 2 === 0 ? (index % 2 === 0 ? "md:col-span-7" : "md:col-span-5") : index % 2 === 0 ? "md:col-span-5" : "md:col-span-7");
 
 export default function ProjectsPage() {
   const [open, setOpen] = useState(false);
@@ -107,10 +114,10 @@ export default function ProjectsPage() {
         </div>
 
         <ul className="grid md:grid-cols-12 gap-6">
-          {projects.map((project, index) => (
+          {orderedProjects.map((project, index) => (
             <li
               key={project.id}
-              className={`group col-span-12 ${index % 3 === 0 ? "md:col-span-7" : "md:col-span-5"}`}
+              className={`group col-span-12 ${spanForIndex(index)}`}
             >
               <ProjectCard project={project} />
             </li>
