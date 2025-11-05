@@ -244,30 +244,57 @@ export default function Home() {
   );
 }
 
+const DISABLED_SLUGS = ["sydney-bound", "mntwire"];
+
 export function ProjectCard({ project }) {
+  const disabled = DISABLED_SLUGS.includes(project.slug);
+
+  const cardContent = (
+    <MotionDiv
+      initial={{ opacity: 0.9 }}
+      whileHover={disabled ? undefined : { scale: 1.015 }}
+      transition={{ type: "spring", stiffness: 200, damping: 20 }}
+      className="relative aspect-square rounded-2xl overflow-hidden border border-white/10 bg-black/40"
+    >
+      <img
+        src={project.cover}
+        alt=""
+        className={`w-full h-full object-cover transition ${disabled ? "opacity-40" : "opacity-90 group-hover:opacity-100"}`}
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-black/0" />
+      <div className="absolute bottom-0 left-0 right-0 p-5 flex items-end justify-between">
+        <div>
+          <span className="inline-block text-xs tracking-wide uppercase text-white/70">{project.tag}</span>
+          <h3 className="text-lg md:text-xl font-semibold leading-tight mt-1 max-w-xl">{project.title}</h3>
+        </div>
+        {!disabled && (
+          <ArrowUpRight className="w-5 h-5 opacity-80 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition" />
+        )}
+      </div>
+      <span
+        className="absolute top-0 left-0 w-16 h-16 bg-[var(--brand-red)]/90 mix-blend-screen"
+        style={{ clipPath: "polygon(0 0, 100% 0, 0 100%)" }}
+        aria-hidden
+      />
+      {disabled && (
+        <div className="absolute inset-0 bg-black/60 backdrop-blur-sm grid place-items-center">
+          <span className="text-white/80 text-sm uppercase tracking-[0.3em]">Coming Soon</span>
+        </div>
+      )}
+    </MotionDiv>
+  );
+
+  if (disabled) {
+    return (
+      <div className="block group pointer-events-none" aria-disabled="true" title="Coming soon">
+        {cardContent}
+      </div>
+    );
+  }
+
   return (
     <Link to={`/projects/${project.slug}`} className="block group" aria-label={project.title}>
-      <MotionDiv
-        initial={{ opacity: 0.9 }}
-        whileHover={{ scale: 1.015 }}
-        transition={{ type: "spring", stiffness: 200, damping: 20 }}
-        className="relative aspect-square rounded-2xl overflow-hidden border border-white/10 bg-black/40"
-      >
-        <img src={project.cover} alt="" className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-black/0" />
-        <div className="absolute bottom-0 left-0 right-0 p-5 flex items-end justify-between">
-          <div>
-            <span className="inline-block text-xs tracking-wide uppercase text-white/70">{project.tag}</span>
-            <h3 className="text-lg md:text-xl font-semibold leading-tight mt-1 max-w-xl">{project.title}</h3>
-          </div>
-          <ArrowUpRight className="w-5 h-5 opacity-80 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition" />
-        </div>
-        <span
-          className="absolute top-0 left-0 w-16 h-16 bg-[var(--brand-red)]/90 mix-blend-screen"
-          style={{ clipPath: "polygon(0 0, 100% 0, 0 100%)" }}
-          aria-hidden
-        />
-      </MotionDiv>
+      {cardContent}
     </Link>
   );
 }

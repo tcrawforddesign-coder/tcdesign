@@ -199,9 +199,9 @@ export const projects = [
       },
     ],
     gallery: [
+      "/images/B_3.png",
       "/images/alena-stepanova-xelnNmDc8DQ-unsplash.jpg",
       "/images/B_2.png",
-      "/images/B_3.png",
       "/images/B_4.png",
       "/images/B_5.png",
       "/images/B_6.png",

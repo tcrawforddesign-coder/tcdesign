@@ -297,10 +297,6 @@ function Gallery({ project }) {
           const wide = index % 5 === 0;
           const colClass = wide ? "sm:col-span-12" : "sm:col-span-6";
 
-          if (index === 1) {
-            return <TextureCard key="texture-card" className={colClass} project={project} />;
-          }
-
           return (
             <MotionFigure
               key={src}
