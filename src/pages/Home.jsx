@@ -9,7 +9,7 @@ const HEADSHOT = "/images/headshot.jpg";
 const BRAND = { red: "#ff1a1a", black: "#0a0a0a" };
 const MotionDiv = motion.div;
 
-const FEATURED_SLUGS = ["civil-goat-coffee", "aluma-skincare", "barbican-refresh", "mntwire"];
+const FEATURED_SLUGS = ["civil-goat-coffee", "aluma-skincare", "barbican-refresh", "data-dog-analytics"];
 const FEATURED_COL_SPANS = ["md:col-span-7", "md:col-span-5", "md:col-span-5", "md:col-span-7"];
 const featuredProjects = FEATURED_SLUGS.map((slug) => projects.find((project) => project.slug === slug)).filter(Boolean);
 
@@ -326,10 +326,10 @@ function MagnetCTA() {
         <h3 className="text-xl font-semibold">Have a brief?</h3>
         <p className="mt-2 text-white/70">Send 3–5 bullets about the challenge. I’ll respond with an approach & timeline.</p>
         <a
-          href="#contact"
-          className="group mt-6 inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 hover:bg-white hover:text-black transition"
+          href="mailto:tcrawford.design@gmail.com"
+          className="mt-6 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white text-black font-medium hover:contrast-125 transition"
         >
-          Share your brief <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition" />
+          Share your brief
         </a>
       </div>
     </div>
