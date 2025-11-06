@@ -351,6 +351,7 @@ function HeadshotCard() {
 function PosterSpotlight({ posters }) {
   const curated = useMemo(() => posters.filter(Boolean), [posters]);
   const [order, setOrder] = useState(curated);
+  const [selected, setSelected] = useState(null);
 
   useEffect(() => {
     setOrder(curated);
@@ -369,30 +370,120 @@ function PosterSpotlight({ posters }) {
     });
   };
 
+  useEffect(() => {
+    if (selected) {
+      const original = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = original;
+      };
+    }
+    return undefined;
+  }, [selected]);
+
+  useEffect(() => {
+    const handleKey = (event) => {
+      if (event.key === "Escape") {
+        setSelected(null);
+      }
+    };
+    if (selected) {
+      window.addEventListener("keydown", handleKey);
+      return () => window.removeEventListener("keydown", handleKey);
+    }
+    return undefined;
+  }, [selected]);
+
   return (
-    <section className="poster-gallery">
-      <header className="poster-gallery__header">
-        <div className="poster-gallery__title">
-          Poster archive
-          <span>{String(order.length).padStart(2, "0")} pieces</span>
+    <>
+      <section className="poster-gallery">
+        <header className="poster-gallery__header">
+          <div className="poster-gallery__title">
+            Poster archive
+            <span>{String(order.length).padStart(2, "0")} pieces</span>
+          </div>
+          <button type="button" className="poster-gallery__shuffle" onClick={shufflePosters}>
+            Shuffle
+          </button>
+        </header>
+        <div className="poster-gallery__scroll" role="list">
+          {order.map((src, index) => (
+            <figure
+              key={src}
+              role="listitem"
+              className="poster-gallery__item"
+              style={{ "--poster-rotation": `${rotations[index % rotations.length]}deg` }}
+            >
+              <button
+                type="button"
+                className="poster-gallery__button"
+                onClick={() => setSelected(src)}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    setSelected(src);
+                  }
+                }}
+                aria-label={`View poster ${index + 1}`}
+              >
+                <img src={src} alt={`Poster ${index + 1}`} loading="lazy" />
+              </button>
+            </figure>
+          ))}
         </div>
-        <button type="button" className="poster-gallery__shuffle" onClick={shufflePosters}>
-          Shuffle
+      </section>
+      {selected && (
+        <PosterLightbox
+          src={selected}
+          onClose={() => setSelected(null)}
+          total={order.length}
+          index={order.findIndex((src) => src === selected)}
+        />
+      )}
+    </>
+  );
+}
+
+function PosterLightbox({ src, onClose, index, total }) {
+  const closeButtonRef = useRef(null);
+
+  useEffect(() => {
+    const previouslyFocused = document.activeElement;
+    closeButtonRef.current?.focus();
+    return () => {
+      if (previouslyFocused && previouslyFocused.focus) {
+        previouslyFocused.focus();
+      }
+    };
+  }, []);
+
+  const handleBackdropClick = (event) => {
+    if (event.target === event.currentTarget) {
+      onClose();
+    }
+  };
+
+  return (
+    <div className="poster-modal" role="dialog" aria-modal="true" onClick={handleBackdropClick}>
+      <div className="poster-modal__backdrop" />
+      <div className="poster-modal__content">
+        <div className="poster-modal__tag">
+          Poster {String(index + 1).padStart(2, "0")}/{String(total).padStart(2, "0")}
+        </div>
+        <div className="poster-modal__image">
+          <img src={src} alt="Poster detail" />
+        </div>
+        <button
+          type="button"
+          className="poster-modal__close"
+          onClick={onClose}
+          ref={closeButtonRef}
+          aria-label="Close poster"
+        >
+          Close
         </button>
-      </header>
-      <div className="poster-gallery__scroll" role="list">
-        {order.map((src, index) => (
-          <figure
-            key={src}
-            role="listitem"
-            className="poster-gallery__item"
-            style={{ "--poster-rotation": `${rotations[index % rotations.length]}deg` }}
-          >
-            <img src={src} alt={`Poster ${index + 1}`} loading="lazy" />
-          </figure>
-        ))}
       </div>
-    </section>
+    </div>
   );
 }
 
