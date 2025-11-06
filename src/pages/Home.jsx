@@ -93,11 +93,9 @@ export default function Home() {
                 className="text-4xl md:text-6xl font-black leading-[1.05] tracking-tight"
                 prefix="Visual designer crafting"
                 highlight="bold"
-                suffix="brand systems & interfaces."
+                suffix="brand systems."
               />
-              <p className="mt-5 text-white/70 max-w-xl">
-                Brutalist taste. Human-friendly UX. Experimental, but never at the expense of clarity.
-              </p>
+              <p className="mt-5 text-white/70 max-w-xl">Simple, intentional, and not afraid to experiment.</p>
               <div className="mt-8 flex flex-wrap gap-3">
                 <a href="#work" className="px-4 py-2 rounded-full bg-white text-black font-medium hover:contrast-125 transition">
                   View work
