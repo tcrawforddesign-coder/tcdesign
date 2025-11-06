@@ -10,3 +10,123 @@ body,
 #root {
   height: 100%;
 }
+
+.profile-card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: 120%;
+  transition: background 0.8s ease, background-size 0.8s ease, transform 0.4s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 50px 90px -60px rgba(0, 0, 0, 0.8);
+  overflow: hidden;
+}
+
+.profile-card:hover {
+  background-position: left center;
+  background-size: 155%;
+}
+
+.profile-card__overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 20% 20%, rgba(255, 26, 26, 0.18), transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(12, 12, 12, 0.95), rgba(12, 12, 12, 0.2));
+  mix-blend-mode: screen;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.profile-card:hover .profile-card__overlay {
+  opacity: 1;
+}
+
+.profile-card__border {
+  position: relative;
+  height: calc(100% - 18px);
+  width: calc(100% - 18px);
+  border-radius: inherit;
+  border: 1px solid transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 28px 24px;
+  gap: 20px;
+  transition: border-color 0.8s ease;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.55));
+}
+
+.profile-card:hover .profile-card__border {
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+.profile-card__name {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fff;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
+.profile-card:hover .profile-card__name {
+  opacity: 1;
+}
+
+.profile-card__icons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
+.profile-card:hover .profile-card__icons {
+  opacity: 1;
+}
+
+.profile-card__icons a {
+  color: rgba(255, 255, 255, 0.85);
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(6px);
+  transition: color 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.profile-card__icons a:hover {
+  color: #0a0a0a;
+  border-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255, 0.85);
+}
+
+.card-hover-border {
+  position: absolute;
+  inset: 12px;
+  border-radius: inherit;
+  border: 1px solid transparent;
+  transition: border-color 0.6s ease, opacity 0.6s ease;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.group:hover .card-hover-border {
+  border-color: rgba(255, 255, 255, 0.65);
+}
+
+.card-hover-border--disabled,
+.group:hover .card-hover-border--disabled {
+  border-color: rgba(255, 255, 255, 0.12);
+}

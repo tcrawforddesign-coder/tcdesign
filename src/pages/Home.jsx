@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowUpRight, Github, Linkedin, Mail, Menu, X, Megaphone, Camera, PenTool, Cpu } from "lucide-react";
+import { ArrowUpRight, Github, Instagram, Linkedin, Mail, Menu, X, Megaphone, Camera, PenTool, Cpu } from "lucide-react";
 
 import { projects } from "../data/projects.js";
 
@@ -120,7 +120,7 @@ export default function Home() {
             </div>
             <div className="md:col-span-5 relative">
               <div className="relative aspect-[3/4] rounded-2xl overflow-hidden border border-white/10 bg-black/40">
-                <img src={HEADSHOT} alt="Travis Crawford headshot" className="w-full h-full object-cover" />
+                <HeadshotCard />
                 <div className="absolute inset-0 ring-1 ring-inset ring-white/10 pointer-events-none" />
               </div>
             </div>
@@ -261,7 +261,8 @@ export function ProjectCard({ project }) {
         alt=""
         className={`w-full h-full object-cover transition ${disabled ? "opacity-40" : "opacity-90 group-hover:opacity-100"}`}
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-black/0" />
+      <div className={`card-hover-border ${disabled ? "card-hover-border--disabled" : ""}`} aria-hidden />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-black/0 pointer-events-none" />
       <div className="absolute bottom-0 left-0 right-0 p-5 flex items-end justify-between">
         <div>
           <span className="inline-block text-xs tracking-wide uppercase text-white/70">{project.tag}</span>
@@ -271,11 +272,6 @@ export function ProjectCard({ project }) {
           <ArrowUpRight className="w-5 h-5 opacity-80 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition" />
         )}
       </div>
-      <span
-        className="absolute top-0 left-0 w-16 h-16 bg-[var(--brand-red)]/90 mix-blend-screen"
-        style={{ clipPath: "polygon(0 0, 100% 0, 0 100%)" }}
-        aria-hidden
-      />
       {disabled && (
         <div className="absolute inset-0 bg-black/60 backdrop-blur-sm grid place-items-center">
           <span className="text-white/80 text-sm uppercase tracking-[0.3em]">Coming Soon</span>
@@ -296,6 +292,42 @@ export function ProjectCard({ project }) {
     <Link to={`/projects/${project.slug}`} className="block group" aria-label={project.title}>
       {cardContent}
     </Link>
+  );
+}
+
+function HeadshotCard() {
+  return (
+    <div
+      className="profile-card"
+      style={{ backgroundImage: `url(${HEADSHOT})` }}
+      aria-label="Portrait of Travis Crawford"
+    >
+      <div className="profile-card__overlay" />
+      <div className="profile-card__border">
+        <div className="profile-card__name">Travis Crawford</div>
+        <div className="profile-card__icons" aria-label="Social links">
+          <a
+            href="https://www.linkedin.com/in/travis-crawford-67759b24a"
+            target="_blank"
+            rel="noreferrer"
+            aria-label="LinkedIn"
+          >
+            <Linkedin className="w-5 h-5" />
+          </a>
+          <a
+            href="https://www.instagram.com/traviscrawford.design"
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Instagram"
+          >
+            <Instagram className="w-5 h-5" />
+          </a>
+          <a href="https://github.com/tcrawforddesign-coder" target="_blank" rel="noreferrer" aria-label="GitHub">
+            <Github className="w-5 h-5" />
+          </a>
+        </div>
+      </div>
+    </div>
   );
 }
 
