@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useCallback, useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowUpRight, Github, Instagram, Linkedin, Mail, Menu, X, Megaphone, Camera, PenTool, Cpu } from "lucide-react";
@@ -89,9 +89,12 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 pt-20 pb-14 md:pt-28 md:pb-24">
           <div className="grid md:grid-cols-12 gap-8 items-end">
             <div className="md:col-span-7">
-              <h1 className="text-4xl md:text-6xl font-black leading-[1.05] tracking-tight">
-                Visual designer crafting <span className="text-[var(--brand-red)]">bold</span> brand systems & interfaces.
-              </h1>
+              <GlitchHeading
+                className="text-4xl md:text-6xl font-black leading-[1.05] tracking-tight"
+                prefix="Visual designer crafting"
+                highlight="bold"
+                suffix="brand systems & interfaces."
+              />
               <p className="mt-5 text-white/70 max-w-xl">
                 Brutalist taste. Human-friendly UX. Experimental, but never at the expense of clarity.
               </p>
@@ -325,6 +328,86 @@ function HeadshotCard() {
         </div>
       </div>
     </div>
+  );
+}
+
+const GLITCH_CHARSET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+function GlitchHeading({ prefix, highlight, suffix, className = "" }) {
+  const fullText = `${prefix} ${highlight} ${suffix}`;
+  const [displayText, setDisplayText] = useState(fullText);
+  const intervalRef = useRef(null);
+  const frameRef = useRef(0);
+  const hasPlayedRef = useRef(false);
+
+  const stopGlitch = useCallback(() => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
+    frameRef.current = 0;
+    setDisplayText(fullText);
+  }, [fullText]);
+
+  const startGlitch = useCallback(() => {
+    if (intervalRef.current) return;
+    frameRef.current = 0;
+    const maxIterations = fullText.length + 4;
+
+    intervalRef.current = setInterval(() => {
+      frameRef.current += 1.35;
+      const iteration = frameRef.current;
+
+      const scrambled = fullText
+        .split("")
+        .map((char, index) => {
+          if (!/[A-Za-z]/.test(char)) {
+            return char;
+          }
+          if (index < iteration) {
+            return fullText[index];
+          }
+          return GLITCH_CHARSET[Math.floor(Math.random() * GLITCH_CHARSET.length)];
+        })
+        .join("");
+
+      setDisplayText(scrambled);
+
+      if (iteration >= maxIterations) {
+        stopGlitch();
+      }
+    }, 45);
+  }, [fullText, stopGlitch]);
+
+  useEffect(() => {
+    setDisplayText(fullText);
+    if (!hasPlayedRef.current) {
+      hasPlayedRef.current = true;
+      startGlitch();
+    }
+    return () => {
+      stopGlitch();
+    };
+  }, [fullText, startGlitch, stopGlitch]);
+
+  const highlightStart = prefix.length + 1;
+  const highlightEnd = highlightStart + highlight.length;
+  const before = displayText.slice(0, highlightStart);
+  const highlighted = displayText.slice(highlightStart, highlightEnd);
+  const after = displayText.slice(highlightEnd);
+
+  const handleMouseEnter = () => {
+    if (!intervalRef.current) {
+      startGlitch();
+    }
+  };
+
+  return (
+    <h1 className={className} onMouseEnter={handleMouseEnter} onMouseLeave={stopGlitch}>
+      {before}
+      <span className="text-[var(--brand-red)]">{highlighted}</span>
+      {after}
+    </h1>
   );
 }
 
