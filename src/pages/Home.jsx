@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState, useRef } from "react";
+import { useCallback, useEffect, useMemo, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowUpRight, Github, Instagram, Linkedin, Mail, Menu, X, Megaphone, Camera, PenTool, Cpu } from "lucide-react";
@@ -8,6 +8,7 @@ import { projects } from "../data/projects.js";
 const HEADSHOT = "/images/headshot.jpg";
 const BRAND = { red: "#ff1a1a", black: "#0a0a0a" };
 const MotionDiv = motion.div;
+const POSTER_IMAGES = Array.from({ length: 19 }, (_, index) => `/images/Poster_${index + 1}.png`);
 
 const FEATURED_SLUGS = ["civil-goat-coffee", "aluma-skincare", "barbican-refresh", "data-dog-analytics"];
 const FEATURED_COL_SPANS = ["md:col-span-7", "md:col-span-5", "md:col-span-5", "md:col-span-7"];
@@ -15,6 +16,7 @@ const featuredProjects = FEATURED_SLUGS.map((slug) => projects.find((project) =>
 
 export default function Home() {
   const [open, setOpen] = useState(false);
+  const [showPosters, setShowPosters] = useState(false);
   const { scrollYProgress } = useScroll();
   const width = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
@@ -165,8 +167,9 @@ export default function Home() {
             <div className="md:col-span-7">
               <h2 className="text-2xl md:text-4xl font-black tracking-tight">About</h2>
               <p className="mt-4 text-white/70 leading-relaxed max-w-2xl">
-                I design brand identities and digital experiences that feel inevitable — the kind you can’t imagine any other
-                way. My process blends research, typographic rigor, and adventurous visual systems.
+                I&apos;m Travis Crawford, a designer from Texas who focuses on branding and digital experiences. I like creating work
+                that feels intentional but still has room to surprise people. When I&apos;m not working on client projects, I&apos;m usually
+                designing posters for fun. It&apos;s my way of staying curious.
               </p>
               <div className="mt-8 flex gap-3">
                 <a href="#contact" className="px-4 py-2 rounded-full bg-[var(--brand-red)] text-black font-medium hover:contrast-125 transition">
@@ -177,19 +180,35 @@ export default function Home() {
                 </a>
               </div>
             </div>
-            <ul className="md:col-span-5 grid grid-cols-2 gap-4 text-sm">
-              {[
-                { k: "Years", v: "5+" },
-                { k: "Awards", v: "Graphis Gold + 6x Silver" },
-                { k: "Focus", v: "Brand, Product, Strategy" },
-                { k: "Tools", v: "Figma, ID, PS/AI" },
-              ].map((stat) => (
-                <li key={stat.k} className="p-4 rounded-xl border border-white/10 bg-black/30">
-                  <div className="text-white/50">{stat.k}</div>
-                  <div className="text-lg font-semibold mt-1">{stat.v}</div>
-                </li>
-              ))}
-            </ul>
+            <aside className="md:col-span-5 space-y-4">
+              <div className="flex justify-end">
+                <button
+                  type="button"
+                  onClick={() => setShowPosters((prev) => !prev)}
+                  aria-pressed={showPosters}
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 bg-white/5 hover:bg-white/10 text-sm uppercase tracking-[0.18em] transition"
+                >
+                  {showPosters ? "Hide posters" : "Show posters"}
+                </button>
+              </div>
+              {showPosters ? (
+                <PosterSpotlight posters={POSTER_IMAGES} />
+              ) : (
+                <ul className="grid grid-cols-2 gap-4 text-sm">
+                  {[
+                    { k: "Years", v: "5+" },
+                    { k: "Awards", v: "Graphis Gold + 6x Silver" },
+                    { k: "Focus", v: "Brand, Product, Strategy" },
+                    { k: "Tools", v: "Figma, ID, PS/AI" },
+                  ].map((stat) => (
+                    <li key={stat.k} className="p-4 rounded-xl border border-white/10 bg-black/30">
+                      <div className="text-white/50">{stat.k}</div>
+                      <div className="text-lg font-semibold mt-1">{stat.v}</div>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </aside>
           </div>
         </section>
 
@@ -326,6 +345,54 @@ function HeadshotCard() {
         </div>
       </div>
     </div>
+  );
+}
+
+function PosterSpotlight({ posters }) {
+  const curated = useMemo(() => posters.filter(Boolean), [posters]);
+  const [order, setOrder] = useState(curated);
+
+  useEffect(() => {
+    setOrder(curated);
+  }, [curated]);
+
+  const rotations = useMemo(() => [-4.5, 2.5, 1.5, -2.5, 0.75], []);
+
+  const shufflePosters = () => {
+    setOrder((prev) => {
+      const next = [...prev];
+      for (let i = next.length - 1; i > 0; i -= 1) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [next[i], next[j]] = [next[j], next[i]];
+      }
+      return next;
+    });
+  };
+
+  return (
+    <section className="poster-gallery">
+      <header className="poster-gallery__header">
+        <div className="poster-gallery__title">
+          Poster archive
+          <span>{String(order.length).padStart(2, "0")} pieces</span>
+        </div>
+        <button type="button" className="poster-gallery__shuffle" onClick={shufflePosters}>
+          Shuffle
+        </button>
+      </header>
+      <div className="poster-gallery__scroll" role="list">
+        {order.map((src, index) => (
+          <figure
+            key={src}
+            role="listitem"
+            className="poster-gallery__item"
+            style={{ "--poster-rotation": `${rotations[index % rotations.length]}deg` }}
+          >
+            <img src={src} alt={`Poster ${index + 1}`} loading="lazy" />
+          </figure>
+        ))}
+      </div>
+    </section>
   );
 }
 
