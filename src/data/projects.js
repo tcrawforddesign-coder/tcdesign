@@ -151,7 +151,7 @@ export const projects = [
     summary: "A typographic refresh honoring the Barbican’s brutalist legacy while opening doors to new voices.",
     roles: ["Brand Strategy", "Identity", "Print"],
     tools: ["Figma", "InDesign", "Photoshop"],
-    cover: "/images/B_1.png",
+    cover: "/images/alena-stepanova-xelnNmDc8DQ-unsplash.jpg",
     heroImage: "/images/andreas-karamalikis-OZkRmwH9ueM-unsplash.jpg",
     textureImage: "/images/virgyl-sowah-lHOJYkpSZ0A-unsplash.jpg",
     textureCopy: "Concrete textures, modular grids, and typographic rhythm tuned for brutalist heritage.",
@@ -202,7 +202,6 @@ export const projects = [
     ],
     gallery: [
       "/images/B_3.png",
-      "/images/alena-stepanova-xelnNmDc8DQ-unsplash.jpg",
       "/images/B_2.png",
       "/images/B_4.png",
       "/images/B_5.png",
