@@ -297,11 +297,8 @@ export function ProjectCard({ project }) {
 
 function HeadshotCard() {
   return (
-    <div
-      className="profile-card"
-      style={{ backgroundImage: `url(${HEADSHOT})` }}
-      aria-label="Portrait of Travis Crawford"
-    >
+    <div className="profile-card" aria-label="Portrait of Travis Crawford">
+      <img src={HEADSHOT} alt="Travis Crawford" className="profile-card__image" />
       <div className="profile-card__overlay" />
       <div className="profile-card__border">
         <div className="profile-card__name">Travis Crawford</div>
