@@ -35,7 +35,7 @@ export default function Home() {
           <div className="h-16 flex items-center justify-between">
             <a href="#home" className="font-black tracking-tight text-lg md:text-xl">
               <span className="px-2 py-1 bg-white text-black">TC</span>
-              <span className="ml-2 text-white/80">DESIGN</span>
+              <span className="ml-2 text-white">DESIGN</span>
             </a>
 
             <nav aria-label="Primary" className="hidden md:flex items-center gap-3 absolute left-1/2 -translate-x-1/2">
@@ -280,6 +280,9 @@ export function ProjectCard({ project }) {
         src={project.cover}
         alt=""
         className={`w-full h-full object-cover transition ${disabled ? "opacity-40" : "opacity-90 group-hover:opacity-100"}`}
+        loading="lazy"
+        decoding="async"
+        sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 90vw"
       />
       <div className={`card-hover-border ${disabled ? "card-hover-border--disabled" : ""}`} aria-hidden />
       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-black/0 pointer-events-none" />
@@ -318,7 +321,14 @@ export function ProjectCard({ project }) {
 function HeadshotCard() {
   return (
     <div className="profile-card" aria-label="Portrait of Travis Crawford">
-      <img src={HEADSHOT} alt="Travis Crawford" className="profile-card__image" />
+      <img
+        src={HEADSHOT}
+        alt="Travis Crawford"
+        className="profile-card__image"
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
+      />
       <div className="profile-card__overlay" />
       <div className="profile-card__border">
         <div className="profile-card__name">Travis Crawford</div>
@@ -426,7 +436,7 @@ function PosterSpotlight({ posters }) {
                 }}
                 aria-label={`View poster ${index + 1}`}
               >
-                <img src={src} alt={`Poster ${index + 1}`} loading="lazy" />
+                <img src={src} alt={`Poster ${index + 1}`} loading="lazy" decoding="async" />
               </button>
             </figure>
           ))}
@@ -467,21 +477,21 @@ function PosterLightbox({ src, onClose, index, total }) {
     <div className="poster-modal" role="dialog" aria-modal="true" onClick={handleBackdropClick}>
       <div className="poster-modal__backdrop" />
       <div className="poster-modal__content">
-        <div className="poster-modal__tag">
-          Poster {String(index + 1).padStart(2, "0")}/{String(total).padStart(2, "0")}
-        </div>
-        <div className="poster-modal__image">
-          <img src={src} alt="Poster detail" />
-        </div>
         <button
           type="button"
-          className="poster-modal__close"
+          className="poster-modal__close poster-modal__close--floating"
           onClick={onClose}
           ref={closeButtonRef}
           aria-label="Close poster"
         >
           Close
         </button>
+        <div className="poster-modal__tag">
+          Poster {String(index + 1).padStart(2, "0")}/{String(total).padStart(2, "0")}
+        </div>
+        <div className="poster-modal__image">
+          <img src={src} alt="Poster detail" loading="lazy" decoding="async" />
+        </div>
       </div>
     </div>
   );
