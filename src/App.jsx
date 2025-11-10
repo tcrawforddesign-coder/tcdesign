@@ -17,7 +17,7 @@ export default function App() {
 
 function NotFound() {
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white grid place-items-center px-6 text-center space-y-4">
+    <div className="min-h-screen bg-[#030303] text-white grid place-items-center px-6 text-center space-y-4">
       <p className="text-sm uppercase tracking-[0.4em] text-white/50">404</p>
       <h1 className="text-3xl font-bold">That page drifted off-grid.</h1>
       <a

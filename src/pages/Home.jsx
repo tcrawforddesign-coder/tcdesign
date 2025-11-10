@@ -4,6 +4,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowUpRight, Github, Instagram, Linkedin, Mail, Menu, X, Megaphone, Camera, PenTool, Cpu } from "lucide-react";
 
 import { projects } from "../data/projects.js";
+import CodeCloud from "../components/CodeCloud.jsx";
 
 const HEADSHOT = "/images/headshot.jpg";
 const BRAND = { red: "#ff1a1a", black: "#0a0a0a" };
@@ -27,7 +28,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white antialiased selection:bg-white selection:text-black">
+    <div className="min-h-screen bg-[#030303] text-white antialiased selection:bg-white selection:text-black">
       <MotionDiv style={{ width }} className="fixed top-0 left-0 h-[3px] bg-[var(--brand-red)] z-50" aria-hidden />
 
       <header className="sticky top-0 z-40 backdrop-blur supports-[backdrop-filter]:bg-black/40 border-b border-white/10">
@@ -35,7 +36,7 @@ export default function Home() {
           <div className="h-16 flex items-center justify-between">
             <a href="#home" className="font-black tracking-tight text-lg md:text-xl">
               <span className="px-2 py-1 bg-white text-black">TC</span>
-              <span className="ml-2 text-white">DESIGN</span>
+              <LogoGlitchWord text="DESIGN" className="ml-2" />
             </a>
 
             <nav aria-label="Primary" className="hidden md:flex items-center gap-3 absolute left-1/2 -translate-x-1/2">
@@ -88,15 +89,14 @@ export default function Home() {
       </header>
 
       <section id="home" className="relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 pt-20 pb-14 md:pt-28 md:pb-24">
+        <CodeCloud />
+        <div className="hero-gradient" aria-hidden="true" />
+        <div className="relative z-10 max-w-7xl mx-auto px-4 pt-20 pb-14 md:pt-28 md:pb-24">
           <div className="grid md:grid-cols-12 gap-8 items-end">
             <div className="md:col-span-7">
-              <GlitchHeading
-                className="text-4xl md:text-6xl font-black leading-[1.05] tracking-tight"
-                prefix="Visual designer crafting"
-                highlight="bold"
-                suffix="brand systems."
-              />
+              <h1 className="hero-heading text-4xl md:text-6xl font-black leading-[1.05] tracking-tight">
+                Visual designer crafting <span className="text-[var(--brand-red)]">bold</span> brand systems.
+              </h1>
               <p className="mt-5 text-white/70 max-w-xl">Simple, intentional, and not afraid to experiment.</p>
               <div className="mt-8 flex flex-wrap gap-3">
                 <a href="#work" className="px-4 py-2 rounded-full bg-white text-black font-medium hover:contrast-125 transition">
@@ -129,7 +129,6 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <Marquee />
       </section>
 
       <main id="content">
@@ -499,81 +498,84 @@ function PosterLightbox({ src, onClose, index, total }) {
 
 const GLITCH_CHARSET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
-function GlitchHeading({ prefix, highlight, suffix, className = "" }) {
-  const fullText = `${prefix} ${highlight} ${suffix}`;
-  const [displayText, setDisplayText] = useState(fullText);
+export function LogoGlitchWord({ text, className = "" }) {
+  const [displayText, setDisplayText] = useState(text);
+  const [isGlitching, setIsGlitching] = useState(false);
   const intervalRef = useRef(null);
-  const frameRef = useRef(0);
-  const hasPlayedRef = useRef(false);
+  const timeoutRef = useRef(null);
+  const textRef = useRef(text);
 
-  const stopGlitch = useCallback(() => {
+  const clearTimers = useCallback(() => {
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
       intervalRef.current = null;
     }
-    frameRef.current = 0;
-    setDisplayText(fullText);
-  }, [fullText]);
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
+  }, []);
 
-  const startGlitch = useCallback(() => {
-    if (intervalRef.current) return;
-    frameRef.current = 0;
-    const maxIterations = fullText.length + 4;
+  const runGlitch = useCallback(() => {
+    clearTimers();
+    const target = textRef.current;
+    const extraChars = Math.max(6, Math.ceil(target.length / 2));
+    const totalLength = target.length + extraChars;
+    let iteration = 0;
+    const maxIterations = totalLength + 4;
 
-    intervalRef.current = setInterval(() => {
-      frameRef.current += 1.35;
-      const iteration = frameRef.current;
+    setIsGlitching(true);
 
-      const scrambled = fullText
-        .split("")
-        .map((char, index) => {
+    intervalRef.current = window.setInterval(() => {
+      iteration += 1.2;
+
+      const scrambled = Array.from({ length: totalLength }, (_, index) => {
+        if (index < target.length) {
+          const char = target[index];
           if (!/[A-Za-z]/.test(char)) {
             return char;
           }
           if (index < iteration) {
-            return fullText[index];
+            return char;
           }
           return GLITCH_CHARSET[Math.floor(Math.random() * GLITCH_CHARSET.length)];
-        })
-        .join("");
+        }
+        const extraIndex = index - target.length;
+        const removalThreshold = target.length + extraIndex * 1.5;
+        if (iteration < removalThreshold) {
+          return GLITCH_CHARSET[Math.floor(Math.random() * GLITCH_CHARSET.length)];
+        }
+        return " ";
+      })
+        .join("")
+        .trimEnd();
 
       setDisplayText(scrambled);
 
       if (iteration >= maxIterations) {
-        stopGlitch();
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+        setDisplayText(target);
+        setIsGlitching(false);
+        timeoutRef.current = window.setTimeout(runGlitch, 6000 + Math.random() * 7000);
       }
     }, 45);
-  }, [fullText, stopGlitch]);
+  }, [clearTimers]);
 
   useEffect(() => {
-    setDisplayText(fullText);
-    if (!hasPlayedRef.current) {
-      hasPlayedRef.current = true;
-      startGlitch();
-    }
+    textRef.current = text;
+    setDisplayText(text);
+    runGlitch();
+
     return () => {
-      stopGlitch();
+      clearTimers();
     };
-  }, [fullText, startGlitch, stopGlitch]);
-
-  const highlightStart = prefix.length + 1;
-  const highlightEnd = highlightStart + highlight.length;
-  const before = displayText.slice(0, highlightStart);
-  const highlighted = displayText.slice(highlightStart, highlightEnd);
-  const after = displayText.slice(highlightEnd);
-
-  const handleMouseEnter = () => {
-    if (!intervalRef.current) {
-      startGlitch();
-    }
-  };
+  }, [text, runGlitch, clearTimers]);
 
   return (
-    <h1 className={className} onMouseEnter={handleMouseEnter} onMouseLeave={stopGlitch}>
-      {before}
-      <span className="text-[var(--brand-red)]">{highlighted}</span>
-      {after}
-    </h1>
+    <span className={`inline-block ${isGlitching ? "text-white" : "text-[var(--brand-red)]"} ${className}`} aria-label={text}>
+      {displayText}
+    </span>
   );
 }
 
@@ -614,19 +616,4 @@ function MagnetCTA() {
   );
 }
 
-function Marquee() {
-  return (
-    <div className="border-y border-white/10 bg-[#0d0d0d] whitespace-nowrap overflow-hidden">
-      <div className="[animation:marquee_18s_linear_infinite] py-3">
-        {Array.from({ length: 12 }).map((_, index) => (
-          <span key={index} className="mx-6 inline-flex items-center gap-2 text-white/60">
-            <span className="w-2 h-2 rounded-full bg-[var(--brand-red)] inline-block" />
-            Brand identity systems • Marketing strategy • Campaign concepts • Content design • Design systems • Web prototypes
-          </span>
-        ))}
-      </div>
-      <style>{`@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}`}</style>
-    </div>
-  );
-}
 

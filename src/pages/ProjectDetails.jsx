@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { ArrowUpRight, ChevronLeft, ChevronRight, Github, Linkedin, Mail, Menu, X, Megaphone, Camera, PenTool, Cpu } from "lucide-react";
 
 import { findProjectBySlug, getAdjacentProjects } from "../data/projects.js";
+import { LogoGlitchWord } from "./Home.jsx";
 
 const MotionHeading = motion.h1;
 const MotionFigure = motion.figure;
@@ -34,7 +35,7 @@ export default function ProjectDetailsPage() {
 
   if (!project) {
     return (
-      <div className="min-h-screen bg-[#0a0a0a] text-white grid place-items-center px-6">
+      <div className="min-h-screen bg-[#030303] text-white grid place-items-center px-6">
         <div className="text-center space-y-4">
           <p className="text-sm uppercase tracking-[0.4em] text-white/50">Project not found</p>
           <h1 className="text-3xl font-bold">The case study you’re looking for has been archived.</h1>
@@ -50,13 +51,13 @@ export default function ProjectDetailsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white">
+    <div className="min-h-screen bg-[#030303] text-white">
       <header className="sticky top-0 z-40 backdrop-blur supports-[backdrop-filter]:bg-black/40 border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4">
           <div className="h-16 flex items-center justify-between">
             <Link to="/" className="font-black tracking-tight text-lg md:text-xl">
               <span className="px-2 py-1 bg-white text-black">TC</span>
-              <span className="ml-2 text-white/80">DESIGN</span>
+              <LogoGlitchWord text="DESIGN" className="ml-2" />
             </Link>
 
             <nav aria-label="Primary" className="hidden md:flex items-center gap-3 absolute left-1/2 -translate-x-1/2">
