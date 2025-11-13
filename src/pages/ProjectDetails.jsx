@@ -8,7 +8,6 @@ import { LogoGlitchWord } from "./Home.jsx";
 
 const MotionHeading = motion.h1;
 const MotionFigure = motion.figure;
-const BRAND = { red: "#ff1a1a", black: "#0a0a0a" };
 
 const iconComponents = {
   PenTool,
@@ -24,12 +23,6 @@ export default function ProjectDetailsPage() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const root = document.documentElement;
-    root.style.setProperty("--brand-red", BRAND.red);
-    root.style.setProperty("--brand-black", BRAND.black);
-  }, []);
-
-  useEffect(() => {
     window.scrollTo({ top: 0, behavior: "auto" });
   }, [slug]);
 
@@ -41,7 +34,7 @@ export default function ProjectDetailsPage() {
           <h1 className="text-3xl font-bold">The case study you’re looking for has been archived.</h1>
           <Link
             to="/"
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 hover:bg-white hover:text-black transition"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 hover:border-white/40 transition"
           >
             <ChevronLeft className="w-4 h-4" /> Back to work
           </Link>
@@ -80,7 +73,7 @@ export default function ProjectDetailsPage() {
             <div className="flex items-center gap-3">
               <Link
                 to={{ pathname: "/", hash: "#contact" }}
-                className="hidden sm:inline-flex items-center gap-2 px-3 py-2 rounded-full bg-[var(--brand-red)] text-black font-medium hover:contrast-125 transition"
+                className="hidden sm:inline-flex items-center gap-2 px-3 py-2 rounded-full bg-white text-black font-medium hover:contrast-125 transition"
               >
                 <ArrowUpRight className="w-4 h-4" /> Contact
               </Link>
@@ -135,7 +128,7 @@ export default function ProjectDetailsPage() {
       <footer className="border-t border-white/10 py-10 text-center text-xs text-white/50">
         © {new Date().getFullYear()} Travis Crawford — Portfolio
         <div className="mt-3 flex justify-center gap-4 text-white/60">
-          <a href="mailto:tcrawford.design@gmail.com" className="inline-flex items-center gap-2 hover:text-white">
+          <a href="mailto:tcrawford.design@gmail.com" className="inline-flex items-center gap-2 hover:text-white" target="_blank" rel="noreferrer">
             <Mail className="w-4 h-4" /> Email
           </a>
           <a href="#" className="inline-flex items-center gap-2 hover:text-white">

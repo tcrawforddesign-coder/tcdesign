@@ -1,10 +1,11 @@
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
 
-const RED_HEX = "#FF0000";
 const ALPHABET = "TRAVISCRAWFORDDESIGNWEBPOSTERYXQKHMN";
 
 const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+
+const ACCENT_HEX = "#FFFFFF";
 
 const CodeCloud = () => {
   const wrapRef = useRef(null);
@@ -13,6 +14,11 @@ const CodeCloud = () => {
   useEffect(() => {
     const wrap = wrapRef.current;
     if (!wrap) return undefined;
+
+    const rootStyles = window.getComputedStyle(document.documentElement);
+    const accentHex = rootStyles.getPropertyValue("--brand-red").trim() || "#ffffff";
+    const baseLetterColor = "#ffffff";
+    const accentLetterColor = accentHex || "#ffffff";
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setPixelRatio(clamp(window.devicePixelRatio, 1, 2));
@@ -67,7 +73,7 @@ const CodeCloud = () => {
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
       ctx.font = "900 180px Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif";
-      ctx.fillStyle = tint ? RED_HEX : "#FFFFFF";
+      ctx.fillStyle = tint ? ACCENT_HEX : "#FFFFFF";
       ctx.fillText(char, 128, 140);
       const texture = new THREE.CanvasTexture(canvas);
       texture.anisotropy = renderer.capabilities.getMaxAnisotropy();

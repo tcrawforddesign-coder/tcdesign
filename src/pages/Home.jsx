@@ -7,7 +7,6 @@ import { projects } from "../data/projects.js";
 import CodeCloud from "../components/CodeCloud.jsx";
 
 const HEADSHOT = "/images/headshot.jpg";
-const BRAND = { red: "#ff1a1a", black: "#0a0a0a" };
 const MotionDiv = motion.div;
 const POSTER_IMAGES = Array.from({ length: 19 }, (_, index) => `/images/Poster_${index + 1}.png`);
 
@@ -20,12 +19,6 @@ export default function Home() {
   const [showPosters, setShowPosters] = useState(false);
   const { scrollYProgress } = useScroll();
   const width = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
-
-  useEffect(() => {
-    const root = document.documentElement;
-    root.style.setProperty("--brand-red", BRAND.red);
-    root.style.setProperty("--brand-black", BRAND.black);
-  }, []);
 
   return (
     <div className="min-h-screen bg-[#030303] text-white antialiased selection:bg-white selection:text-black">
@@ -48,7 +41,7 @@ export default function Home() {
             </nav>
 
             <div className="flex items-center gap-3">
-              <a href="#contact" className="hidden sm:inline-flex items-center gap-2 px-3 py-2 rounded-full bg-[var(--brand-red)] text-black font-medium hover:contrast-125 transition">
+              <a href="#contact" className="hidden sm:inline-flex items-center gap-2 px-3 py-2 rounded-full bg-white text-black font-medium hover:contrast-125 transition">
                 <ArrowUpRight className="w-4 h-4" /> Contact
               </a>
               <button className="md:hidden p-2 rounded border border-white/15" aria-label="Open menu" onClick={() => setOpen(true)}>
@@ -159,7 +152,7 @@ export default function Home() {
             aria-hidden
             style={{
               backgroundImage:
-                "repeating-linear-gradient(0deg, rgba(255,255,255,.12) 0 1px, transparent 1px 3px), repeating-linear-gradient(90deg, rgba(255,26,26,.10) 0 2px, transparent 2px 6px)",
+                "repeating-linear-gradient(0deg, rgba(255,255,255,.12) 0 1px, transparent 1px 3px), repeating-linear-gradient(90deg, rgba(255,255,255,.10) 0 2px, transparent 2px 6px)",
             }}
           />
           <div className="max-w-7xl mx-auto px-4 py-16 md:py-24 grid md:grid-cols-12 gap-10 items-center">
@@ -599,7 +592,7 @@ function MagnetCTA() {
         <div
           className="pointer-events-none absolute -inset-20 opacity-40"
           style={{
-            background: `radial-gradient(400px 200px at calc(50% + ${pos.x / 10}px) calc(50% + ${pos.y / 10}px), rgba(255,26,26,.25), transparent 60%)`,
+            background: `radial-gradient(400px 200px at calc(50% + ${pos.x / 10}px) calc(50% + ${pos.y / 10}px), rgba(255,255,255,.22), transparent 60%)`,
           }}
           aria-hidden
         />

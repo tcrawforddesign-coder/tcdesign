@@ -1,11 +1,10 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowUpRight, Github, Linkedin, Mail, Menu, X } from "lucide-react";
 
 import { projects } from "../data/projects.js";
 import { ProjectCard, LogoGlitchWord } from "./Home.jsx";
 
-const BRAND = { red: "#ff1a1a", black: "#0a0a0a" };
 const PRIORITY_SLUGS = ["data-dog-analytics"];
 
 const orderedProjects = [
@@ -16,12 +15,6 @@ const spanForIndex = (index) => (Math.floor(index / 2) % 2 === 0 ? (index % 2 ==
 
 export default function ProjectsPage() {
   const [open, setOpen] = useState(false);
-
-  useEffect(() => {
-    const root = document.documentElement;
-    root.style.setProperty("--brand-red", BRAND.red);
-    root.style.setProperty("--brand-black", BRAND.black);
-  }, []);
 
   return (
     <div className="min-h-screen bg-[#030303] text-white">
@@ -53,7 +46,7 @@ export default function ProjectsPage() {
             <div className="flex items-center gap-3">
               <Link
                 to={{ pathname: "/", hash: "#contact" }}
-                className="hidden sm:inline-flex items-center gap-2 px-3 py-2 rounded-full bg-[var(--brand-red)] text-black font-medium hover:contrast-125 transition"
+                className="hidden sm:inline-flex items-center gap-2 px-3 py-2 rounded-full bg-white text-black font-medium hover:contrast-125 transition"
               >
                 <ArrowUpRight className="w-4 h-4" /> Contact
               </Link>
@@ -105,10 +98,7 @@ export default function ProjectsPage() {
               studies, and collaborations.
             </p>
           </div>
-          <Link
-            to={{ pathname: "/", hash: "#contact" }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 hover:bg-white hover:text-black transition"
-          >
+          <Link to={{ pathname: "/", hash: "#contact" }} className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white text-black font-medium hover:contrast-125 transition">
             Start a project <ArrowUpRight className="w-4 h-4" />
           </Link>
         </div>
@@ -128,10 +118,10 @@ export default function ProjectsPage() {
       <footer className="border-t border-white/10 py-10 text-center text-xs text-white/50">
         © {new Date().getFullYear()} Travis Crawford — Portfolio
         <div className="mt-3 flex justify-center gap-4 text-white/60">
-          <a href="mailto:tcrawford.design@gmail.com" className="inline-flex items-center gap-2 hover:text-white">
+          <Link to={{ pathname: "/", hash: "#contact" }} className="inline-flex items-center gap-2 hover:text-white">
             <Mail className="w-4 h-4" /> Email
-          </a>
-          <a href="#" className="inline-flex items-center gap-2 hover:text-white">
+          </Link>
+          <a href="https://github.com/tcrawforddesign-coder" className="inline-flex items-center gap-2 hover:text-white">
             <Github className="w-4 h-4" /> GitHub
           </a>
           <a href="https://www.linkedin.com/in/travis-crawford-67759b24a" className="inline-flex items-center gap-2 hover:text-white">

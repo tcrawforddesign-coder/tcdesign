@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --brand-red: #ff1a1a;
+  --brand-red: #ffffff;
   --brand-black: #030303;
 }
 
@@ -12,7 +12,14 @@ body,
 }
 
 body {
-  background-color: #030303;
+  background-color: var(--brand-black);
+  color: #ffffff;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+::selection {
+  background: #ffffff;
+  color: #000000;
 }
 
 .profile-card {
@@ -20,7 +27,7 @@ body {
   width: 100%;
   height: 100%;
   border-radius: inherit;
-  background-color: #050505;
+  background-color: rgba(255, 255, 255, 0.04);
   transition: transform 0.4s ease;
   display: flex;
   align-items: center;
@@ -48,8 +55,8 @@ body {
 .profile-card__overlay {
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 20% 20%, rgba(255, 26, 26, 0.18), transparent 50%),
-    radial-gradient(circle at 80% 80%, rgba(12, 12, 12, 0.95), rgba(12, 12, 12, 0.2));
+  background: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.16), transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(12, 12, 12, 0.9), rgba(12, 12, 12, 0.2));
   mix-blend-mode: screen;
   opacity: 0;
   transition: opacity 0.6s ease;
@@ -81,8 +88,8 @@ body {
 
 .profile-card__name {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 1.15rem;
-  font-weight: 600;
+  font-size: 1.125rem;
+  font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: #fff;
@@ -108,14 +115,13 @@ body {
 }
 
 .profile-card__icons a {
-  color: rgba(255, 255, 255, 0.85);
-  display: grid;
-  place-items: center;
   width: 38px;
   height: 38px;
+  display: grid;
+  place-items: center;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: rgba(255, 255, 255, 0.7);
   transition: color 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
 }
 
@@ -145,8 +151,8 @@ body {
   pointer-events: none;
   background-image: repeating-linear-gradient(
     to bottom,
-    rgba(255, 0, 0, 0.08),
-    rgba(255, 0, 0, 0.08) 1px,
+    rgba(255, 255, 255, 0.12),
+    rgba(255, 255, 255, 0.12) 1px,
     transparent 1px,
     transparent 3px
   );
@@ -185,6 +191,31 @@ body {
     rgba(0, 0, 0, 0.15) 60%,
     rgba(0, 0, 0, 0) 75%
   );
+}
+
+:root[data-theme="light"] .hero-gradient {
+  background: linear-gradient(
+    to top,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(255, 255, 255, 0.82) 25%,
+    rgba(255, 255, 255, 0.55) 45%,
+    rgba(255, 255, 255, 0.12) 65%,
+    rgba(255, 255, 255, 0) 80%
+  );
+}
+
+:root[data-theme="light"] .hero-heading {
+  text-shadow:
+    0 18px 40px rgba(255, 255, 255, 0.65),
+    0 8px 24px rgba(255, 255, 255, 0.5),
+    0 0 18px rgba(255, 255, 255, 0.35);
+}
+
+:root[data-theme="light"] .hero-heading span {
+  text-shadow:
+    0 18px 40px rgba(255, 255, 255, 0.6),
+    0 8px 24px rgba(255, 255, 255, 0.44),
+    0 0 18px rgba(255, 255, 255, 0.3);
 }
 
 .poster-gallery {
@@ -282,8 +313,8 @@ body {
 
 .poster-gallery__item:hover {
   transform: rotate(0deg) translateY(-6px);
-  border-color: rgba(255, 255, 255, 0.18);
-  box-shadow: 0 32px 52px -24px rgba(255, 26, 26, 0.25);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 32px 52px -24px rgba(255, 255, 255, 0.2);
 }
 
 .poster-gallery__item:hover::after {
@@ -421,4 +452,93 @@ body {
 .card-hover-border--disabled,
 .group:hover .card-hover-border--disabled {
   border-color: rgba(255, 255, 255, 0.12);
+}
+
+:root[data-theme="light"] .text-white {
+  color: var(--color-text-primary) !important;
+}
+
+:root[data-theme="light"] .text-white\/90 {
+  color: rgba(18, 18, 18, 0.9) !important;
+}
+
+:root[data-theme="light"] .text-white\/80 {
+  color: rgba(18, 18, 18, 0.8) !important;
+}
+
+:root[data-theme="light"] .text-white\/70 {
+  color: var(--color-text-muted) !important;
+}
+
+:root[data-theme="light"] .text-white\/60 {
+  color: rgba(18, 18, 18, 0.6) !important;
+}
+
+:root[data-theme="light"] .text-white\/50 {
+  color: rgba(18, 18, 18, 0.5) !important;
+}
+
+:root[data-theme="light"] .text-white\/40 {
+  color: rgba(18, 18, 18, 0.4) !important;
+}
+
+:root[data-theme="light"] .text-white\/30 {
+  color: rgba(18, 18, 18, 0.3) !important;
+}
+
+:root[data-theme="light"] .hover\:text-white:hover {
+  color: var(--color-text-primary) !important;
+}
+
+:root[data-theme="light"] .bg-\[\#030303\] {
+  background-color: var(--brand-black) !important;
+}
+
+:root[data-theme="light"] .bg-\[\#0d0d0d\] {
+  background-color: #ededed !important;
+}
+
+:root[data-theme="light"] .bg-black\/80 {
+  background-color: rgba(0, 0, 0, 0.6) !important;
+}
+
+:root[data-theme="light"] .bg-black\/60 {
+  background-color: rgba(0, 0, 0, 0.4) !important;
+}
+
+:root[data-theme="light"] .bg-black\/40 {
+  background-color: rgba(0, 0, 0, 0.12) !important;
+}
+
+:root[data-theme="light"] .bg-black\/30 {
+  background-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+:root[data-theme="light"] .bg-white\/5 {
+  background-color: rgba(0, 0, 0, 0.04) !important;
+}
+
+:root[data-theme="light"] .bg-white\/10 {
+  background-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+:root[data-theme="light"] .border-white\/10,
+:root[data-theme="light"] .border-white\/15,
+:root[data-theme="light"] .border-white\/20,
+:root[data-theme="light"] .border-white\/30,
+:root[data-theme="light"] .border-white\/40,
+:root[data-theme="light"] .border-white\/80 {
+  border-color: var(--color-border) !important;
+}
+
+:root[data-theme="light"] .ring-white\/10 {
+  --tw-ring-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+:root[data-theme="light"] .theme-toggle {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+:root[data-theme="light"] .accent-button:hover {
+  filter: brightness(0.95);
 }
