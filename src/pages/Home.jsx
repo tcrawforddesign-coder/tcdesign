@@ -195,7 +195,11 @@ export default function Home() {
                 <a href="#contact" className="px-4 py-2 rounded-full bg-[var(--brand-red)] text-black font-medium hover:contrast-125 transition">
                   Work together
                 </a>
-                <a href="#" className="px-4 py-2 rounded-full border border-white/20 hover:border-white/40">
+                <a
+                  href="/TravisCrawford_Resume.pdf"
+                  download
+                  className="px-4 py-2 rounded-full border border-white/20 hover:border-white/40"
+                >
                   Download CV
                 </a>
               </div>
