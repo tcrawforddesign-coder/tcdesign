@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 
 import Home from "./pages/Home.jsx";
 import ProjectsPage from "./pages/Projects.jsx";
+import PostersPage from "./pages/Posters.jsx";
 import ProjectDetailsPage from "./pages/ProjectDetails.jsx";
 
 export default function App() {
@@ -9,6 +10,7 @@ export default function App() {
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/projects" element={<ProjectsPage />} />
+      <Route path="/posters" element={<PostersPage />} />
       <Route path="/projects/:slug" element={<ProjectDetailsPage />} />
       <Route path="*" element={<NotFound />} />
     </Routes>

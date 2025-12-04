@@ -3,11 +3,13 @@ import { Link } from "react-router-dom";
 import { ArrowUpRight, Github, Linkedin, Mail, Menu, X } from "lucide-react";
 
 import { projects } from "../data/projects.js";
-import { ProjectCard, LogoGlitchWord } from "./Home.jsx";
+import { posterProject } from "../data/posters.js";
+import { ProjectCard } from "./Home.jsx";
 
 const PRIORITY_SLUGS = ["data-dog-analytics"];
 
 const orderedProjects = [
+  posterProject,
   ...PRIORITY_SLUGS.map((slug) => projects.find((project) => project.slug === slug)).filter(Boolean),
   ...projects.filter((project) => !PRIORITY_SLUGS.includes(project.slug)),
 ];
@@ -22,14 +24,14 @@ export default function ProjectsPage() {
         <div className="max-w-7xl mx-auto px-4">
           <div className="h-16 flex items-center justify-between">
             <Link to="/" className="font-black tracking-tight text-lg md:text-xl">
-              <span className="px-2 py-1 bg-white text-black">TC</span>
-              <LogoGlitchWord text="DESIGN" className="ml-2" />
+              Travis Crawford
             </Link>
 
             <nav aria-label="Primary" className="hidden md:flex items-center gap-3 absolute left-1/2 -translate-x-1/2">
               {[
                 { label: "Work", to: { pathname: "/", hash: "#work" } },
                 { label: "Projects", to: "/projects" },
+                { label: "Posters", to: "/posters" },
                 { label: "About", to: { pathname: "/", hash: "#about" } },
                 { label: "Contact", to: { pathname: "/", hash: "#contact" } },
               ].map((item) => (
@@ -69,6 +71,7 @@ export default function ProjectsPage() {
                 {[
                   { label: "Work", to: { pathname: "/", hash: "#work" } },
                   { label: "Projects", to: "/projects" },
+                  { label: "Posters", to: "/posters" },
                   { label: "About", to: { pathname: "/", hash: "#about" } },
                   { label: "Contact", to: { pathname: "/", hash: "#contact" } },
                 ].map((item) => (

@@ -1,22 +1,30 @@
-import { useCallback, useEffect, useMemo, useState, useRef } from "react";
+import { useCallback, useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowUpRight, Github, Instagram, Linkedin, Mail, Menu, X, Megaphone, Camera, PenTool, Cpu } from "lucide-react";
 
 import { projects } from "../data/projects.js";
+import { posterProject } from "../data/posters.js";
 import CodeCloud from "../components/CodeCloud.jsx";
 
 const HEADSHOT = "/images/headshot.jpg";
 const MotionDiv = motion.div;
-const POSTER_IMAGES = Array.from({ length: 19 }, (_, index) => `/images/Poster_${index + 1}.png`);
 
-const FEATURED_SLUGS = ["civil-goat-coffee", "aluma-skincare", "barbican-refresh", "data-dog-analytics"];
+const FEATURED_SLUGS = ["civil-goat-coffee", "aluma-skincare", "barbican-refresh"];
+const baseFeaturedProjects = FEATURED_SLUGS.map((slug) => projects.find((project) => project.slug === slug)).filter(Boolean);
+const featuredProjects = posterProject
+  ? [baseFeaturedProjects[0], posterProject, ...baseFeaturedProjects.slice(1)].filter(Boolean)
+  : baseFeaturedProjects;
 const FEATURED_COL_SPANS = ["md:col-span-7", "md:col-span-5", "md:col-span-5", "md:col-span-7"];
-const featuredProjects = FEATURED_SLUGS.map((slug) => projects.find((project) => project.slug === slug)).filter(Boolean);
+const NAV_ITEMS = [
+  { label: "Work", href: "#work", type: "anchor" },
+  { label: "Posters", href: "/posters", type: "route" },
+  { label: "About", href: "#about", type: "anchor" },
+  { label: "Contact", href: "#contact", type: "anchor" },
+];
 
 export default function Home() {
   const [open, setOpen] = useState(false);
-  const [showPosters, setShowPosters] = useState(false);
   const { scrollYProgress } = useScroll();
   const width = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
@@ -28,16 +36,29 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4">
           <div className="h-16 flex items-center justify-between">
             <a href="#home" className="font-black tracking-tight text-lg md:text-xl">
-              <span className="px-2 py-1 bg-white text-black">TC</span>
-              <LogoGlitchWord text="DESIGN" className="ml-2" />
+              Travis Crawford
             </a>
 
             <nav aria-label="Primary" className="hidden md:flex items-center gap-3 absolute left-1/2 -translate-x-1/2">
-              {["Work", "About", "Contact"].map((item) => (
-                <a key={item} href={`#${item.toLowerCase()}`} className="px-4 py-2 rounded-full border border-white/15 hover:border-white/40 transition backdrop-blur bg-white/5 hover:bg-white/10">
-                  {item}
-                </a>
-              ))}
+              {NAV_ITEMS.map((item) =>
+                item.type === "route" ? (
+                  <Link
+                    key={item.label}
+                    to={item.href}
+                    className="px-4 py-2 rounded-full border border-white/15 hover:border-white/40 transition backdrop-blur bg-white/5 hover:bg-white/10"
+                  >
+                    {item.label}
+                  </Link>
+                ) : (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    className="px-4 py-2 rounded-full border border-white/15 hover:border-white/40 transition backdrop-blur bg-white/5 hover:bg-white/10"
+                  >
+                    {item.label}
+                  </a>
+                ),
+              )}
             </nav>
 
             <div className="flex items-center gap-3">
@@ -60,19 +81,25 @@ export default function Home() {
             </div>
             <div className="min-h-full grid place-items-center">
               <ul className="space-y-6 text-center text-2xl">
-                {[
-                  { label: "Work", href: "#work" },
-                  { label: "About", href: "#about" },
-                  { label: "Contact", href: "#contact" },
-                ].map((i) => (
-                  <li key={i.label}>
-                    <a
-                      href={i.href}
-                      onClick={() => setOpen(false)}
-                      className="px-6 py-3 rounded-full border border-white/15 inline-block bg-white/5 hover:bg-white/10"
-                    >
-                      {i.label}
-                    </a>
+                {NAV_ITEMS.map((item) => (
+                  <li key={item.label}>
+                    {item.type === "route" ? (
+                      <Link
+                        to={item.href}
+                        onClick={() => setOpen(false)}
+                        className="px-6 py-3 rounded-full border border-white/15 inline-block bg-white/5 hover:bg-white/10"
+                      >
+                        {item.label}
+                      </Link>
+                    ) : (
+                      <a
+                        href={item.href}
+                        onClick={() => setOpen(false)}
+                        className="px-6 py-3 rounded-full border border-white/15 inline-block bg-white/5 hover:bg-white/10"
+                      >
+                        {item.label}
+                      </a>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -172,34 +199,20 @@ export default function Home() {
                 </a>
               </div>
             </div>
-            <aside className="md:col-span-5 space-y-4">
-              <div className="flex justify-end">
-                <button
-                  type="button"
-                  onClick={() => setShowPosters((prev) => !prev)}
-                  aria-pressed={showPosters}
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 bg-white/5 hover:bg-white/10 text-sm uppercase tracking-[0.18em] transition"
-                >
-                  {showPosters ? "Hide posters" : "Show posters"}
-                </button>
-              </div>
-              {showPosters ? (
-                <PosterSpotlight posters={POSTER_IMAGES} />
-              ) : (
-                <ul className="grid grid-cols-2 gap-4 text-sm">
-                  {[
-                    { k: "Years", v: "5+" },
-                    { k: "Awards", v: "Graphis Gold + 6x Silver" },
-                    { k: "Focus", v: "Brand, Product, Strategy" },
-                    { k: "Tools", v: "Figma, ID, PS/AI" },
-                  ].map((stat) => (
-                    <li key={stat.k} className="p-4 rounded-xl border border-white/10 bg-black/30">
-                      <div className="text-white/50">{stat.k}</div>
-                      <div className="text-lg font-semibold mt-1">{stat.v}</div>
-                    </li>
-                  ))}
-                </ul>
-              )}
+            <aside className="md:col-span-5">
+              <ul className="grid grid-cols-2 gap-4 text-sm">
+                {[
+                  { k: "Years", v: "5+" },
+                  { k: "Awards", v: "Graphis Gold + 6x Silver" },
+                  { k: "Focus", v: "Brand, Product, Strategy" },
+                  { k: "Tools", v: "Figma, ID, PS/AI" },
+                ].map((stat) => (
+                  <li key={stat.k} className="p-4 rounded-xl border border-white/10 bg-black/30">
+                    <div className="text-white/50">{stat.k}</div>
+                    <div className="text-lg font-semibold mt-1">{stat.v}</div>
+                  </li>
+                ))}
+              </ul>
             </aside>
           </div>
         </section>
@@ -243,6 +256,9 @@ export default function Home() {
             <a href="#work" className="hover:text-white">
               Work
             </a>
+            <Link to="/posters" className="hover:text-white">
+              Posters
+            </Link>
             <a href="#about" className="hover:text-white">
               About
             </a>
@@ -260,6 +276,7 @@ const DISABLED_SLUGS = ["sydney-bound", "mntwire"];
 
 export function ProjectCard({ project }) {
   const disabled = DISABLED_SLUGS.includes(project.slug);
+  const linkTarget = project.href ?? (project.slug ? `/projects/${project.slug}` : "#");
 
   const cardContent = (
     <MotionDiv
@@ -304,7 +321,7 @@ export function ProjectCard({ project }) {
   }
 
   return (
-    <Link to={`/projects/${project.slug}`} className="block group" aria-label={project.title}>
+    <Link to={linkTarget} className="block group" aria-label={project.title}>
       {cardContent}
     </Link>
   );
@@ -344,145 +361,6 @@ function HeadshotCard() {
           <a href="https://github.com/tcrawforddesign-coder" target="_blank" rel="noreferrer" aria-label="GitHub">
             <Github className="w-5 h-5" />
           </a>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function PosterSpotlight({ posters }) {
-  const curated = useMemo(() => posters.filter(Boolean), [posters]);
-  const [order, setOrder] = useState(curated);
-  const [selected, setSelected] = useState(null);
-
-  useEffect(() => {
-    setOrder(curated);
-  }, [curated]);
-
-  const rotations = useMemo(() => [-4.5, 2.5, 1.5, -2.5, 0.75], []);
-
-  const shufflePosters = () => {
-    setOrder((prev) => {
-      const next = [...prev];
-      for (let i = next.length - 1; i > 0; i -= 1) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [next[i], next[j]] = [next[j], next[i]];
-      }
-      return next;
-    });
-  };
-
-  useEffect(() => {
-    if (selected) {
-      const original = document.body.style.overflow;
-      document.body.style.overflow = "hidden";
-      return () => {
-        document.body.style.overflow = original;
-      };
-    }
-    return undefined;
-  }, [selected]);
-
-  useEffect(() => {
-    const handleKey = (event) => {
-      if (event.key === "Escape") {
-        setSelected(null);
-      }
-    };
-    if (selected) {
-      window.addEventListener("keydown", handleKey);
-      return () => window.removeEventListener("keydown", handleKey);
-    }
-    return undefined;
-  }, [selected]);
-
-  return (
-    <>
-      <section className="poster-gallery">
-        <header className="poster-gallery__header">
-          <div className="poster-gallery__title">
-            Poster archive
-            <span>{String(order.length).padStart(2, "0")} pieces</span>
-          </div>
-          <button type="button" className="poster-gallery__shuffle" onClick={shufflePosters}>
-            Shuffle
-          </button>
-        </header>
-        <div className="poster-gallery__scroll" role="list">
-          {order.map((src, index) => (
-            <figure
-              key={src}
-              role="listitem"
-              className="poster-gallery__item"
-              style={{ "--poster-rotation": `${rotations[index % rotations.length]}deg` }}
-            >
-              <button
-                type="button"
-                className="poster-gallery__button"
-                onClick={() => setSelected(src)}
-                onKeyDown={(event) => {
-                  if (event.key === "Enter" || event.key === " ") {
-                    event.preventDefault();
-                    setSelected(src);
-                  }
-                }}
-                aria-label={`View poster ${index + 1}`}
-              >
-                <img src={src} alt={`Poster ${index + 1}`} loading="lazy" decoding="async" />
-              </button>
-            </figure>
-          ))}
-        </div>
-      </section>
-      {selected && (
-        <PosterLightbox
-          src={selected}
-          onClose={() => setSelected(null)}
-          total={order.length}
-          index={order.findIndex((src) => src === selected)}
-        />
-      )}
-    </>
-  );
-}
-
-function PosterLightbox({ src, onClose, index, total }) {
-  const closeButtonRef = useRef(null);
-
-  useEffect(() => {
-    const previouslyFocused = document.activeElement;
-    closeButtonRef.current?.focus();
-    return () => {
-      if (previouslyFocused && previouslyFocused.focus) {
-        previouslyFocused.focus();
-      }
-    };
-  }, []);
-
-  const handleBackdropClick = (event) => {
-    if (event.target === event.currentTarget) {
-      onClose();
-    }
-  };
-
-  return (
-    <div className="poster-modal" role="dialog" aria-modal="true" onClick={handleBackdropClick}>
-      <div className="poster-modal__backdrop" />
-      <div className="poster-modal__content">
-        <button
-          type="button"
-          className="poster-modal__close poster-modal__close--floating"
-          onClick={onClose}
-          ref={closeButtonRef}
-          aria-label="Close poster"
-        >
-          Close
-        </button>
-        <div className="poster-modal__tag">
-          Poster {String(index + 1).padStart(2, "0")}/{String(total).padStart(2, "0")}
-        </div>
-        <div className="poster-modal__image">
-          <img src={src} alt="Poster detail" loading="lazy" decoding="async" />
         </div>
       </div>
     </div>

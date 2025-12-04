@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import { ArrowUpRight, ChevronLeft, ChevronRight, Github, Linkedin, Mail, Menu, X, Megaphone, Camera, PenTool, Cpu } from "lucide-react";
 
 import { findProjectBySlug, getAdjacentProjects } from "../data/projects.js";
-import { LogoGlitchWord } from "./Home.jsx";
 
 const MotionHeading = motion.h1;
 const MotionFigure = motion.figure;
@@ -49,14 +48,14 @@ export default function ProjectDetailsPage() {
         <div className="max-w-7xl mx-auto px-4">
           <div className="h-16 flex items-center justify-between">
             <Link to="/" className="font-black tracking-tight text-lg md:text-xl">
-              <span className="px-2 py-1 bg-white text-black">TC</span>
-              <LogoGlitchWord text="DESIGN" className="ml-2" />
+              Travis Crawford
             </Link>
 
             <nav aria-label="Primary" className="hidden md:flex items-center gap-3 absolute left-1/2 -translate-x-1/2">
               {[
                 { label: "Work", to: { pathname: "/", hash: "#work" } },
                 { label: "Projects", to: "/projects" },
+                { label: "Posters", to: "/posters" },
                 { label: "About", to: { pathname: "/", hash: "#about" } },
                 { label: "Contact", to: { pathname: "/", hash: "#contact" } },
               ].map((item) => (
@@ -96,6 +95,7 @@ export default function ProjectDetailsPage() {
                 {[
                   { label: "Work", to: { pathname: "/", hash: "#work" } },
                   { label: "Projects", to: "/projects" },
+                  { label: "Posters", to: "/posters" },
                   { label: "About", to: { pathname: "/", hash: "#about" } },
                   { label: "Contact", to: { pathname: "/", hash: "#contact" } },
                 ].map((item) => (

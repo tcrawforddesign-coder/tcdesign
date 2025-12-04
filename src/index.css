@@ -277,6 +277,27 @@ body {
   max-height: 360px;
 }
 
+.poster-gallery--expanded {
+  padding: 28px;
+  gap: 22px;
+}
+
+.poster-gallery--expanded .poster-gallery__scroll {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 24px;
+  max-height: none;
+  overflow-y: visible;
+  padding-right: 0;
+}
+
+.poster-gallery--expanded .poster-gallery__item {
+  transform: rotate(calc(var(--poster-rotation, 0deg) / 2));
+}
+
+.poster-gallery--expanded .poster-gallery__item:hover {
+  transform: translateY(-6px);
+}
+
 @media (min-width: 1024px) {
   .poster-gallery__scroll {
     max-height: 420px;
