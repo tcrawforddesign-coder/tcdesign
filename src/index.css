@@ -275,6 +275,8 @@ body {
   overflow-x: hidden;
   padding-right: 4px;
   max-height: 360px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 .poster-gallery--expanded {
@@ -359,16 +361,7 @@ body {
 }
 
 .poster-gallery__scroll::-webkit-scrollbar {
-  width: 6px;
-}
-
-.poster-gallery__scroll::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.18);
-  border-radius: 999px;
-}
-
-.poster-gallery__scroll::-webkit-scrollbar-track {
-  background: transparent;
+  display: none;
 }
 
 .poster-modal {

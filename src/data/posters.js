@@ -147,13 +147,6 @@ export const posterEntries = [
     colorMode: "color",
   },
   {
-    id: "poster-22",
-    src: "/images/Poster_22.png",
-    title: "Spectral Node",
-    year: 2024,
-    colorMode: "color",
-  },
-  {
     id: "poster-23",
     src: "/images/Poster_23.png",
     title: "Gridline Drift",
