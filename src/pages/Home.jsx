@@ -13,10 +13,6 @@ import {
   Camera,
   PenTool,
   Cpu,
-  Figma as FigmaIcon,
-  Palette,
-  Code,
-  LayoutPanelTop,
 } from "lucide-react";
 
 import { projects } from "../data/projects.js";
@@ -39,11 +35,13 @@ const NAV_ITEMS = [
   { label: "Contact", href: "#contact", type: "anchor" },
 ];
 const TOOL_ICONS = [
-  { label: "Figma", Icon: FigmaIcon },
-  { label: "Illustrator", Icon: PenTool },
-  { label: "Photoshop", Icon: Palette },
-  { label: "InDesign", Icon: LayoutPanelTop },
-  { label: "HTML/CSS", Icon: Code },
+  { label: "Figma", src: "/Figma.svg" },
+  { label: "Illustrator", src: "/Illustrator.svg" },
+  { label: "Photoshop", src: "/Photoshop.svg" },
+  { label: "InDesign", src: "/InDesign.svg" },
+  { label: "Lightroom", src: "/Lightroom.svg" },
+  { label: "Acrobat", src: "/Acrobat.svg" },
+  { label: "XD", src: "/Xd.svg" },
 ];
 
 export default function Home() {
@@ -239,11 +237,11 @@ export default function Home() {
                     <div className="text-white/50 uppercase tracking-[0.18em] text-xs">{stat.k}</div>
                     {stat.type === "tools" ? (
                       <div className="mt-3 flex flex-col gap-3">
-                        <div className="flex flex-wrap gap-3">
-                          {TOOL_ICONS.map(({ label, Icon }) => (
+                        <div className="flex flex-wrap gap-x-4 gap-y-3">
+                          {TOOL_ICONS.map(({ label, src }) => (
                             <div key={label} className="flex items-center gap-2">
-                              <span className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/40">
-                                <Icon className="h-4 w-4 text-white" />
+                              <span className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/40 bg-white/5">
+                                <img src={src} alt={`${label} icon`} className="h-5 w-5" loading="lazy" decoding="async" />
                               </span>
                               <span className="text-xs text-white/60">{label}</span>
                             </div>
