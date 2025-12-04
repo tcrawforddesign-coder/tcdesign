@@ -132,6 +132,55 @@ export const posterEntries = [
     year: 2025,
     colorMode: "color",
   },
+  {
+    id: "poster-20",
+    src: "/images/Poster_20.png",
+    title: "Phase Garden",
+    year: 2025,
+    colorMode: "color",
+  },
+  {
+    id: "poster-21",
+    src: "/images/Poster_21.png",
+    title: "Neon Loom",
+    year: 2025,
+    colorMode: "color",
+  },
+  {
+    id: "poster-22",
+    src: "/images/Poster_22.png",
+    title: "Spectral Node",
+    year: 2024,
+    colorMode: "color",
+  },
+  {
+    id: "poster-23",
+    src: "/images/Poster_23.png",
+    title: "Gridline Drift",
+    year: 2023,
+    colorMode: "mono",
+  },
+  {
+    id: "poster-24",
+    src: "/images/Poster_24.png",
+    title: "Inverted Silence",
+    year: 2025,
+    colorMode: "mono",
+  },
+  {
+    id: "poster-25",
+    src: "/images/Poster_25.png",
+    title: "Sonic Melt",
+    year: 2025,
+    colorMode: "color",
+  },
+  {
+    id: "poster-26",
+    src: "/images/Poster_26.png",
+    title: "Cobalt Flux",
+    year: 2025,
+    colorMode: "color",
+  },
 ];
 
 export const posterProject = {
