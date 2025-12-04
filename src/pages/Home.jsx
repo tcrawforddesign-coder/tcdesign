@@ -1,7 +1,23 @@
 import { useCallback, useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowUpRight, Github, Instagram, Linkedin, Mail, Menu, X, Megaphone, Camera, PenTool, Cpu } from "lucide-react";
+import {
+  ArrowUpRight,
+  Github,
+  Instagram,
+  Linkedin,
+  Mail,
+  Menu,
+  X,
+  Megaphone,
+  Camera,
+  PenTool,
+  Cpu,
+  Figma as FigmaIcon,
+  Palette,
+  Code,
+  LayoutPanelTop,
+} from "lucide-react";
 
 import { projects } from "../data/projects.js";
 import { posterProject } from "../data/posters.js";
@@ -21,6 +37,13 @@ const NAV_ITEMS = [
   { label: "Posters", href: "/posters", type: "route" },
   { label: "About", href: "#about", type: "anchor" },
   { label: "Contact", href: "#contact", type: "anchor" },
+];
+const TOOL_ICONS = [
+  { label: "Figma", Icon: FigmaIcon },
+  { label: "Illustrator", Icon: PenTool },
+  { label: "Photoshop", Icon: Palette },
+  { label: "InDesign", Icon: LayoutPanelTop },
+  { label: "HTML/CSS", Icon: Code },
 ];
 
 export default function Home() {
@@ -210,11 +233,26 @@ export default function Home() {
                   { k: "Years", v: "5+" },
                   { k: "Awards", v: "Graphis Gold + 6x Silver" },
                   { k: "Focus", v: "Brand, Product, Strategy" },
-                  { k: "Tools", v: "Figma, ID, PS/AI" },
+                  { k: "Tools", type: "tools" },
                 ].map((stat) => (
                   <li key={stat.k} className="p-4 rounded-xl border border-white/10 bg-black/30">
-                    <div className="text-white/50">{stat.k}</div>
-                    <div className="text-lg font-semibold mt-1">{stat.v}</div>
+                    <div className="text-white/50 uppercase tracking-[0.18em] text-xs">{stat.k}</div>
+                    {stat.type === "tools" ? (
+                      <div className="mt-3 flex flex-col gap-3">
+                        <div className="flex flex-wrap gap-3">
+                          {TOOL_ICONS.map(({ label, Icon }) => (
+                            <div key={label} className="flex items-center gap-2">
+                              <span className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/40">
+                                <Icon className="h-4 w-4 text-white" />
+                              </span>
+                              <span className="text-xs text-white/60">{label}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="text-lg font-semibold mt-1">{stat.v}</div>
+                    )}
                   </li>
                 ))}
               </ul>
