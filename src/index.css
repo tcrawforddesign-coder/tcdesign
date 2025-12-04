@@ -413,19 +413,33 @@ body {
   justify-content: center;
 }
 
+.poster-modal__info {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0 4px;
+}
+
 .poster-modal__tag {
-  position: absolute;
-  top: 18px;
-  left: 18px;
-  padding: 6px 14px;
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 18px;
   border-radius: 999px;
   border: 1px solid rgba(255, 255, 255, 0.2);
-  background: rgba(12, 12, 12, 0.6);
+  background: rgba(12, 12, 12, 0.55);
   text-transform: uppercase;
-  letter-spacing: 0.36em;
+  letter-spacing: 0.32em;
   font-size: 10px;
   color: rgba(255, 255, 255, 0.7);
-  pointer-events: none;
+  width: fit-content;
+}
+
+.poster-modal__caption {
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
 }
 
 .poster-modal__close {

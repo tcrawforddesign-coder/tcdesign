@@ -159,16 +159,18 @@ function PosterLightbox({ poster, onClose, index, total }) {
         >
           Close
         </button>
-        <div className="poster-modal__tag">
-          Poster {String(index + 1).padStart(2, "0")}/{String(total).padStart(2, "0")}
-        </div>
         <div className="poster-modal__image">
           <img src={poster.src} alt={poster.title ?? "Poster detail"} loading="lazy" decoding="async" />
         </div>
-        <footer className="text-xs uppercase tracking-[0.3em] text-white/60 pl-2">
-          {poster.title}
-          {poster.year ? ` — ${poster.year}` : ""}
-        </footer>
+        <div className="poster-modal__info">
+          <span className="poster-modal__tag">
+            Poster {String(index + 1).padStart(2, "0")}/{String(total).padStart(2, "0")}
+          </span>
+          <span className="poster-modal__caption">
+            {poster.title}
+            {poster.year ? ` — ${poster.year}` : ""}
+          </span>
+        </div>
       </div>
     </div>
   );

@@ -4,6 +4,7 @@ import { ArrowUpRight, Github, Linkedin, Mail, Menu, Sparkles, X } from "lucide-
 
 import PosterGallery from "../components/PosterGallery.jsx";
 import { posterEntries, posterProject } from "../data/posters.js";
+import { LogoGlitchWord } from "./Home.jsx";
 
 const NAV_LINKS = [
   { label: "Work", to: { pathname: "/", hash: "#work" } },
@@ -57,8 +58,9 @@ export default function PostersPage() {
       <header className="sticky top-0 z-40 backdrop-blur supports-[backdrop-filter]:bg-black/40 border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4">
           <div className="h-16 flex items-center justify-between">
-            <Link to="/" className="font-black tracking-tight text-lg md:text-xl">
-              Travis Crawford
+            <Link to="/" className="font-black tracking-tight text-lg md:text-xl inline-flex items-center gap-2">
+              <span>Travis Crawford</span>
+              <LogoGlitchWord text="DESIGN" />
             </Link>
 
             <nav aria-label="Primary" className="hidden md:flex items-center gap-3 absolute left-1/2 -translate-x-1/2">
