@@ -107,9 +107,9 @@ export default function PosterGallery({
                     setSelected({ poster, index });
                   }
                 }}
-                aria-label={`View ${poster.title ?? `poster ${index + 1}`}`}
+                aria-label={`View poster ${index + 1}`}
               >
-                <img src={poster.src} alt={poster.title ?? `Poster ${index + 1}`} loading="lazy" decoding="async" />
+                <img src={poster.src} alt="" loading="lazy" decoding="async" />
               </button>
             </figure>
           ))}
@@ -160,19 +160,16 @@ function PosterLightbox({ poster, onClose, index, total }) {
           Close
         </button>
         <div className="poster-modal__image">
-          <img src={poster.src} alt={poster.title ?? "Poster detail"} loading="lazy" decoding="async" />
+          <img src={poster.src} alt="Poster detail" loading="lazy" decoding="async" />
         </div>
-        <div className="poster-modal__info">
+        <div className="poster-modal__info" aria-hidden>
           <span className="poster-modal__tag">
             Poster {String(index + 1).padStart(2, "0")}/{String(total).padStart(2, "0")}
-          </span>
-          <span className="poster-modal__caption">
-            {poster.title}
-            {poster.year ? ` — ${poster.year}` : ""}
           </span>
         </div>
       </div>
     </div>
   );
 }
+
 

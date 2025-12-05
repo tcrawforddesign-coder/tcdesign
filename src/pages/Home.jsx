@@ -1,19 +1,7 @@
-import { useCallback, useEffect, useState, useRef } from "react";
+import { useCallback, useEffect, useMemo, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { motion, useScroll, useTransform } from "framer-motion";
-import {
-  ArrowUpRight,
-  Github,
-  Instagram,
-  Linkedin,
-  Mail,
-  Menu,
-  X,
-  Megaphone,
-  Camera,
-  PenTool,
-  Cpu,
-} from "lucide-react";
+import { ArrowUpRight, Github, Instagram, Linkedin, Mail, Menu, X, Megaphone, Camera, PenTool, Cpu } from "lucide-react";
 
 import { projects } from "../data/projects.js";
 import { posterProject } from "../data/posters.js";
@@ -21,28 +9,34 @@ import CodeCloud from "../components/CodeCloud.jsx";
 
 const HEADSHOT = "/images/headshot.jpg";
 const MotionDiv = motion.div;
+const POSTER_IMAGES = Array.from({ length: 19 }, (_, index) => `/images/Poster_${index + 1}.png`);
+const SOFTWARE_ICONS = [
+  { name: "Photoshop", src: "/Photoshop.svg" },
+  { name: "Illustrator", src: "/Illustrator.svg" },
+  { name: "InDesign", src: "/InDesign.svg" },
+  { name: "Figma", src: "/Figma.svg" },
+  { name: "Lightroom", src: "/Lightroom.svg" },
+  { name: "Acrobat", src: "/Acrobat.svg" },
+  { name: "XD", src: "/Xd.svg" },
+  { name: "Cursor", src: "/Cursor.svg" },
+];
+const PRIMARY_NAV = [
+  { label: "Work", type: "anchor", href: "#work" },
+  { label: "Posters", type: "route", to: "/posters" },
+  { label: "About", type: "anchor", href: "#about" },
+  { label: "Contact", type: "anchor", href: "#contact" },
+];
+const ABOUT_TEXT_STATS = [
+  { k: "Years", v: "5+" },
+  { k: "Awards", v: "Graphis Gold + 6x Silver" },
+];
 
 const FEATURED_SLUGS = ["civil-goat-coffee", "aluma-skincare", "barbican-refresh"];
+const FEATURED_COL_SPANS = ["md:col-span-7", "md:col-span-5", "md:col-span-5", "md:col-span-7"];
 const baseFeaturedProjects = FEATURED_SLUGS.map((slug) => projects.find((project) => project.slug === slug)).filter(Boolean);
 const featuredProjects = posterProject
   ? [baseFeaturedProjects[0], posterProject, ...baseFeaturedProjects.slice(1)].filter(Boolean)
   : baseFeaturedProjects;
-const FEATURED_COL_SPANS = ["md:col-span-7", "md:col-span-5", "md:col-span-5", "md:col-span-7"];
-const NAV_ITEMS = [
-  { label: "Work", href: "#work", type: "anchor" },
-  { label: "Posters", href: "/posters", type: "route" },
-  { label: "About", href: "#about", type: "anchor" },
-  { label: "Contact", href: "#contact", type: "anchor" },
-];
-const TOOL_ICONS = [
-  { label: "Figma", src: "/Figma.svg" },
-  { label: "Illustrator", src: "/Illustrator.svg" },
-  { label: "Photoshop", src: "/Photoshop.svg" },
-  { label: "InDesign", src: "/InDesign.svg" },
-  { label: "Lightroom", src: "/Lightroom.svg" },
-  { label: "Acrobat", src: "/Acrobat.svg" },
-  { label: "XD", src: "/Xd.svg" },
-];
 
 export default function Home() {
   const [open, setOpen] = useState(false);
@@ -62,11 +56,11 @@ export default function Home() {
             </a>
 
             <nav aria-label="Primary" className="hidden md:flex items-center gap-3 absolute left-1/2 -translate-x-1/2">
-              {NAV_ITEMS.map((item) =>
+              {PRIMARY_NAV.map((item) =>
                 item.type === "route" ? (
                   <Link
                     key={item.label}
-                    to={item.href}
+                    to={item.to}
                     className="px-4 py-2 rounded-full border border-white/15 hover:border-white/40 transition backdrop-blur bg-white/5 hover:bg-white/10"
                   >
                     {item.label}
@@ -103,11 +97,11 @@ export default function Home() {
             </div>
             <div className="min-h-full grid place-items-center">
               <ul className="space-y-6 text-center text-2xl">
-                {NAV_ITEMS.map((item) => (
+                {PRIMARY_NAV.map((item) => (
                   <li key={item.label}>
                     {item.type === "route" ? (
                       <Link
-                        to={item.href}
+                        to={item.to}
                         onClick={() => setOpen(false)}
                         className="px-6 py-3 rounded-full border border-white/15 inline-block bg-white/5 hover:bg-white/10"
                       >
@@ -216,44 +210,31 @@ export default function Home() {
                 <a href="#contact" className="px-4 py-2 rounded-full bg-[var(--brand-red)] text-black font-medium hover:contrast-125 transition">
                   Work together
                 </a>
-                <a
-                  href="/TravisCrawford_Resume.pdf"
-                  download
-                  className="px-4 py-2 rounded-full border border-white/20 hover:border-white/40"
-                >
+                <a href="#" className="px-4 py-2 rounded-full border border-white/20 hover:border-white/40">
                   Download CV
                 </a>
               </div>
             </div>
-            <aside className="md:col-span-5">
-              <ul className="grid grid-cols-2 gap-4 text-sm">
-                {[
-                  { k: "Years", v: "5+" },
-                  { k: "Awards", v: "Graphis Gold + 6x Silver" },
-                  { k: "Focus", v: "Brand, Product, Strategy" },
-                  { k: "Tools", type: "tools" },
-                ].map((stat) => (
+            <aside className="md:col-span-5 space-y-4 text-sm">
+              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {ABOUT_TEXT_STATS.map((stat) => (
                   <li key={stat.k} className="p-4 rounded-xl border border-white/10 bg-black/30">
-                    <div className="text-white/50 uppercase tracking-[0.18em] text-xs">{stat.k}</div>
-                    {stat.type === "tools" ? (
-                      <div className="mt-3 flex flex-col gap-3">
-                        <div className="flex flex-wrap gap-x-4 gap-y-3">
-                          {TOOL_ICONS.map(({ label, src }) => (
-                            <div key={label} className="flex items-center gap-2">
-                              <span className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/40 bg-white/5">
-                                <img src={src} alt={`${label} icon`} className="h-5 w-5" loading="lazy" decoding="async" />
-                              </span>
-                              <span className="text-xs text-white/60">{label}</span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="text-lg font-semibold mt-1">{stat.v}</div>
-                    )}
+                    <div className="text-white/50">{stat.k}</div>
+                    <div className="text-lg font-semibold mt-1">{stat.v}</div>
                   </li>
                 ))}
               </ul>
+              <div className="p-4 rounded-xl border border-white/10 bg-black/30">
+                <div className="text-white/50">Tools</div>
+                <div className="mt-4 grid grid-cols-4 gap-4">
+                  {SOFTWARE_ICONS.map((icon) => (
+                    <div key={icon.name} className="flex flex-col items-center gap-2 text-center">
+                      <img src={icon.src} alt={icon.name} className="h-12 w-12 object-contain" loading="lazy" decoding="async" />
+                      <span className="text-[11px] uppercase tracking-[0.28em] text-white/60">{icon.name}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </aside>
           </div>
         </section>
@@ -402,6 +383,145 @@ function HeadshotCard() {
           <a href="https://github.com/tcrawforddesign-coder" target="_blank" rel="noreferrer" aria-label="GitHub">
             <Github className="w-5 h-5" />
           </a>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function PosterSpotlight({ posters }) {
+  const curated = useMemo(() => posters.filter(Boolean), [posters]);
+  const [order, setOrder] = useState(curated);
+  const [selected, setSelected] = useState(null);
+
+  useEffect(() => {
+    setOrder(curated);
+  }, [curated]);
+
+  const rotations = useMemo(() => [-4.5, 2.5, 1.5, -2.5, 0.75], []);
+
+  const shufflePosters = () => {
+    setOrder((prev) => {
+      const next = [...prev];
+      for (let i = next.length - 1; i > 0; i -= 1) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [next[i], next[j]] = [next[j], next[i]];
+      }
+      return next;
+    });
+  };
+
+  useEffect(() => {
+    if (selected) {
+      const original = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = original;
+      };
+    }
+    return undefined;
+  }, [selected]);
+
+  useEffect(() => {
+    const handleKey = (event) => {
+      if (event.key === "Escape") {
+        setSelected(null);
+      }
+    };
+    if (selected) {
+      window.addEventListener("keydown", handleKey);
+      return () => window.removeEventListener("keydown", handleKey);
+    }
+    return undefined;
+  }, [selected]);
+
+  return (
+    <>
+      <section className="poster-gallery">
+        <header className="poster-gallery__header">
+          <div className="poster-gallery__title">
+            Poster archive
+            <span>{String(order.length).padStart(2, "0")} pieces</span>
+          </div>
+          <button type="button" className="poster-gallery__shuffle" onClick={shufflePosters}>
+            Shuffle
+          </button>
+        </header>
+        <div className="poster-gallery__scroll" role="list">
+          {order.map((src, index) => (
+            <figure
+              key={src}
+              role="listitem"
+              className="poster-gallery__item"
+              style={{ "--poster-rotation": `${rotations[index % rotations.length]}deg` }}
+            >
+              <button
+                type="button"
+                className="poster-gallery__button"
+                onClick={() => setSelected(src)}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    setSelected(src);
+                  }
+                }}
+                aria-label={`View poster ${index + 1}`}
+              >
+                <img src={src} alt={`Poster ${index + 1}`} loading="lazy" decoding="async" />
+              </button>
+            </figure>
+          ))}
+        </div>
+      </section>
+      {selected && (
+        <PosterLightbox
+          src={selected}
+          onClose={() => setSelected(null)}
+          total={order.length}
+          index={order.findIndex((src) => src === selected)}
+        />
+      )}
+    </>
+  );
+}
+
+function PosterLightbox({ src, onClose, index, total }) {
+  const closeButtonRef = useRef(null);
+
+  useEffect(() => {
+    const previouslyFocused = document.activeElement;
+    closeButtonRef.current?.focus();
+    return () => {
+      if (previouslyFocused && previouslyFocused.focus) {
+        previouslyFocused.focus();
+      }
+    };
+  }, []);
+
+  const handleBackdropClick = (event) => {
+    if (event.target === event.currentTarget) {
+      onClose();
+    }
+  };
+
+  return (
+    <div className="poster-modal" role="dialog" aria-modal="true" onClick={handleBackdropClick}>
+      <div className="poster-modal__backdrop" />
+      <div className="poster-modal__content">
+        <button
+          type="button"
+          className="poster-modal__close poster-modal__close--floating"
+          onClick={onClose}
+          ref={closeButtonRef}
+          aria-label="Close poster"
+        >
+          Close
+        </button>
+        <div className="poster-modal__tag">
+          Poster {String(index + 1).padStart(2, "0")}/{String(total).padStart(2, "0")}
+        </div>
+        <div className="poster-modal__image">
+          <img src={src} alt="Poster detail" loading="lazy" decoding="async" />
         </div>
       </div>
     </div>

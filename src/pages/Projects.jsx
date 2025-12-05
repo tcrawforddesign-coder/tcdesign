@@ -23,9 +23,9 @@ export default function ProjectsPage() {
       <header className="sticky top-0 z-40 backdrop-blur supports-[backdrop-filter]:bg-black/40 border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4">
           <div className="h-16 flex items-center justify-between">
-            <Link to="/" className="font-black tracking-tight text-lg md:text-xl inline-flex items-center gap-2">
-              <span>Travis Crawford</span>
-              <LogoGlitchWord text="DESIGN" />
+            <Link to="/" className="font-black tracking-tight text-lg md:text-xl">
+              <span className="px-2 py-1 bg-white text-black">TC</span>
+              <LogoGlitchWord text="DESIGN" className="ml-2" />
             </Link>
 
             <nav aria-label="Primary" className="hidden md:flex items-center gap-3 absolute left-1/2 -translate-x-1/2">

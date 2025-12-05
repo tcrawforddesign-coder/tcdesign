@@ -122,8 +122,8 @@ export default function PostersPage() {
           <div className="md:col-span-7 space-y-6">
             <p className="text-[11px] uppercase tracking-[0.4em] text-white/50">Poster Archive</p>
             <h1 className="text-4xl md:text-5xl font-black leading-tight tracking-tight">{posterProject.spotlight.headline}</h1>
-            <p className="text-white/70 leading-relaxed max-w-2xl">{posterProject.summary}</p>
-            <div className="space-y-4 text-white/70 leading-relaxed">
+            <p className="text-white/70 leading-relaxed max-w-3xl">{posterProject.summary}</p>
+            <div className="space-y-4 text-white/70 leading-relaxed max-w-3xl">
               {posterProject.intro.map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>
               ))}
@@ -148,14 +148,6 @@ export default function PostersPage() {
                 Personal Lab
               </div>
               <p className="text-white/70 text-sm leading-relaxed">{posterProject.spotlight.copy}</p>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs uppercase tracking-[0.26em] text-white/50">
-                {posterProject.statBlocks.map((stat) => (
-                  <div key={stat.label} className="rounded-xl border border-white/10 bg-black/50 px-3 py-4">
-                    <div>{stat.label}</div>
-                    <div className="mt-2 text-white text-[11px] tracking-[0.18em]">{stat.value}</div>
-                  </div>
-                ))}
-              </div>
             </div>
             <div className="rounded-2xl border border-white/10 bg-black/35 p-6 md:p-7">
               <h2 className="text-lg font-semibold tracking-tight text-white">Why posters?</h2>
@@ -246,4 +238,5 @@ export default function PostersPage() {
     </div>
   );
 }
+
 
