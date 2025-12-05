@@ -4,8 +4,6 @@ import { motion } from "framer-motion";
 import { ArrowUpRight, ChevronLeft, ChevronRight, Github, Linkedin, Mail, Menu, X, Megaphone, Camera, PenTool, Cpu } from "lucide-react";
 
 import { findProjectBySlug, getAdjacentProjects } from "../data/projects.js";
-import { LogoGlitchWord } from "./Home.jsx";
-
 const MotionHeading = motion.h1;
 const MotionFigure = motion.figure;
 
@@ -48,9 +46,8 @@ export default function ProjectDetailsPage() {
       <header className="sticky top-0 z-40 backdrop-blur supports-[backdrop-filter]:bg-black/40 border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4">
           <div className="h-16 flex items-center justify-between">
-            <Link to="/" className="font-black tracking-tight text-lg md:text-xl inline-flex items-center gap-2">
+            <Link to="/" className="font-black tracking-tight text-lg md:text-xl inline-flex items-center">
               <span>Travis Crawford</span>
-              <LogoGlitchWord text="DESIGN" />
             </Link>
 
             <nav aria-label="Primary" className="hidden md:flex items-center gap-3 absolute left-1/2 -translate-x-1/2">
@@ -63,7 +60,7 @@ export default function ProjectDetailsPage() {
               ].map((item) => (
                 <Link
                   key={item.label}
-                  to={{ pathname: "/", hash: item.hash }}
+                  to={item.to}
                   className="px-4 py-2 rounded-full border border-white/15 hover:border-white/40 transition backdrop-blur bg-white/5 hover:bg-white/10"
                 >
                   {item.label}
