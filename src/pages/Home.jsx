@@ -253,9 +253,6 @@ export default function Home() {
                   >
                     <Mail className="w-4 h-4" /> tcrawford.design@gmail.com
                   </a>
-                  <a href="#" className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 hover:border-white/40">
-                    <Github className="w-4 h-4" /> GitHub
-                  </a>
                   <a
                     href="https://www.linkedin.com/in/travis-crawford-67759b24a"
                     className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 hover:border-white/40"
@@ -371,16 +368,8 @@ function HeadshotCard() {
           >
             <Linkedin className="w-5 h-5" />
           </a>
-          <a
-            href="https://www.instagram.com/traviscrawford.design"
-            target="_blank"
-            rel="noreferrer"
-            aria-label="Instagram"
-          >
+          <a href="https://www.instagram.com/treves_/" target="_blank" rel="noreferrer" aria-label="Instagram">
             <Instagram className="w-5 h-5" />
-          </a>
-          <a href="https://github.com/tcrawforddesign-coder" target="_blank" rel="noreferrer" aria-label="GitHub">
-            <Github className="w-5 h-5" />
           </a>
         </div>
       </div>
