@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpRight, ChevronLeft, ChevronRight, Github, Linkedin, Mail, Menu, X, Megaphone, Camera, PenTool, Cpu } from "lucide-react";
 
 import { findProjectBySlug, getAdjacentProjects } from "../data/projects.js";
@@ -19,6 +19,7 @@ export default function ProjectDetailsPage() {
   const project = useMemo(() => findProjectBySlug(slug), [slug]);
   const { prev, next } = useMemo(() => getAdjacentProjects(slug), [slug]);
   const [open, setOpen] = useState(false);
+  const isCivilGoat = project?.slug === "civil-goat-coffee";
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "auto" });
@@ -120,6 +121,7 @@ export default function ProjectDetailsPage() {
         <IconCards highlights={project.highlights} />
         <TextureBanner project={project} />
         <LongformCopy {...project.approach} id="approach" />
+        {isCivilGoat && project.socialPosts ? <SocialFeedSection posts={project.socialPosts} projectName={project.title} /> : null}
         <Gallery project={project} />
         <LongformCopy {...project.outcomes} id="outcomes" />
         <PrevNext prev={prev} next={next} />
@@ -400,6 +402,66 @@ function NavCard({ direction, label, slug }) {
         </>
       )}
     </Link>
+  );
+}
+
+function SocialFeedSection({ posts, projectName }) {
+  const [active, setActive] = useState(0);
+
+  useEffect(() => {
+    if (!posts || posts.length <= 1) return undefined;
+    const timer = window.setInterval(() => {
+      setActive((prev) => (prev + 1) % posts.length);
+    }, 4000);
+    return () => window.clearInterval(timer);
+  }, [posts]);
+
+  if (!posts || posts.length === 0) return null;
+
+  return (
+    <section>
+      <div className="text-[11px] uppercase tracking-widest text-white/60 mb-3">Ads &amp; Social</div>
+      <div className="grid md:grid-cols-12 gap-10 items-center">
+        <div className="md:col-span-5 space-y-4">
+          <h2 className="text-2xl md:text-3xl font-bold tracking-tight">Instagram content system</h2>
+          <p className="text-white/70 text-sm leading-relaxed">
+            A swipeable set of promos for {projectName} showing how the conversational identity flexes across social placements. Motion and static stories share
+            the same typography, color energy, and conversational copy structure.
+          </p>
+        </div>
+        <div className="md:col-span-7 flex justify-center">
+          <div className="iphone-frame">
+            <div className="iphone-notch" aria-hidden />
+            <div className="iphone-screen">
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={posts[active]}
+                  src={posts[active]}
+                  alt={`Civil Goat social post ${active + 1}`}
+                  className="h-full w-full object-cover"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.35, ease: "easeOut" }}
+                />
+              </AnimatePresence>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="mt-8 iphone-dots" role="tablist" aria-label="Civil Goat social posts">
+        {posts.map((post, index) => (
+          <button
+            key={post}
+            type="button"
+            className={`iphone-dot ${index === active ? "iphone-dot--active" : ""}`}
+            onClick={() => setActive(index)}
+            aria-label={`Show social post ${index + 1}`}
+            aria-pressed={index === active}
+          />
+        ))}
+      </div>
+    </section>
   );
 }
 

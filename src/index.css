@@ -399,6 +399,72 @@ body {
   pointer-events: none;
 }
 
+.iphone-frame {
+  position: relative;
+  width: min(320px, 80vw);
+  aspect-ratio: 9 / 19.5;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-radius: 36px;
+  padding: 32px 18px 28px;
+  background: rgba(8, 8, 8, 0.85);
+  box-shadow: 0 40px 80px -50px rgba(0, 0, 0, 0.85);
+}
+
+.iphone-notch {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40%;
+  height: 18px;
+  background: rgba(12, 12, 12, 0.9);
+  border-radius: 0 0 18px 18px;
+}
+
+.iphone-screen {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 26px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.iphone-screen img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.iphone-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.iphone-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.22);
+  border: none;
+  padding: 0;
+  transition: background 0.2s ease;
+}
+
+.iphone-dot--active {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.iphone-dot:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.8);
+  outline-offset: 2px;
+}
+
 .poster-modal__close {
   position: absolute;
   top: -32px;
