@@ -124,9 +124,6 @@ export default function ProjectsPage() {
           <Link to={{ pathname: "/", hash: "#contact" }} className="inline-flex items-center gap-2 hover:text-white">
             <Mail className="w-4 h-4" /> Email
           </Link>
-          <a href="https://github.com/tcrawforddesign-coder" className="inline-flex items-center gap-2 hover:text-white">
-            <Github className="w-4 h-4" /> GitHub
-          </a>
           <a href="https://www.linkedin.com/in/travis-crawford-67759b24a" className="inline-flex items-center gap-2 hover:text-white">
             <Linkedin className="w-4 h-4" /> LinkedIn
           </a>

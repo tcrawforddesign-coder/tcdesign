@@ -136,9 +136,6 @@ export default function ProjectDetailsPage() {
           <a href="mailto:tcrawford.design@gmail.com" className="inline-flex items-center gap-2 hover:text-white" target="_blank" rel="noreferrer">
             <Mail className="w-4 h-4" /> Email
           </a>
-          <a href="#" className="inline-flex items-center gap-2 hover:text-white">
-            <Github className="w-4 h-4" /> GitHub
-          </a>
           <a href="https://www.linkedin.com/in/travis-crawford-67759b24a" className="inline-flex items-center gap-2 hover:text-white">
             <Linkedin className="w-4 h-4" /> LinkedIn
           </a>
@@ -189,7 +186,19 @@ function Hero({ project }) {
         </div>
       </div>
       <div className="relative">
-        <img src={project.heroImage} alt="Project hero" className="w-full aspect-[16/6] object-cover" />
+        {project.heroVideo ? (
+          <video
+            src={project.heroVideo}
+            className="w-full aspect-[16/6] object-cover"
+            autoPlay
+            muted
+            loop
+            playsInline
+            poster={project.heroImage}
+          />
+        ) : (
+          <img src={project.heroImage} alt="Project hero" className="w-full aspect-[16/6] object-cover" />
+        )}
         <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent" />
       </div>
     </header>
@@ -289,52 +298,49 @@ function TextureBanner({ project }) {
 }
 
 function Gallery({ project, socialSection }) {
+  const tiles = [];
+
+  project.gallery.forEach((src, index) => {
+    const wide = index % 5 === 0;
+    const colClass = wide ? "sm:col-span-12" : "sm:col-span-6";
+
+    tiles.push(
+      <MotionFigure
+        key={src}
+        initial={{ opacity: 0, y: 8 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-15%" }}
+        transition={{ duration: 0.35, delay: (index % 5) * 0.04 }}
+        className={`group/spot relative overflow-hidden rounded-xl border border-white/10 ${colClass}`}
+        onMouseMove={(event) => {
+          const rect = event.currentTarget.getBoundingClientRect();
+          event.currentTarget.style.setProperty("--mx", `${event.clientX - rect.left}px`);
+          event.currentTarget.style.setProperty("--my", `${event.clientY - rect.top}px`);
+        }}
+      >
+        <div className="aspect-[16/9]">
+          <img src={src} alt="Case study visual" className="w-full h-full object-cover" />
+        </div>
+        <div
+          className="pointer-events-none absolute inset-0 opacity-0 group-hover/spot:opacity-100 transition-opacity"
+          style={{ background: "radial-gradient(600px at var(--mx) var(--my), rgba(255,255,255,0.08), transparent 60%)" }}
+        />
+        <div className="absolute inset-0 rounded-xl ring-0 ring-white/0 group-hover/spot:ring-1 group-hover/spot:ring-white/10 transition-all" />
+      </MotionFigure>
+    );
+
+    if (socialSection && index === 4) {
+      tiles.push(
+        <div key="social-section" className="sm:col-span-12">
+          {socialSection}
+        </div>
+      );
+    }
+  });
+
   return (
     <section className="space-y-5">
-      <div className="grid grid-cols-1 sm:grid-cols-12 gap-4">
-        {project.gallery.map((src, index) => {
-          const wide = index % 5 === 0;
-          const colClass = wide ? "sm:col-span-12" : "sm:col-span-6";
-
-          const figure = (
-            <MotionFigure
-              key={src}
-              initial={{ opacity: 0, y: 8 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-15%" }}
-              transition={{ duration: 0.35, delay: (index % 5) * 0.04 }}
-              className={`group/spot relative overflow-hidden rounded-xl border border-white/10 ${colClass}`}
-              onMouseMove={(event) => {
-                const rect = event.currentTarget.getBoundingClientRect();
-                event.currentTarget.style.setProperty("--mx", `${event.clientX - rect.left}px`);
-                event.currentTarget.style.setProperty("--my", `${event.clientY - rect.top}px`);
-              }}
-            >
-              <div className="aspect-[16/9]">
-                <img src={src} alt="Case study visual" className="w-full h-full object-cover" />
-              </div>
-              <div
-                className="pointer-events-none absolute inset-0 opacity-0 group-hover/spot:opacity-100 transition-opacity"
-                style={{ background: "radial-gradient(600px at var(--mx) var(--my), rgba(255,255,255,0.08), transparent 60%)" }}
-              />
-              <div className="absolute inset-0 rounded-xl ring-0 ring-white/0 group-hover/spot:ring-1 group-hover/spot:ring-white/10 transition-all" />
-            </MotionFigure>
-          );
-
-          if (socialSection && index === 4) {
-            return (
-              <>
-                {figure}
-                <li key="social-section" className="sm:col-span-12 list-none">
-                  {socialSection}
-                </li>
-              </>
-            );
-          }
-
-          return figure;
-        })}
-      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-12 gap-4">{tiles}</div>
     </section>
   );
 }
