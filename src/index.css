@@ -465,6 +465,146 @@ body {
   outline-offset: 2px;
 }
 
+.insta-shell {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 14px 12px 12px;
+  gap: 12px;
+}
+
+.insta-status {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-transform: uppercase;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.insta-status__icons {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.insta-status__dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.45);
+}
+
+.insta-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.insta-header__left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.insta-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0)),
+    linear-gradient(135deg, rgba(255, 123, 0, 0.9), rgba(255, 0, 120, 0.9));
+  border: 2px solid rgba(0, 0, 0, 0.45);
+}
+
+.insta-name {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+.insta-meta {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.28em;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.insta-more {
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.insta-media {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 8px;
+  overflow: hidden;
+}
+
+.insta-media__inner {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.insta-media-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 14px;
+}
+
+.insta-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 6px;
+}
+
+.insta-action {
+  width: 18px;
+  height: 18px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  display: inline-block;
+}
+
+.insta-action--heart {
+  border-radius: 999px;
+}
+
+.insta-action--comment {
+  border-radius: 6px 6px 6px 2px;
+}
+
+.insta-action--share {
+  width: 20px;
+  transform: skewX(-12deg);
+}
+
+.insta-action--save {
+  border-radius: 2px;
+  height: 20px;
+}
+
+.insta-caption {
+  font-size: 11px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.insta-caption__copy {
+  color: rgba(255, 255, 255, 0.6);
+}
+
 .poster-modal__close {
   position: absolute;
   top: -32px;

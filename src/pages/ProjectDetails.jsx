@@ -406,17 +406,46 @@ function NavCard({ direction, label, slug }) {
 }
 
 function SocialFeedSection({ posts, projectName }) {
+  const normalizedPosts = useMemo(
+    () =>
+      posts
+        ?.map((post, index) => {
+          if (typeof post === "string") {
+            return { type: "image", src: post, alt: `${projectName} social post ${index + 1}` };
+          }
+          if (Array.isArray(post)) {
+            return { type: "gif", frames: post, alt: `${projectName} animated social post` };
+          }
+          if (post?.type === "gif" && post.frames) {
+            return { type: "gif", frames: post.frames, alt: post.alt ?? `${projectName} animated social post` };
+          }
+          if (post?.src) {
+            return { type: "image", src: post.src, alt: post.alt ?? `${projectName} social post ${index + 1}` };
+          }
+          return null;
+        })
+        .filter(Boolean) ?? [],
+    [posts, projectName],
+  );
+
   const [active, setActive] = useState(0);
 
   useEffect(() => {
-    if (!posts || posts.length <= 1) return undefined;
+    setActive(0);
+  }, [normalizedPosts]);
+
+  useEffect(() => {
+    if (normalizedPosts.length <= 1) return undefined;
     const timer = window.setInterval(() => {
-      setActive((prev) => (prev + 1) % posts.length);
+      setActive((prev) => (prev + 1) % normalizedPosts.length);
     }, 4000);
     return () => window.clearInterval(timer);
-  }, [posts]);
+  }, [normalizedPosts]);
 
-  if (!posts || posts.length === 0) return null;
+  if (!normalizedPosts.length) return null;
+
+  const current = normalizedPosts[active];
+  const transitionKey = current.type === "gif" ? `gif-${current.frames.join("|")}` : current.src;
 
   return (
     <section>
@@ -433,26 +462,62 @@ function SocialFeedSection({ posts, projectName }) {
           <div className="iphone-frame">
             <div className="iphone-notch" aria-hidden />
             <div className="iphone-screen">
-              <AnimatePresence mode="wait">
-                <motion.img
-                  key={posts[active]}
-                  src={posts[active]}
-                  alt={`Civil Goat social post ${active + 1}`}
-                  className="h-full w-full object-cover"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.35, ease: "easeOut" }}
-                />
-              </AnimatePresence>
+              <div className="insta-shell">
+                <div className="insta-status">
+                  <span>9:41</span>
+                  <div className="insta-status__icons" aria-hidden>
+                    <span className="insta-status__dot" />
+                    <span className="insta-status__dot" />
+                    <span className="insta-status__dot" />
+                  </div>
+                </div>
+                <div className="insta-header">
+                  <div className="insta-header__left">
+                    <span className="insta-avatar" aria-hidden />
+                    <div>
+                      <div className="insta-name">Civil Goat Coffee</div>
+                      <div className="insta-meta">Sponsored</div>
+                    </div>
+                  </div>
+                  <span className="insta-more" aria-hidden>•••</span>
+                </div>
+                <div className="insta-media">
+                  <AnimatePresence mode="wait" initial={false}>
+                    <motion.div
+                      key={transitionKey}
+                      className="insta-media__inner"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -20 }}
+                      transition={{ duration: 0.35, ease: "easeOut" }}
+                    >
+                      {current.type === "gif" ? (
+                        <AnimatedFrames frames={current.frames} alt={current.alt} />
+                      ) : (
+                        <img src={current.src} alt={current.alt} className="insta-media-img" loading="lazy" decoding="async" />
+                      )}
+                    </motion.div>
+                  </AnimatePresence>
+                </div>
+                <div className="insta-actions" aria-hidden>
+                  <span className="insta-action insta-action--heart" />
+                  <span className="insta-action insta-action--comment" />
+                  <span className="insta-action insta-action--share" />
+                  <span className="insta-action insta-action--save" />
+                </div>
+                <div className="insta-caption">
+                  <span className="insta-name">Civil Goat Coffee</span>
+                  <span className="insta-caption__copy"> Talking to fans across every channel.</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <div className="mt-8 iphone-dots" role="tablist" aria-label="Civil Goat social posts">
-        {posts.map((post, index) => (
+      <div className="mt-8 iphone-dots" role="tablist" aria-label={`${projectName} social posts`}>
+        {normalizedPosts.map((post, index) => (
           <button
-            key={post}
+            key={(post.type === "gif" ? post.frames.join("|") : post.src) ?? index}
             type="button"
             className={`iphone-dot ${index === active ? "iphone-dot--active" : ""}`}
             onClick={() => setActive(index)}
@@ -463,5 +528,25 @@ function SocialFeedSection({ posts, projectName }) {
       </div>
     </section>
   );
+}
+
+function AnimatedFrames({ frames, alt, interval = 180 }) {
+  const [frameIndex, setFrameIndex] = useState(0);
+
+  useEffect(() => {
+    setFrameIndex(0);
+  }, [frames]);
+
+  useEffect(() => {
+    if (!frames || frames.length <= 1) return undefined;
+    const timer = window.setInterval(() => {
+      setFrameIndex((prev) => (prev + 1) % frames.length);
+    }, interval);
+    return () => window.clearInterval(timer);
+  }, [frames, interval]);
+
+  if (!frames || frames.length === 0) return null;
+
+  return <img src={frames[frameIndex]} alt={alt} className="insta-media-img" loading="lazy" decoding="async" />;
 }
 
