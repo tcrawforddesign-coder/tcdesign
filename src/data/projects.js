@@ -16,14 +16,8 @@ export const projects = [
       { type: "image", src: "/images/Ad_1.png", alt: "Civil Goat carousel ad promoting seasonal roast" },
       { type: "image", src: "/images/Ad_2.png", alt: "Civil Goat Instagram story with conversational headline" },
       { type: "image", src: "/images/Ad_3.png", alt: "Civil Goat social tile featuring product photography" },
-      { type: "image", src: "/images/Ad_4.png", alt: "Civil Goat loyalty program announcement graphic" },
       { type: "image", src: "/images/Social_1.png", alt: "Civil Goat grid post with modular typography" },
       { type: "image", src: "/images/Social_2.png", alt: "Civil Goat quote post using brand pattern" },
-      {
-        type: "gif",
-        frames: ["/images/Icon_gif_1.png", "/images/Icon_gif_2.png", "/images/Icon_gif_3.png", "/images/Icon_gif_4.png", "/images/Icon_gif_5.png"],
-        alt: "Animated Civil Goat icon system cycling through mark variations",
-      },
     ],
     challenge: {
       kicker: "Challenge",

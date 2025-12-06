@@ -121,8 +121,12 @@ export default function ProjectDetailsPage() {
         <IconCards highlights={project.highlights} />
         <TextureBanner project={project} />
         <LongformCopy {...project.approach} id="approach" />
-        {isCivilGoat && project.socialPosts ? <SocialFeedSection posts={project.socialPosts} projectName={project.title} /> : null}
-        <Gallery project={project} />
+        <Gallery
+          project={project}
+          socialSection={
+            isCivilGoat && project.socialPosts ? <SocialFeedSection posts={project.socialPosts} projectName={project.title} /> : null
+          }
+        />
         <LongformCopy {...project.outcomes} id="outcomes" />
         <PrevNext prev={prev} next={next} />
       </div>
@@ -284,7 +288,7 @@ function TextureBanner({ project }) {
   );
 }
 
-function Gallery({ project }) {
+function Gallery({ project, socialSection }) {
   return (
     <section className="space-y-5">
       <div className="grid grid-cols-1 sm:grid-cols-12 gap-4">
@@ -292,7 +296,7 @@ function Gallery({ project }) {
           const wide = index % 5 === 0;
           const colClass = wide ? "sm:col-span-12" : "sm:col-span-6";
 
-          return (
+          const figure = (
             <MotionFigure
               key={src}
               initial={{ opacity: 0, y: 8 }}
@@ -316,6 +320,19 @@ function Gallery({ project }) {
               <div className="absolute inset-0 rounded-xl ring-0 ring-white/0 group-hover/spot:ring-1 group-hover/spot:ring-white/10 transition-all" />
             </MotionFigure>
           );
+
+          if (socialSection && index === 4) {
+            return (
+              <>
+                {figure}
+                <li key="social-section" className="sm:col-span-12 list-none">
+                  {socialSection}
+                </li>
+              </>
+            );
+          }
+
+          return figure;
         })}
       </div>
     </section>
@@ -411,16 +428,10 @@ function SocialFeedSection({ posts, projectName }) {
       posts
         ?.map((post, index) => {
           if (typeof post === "string") {
-            return { type: "image", src: post, alt: `${projectName} social post ${index + 1}` };
-          }
-          if (Array.isArray(post)) {
-            return { type: "gif", frames: post, alt: `${projectName} animated social post` };
-          }
-          if (post?.type === "gif" && post.frames) {
-            return { type: "gif", frames: post.frames, alt: post.alt ?? `${projectName} animated social post` };
+            return { src: post, alt: `${projectName} social post ${index + 1}` };
           }
           if (post?.src) {
-            return { type: "image", src: post.src, alt: post.alt ?? `${projectName} social post ${index + 1}` };
+            return { src: post.src, alt: post.alt ?? `${projectName} social post ${index + 1}` };
           }
           return null;
         })
@@ -445,7 +456,7 @@ function SocialFeedSection({ posts, projectName }) {
   if (!normalizedPosts.length) return null;
 
   const current = normalizedPosts[active];
-  const transitionKey = current.type === "gif" ? `gif-${current.frames.join("|")}` : current.src;
+  const transitionKey = current.src;
 
   return (
     <section>
@@ -491,11 +502,7 @@ function SocialFeedSection({ posts, projectName }) {
                       exit={{ opacity: 0, y: -20 }}
                       transition={{ duration: 0.35, ease: "easeOut" }}
                     >
-                      {current.type === "gif" ? (
-                        <AnimatedFrames frames={current.frames} alt={current.alt} />
-                      ) : (
-                        <img src={current.src} alt={current.alt} className="insta-media-img" loading="lazy" decoding="async" />
-                      )}
+                      <img src={current.src} alt={current.alt} className="insta-media-img" loading="lazy" decoding="async" />
                     </motion.div>
                   </AnimatePresence>
                 </div>
@@ -517,7 +524,7 @@ function SocialFeedSection({ posts, projectName }) {
       <div className="mt-8 iphone-dots" role="tablist" aria-label={`${projectName} social posts`}>
         {normalizedPosts.map((post, index) => (
           <button
-            key={(post.type === "gif" ? post.frames.join("|") : post.src) ?? index}
+            key={post.src ?? index}
             type="button"
             className={`iphone-dot ${index === active ? "iphone-dot--active" : ""}`}
             onClick={() => setActive(index)}
@@ -526,27 +533,31 @@ function SocialFeedSection({ posts, projectName }) {
           />
         ))}
       </div>
+      <div className="mt-10">
+        <ul className="flex flex-wrap gap-4">
+          {normalizedPosts.map((post, index) => {
+            const key = post.src ?? index;
+            return (
+              <li
+                key={key}
+                className={`relative flex-shrink-0 w-40 h-40 rounded-xl border border-white/10 bg-black/30 overflow-hidden ${
+                  index === active ? "ring-2 ring-white/70" : "ring-1 ring-white/10"
+                }`}
+              >
+                <button
+                  type="button"
+                  onClick={() => setActive(index)}
+                  className="absolute inset-0"
+                  aria-label={`Show social post ${index + 1}`}
+                >
+                  <img src={post.src} alt="" className="w-full h-full object-cover" loading="lazy" decoding="async" />
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
     </section>
   );
-}
-
-function AnimatedFrames({ frames, alt, interval = 180 }) {
-  const [frameIndex, setFrameIndex] = useState(0);
-
-  useEffect(() => {
-    setFrameIndex(0);
-  }, [frames]);
-
-  useEffect(() => {
-    if (!frames || frames.length <= 1) return undefined;
-    const timer = window.setInterval(() => {
-      setFrameIndex((prev) => (prev + 1) % frames.length);
-    }, interval);
-    return () => window.clearInterval(timer);
-  }, [frames, interval]);
-
-  if (!frames || frames.length === 0) return null;
-
-  return <img src={frames[frameIndex]} alt={alt} className="insta-media-img" loading="lazy" decoding="async" />;
 }
 
