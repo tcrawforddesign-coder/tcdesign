@@ -10,7 +10,7 @@ export const projects = [
     tools: ["Illustrator", "Photoshop", "Figma"],
     cover: "/images/CG_6.png",
     heroImage: "/images/CG_6.png",
-    heroVideo: "/videos/5529207-hd_1920_1080_30fps.mp4",
+    heroVideo: "https://txbi6s0cie448na3.public.blob.vercel-storage.com/5529207-hd_1920_1080_30fps.mp4",
     textureImage: "https://images.unsplash.com/photo-1521123845560-14093637aa7d?q=80&w=1600&auto=format&fit=crop",
     textureCopy: "Quote marks, modular grids, and confident type — systemized into tokens teams can actually use.",
     socialPosts: [
