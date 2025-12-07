@@ -193,10 +193,7 @@ function Hero({ project }) {
             muted
             loop
             playsInline
-            poster={project.heroImage}
-          >
             <source src={project.heroVideo} type="video/mp4" />
-            <img src={project.heroImage} alt="Project hero" />
           </video>
         ) : (
           <img src={project.heroImage} alt="Project hero" className="w-full aspect-[16/6] object-cover" />
