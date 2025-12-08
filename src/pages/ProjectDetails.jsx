@@ -193,6 +193,7 @@ function Hero({ project }) {
             muted
             loop
             playsInline
+          >
             <source src={project.heroVideo} type="video/mp4" />
           </video>
         ) : (

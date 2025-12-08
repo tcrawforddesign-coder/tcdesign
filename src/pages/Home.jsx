@@ -214,16 +214,8 @@ export default function Home() {
                 </a>
               </div>
             </div>
-            <aside className="md:col-span-5 space-y-4 text-sm">
-              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {ABOUT_TEXT_STATS.map((stat) => (
-                  <li key={stat.k} className="p-4 rounded-xl border border-white/10 bg-black/30">
-                    <div className="text-white/50">{stat.k}</div>
-                    <div className="text-lg font-semibold mt-1">{stat.v}</div>
-                  </li>
-                ))}
-              </ul>
-              <div className="p-4 rounded-xl border border-white/10 bg-black/30">
+            <aside className="md:col-span-5 space-y-4 text-sm relative z-0">
+              <div className="p-4 rounded-xl border border-white/10 bg-black/30 relative z-10">
                 <div className="text-white/50">Tools</div>
                 <div className="mt-4 grid grid-cols-4 gap-4">
                   {SOFTWARE_ICONS.map((icon) => (
@@ -234,6 +226,14 @@ export default function Home() {
                   ))}
                 </div>
               </div>
+              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {ABOUT_TEXT_STATS.map((stat) => (
+                  <li key={stat.k} className="p-4 rounded-xl border border-white/10 bg-black/30">
+                    <div className="text-white/50">{stat.k}</div>
+                    <div className="text-lg font-semibold mt-1">{stat.v}</div>
+                  </li>
+                ))}
+              </ul>
             </aside>
           </div>
         </section>
