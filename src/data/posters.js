@@ -174,6 +174,27 @@ export const posterEntries = [
     year: 2025,
     colorMode: "color",
   },
+  {
+    id: "poster-27",
+    src: "/images/Poster_27.png",
+    title: "Poster 27",
+    year: 2025,
+    colorMode: "color",
+  },
+  {
+    id: "poster-28",
+    src: "/images/Poster_28.png",
+    title: "Poster 28",
+    year: 2025,
+    colorMode: "color",
+  },
+  {
+    id: "poster-29",
+    src: "/images/Poster_29.png",
+    title: "Poster 29",
+    year: 2025,
+    colorMode: "color",
+  },
 ];
 
 export const posterProject = {
