@@ -290,7 +290,7 @@ export default function Home() {
   );
 }
 
-const DISABLED_SLUGS = ["sydney-bound", "mntwire"];
+const DISABLED_SLUGS = ["mntwire"];
 
 export function ProjectCard({ project }) {
   const disabled = DISABLED_SLUGS.includes(project.slug);
