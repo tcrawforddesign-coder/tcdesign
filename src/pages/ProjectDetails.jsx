@@ -14,6 +14,17 @@ const iconComponents = {
   Megaphone,
 };
 
+function splitProjectTitle(title = "") {
+  const segments = title.split("—").map((segment) => segment.trim()).filter(Boolean);
+  if (segments.length <= 1) {
+    return { primary: title.trim(), secondary: "" };
+  }
+  return {
+    primary: segments[0],
+    secondary: segments.slice(1).join(" — "),
+  };
+}
+
 export default function ProjectDetailsPage() {
   const { slug } = useParams();
   const project = useMemo(() => findProjectBySlug(slug), [slug]);
@@ -120,6 +131,7 @@ export default function ProjectDetailsPage() {
         <LongformCopy {...project.challenge} id="challenge" />
         <IconCards highlights={project.highlights} />
         <TextureBanner project={project} />
+        {project.deliverables ? <DeliverablesList items={project.deliverables} /> : null}
         <LongformCopy {...project.approach} id="approach" />
         <Gallery
           project={project}
@@ -146,6 +158,7 @@ export default function ProjectDetailsPage() {
 }
 
 function Hero({ project }) {
+  const { primary, secondary } = splitProjectTitle(project.title ?? "");
   return (
     <header className="relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-10 pt-16 pb-8">
@@ -160,8 +173,11 @@ function Hero({ project }) {
           transition={{ duration: 0.45 }}
           className="text-5xl md:text-6xl font-black leading-[0.95]"
         >
-          {project.title}
+          <span className="block">{primary}</span>
         </MotionHeading>
+        {secondary ? (
+          <div className="mt-2 text-[12px] uppercase tracking-[0.4em] text-white/60">{secondary}</div>
+        ) : null}
         <p className="mt-4 max-w-2xl text-white/70">{project.summary}</p>
         <div className="mt-6 flex flex-wrap gap-2">
           {project.roles.map((role) => (
@@ -196,8 +212,10 @@ function Hero({ project }) {
           >
             <source src={project.heroVideo} type="video/mp4" />
           </video>
-        ) : (
+        ) : project.heroImage ? (
           <img src={project.heroImage} alt="Project hero" className="w-full aspect-[16/6] object-cover" />
+        ) : (
+          <div className="w-full aspect-[16/6] bg-gradient-to-br from-[#090909] to-[#141414]" />
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent" />
       </div>
@@ -267,19 +285,53 @@ function IconCards({ highlights }) {
   );
 }
 
+function DeliverablesList({ items }) {
+  const statusStyles = (status) => {
+    const normalized = status.toLowerCase();
+    if (normalized === "shipped") {
+      return "border-emerald-500/30 text-emerald-300 bg-emerald-500/10";
+    }
+    if (normalized === "in progress") {
+      return "border-amber-400/30 text-amber-200 bg-amber-400/10";
+    }
+    return "border-white/20 text-white/70 bg-white/5";
+  };
+
+  return (
+    <section>
+      <div className="text-[11px] uppercase tracking-widest text-white/60 mb-2">Production status</div>
+      <div className="grid gap-4 md:grid-cols-3">
+        {items.map(({ title, status, description }) => (
+          <HoverSpotlight key={title} className="rounded-2xl border border-white/10 bg-[#0c0c0c]/60 p-5 flex flex-col gap-3">
+            <div className="flex items-center justify-between gap-3">
+              <h3 className="text-sm font-semibold tracking-tight">{title}</h3>
+              <span className={`px-3 py-1 rounded-full text-xs uppercase tracking-[0.25em] border ${statusStyles(status)}`}>{status}</span>
+            </div>
+            <p className="text-sm text-white/70 leading-relaxed">{description}</p>
+          </HoverSpotlight>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 function TextureBanner({ project }) {
   return (
     <HoverSpotlight className="rounded-2xl overflow-hidden border border-white/10">
       <div className="relative aspect-[21/9]">
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `url(${project.textureImage})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            filter: "contrast(105%) saturate(95%)",
-          }}
-        />
+        {project.textureImage ? (
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage: `url(${project.textureImage})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              filter: "contrast(105%) saturate(95%)",
+            }}
+          />
+        ) : (
+          <div className="absolute inset-0 bg-gradient-to-br from-[#090909] to-[#141414]" />
+        )}
         <div
           className="absolute inset-0 opacity-15"
           style={{
@@ -299,8 +351,15 @@ function TextureBanner({ project }) {
 
 function Gallery({ project, socialSection }) {
   const tiles = [];
+  const aspectRatio = project.galleryAspect ?? "16 / 9";
+  const isContain = (project.galleryObjectFit ?? "cover") === "contain";
+  const galleryItems = project.gallery ?? [];
 
-  project.gallery.forEach((src, index) => {
+  if (!galleryItems.length && !socialSection) {
+    return null;
+  }
+
+  galleryItems.forEach((src, index) => {
     const wide = index % 5 === 0;
     const colClass = wide ? "sm:col-span-12" : "sm:col-span-6";
 
@@ -318,8 +377,14 @@ function Gallery({ project, socialSection }) {
           event.currentTarget.style.setProperty("--my", `${event.clientY - rect.top}px`);
         }}
       >
-        <div className="aspect-[16/9]">
-          <img src={src} alt="Case study visual" className="w-full h-full object-cover" />
+        <div className="w-full" style={{ aspectRatio }}>
+          <div className={`w-full h-full ${isContain ? "bg-black/60 flex items-center justify-center p-5" : ""}`}>
+            <img
+              src={src}
+              alt="Case study visual"
+              className={`w-full h-full ${isContain ? "object-contain" : "object-cover"}`}
+            />
+          </div>
         </div>
         <div
           className="pointer-events-none absolute inset-0 opacity-0 group-hover/spot:opacity-100 transition-opacity"
@@ -360,15 +425,19 @@ function TextureCard({ project, className = "" }) {
       }}
     >
       <div className="aspect-[16/9] relative">
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `url(${project.textureImage})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            filter: "contrast(105%) saturate(95%)",
-          }}
-        />
+        {project.textureImage ? (
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage: `url(${project.textureImage})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              filter: "contrast(105%) saturate(95%)",
+            }}
+          />
+        ) : (
+          <div className="absolute inset-0 bg-gradient-to-br from-[#090909] to-[#141414]" />
+        )}
         <div
           className="absolute inset-0 opacity-15"
           style={{

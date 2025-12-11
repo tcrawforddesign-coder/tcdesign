@@ -20,6 +20,18 @@ const SOFTWARE_ICONS = [
   { name: "XD", src: "/Xd.svg" },
   { name: "Cursor", src: "/Cursor.svg" },
 ];
+
+function splitProjectTitle(title = "") {
+  const segments = title.split("—").map((segment) => segment.trim()).filter(Boolean);
+  if (segments.length <= 1) {
+    return { primary: title.trim(), secondary: "" };
+  }
+  return {
+    primary: segments[0],
+    secondary: segments.slice(1).join(" — "),
+  };
+}
+
 const PRIMARY_NAV = [
   { label: "Work", type: "anchor", href: "#work" },
   { label: "Posters", type: "route", to: "/posters" },
@@ -294,35 +306,57 @@ const DISABLED_SLUGS = ["mntwire"];
 
 export function ProjectCard({ project }) {
   const disabled = DISABLED_SLUGS.includes(project.slug);
+  const isAtlas = project.slug === "atlas-coffee-club";
+  const { primary, secondary } = splitProjectTitle(project.title ?? "");
   const linkTarget = project.href ?? (project.slug ? `/projects/${project.slug}` : "#");
+  const hasImage = Boolean(project.cover);
+  const isComingSoon = disabled || isAtlas;
+  const clickable = !isComingSoon;
+  const ariaLabel = secondary ? `${primary} — ${secondary}` : primary;
 
   const cardContent = (
     <MotionDiv
       initial={{ opacity: 0.9 }}
-      whileHover={disabled ? undefined : { scale: 1.015 }}
+      whileHover={clickable ? { scale: 1.015 } : undefined}
       transition={{ type: "spring", stiffness: 200, damping: 20 }}
       className="relative aspect-square rounded-2xl overflow-hidden border border-white/10 bg-black/40"
     >
-      <img
-        src={project.cover}
-        alt=""
-        className={`w-full h-full object-cover transition ${disabled ? "opacity-40" : "opacity-90 group-hover:opacity-100"}`}
-        loading="lazy"
-        decoding="async"
-        sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 90vw"
-      />
+      {hasImage ? (
+        <img
+          src={project.cover}
+          alt=""
+          className={`w-full h-full object-cover transition ${disabled ? "opacity-40" : "opacity-90 group-hover:opacity-100"}`}
+          loading="lazy"
+          decoding="async"
+          sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 90vw"
+        />
+      ) : (
+        <div
+          className={`w-full h-full transition ${disabled ? "opacity-40" : "opacity-90 group-hover:opacity-100"} ${
+            isAtlas ? "bg-gradient-to-br from-[#0b0b0b] to-[#171717]" : "bg-black/50"
+          }`}
+          aria-hidden="true"
+        />
+      )}
       <div className={`card-hover-border ${disabled ? "card-hover-border--disabled" : ""}`} aria-hidden />
       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-black/0 pointer-events-none" />
       <div className="absolute bottom-0 left-0 right-0 p-5 flex items-end justify-between">
-        <div>
+        <div className="space-y-1">
           <span className="inline-block text-xs tracking-wide uppercase text-white/70">{project.tag}</span>
-          <h3 className="text-lg md:text-xl font-semibold leading-tight mt-1 max-w-xl">{project.title}</h3>
+          <div className="space-y-1">
+            <h3 className="text-lg md:text-xl font-semibold leading-tight max-w-xl">{primary}</h3>
+            {secondary ? (
+              <span className="block text-[11px] uppercase tracking-[0.35em] text-white/50">{secondary}</span>
+            ) : null}
+          </div>
         </div>
-        {!disabled && (
+        {clickable ? (
           <ArrowUpRight className="w-5 h-5 opacity-80 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition" />
+        ) : (
+          <span className="text-[11px] uppercase tracking-[0.35em] text-white/50">Coming Soon</span>
         )}
       </div>
-      {disabled && (
+      {isComingSoon && (
         <div className="absolute inset-0 bg-black/60 backdrop-blur-sm grid place-items-center">
           <span className="text-white/80 text-sm uppercase tracking-[0.3em]">Coming Soon</span>
         </div>
@@ -338,8 +372,16 @@ export function ProjectCard({ project }) {
     );
   }
 
+  if (!clickable) {
+    return (
+      <div className="block group cursor-default" aria-disabled="true" aria-label={ariaLabel} title="Case study coming soon">
+        {cardContent}
+      </div>
+    );
+  }
+
   return (
-    <Link to={linkTarget} className="block group" aria-label={project.title}>
+    <Link to={linkTarget} className="block group" aria-label={ariaLabel}>
       {cardContent}
     </Link>
   );

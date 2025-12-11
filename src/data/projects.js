@@ -86,16 +86,35 @@ export const projects = [
   {
     id: 2,
     slug: "atlas-coffee-club",
-    title: "Atlas Coffee Club — Always-On Acquisition",
-    tag: "Paid Social",
+    title: "Atlas Coffee Club — DTC Static Ads",
+    tag: "Ad Creative",
     timeframe: "2024—Present",
     summary: "Static performance ads showcasing single-origin drops and subscription perks for a global coffee club.",
     roles: ["Art Direction", "Content Design"],
     tools: ["Photoshop", "Illustrator", "Figma"],
-    cover: "/images/Poster_27.png",
-    heroImage: "/images/Poster_28.png",
-    textureImage: "https://images.unsplash.com/photo-1512568400610-62da28bc8a13?q=80&w=1600&auto=format&fit=crop",
-    textureCopy: "Tactile beans, map gridlines, and origin stamps layer into a flexible language for subscription storytelling.",
+    cover: null,
+    heroImage: null,
+    textureImage: null,
+    textureCopy: "Paid social experimentation for Meta placements—focused on flavor storytelling, promo clarity, and legible typography at the thumb-stop.",
+    galleryAspect: "4 / 5",
+    galleryObjectFit: "contain",
+    deliverables: [
+      {
+        title: "Black Friday subscription push",
+        status: "Shipped",
+        description: "Five Meta ad variants covering urgency messaging, limited roast drops, and retention perks.",
+      },
+      {
+        title: "Ingredient benefits carousel",
+        status: "Shipped",
+        description: "Two frames highlighting sourcing notes and brewing rituals with legibility tuned for 4:5 placements.",
+      },
+      {
+        title: "Price comparison series",
+        status: "In progress",
+        description: "Work in progress set contrasting subscription savings versus single bag purchases.",
+      },
+    ],
     challenge: {
       kicker: "Challenge",
       title: "Shipping ads fast enough for a coffee club on the move",
@@ -114,9 +133,9 @@ export const projects = [
     },
     outcomes: {
       kicker: "Outcomes",
-      title: "Paid social that keeps pouring",
+      title: "Performance reporting in progress",
       paragraphs: [
-        "Creative tests unlocked +18% lift on add-to-cart rate for carousel placements and lowered CPA on prospecting sets.",
+        "Meta placements are currently in-market; we’re tracking engagement signals and will log hard performance metrics once the campaigns conclude.",
       ],
     },
     highlights: [
