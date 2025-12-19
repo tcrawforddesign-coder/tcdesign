@@ -13,6 +13,13 @@ export const projects = [
     heroVideo: "https://txbi6s0cie448na3.public.blob.vercel-storage.com/5529207-hd_1920_1080_30fps.mp4",
     textureImage: "https://images.unsplash.com/photo-1521123845560-14093637aa7d?q=80&w=1600&auto=format&fit=crop",
     textureCopy: "Quote marks, modular grids, and confident type — systemized into tokens teams can actually use.",
+    colorPalette: [
+      { name: "Buttermilk Foam", hex: "#F2E7D8" },
+      { name: "Deep Espresso", hex: "#1B100C" },
+      { name: "Copper Pull", hex: "#C74F2B" },
+      { name: "Walnut Shell", hex: "#8A5C3A" },
+      { name: "Patio Sage", hex: "#AABF96" },
+    ],
     socialPosts: [
       { type: "image", src: "/images/Ad_1.png", alt: "Civil Goat carousel ad promoting seasonal roast" },
       { type: "image", src: "/images/Ad_2.png", alt: "Civil Goat Instagram story with conversational headline" },
@@ -92,27 +99,66 @@ export const projects = [
     summary: "Static performance ads showcasing single-origin drops and subscription perks for a global coffee club.",
     roles: ["Art Direction", "Content Design"],
     tools: ["Photoshop", "Illustrator", "Figma"],
-    cover: null,
-    heroImage: null,
+    cover: "/images/AtlasCoffee_projectcard.png",
+    heroImage: "/images/A-Look-At-Atlas-Coffee-Club.png",
     textureImage: null,
-    textureCopy: "Paid social experimentation for Meta placements—focused on flavor storytelling, promo clarity, and legible typography at the thumb-stop.",
+    textureCopy: null,
     galleryAspect: "4 / 5",
     galleryObjectFit: "contain",
-    deliverables: [
+    galleryLayout: "meta",
+    galleryNote: "Meta placements ship as 4:5 static frames across prospecting and retargeting sets. Each treatment keeps promo clarity tight within the safe zone.",
+    galleryGroups: [
       {
-        title: "Black Friday subscription push",
-        status: "Shipped",
-        description: "Five Meta ad variants covering urgency messaging, limited roast drops, and retention perks.",
+        title: "All-in-One comparison set",
+        description: "Static frames comparing Atlas+ Superblend pricing versus buying individual supplements.",
+        items: [
+          { preview: "/images/All-in-One_1.png", full: "/images/All-in-One_1.png" },
+          { preview: "/images/All-in-One_2.png", full: "/images/All-in-One_2.png" },
+          { preview: "/images/All-in-One_3.png", full: "/images/All-in-One_3.png" },
+          { preview: "/images/All-in-One_4.png", full: "/images/All-in-One_4.png" },
+          { preview: "/images/All-in-One_5_1080x1350.png", full: "/images/All-in-One_5.png" },
+        ],
       },
       {
-        title: "Ingredient benefits carousel",
-        status: "Shipped",
-        description: "Two frames highlighting sourcing notes and brewing rituals with legibility tuned for 4:5 placements.",
+        title: "Black Friday acquisition set",
+        description: "Nine-variant push testing urgency copy, limited-roast messaging, and loyalty perks at 4:5.",
+        items: [
+          "/images/Atlas_bogo_1.png",
+          "/images/Atlas_bogo_2.png",
+          "/images/Atlas_bogo_3.png",
+          "/images/Atlas_bogo_4.png",
+          "/images/Atlas_bogo_5.png",
+          "/images/Atlas_bogo_6.png",
+          "/images/Atlas_bogo_7.png",
+          "/images/Atlas_bogo_7-1.png",
+          "/images/Atlas_bogo_8.png",
+        ],
+      },
+      {
+        title: "Body+Mind benefits set",
+        description: "Ingredient-forward frames highlighting Atlas+ benefits for energy, focus, and recovery.",
+        items: [
+          { preview: "/images/Body+Mind_1_1080x1350.png", full: "/images/Body+Mind_1.png" },
+          { preview: "/images/Body+Mind_2_1080x1350.png", full: "/images/Body+Mind_2.png" },
+        ],
+      },
+    ],
+    deliverables: [
+      {
+        title: "All-in-One comparison set",
+        description: "Static frames comparing Atlas+ Superblend pricing versus buying individual supplements.",
+      },
+      {
+        title: "Black Friday sale ad set",
+        description: "Nine Meta ad variants focused on the limited-time sale offer, urgency messaging, and first-bag incentives.",
+      },
+      {
+        title: "Body+Mind benefits set",
+        description: "Ingredient storytelling highlighting Atlas+ impact on energy, focus, and recovery.",
       },
       {
         title: "Price comparison series",
-        status: "In progress",
-        description: "Work in progress set contrasting subscription savings versus single bag purchases.",
+        description: "Comparison-focused creative exploring subscription savings versus single bag purchases.",
       },
     ],
     challenge: {
@@ -125,9 +171,9 @@ export const projects = [
     },
     approach: {
       kicker: "Approach",
-      title: "Origin storytelling tuned for performance metrics",
+      title: "Performance-first creative system",
       paragraphs: [
-        "I built static templates with flexible typographic hierarchy, origin stamp overlays, and color palettes derived from roast profiles.",
+        "I built static templates with flexible typographic hierarchy, promo modules, and sale-focused accents that stay legible across placements.",
         "Creative runs through Figma to Photoshop workflow, keeping exports fast while maintaining performance copy legibility across placements.",
       ],
     },
@@ -141,27 +187,21 @@ export const projects = [
     highlights: [
       {
         icon: "PenTool",
-        title: "Template Library",
-        copy: "Reusable Figma + PSD system to swap tasting notes, promos, and product photography in minutes.",
+        title: "Meta Variant Set",
+        copy: "Five static 4:5 frames covering urgency, limited drops, and loyalty perks for the Black Friday acquisition push.",
       },
       {
         icon: "Cpu",
-        title: "Performance Guardrails",
-        copy: "Hierarchy designed for thumb-stopping headlines while leaving space for ingredient storytelling.",
+        title: "Offer Guardrails",
+        copy: "Promo copy, disclaimers, and CTAs tuned for thumb-stop legibility within Meta safe zones.",
       },
       {
         icon: "Camera",
-        title: "Origin Library",
-        copy: "Visual system inspired by postage, passports, and pour-over textures to celebrate global sourcing.",
+        title: "Promo Messaging Toolkit",
+        copy: "Pricing callouts, disclaimers, and CTA variants ready to swap into new static treatments.",
       },
     ],
-    gallery: [
-      "/images/Poster_27.png",
-      "/images/Poster_28.png",
-      "/images/Poster_29.png",
-      "https://images.unsplash.com/photo-1459755486867-b55449bb39ff?q=80&w=1600&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=1600&auto=format&fit=crop",
-    ],
+    gallery: [],
   },
   {
     id: 3,

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowUpRight, Github, Linkedin, Mail, Menu, X } from "lucide-react";
 
@@ -18,8 +18,12 @@ const spanForIndex = (index) => (Math.floor(index / 2) % 2 === 0 ? (index % 2 ==
 export default function ProjectsPage() {
   const [open, setOpen] = useState(false);
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "auto" });
+  }, []);
+
   return (
-    <div className="min-h-screen bg-[#030303] text-white">
+    <div className="min-h-screen bg-[#030303] text-white" id="top">
       <header className="sticky top-0 z-40 backdrop-blur supports-[backdrop-filter]:bg-black/40 border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4">
           <div className="h-16 flex items-center justify-between">

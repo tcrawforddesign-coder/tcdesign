@@ -25,6 +25,18 @@ function splitProjectTitle(title = "") {
   };
 }
 
+function getReadableTextColor(hex) {
+  if (!hex) return "#0b0b0b";
+  const stripped = hex.replace("#", "");
+  const bigint = parseInt(stripped, 16);
+  if (Number.isNaN(bigint)) return "#0b0b0b";
+  const r = (bigint >> 16) & 255;
+  const g = (bigint >> 8) & 255;
+  const b = bigint & 255;
+  const yiq = (r * 299 + g * 587 + b * 114) / 1000;
+  return yiq >= 160 ? "#1a1a1a" : "#f8f8f8";
+}
+
 export default function ProjectDetailsPage() {
   const { slug } = useParams();
   const project = useMemo(() => findProjectBySlug(slug), [slug]);
@@ -131,7 +143,7 @@ export default function ProjectDetailsPage() {
         <LongformCopy {...project.challenge} id="challenge" />
         <IconCards highlights={project.highlights} />
         <TextureBanner project={project} />
-        {project.deliverables ? <DeliverablesList items={project.deliverables} /> : null}
+        {project.colorPalette ? <ColorPalette palette={project.colorPalette} /> : null}
         <LongformCopy {...project.approach} id="approach" />
         <Gallery
           project={project}
@@ -285,37 +297,12 @@ function IconCards({ highlights }) {
   );
 }
 
-function DeliverablesList({ items }) {
-  const statusStyles = (status) => {
-    const normalized = status.toLowerCase();
-    if (normalized === "shipped") {
-      return "border-emerald-500/30 text-emerald-300 bg-emerald-500/10";
-    }
-    if (normalized === "in progress") {
-      return "border-amber-400/30 text-amber-200 bg-amber-400/10";
-    }
-    return "border-white/20 text-white/70 bg-white/5";
-  };
-
-  return (
-    <section>
-      <div className="text-[11px] uppercase tracking-widest text-white/60 mb-2">Production status</div>
-      <div className="grid gap-4 md:grid-cols-3">
-        {items.map(({ title, status, description }) => (
-          <HoverSpotlight key={title} className="rounded-2xl border border-white/10 bg-[#0c0c0c]/60 p-5 flex flex-col gap-3">
-            <div className="flex items-center justify-between gap-3">
-              <h3 className="text-sm font-semibold tracking-tight">{title}</h3>
-              <span className={`px-3 py-1 rounded-full text-xs uppercase tracking-[0.25em] border ${statusStyles(status)}`}>{status}</span>
-            </div>
-            <p className="text-sm text-white/70 leading-relaxed">{description}</p>
-          </HoverSpotlight>
-        ))}
-      </div>
-    </section>
-  );
-}
 
 function TextureBanner({ project }) {
+  if (!project.textureImage && !project.textureCopy) {
+    return null;
+  }
+
   return (
     <HoverSpotlight className="rounded-2xl overflow-hidden border border-white/10">
       <div className="relative aspect-[21/9]">
@@ -341,31 +328,330 @@ function TextureBanner({ project }) {
           }}
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/20 to-black/40" />
-        <div className="absolute inset-0 p-6 md:p-8 flex items-end">
-          <p className="max-w-3xl text-white/85 text-sm md:text-base">{project.textureCopy}</p>
-        </div>
+        {project.textureCopy ? (
+          <div className="absolute inset-0 p-6 md:p-8 flex items-end">
+            <p className="max-w-3xl text-white/85 text-sm md:text-base">{project.textureCopy}</p>
+          </div>
+        ) : null}
       </div>
     </HoverSpotlight>
   );
 }
 
+function ColorPalette({ palette }) {
+  return (
+    <section>
+      <div className="text-[11px] uppercase tracking-widest text-white/60 mb-2">Color System</div>
+      <HoverSpotlight className="relative rounded-2xl border border-white/10 bg-[#060606]/85 p-6 md:p-8 overflow-hidden backdrop-blur">
+        <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 relative">
+          <div className="lg:w-80 space-y-4">
+            <h3 className="text-xl font-semibold tracking-tight text-white">Palette in Orbit</h3>
+            <p className="text-sm text-white/70 leading-relaxed">
+              Instead of swatch cards, each color drifts as an organic ribbon. Foam, espresso, copper, walnut, and sage orb around each other—showing
+              how the palette layers and collides in packaging spreads.
+            </p>
+            <span className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.35em] text-white/45">
+              <span className="inline-block h-2 w-10 bg-gradient-to-r from-white/0 via-white/70 to-white/0" />
+              floating ribbons
+            </span>
+          </div>
+
+          <PalettePlayground palette={palette} />
+        </div>
+      </HoverSpotlight>
+    </section>
+  );
+}
+
+function PalettePlayground({ palette }) {
+  const layout = useMemo(() => {
+    const base = [
+      { top: -10, left: -8, width: 55, height: 38, rotation: -8, borderRadius: "48% 52% 44% 56% / 36% 54% 46% 64%" },
+      { top: 22, left: 18, width: 48, height: 52, rotation: 6, borderRadius: "55% 45% 62% 38% / 50% 40% 60% 50%" },
+      { top: -6, left: 50, width: 40, height: 42, rotation: -12, borderRadius: "60% 40% 58% 42% / 42% 58% 38% 62%" },
+      { top: 48, left: 60, width: 38, height: 40, rotation: 10, borderRadius: "52% 48% 62% 38% / 46% 58% 42% 54%" },
+      { top: 48, left: -4, width: 42, height: 44, rotation: -14, borderRadius: "58% 42% 48% 52% / 60% 40% 50% 50%" },
+    ];
+
+    return palette.map((swatch, index) => {
+      const slot = base[index % base.length];
+      return {
+        ...slot,
+        color: swatch,
+        delay: index * 0.18,
+      };
+    });
+  }, [palette]);
+
+  return (
+    <div className="relative flex-1 min-h-[320px] lg:min-h-[360px] overflow-visible">
+      <motion.div
+        className="absolute inset-[-25%] opacity-40 blur-3xl"
+        animate={{ rotate: [0, 360] }}
+        transition={{ duration: 28, repeat: Infinity, ease: "linear" }}
+        style={{
+          background:
+            "conic-gradient(from 0deg, rgba(255,255,255,0.18), rgba(255,255,255,0), rgba(255,255,255,0.22), rgba(255,255,255,0))",
+        }}
+      />
+      <div className="absolute inset-0 pointer-events-none border border-white/10 rounded-[44px] opacity-60" aria-hidden />
+
+      {layout.map((shape, index) => (
+        <motion.div
+          key={shape.color.hex}
+          className="absolute shadow-[0_30px_60px_-26px_rgba(0,0,0,0.85)]"
+          style={{
+            top: `${shape.top}%`,
+            left: `${shape.left}%`,
+            width: `${shape.width}%`,
+            height: `${shape.height}%`,
+            borderRadius: shape.borderRadius,
+            backgroundColor: shape.color.hex,
+            mixBlendMode: "screen",
+          }}
+          initial={{ opacity: 0, scale: 0.85, rotate: shape.rotation - 6 }}
+          animate={{
+            opacity: 1,
+            scale: [0.95, 1.05, 0.98, 1],
+            rotate: [shape.rotation, shape.rotation + 4, shape.rotation - 2, shape.rotation],
+            x: [0, index % 2 === 0 ? 12 : -10, index % 2 === 0 ? -6 : 8, 0],
+            y: [0, index % 2 === 0 ? -8 : 10, index % 2 === 0 ? 6 : -6, 0],
+          }}
+          transition={{ duration: 14 + index * 1.6, repeat: Infinity, ease: [0.42, 0, 0.58, 1], delay: shape.delay }}
+        >
+          <motion.div
+            className="absolute inset-0"
+            style={{ borderRadius: shape.borderRadius }}
+            animate={{ backgroundPosition: ["0% 0%", "120% 80%", "0% 0%"] }}
+            transition={{ duration: 10 + index, repeat: Infinity, ease: "linear", delay: shape.delay / 2 }}
+            aria-hidden
+          />
+          <motion.div
+            className="absolute inset-0 mix-blend-overlay opacity-15"
+            style={{ borderRadius: shape.borderRadius }}
+            animate={{ x: ["-12%", "14%", "-8%", "0%"] }}
+            transition={{ duration: 12 + index, repeat: Infinity, repeatType: "mirror", ease: "easeInOut", delay: shape.delay }}
+          />
+          <motion.span
+            className="absolute px-3 py-1 rounded-full bg-black/35 backdrop-blur text-[11px] uppercase tracking-[0.35em]"
+            style={{
+              bottom: shape.top > 35 ? "12%" : "auto",
+              top: shape.top > 35 ? "auto" : "12%",
+              left: shape.left > 35 ? "auto" : "12%",
+              right: shape.left > 35 ? "12%" : "auto",
+              color: getReadableTextColor(shape.color.hex),
+            }}
+            animate={{ opacity: [0.6, 1, 0.6], scale: [0.95, 1.05, 0.95] }}
+            transition={{ duration: 6 + index, repeat: Infinity, ease: "easeInOut", delay: shape.delay }}
+          >
+            {shape.color.hex}
+          </motion.span>
+          <motion.span
+            className="absolute text-xs font-semibold tracking-tight"
+            style={{
+              bottom: shape.top > 35 ? "28%" : "auto",
+              top: shape.top > 35 ? "auto" : "28%",
+              left: "18%",
+              color: getReadableTextColor(shape.color.hex),
+            }}
+            animate={{ opacity: [0.85, 1, 0.85], x: [0, 4, 0] }}
+            transition={{ duration: 5 + index, repeat: Infinity, ease: "easeInOut", delay: shape.delay / 1.5 }}
+          >
+            {shape.color.name}
+          </motion.span>
+        </motion.div>
+      ))}
+    </div>
+  );
+}
+
 function Gallery({ project, socialSection }) {
+  const [activeMedia, setActiveMedia] = useState(null);
+
+  useEffect(() => {
+    if (!activeMedia) return undefined;
+    function handleKeyDown(event) {
+      if (event.key === "Escape") {
+        setActiveMedia(null);
+      }
+    }
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [activeMedia]);
+
+  const handleOpen = (media) => {
+    if (!media) return;
+    setActiveMedia({ src: media.full ?? media.preview, alt: media.alt ?? "" });
+  };
+
+  const handleClose = () => setActiveMedia(null);
+
+  const normalizeMediaItem = (item, altFallback) => {
+    if (!item) return null;
+    if (typeof item === "string") {
+      return { preview: item, full: item, alt: altFallback };
+    }
+    if (typeof item === "object") {
+      const preview = item.preview ?? item.src ?? item.full;
+      if (!preview) return null;
+      const full = item.full ?? item.src ?? preview;
+      const alt = item.alt ?? altFallback;
+      return { preview, full, alt };
+    }
+    return null;
+  };
+
   const tiles = [];
   const aspectRatio = project.galleryAspect ?? "16 / 9";
   const isContain = (project.galleryObjectFit ?? "cover") === "contain";
   const galleryItems = project.gallery ?? [];
+  const layout = project.galleryLayout ?? "default";
+  const groups = project.galleryGroups ?? [];
+  const hasDefaultMedia = galleryItems.length > 0;
+  const hasGroups = groups.length > 0;
 
-  if (!galleryItems.length && !socialSection) {
+  if (!hasDefaultMedia && !hasGroups && !socialSection) {
     return null;
   }
 
-  galleryItems.forEach((src, index) => {
+  if (layout === "meta") {
+    return (
+      <>
+        <AnimatePresence>
+          {activeMedia ? (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm flex items-center justify-center p-6"
+              onClick={handleClose}
+            >
+              <motion.div
+                initial={{ scale: 0.96, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.95, opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                className="relative w-full max-w-[22rem] md:max-w-[28rem]"
+                style={{ maxHeight: "75vh" }}
+                onClick={(event) => event.stopPropagation()}
+              >
+                <button
+                  type="button"
+                  onClick={handleClose}
+                  className="absolute top-4 right-4 z-10 px-3 py-1.5 text-xs uppercase tracking-[0.3em] text-white/70 hover:text-white"
+                >
+                  Close
+                </button>
+                <img src={activeMedia.src} alt={activeMedia.alt ?? ""} className="w-full h-full object-contain" loading="lazy" decoding="async" />
+              </motion.div>
+            </motion.div>
+          ) : null}
+        </AnimatePresence>
+
+        <section className="space-y-5">
+        {project.galleryNote ? (
+          <p className="text-sm text-white/60 max-w-3xl">{project.galleryNote}</p>
+        ) : null}
+        {hasGroups ? (
+          <div className="space-y-8">
+            {groups.map((group) => (
+              <div key={group.title} className="space-y-4">
+                <div>
+                  <h3 className="text-lg font-semibold tracking-tight text-white">{group.title}</h3>
+                  {group.description ? <p className="mt-2 text-sm text-white/65 max-w-2xl">{group.description}</p> : null}
+                </div>
+                <div className="grid gap-5 md:grid-cols-3">
+                  {group.items.map((item, index) => {
+                    const media = normalizeMediaItem(item, `${group.title} placement`);
+                    if (!media) return null;
+                    return (
+                      <MotionFigure
+                        key={`${group.title}-${media.preview}-${index}`}
+                        initial={{ opacity: 0, y: 12 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, margin: "-15%" }}
+                        transition={{ duration: 0.35, delay: index * 0.05 }}
+                        className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#0c0c0c]/60 cursor-zoom-in"
+                        role="button"
+                        tabIndex={0}
+                        onClick={() => handleOpen(media)}
+                        onKeyDown={(event) => {
+                          if (event.key === "Enter" || event.key === " ") {
+                            event.preventDefault();
+                            handleOpen(media);
+                          }
+                        }}
+                      >
+                        <div className="w-full" style={{ aspectRatio }}>
+                          <img src={media.preview} alt={media.alt} className="w-full h-full object-cover" loading="lazy" decoding="async" />
+                        </div>
+                      </MotionFigure>
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="grid gap-5 md:grid-cols-3">
+            {galleryItems.map((item, index) => {
+              const media = normalizeMediaItem(item, "Meta placement static");
+              if (!media) return null;
+              return (
+                <MotionFigure
+                  key={`${media.preview}-${index}`}
+                  initial={{ opacity: 0, y: 12 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-15%" }}
+                  transition={{ duration: 0.35, delay: index * 0.05 }}
+                  className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#0c0c0c]/60 cursor-zoom-in"
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => handleOpen(media)}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter" || event.key === " ") {
+                      event.preventDefault();
+                      handleOpen(media);
+                    }
+                  }}
+                >
+                  <div className="w-full" style={{ aspectRatio }}>
+                    <img src={media.preview} alt={media.alt} className="w-full h-full object-cover" loading="lazy" decoding="async" />
+                  </div>
+                </MotionFigure>
+              );
+            })}
+          </div>
+        )}
+        {socialSection ? <div className="pt-2">{socialSection}</div> : null}
+        </section>
+      </>
+    );
+  }
+
+  if (!hasDefaultMedia && socialSection) {
+    return (
+      <section className="space-y-5">
+        {project.galleryNote ? (
+          <p className="text-sm text-white/60 max-w-3xl">{project.galleryNote}</p>
+        ) : null}
+        {socialSection}
+      </section>
+    );
+  }
+
+  galleryItems.forEach((item, index) => {
+    const media = normalizeMediaItem(item, "Case study visual");
+    if (!media) {
+      return;
+    }
     const wide = index % 5 === 0;
     const colClass = wide ? "sm:col-span-12" : "sm:col-span-6";
 
     tiles.push(
       <MotionFigure
-        key={src}
+        key={`${media.preview}-${index}`}
         initial={{ opacity: 0, y: 8 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-15%" }}
@@ -379,11 +665,18 @@ function Gallery({ project, socialSection }) {
       >
         <div className="w-full" style={{ aspectRatio }}>
           <div className={`w-full h-full ${isContain ? "bg-black/60 flex items-center justify-center p-5" : ""}`}>
-            <img
-              src={src}
-              alt="Case study visual"
-              className={`w-full h-full ${isContain ? "object-contain" : "object-cover"}`}
-            />
+            <button
+              type="button"
+              onClick={() => handleOpen(media)}
+              className="block w-full h-full cursor-zoom-in"
+              aria-label="View image in detail"
+            >
+              <img
+                src={media.preview}
+                alt={media.alt}
+                className={`w-full h-full ${isContain ? "object-contain" : "object-cover"}`}
+              />
+            </button>
           </div>
         </div>
         <div
@@ -404,9 +697,43 @@ function Gallery({ project, socialSection }) {
   });
 
   return (
-    <section className="space-y-5">
+    <>
+      <AnimatePresence>
+        {activeMedia ? (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm flex items-center justify-center p-6"
+            onClick={handleClose}
+          >
+            <motion.div
+              initial={{ scale: 0.96, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="relative w-full max-w-[22rem] md:max-w-[28rem]"
+              style={{ maxHeight: "75vh" }}
+              onClick={(event) => event.stopPropagation()}
+            >
+              <button
+                type="button"
+                onClick={handleClose}
+                className="absolute top-4 right-4 z-10 px-3 py-1.5 text-xs uppercase tracking-[0.3em] text-white/70 hover:text-white"
+              >
+                Close
+              </button>
+              <img src={activeMedia.src} alt={activeMedia.alt ?? ""} className="w-full h-full object-contain" loading="lazy" decoding="async" />
+            </motion.div>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
+
+      <section className="space-y-5">
       <div className="grid grid-cols-1 sm:grid-cols-12 gap-4">{tiles}</div>
     </section>
+    </>
   );
 }
 

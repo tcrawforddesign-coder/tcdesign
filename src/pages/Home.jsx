@@ -181,10 +181,13 @@ export default function Home() {
       <main id="content">
         <section id="work" className="relative">
           <div className="max-w-7xl mx-auto px-4 py-14 md:py-24">
-            <div className="flex items-end justify-between mb-8">
+            <div className="flex items-end justify-between mb-8 gap-4 flex-wrap">
               <h2 className="text-2xl md:text-4xl font-black tracking-tight">Selected Work</h2>
-              <Link to="/projects" className="inline-flex items-center gap-2 text-white/70 hover:text-white">
-                See all <ArrowUpRight className="w-4 h-4" />
+              <Link
+                to={{ pathname: "/projects", hash: "#top" }}
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-black font-semibold shadow-[0_10px_30px_-12px_rgba(255,255,255,0.65)] hover:shadow-[0_14px_34px_-10px_rgba(255,255,255,0.75)] hover:translate-y-[-2px] transition-transform transition-shadow"
+              >
+                See all work <ArrowUpRight className="w-4 h-4" />
               </Link>
             </div>
             <ul className="grid md:grid-cols-12 gap-6">
