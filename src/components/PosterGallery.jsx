@@ -33,10 +33,37 @@ export default function PosterGallery({
   const curated = useMemo(() => normalizePosters(posters), [posters]);
   const [order, setOrder] = useState(curated);
   const [selected, setSelected] = useState(null);
+  const [visibleCount, setVisibleCount] = useState(() => {
+    const initial =
+      variant === "expanded"
+        ? Math.min(12, curated.length)
+        : Math.min(8, curated.length);
+    return initial || curated.length;
+  });
+  const loadMoreRef = useRef(null);
+  const batchSize = variant === "expanded" ? 9 : 6;
 
   useEffect(() => {
     setOrder(curated);
   }, [curated]);
+
+  useEffect(() => {
+    setVisibleCount((prev) => {
+      const base =
+        variant === "expanded"
+          ? Math.min(12, curated.length)
+          : Math.min(8, curated.length);
+
+      if (!base) return curated.length;
+      if (prev > curated.length) {
+        return curated.length;
+      }
+      if (prev < base) {
+        return base;
+      }
+      return prev;
+    });
+  }, [curated.length, variant]);
 
   const rotations = useMemo(() => [-4.5, 2.5, 1.5, -2.5, 0.75], []);
 
@@ -75,6 +102,33 @@ export default function PosterGallery({
     return undefined;
   }, [selected]);
 
+  useEffect(() => {
+    if (!loadMoreRef.current) return undefined;
+    if (visibleCount >= order.length) return undefined;
+
+    const element = loadMoreRef.current;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setVisibleCount((count) =>
+              Math.min(count + batchSize, order.length),
+            );
+          }
+        });
+      },
+      { rootMargin: "200px 0px" },
+    );
+
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [batchSize, order.length, visibleCount]);
+
+  const visiblePosters = useMemo(
+    () => order.slice(0, visibleCount),
+    [order, visibleCount],
+  );
+
   return (
     <>
       <section className={`poster-gallery ${variant === "expanded" ? "poster-gallery--expanded" : ""}`}>
@@ -90,7 +144,7 @@ export default function PosterGallery({
           ) : null}
         </header>
         <div className="poster-gallery__scroll" role="list">
-          {order.map((poster, index) => (
+          {visiblePosters.map((poster, index) => (
             <figure
               key={poster.id}
               role="listitem"
@@ -114,6 +168,22 @@ export default function PosterGallery({
             </figure>
           ))}
         </div>
+        {visibleCount < order.length ? (
+          <div className="poster-gallery__load-more">
+            <button
+              type="button"
+              className="poster-gallery__load-more-button"
+              onClick={() =>
+                setVisibleCount((count) =>
+                  Math.min(count + batchSize, order.length),
+                )
+              }
+            >
+              Load more posters ({order.length - visibleCount} remaining)
+            </button>
+            <div ref={loadMoreRef} aria-hidden />
+          </div>
+        ) : null}
       </section>
       {selected ? (
         <PosterLightbox
