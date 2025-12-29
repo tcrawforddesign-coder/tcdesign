@@ -29,6 +29,7 @@ export default function PosterGallery({
   title = "Poster archive",
   enableShuffle = true,
   variant = "compact",
+  project = null,
 }) {
   const curated = useMemo(() => normalizePosters(posters), [posters]);
   const [order, setOrder] = useState(curated);
