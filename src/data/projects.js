@@ -110,18 +110,20 @@ export const projects = [
     galleryGroups: [
       {
         title: "All-in-One comparison set",
-        description: "Static frames comparing Atlas+ Superblend pricing versus buying individual supplements.",
+        description: "Static frames comparing Atlas+ Superblend pricing versus buying individual supplements. Launched with refreshed pricing modules.",
+        carousel: true,
         items: [
-          { preview: "/images/All-in-One_1.png", full: "/images/All-in-One_1.png" },
-          { preview: "/images/All-in-One_2.png", full: "/images/All-in-One_2.png" },
-          { preview: "/images/All-in-One_3.png", full: "/images/All-in-One_3.png" },
-          { preview: "/images/All-in-One_4.png", full: "/images/All-in-One_4.png" },
-          { preview: "/images/All-in-One_5_1080x1350.png", full: "/images/All-in-One_5.png" },
+          { preview: "/images/All-in-One_1.png", full: "/images/All-in-One_1.png", alt: "Atlas+ Superblend comparison — hero variant" },
+          { preview: "/images/All-in-One_2.png", full: "/images/All-in-One_2.png", alt: "Atlas+ Superblend comparison — ingredient callout" },
+          { preview: "/images/All-in-One_3.png", full: "/images/All-in-One_3.png", alt: "Atlas+ Superblend comparison — pricing grid" },
+          { preview: "/images/All-in-One_4.png", full: "/images/All-in-One_4.png", alt: "Atlas+ Superblend comparison — offer highlight" },
+          { preview: "/images/All-in-One_5_1080x1350.png", full: "/images/All-in-One_5.png", alt: "Atlas+ Superblend comparison — savings breakdown" },
         ],
       },
       {
         title: "Black Friday acquisition set",
         description: "Nine-variant push testing urgency copy, limited-roast messaging, and loyalty perks at 4:5.",
+        carousel: true,
         items: [
           "/images/Atlas_bogo_1.png",
           "/images/Atlas_bogo_2.png",
@@ -146,7 +148,7 @@ export const projects = [
     deliverables: [
       {
         title: "All-in-One comparison set",
-        description: "Static frames comparing Atlas+ Superblend pricing versus buying individual supplements.",
+        description: "Atlas+ Superblend comparison ad set live across prospecting and retargeting.",
       },
       {
         title: "Black Friday sale ad set",

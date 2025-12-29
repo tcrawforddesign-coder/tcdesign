@@ -143,31 +143,44 @@ export default function PosterGallery({
             </button>
           ) : null}
         </header>
-        <div className="poster-gallery__scroll" role="list">
-          {visiblePosters.map((poster, index) => (
-            <figure
-              key={poster.id}
-              role="listitem"
-              className="poster-gallery__item"
-              style={{ "--poster-rotation": `${rotations[index % rotations.length]}deg` }}
-            >
-              <button
-                type="button"
-                className="poster-gallery__button"
-                onClick={() => setSelected({ poster, index })}
-                onKeyDown={(event) => {
-                  if (event.key === "Enter" || event.key === " ") {
-                    event.preventDefault();
-                    setSelected({ poster, index });
-                  }
-                }}
-                aria-label={`View poster ${index + 1}`}
+        {(visiblePosters.length && !project?.confidential) ? (
+          <div className="poster-gallery__scroll" role="list">
+            {visiblePosters.map((poster, index) => (
+              <figure
+                key={poster.id}
+                role="listitem"
+                className="poster-gallery__item"
+                style={{ "--poster-rotation": `${rotations[index % rotations.length]}deg` }}
               >
-                <img src={poster.src} alt="" loading="lazy" decoding="async" />
-              </button>
-            </figure>
-          ))}
-        </div>
+                <button
+                  type="button"
+                  className="poster-gallery__button"
+                  onClick={() => setSelected({ poster, index })}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter" || event.key === " ") {
+                      event.preventDefault();
+                      setSelected({ poster, index });
+                    }
+                  }}
+                  aria-label={`View poster ${index + 1}`}
+                >
+                  <img
+                    src={poster.src}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </button>
+              </figure>
+            ))}
+          </div>
+        ) : (
+          <div className="poster-gallery__placeholder">
+            <p className="poster-gallery__placeholder-label">
+              {project?.confidentialMessage ?? "Assets redacted until launch."}
+            </p>
+          </div>
+        )}
         {visibleCount < order.length ? (
           <div className="poster-gallery__load-more">
             <button

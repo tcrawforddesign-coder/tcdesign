@@ -309,11 +309,10 @@ const DISABLED_SLUGS = ["mntwire"];
 
 export function ProjectCard({ project }) {
   const disabled = DISABLED_SLUGS.includes(project.slug);
-  const isAtlas = project.slug === "atlas-coffee-club";
   const { primary, secondary } = splitProjectTitle(project.title ?? "");
   const linkTarget = project.href ?? (project.slug ? `/projects/${project.slug}` : "#");
   const hasImage = Boolean(project.cover);
-  const isComingSoon = disabled || isAtlas;
+  const isComingSoon = disabled;
   const clickable = !isComingSoon;
   const ariaLabel = secondary ? `${primary} — ${secondary}` : primary;
 
@@ -335,9 +334,7 @@ export function ProjectCard({ project }) {
         />
       ) : (
         <div
-          className={`w-full h-full transition ${disabled ? "opacity-40" : "opacity-90 group-hover:opacity-100"} ${
-            isAtlas ? "bg-gradient-to-br from-[#0b0b0b] to-[#171717]" : "bg-black/50"
-          }`}
+          className={`w-full h-full transition ${disabled ? "opacity-40" : "opacity-90 group-hover:opacity-100"} bg-black/50`}
           aria-hidden="true"
         />
       )}

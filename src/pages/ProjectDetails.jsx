@@ -555,17 +555,28 @@ function Gallery({ project, socialSection }) {
         ) : null}
         {hasGroups ? (
           <div className="space-y-8">
-            {groups.map((group) => (
-              <div key={group.title} className="space-y-4">
-                <div>
-                  <h3 className="text-lg font-semibold tracking-tight text-white">{group.title}</h3>
-                  {group.description ? <p className="mt-2 text-sm text-white/65 max-w-2xl">{group.description}</p> : null}
-                </div>
-                <div className="grid gap-5 md:grid-cols-3">
-                  {group.items.map((item, index) => {
-                    const media = normalizeMediaItem(item, `${group.title} placement`);
-                    if (!media) return null;
-                    return (
+            {groups.map((group) => {
+              const normalizedItems = (group.items ?? [])
+                .map((item, index) => normalizeMediaItem(item, `${group.title} placement ${index + 1}`))
+                .filter(Boolean);
+              const hasItems = normalizedItems.length > 0;
+
+              let content = null;
+
+              if (hasItems && group.carousel) {
+                content = (
+                  <CarouselMediaGroup
+                    key={`${group.title}-carousel`}
+                    title={group.title}
+                    items={normalizedItems}
+                    aspectRatio={aspectRatio}
+                    onOpen={handleOpen}
+                  />
+                );
+              } else if (hasItems) {
+                content = (
+                  <div className="grid gap-5 md:grid-cols-3">
+                    {normalizedItems.map((media, index) => (
                       <MotionFigure
                         key={`${group.title}-${media.preview}-${index}`}
                         initial={{ opacity: 0, y: 12 }}
@@ -587,11 +598,34 @@ function Gallery({ project, socialSection }) {
                           <img src={media.preview} alt={media.alt} className="w-full h-full object-cover" loading="lazy" decoding="async" />
                         </div>
                       </MotionFigure>
-                    );
-                  })}
+                    ))}
+                  </div>
+                );
+              } else if (group.confidential) {
+                content = (
+                  <div className="poster-gallery__placeholder">
+                    <p className="poster-gallery__placeholder-label">
+                      {group.confidentialMessage ?? "Assets withheld until launch."}
+                    </p>
+                    {group.description ? (
+                      <p className="poster-gallery__placeholder-subtext">{group.description}</p>
+                    ) : null}
+                  </div>
+                );
+              }
+
+              return (
+                <div key={group.title} className="space-y-4">
+                  {group.confidential ? null : (
+                    <div>
+                      <h3 className="text-lg font-semibold tracking-tight text-white">{group.title}</h3>
+                      {group.description ? <p className="mt-2 text-sm text-white/65 max-w-2xl">{group.description}</p> : null}
+                    </div>
+                  )}
+                  {content}
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         ) : (
           <div className="grid gap-5 md:grid-cols-3">
@@ -734,6 +768,108 @@ function Gallery({ project, socialSection }) {
       <div className="grid grid-cols-1 sm:grid-cols-12 gap-4">{tiles}</div>
     </section>
     </>
+  );
+}
+
+function CarouselMediaGroup({ title, items, aspectRatio, onOpen }) {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    setCurrentIndex(0);
+  }, [items]);
+
+  const total = items.length;
+  if (!total) {
+    return null;
+  }
+
+  const visibleCount = Math.min(3, total);
+  const visibleIndices = useMemo(() => {
+    return Array.from({ length: visibleCount }, (_, offset) => (currentIndex + offset) % total);
+  }, [currentIndex, total, visibleCount]);
+
+  const navigationDisabled = total <= visibleCount;
+  const gridColumnsClass =
+    visibleCount === 1 ? "md:grid-cols-1" : visibleCount === 2 ? "md:grid-cols-2" : "md:grid-cols-3";
+
+  const handlePrevious = () => {
+    if (navigationDisabled) return;
+    setCurrentIndex((prev) => (prev - 1 + total) % total);
+  };
+
+  const handleNext = () => {
+    if (navigationDisabled) return;
+    setCurrentIndex((prev) => (prev + 1) % total);
+  };
+
+  return (
+    <div className="space-y-3">
+      <div className="relative overflow-hidden">
+        <div className={`grid gap-4 grid-cols-1 ${gridColumnsClass}`}>
+          {visibleIndices.map((itemIndex, offset) => {
+            const media = items[itemIndex];
+            if (!media) return null;
+            return (
+              <MotionFigure
+                key={`${media.preview}-${itemIndex}`}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.28, delay: offset * 0.04 }}
+                className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#0c0c0c]/60"
+              >
+                <button
+                  type="button"
+                  onClick={() => onOpen(media)}
+                  className="group/carousel block w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+                  aria-label={`Open ${title} frame ${itemIndex + 1} of ${total} in detail view`}
+                >
+                  <div className="relative w-full" style={{ aspectRatio }}>
+                    <img
+                      src={media.preview}
+                      alt={media.alt}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                    <span className="pointer-events-none absolute bottom-4 left-1/2 -translate-x-1/2 rounded-full bg-black/55 px-3 py-1 text-[11px] uppercase tracking-[0.35em] text-white/70 opacity-0 transition group-hover/carousel:opacity-100">
+                      View larger
+                    </span>
+                  </div>
+                </button>
+              </MotionFigure>
+            );
+          })}
+        </div>
+        <button
+          type="button"
+          onClick={handlePrevious}
+          className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full border border-white/15 bg-black/50 p-2 text-white/80 hover:bg-black/70 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 disabled:opacity-40 disabled:hover:bg-black/50"
+          aria-label="Previous frames"
+          disabled={navigationDisabled}
+        >
+          <ChevronLeft className="w-4 h-4" />
+        </button>
+        <button
+          type="button"
+          onClick={handleNext}
+          className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full border border-white/15 bg-black/50 p-2 text-white/80 hover:bg-black/70 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 disabled:opacity-40 disabled:hover:bg-black/50"
+          aria-label="Next frames"
+          disabled={navigationDisabled}
+        >
+          <ChevronRight className="w-4 h-4" />
+        </button>
+      </div>
+
+      <div className="flex items-center justify-between text-[13px] text-white/65">
+        <span aria-live="polite">
+          Showing {visibleCount} of {total} frames
+        </span>
+        <span className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.35em] text-white/45">
+          Use arrows to browse
+          <ArrowUpRight className="w-3 h-3 opacity-60" />
+        </span>
+      </div>
+    </div>
   );
 }
 
