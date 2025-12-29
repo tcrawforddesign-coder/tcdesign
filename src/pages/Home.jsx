@@ -232,11 +232,11 @@ export default function Home() {
             <aside className="md:col-span-5 space-y-4 text-sm relative z-0">
               <div className="p-4 rounded-xl border border-white/10 bg-black/30 relative z-10">
                 <div className="text-white/50">Tools</div>
-                <div className="mt-4 grid grid-cols-4 gap-4">
+                <div className="mt-4 grid grid-cols-3 sm:grid-cols-4 gap-4">
                   {SOFTWARE_ICONS.map((icon) => (
-                    <div key={icon.name} className="flex flex-col items-center gap-2 text-center">
+                    <div key={icon.name} className="software-icon flex flex-col items-center gap-2 text-center">
                       <img src={icon.src} alt={icon.name} className="h-12 w-12 object-contain" loading="lazy" decoding="async" />
-                      <span className="text-[11px] uppercase tracking-[0.28em] text-white/60">{icon.name}</span>
+                      <span className="software-icon__label text-[11px] uppercase tracking-[0.28em] text-white/60">{icon.name}</span>
                     </div>
                   ))}
                 </div>

@@ -333,6 +333,16 @@ body {
   filter: blur(7px) grayscale(20%);
 }
 
+.software-icon__label {
+  transition: opacity 0.2s ease;
+}
+
+@media (max-width: 420px) {
+  .software-icon__label {
+    display: none;
+  }
+}
+
 .poster-gallery__button {
   all: unset;
   display: block;
