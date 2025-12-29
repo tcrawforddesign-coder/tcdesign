@@ -345,17 +345,11 @@ function ColorPalette({ palette }) {
       <HoverSpotlight className="relative rounded-2xl border border-white/10 bg-[#060606]/85 p-6 md:p-8 overflow-hidden backdrop-blur">
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 relative">
           <div className="lg:w-80 space-y-4">
-            <h3 className="text-xl font-semibold tracking-tight text-white">Palette in Orbit</h3>
+            <h3 className="text-xl font-semibold tracking-tight text-white">Palette Fundamentals</h3>
             <p className="text-sm text-white/70 leading-relaxed">
-              Instead of swatch cards, each color drifts as an organic ribbon. Foam, espresso, copper, walnut, and sage orb around each other—showing
-              how the palette layers and collides in packaging spreads.
+              Foam, espresso, copper, walnut, and sage presented as straightforward swatches so you can read contrast and temperature without any animation getting in the way.
             </p>
-            <span className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.35em] text-white/45">
-              <span className="inline-block h-2 w-10 bg-gradient-to-r from-white/0 via-white/70 to-white/0" />
-              floating ribbons
-            </span>
           </div>
-
           <PalettePlayground palette={palette} />
         </div>
       </HoverSpotlight>
@@ -364,102 +358,20 @@ function ColorPalette({ palette }) {
 }
 
 function PalettePlayground({ palette }) {
-  const layout = useMemo(() => {
-    const base = [
-      { top: -10, left: -8, width: 55, height: 38, rotation: -8, borderRadius: "48% 52% 44% 56% / 36% 54% 46% 64%" },
-      { top: 22, left: 18, width: 48, height: 52, rotation: 6, borderRadius: "55% 45% 62% 38% / 50% 40% 60% 50%" },
-      { top: -6, left: 50, width: 40, height: 42, rotation: -12, borderRadius: "60% 40% 58% 42% / 42% 58% 38% 62%" },
-      { top: 48, left: 60, width: 38, height: 40, rotation: 10, borderRadius: "52% 48% 62% 38% / 46% 58% 42% 54%" },
-      { top: 48, left: -4, width: 42, height: 44, rotation: -14, borderRadius: "58% 42% 48% 52% / 60% 40% 50% 50%" },
-    ];
-
-    return palette.map((swatch, index) => {
-      const slot = base[index % base.length];
-      return {
-        ...slot,
-        color: swatch,
-        delay: index * 0.18,
-      };
-    });
-  }, [palette]);
-
   return (
-    <div className="relative flex-1 min-h-[320px] lg:min-h-[360px] overflow-visible">
-      <motion.div
-        className="absolute inset-[-25%] opacity-40 blur-3xl"
-        animate={{ rotate: [0, 360] }}
-        transition={{ duration: 28, repeat: Infinity, ease: "linear" }}
-        style={{
-          background:
-            "conic-gradient(from 0deg, rgba(255,255,255,0.18), rgba(255,255,255,0), rgba(255,255,255,0.22), rgba(255,255,255,0))",
-        }}
-      />
-      <div className="absolute inset-0 pointer-events-none border border-white/10 rounded-[44px] opacity-60" aria-hidden />
-
-      {layout.map((shape, index) => (
-        <motion.div
-          key={shape.color.hex}
-          className="absolute shadow-[0_30px_60px_-26px_rgba(0,0,0,0.85)]"
-          style={{
-            top: `${shape.top}%`,
-            left: `${shape.left}%`,
-            width: `${shape.width}%`,
-            height: `${shape.height}%`,
-            borderRadius: shape.borderRadius,
-            backgroundColor: shape.color.hex,
-            mixBlendMode: "screen",
-          }}
-          initial={{ opacity: 0, scale: 0.85, rotate: shape.rotation - 6 }}
-          animate={{
-            opacity: 1,
-            scale: [0.95, 1.05, 0.98, 1],
-            rotate: [shape.rotation, shape.rotation + 4, shape.rotation - 2, shape.rotation],
-            x: [0, index % 2 === 0 ? 12 : -10, index % 2 === 0 ? -6 : 8, 0],
-            y: [0, index % 2 === 0 ? -8 : 10, index % 2 === 0 ? 6 : -6, 0],
-          }}
-          transition={{ duration: 14 + index * 1.6, repeat: Infinity, ease: [0.42, 0, 0.58, 1], delay: shape.delay }}
+    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 flex-1">
+      {palette.map((swatch) => (
+        <div
+          key={swatch.hex}
+          className="flex flex-col gap-3 p-4 rounded-2xl border border-white/12 bg-black/30"
+          style={{ boxShadow: "0 20px 55px -32px rgba(0,0,0,0.85)" }}
         >
-          <motion.div
-            className="absolute inset-0"
-            style={{ borderRadius: shape.borderRadius }}
-            animate={{ backgroundPosition: ["0% 0%", "120% 80%", "0% 0%"] }}
-            transition={{ duration: 10 + index, repeat: Infinity, ease: "linear", delay: shape.delay / 2 }}
-            aria-hidden
-          />
-          <motion.div
-            className="absolute inset-0 mix-blend-overlay opacity-15"
-            style={{ borderRadius: shape.borderRadius }}
-            animate={{ x: ["-12%", "14%", "-8%", "0%"] }}
-            transition={{ duration: 12 + index, repeat: Infinity, repeatType: "mirror", ease: "easeInOut", delay: shape.delay }}
-          />
-          <motion.span
-            className="absolute px-3 py-1 rounded-full bg-black/35 backdrop-blur text-[11px] uppercase tracking-[0.35em]"
-            style={{
-              bottom: shape.top > 35 ? "12%" : "auto",
-              top: shape.top > 35 ? "auto" : "12%",
-              left: shape.left > 35 ? "auto" : "12%",
-              right: shape.left > 35 ? "12%" : "auto",
-              color: getReadableTextColor(shape.color.hex),
-            }}
-            animate={{ opacity: [0.6, 1, 0.6], scale: [0.95, 1.05, 0.95] }}
-            transition={{ duration: 6 + index, repeat: Infinity, ease: "easeInOut", delay: shape.delay }}
-          >
-            {shape.color.hex}
-          </motion.span>
-          <motion.span
-            className="absolute text-xs font-semibold tracking-tight"
-            style={{
-              bottom: shape.top > 35 ? "28%" : "auto",
-              top: shape.top > 35 ? "auto" : "28%",
-              left: "18%",
-              color: getReadableTextColor(shape.color.hex),
-            }}
-            animate={{ opacity: [0.85, 1, 0.85], x: [0, 4, 0] }}
-            transition={{ duration: 5 + index, repeat: Infinity, ease: "easeInOut", delay: shape.delay / 1.5 }}
-          >
-            {shape.color.name}
-          </motion.span>
-        </motion.div>
+          <div className="h-20 rounded-xl border border-white/6" style={{ backgroundColor: swatch.hex }} aria-hidden />
+          <div className="flex items-center justify-between text-[11px] uppercase tracking-[0.32em] text-white/60">
+            <span>{swatch.name}</span>
+            <span>{swatch.hex}</span>
+          </div>
+        </div>
       ))}
     </div>
   );

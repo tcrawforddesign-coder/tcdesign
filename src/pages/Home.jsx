@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState, useRef } from "react";
+import { useCallback, useEffect, useMemo, useState, useRef, useId } from "react";
 import { Link } from "react-router-dom";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowUpRight, Github, Instagram, Linkedin, Mail, Menu, X, Megaphone, Camera, PenTool, Cpu } from "lucide-react";
@@ -9,6 +9,7 @@ import CodeCloud from "../components/CodeCloud.jsx";
 
 const HEADSHOT = "/images/headshot.jpg";
 const MotionDiv = motion.div;
+const MotionOutline = motion.div;
 const POSTER_IMAGES = Array.from({ length: 19 }, (_, index) => `/images/Poster_${index + 1}.png`);
 const SOFTWARE_ICONS = [
   { name: "Photoshop", src: "/Photoshop.svg" },
@@ -54,6 +55,9 @@ export default function Home() {
   const [open, setOpen] = useState(false);
   const { scrollYProgress } = useScroll();
   const width = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+  const outlineRotation = useTransform(scrollYProgress, [0, 1], ["0deg", "8deg"]);
+  const outlineOpacity = useTransform(scrollYProgress, [0, 0.4], [0.18, 0.05]);
+  const outlineScale = useTransform(scrollYProgress, [0, 1], [1, 1.12]);
 
   return (
     <div className="min-h-screen bg-[#030303] text-white antialiased selection:bg-white selection:text-black">
@@ -138,42 +142,58 @@ export default function Home() {
       <section id="home" className="relative overflow-hidden">
         <CodeCloud />
         <div className="hero-gradient" aria-hidden="true" />
-        <div className="relative z-10 max-w-7xl mx-auto px-4 pt-20 pb-14 md:pt-28 md:pb-24">
-          <div className="grid md:grid-cols-12 gap-8 items-end">
-            <div className="md:col-span-7">
-              <h1 className="hero-heading text-4xl md:text-6xl font-black leading-[1.05] tracking-tight">
-                Visual designer crafting <span className="text-[var(--brand-red)]">bold</span> brand systems.
-              </h1>
-              <p className="mt-5 text-white/70 max-w-xl">Simple, intentional, and not afraid to experiment.</p>
-              <div className="mt-8 flex flex-wrap gap-3">
-                <a href="#work" className="px-4 py-2 rounded-full bg-white text-black font-medium hover:contrast-125 transition">
-                  View work
-                </a>
-                <a href="#contact" className="px-4 py-2 rounded-full border border-white/20 hover:border-white/40">
-                  Get in touch
-                </a>
-              </div>
-              <div className="mt-10 flex flex-wrap gap-6 text-sm text-white/60">
-                <span className="inline-flex items-center gap-2">
-                  <PenTool className="w-4 h-4" /> Branding
-                </span>
-                <span className="inline-flex items-center gap-2">
-                  <Megaphone className="w-4 h-4" /> Marketing
-                </span>
-                <span className="inline-flex items-center gap-2">
-                  <Cpu className="w-4 h-4" /> Strategy
-                </span>
-                <span className="inline-flex items-center gap-2">
-                  <Camera className="w-4 h-4" /> Art Direction
-                </span>
-              </div>
+            <div className="relative z-10 max-w-7xl mx-auto px-4 pt-20 pb-14 md:pt-28 md:pb-24">
+              <div className="grid md:grid-cols-12 gap-8 items-start">
+                <div className="md:col-span-7 flex flex-col gap-5">
+                  <div className="hero-intro-card relative rounded-[28px] border border-white/15 bg-black/55 backdrop-blur-sm px-6 py-8 md:px-10 md:py-12 shadow-[0_30px_80px_-50px_rgba(0,0,0,0.9)]">
+                    <MotionOutline
+                      style={{ rotate: outlineRotation, opacity: outlineOpacity, scale: outlineScale }}
+                      className="hero-heading__outline hidden md:block"
+                      aria-hidden
+                    >
+                      TC
+                    </MotionOutline>
+                    <div className="space-y-5 relative z-10">
+                      <h1 className="hero-heading text-4xl md:text-6xl font-black leading-[1.05] tracking-tight">
+                        Visual designer crafting <span className="text-[var(--brand-red)]">bold</span> brand systems.
+                      </h1>
+                      <p className="text-white/70 max-w-xl">Simple, intentional, and not afraid to experiment.</p>
+                      <div className="flex flex-wrap gap-3">
+                        <a href="#work" className="px-4 py-2 rounded-full bg-white text-black font-medium hover:contrast-125 transition">
+                          View work
+                        </a>
+                        <a href="#contact" className="px-4 py-2 rounded-full border border-white/20 hover:border-white/40">
+                          Get in touch
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <DashboardMetricCard />
             </div>
-            <div className="md:col-span-5 relative">
-              <div className="relative aspect-[3/4] rounded-2xl overflow-hidden border border-white/10 bg-black/40">
-                <HeadshotCard />
-                <div className="absolute inset-0 ring-1 ring-inset ring-white/10 pointer-events-none" />
+              <div className="md:col-span-5 flex flex-col gap-4">
+                <div className="relative w-full aspect-[3/4] sm:aspect-[4/5] md:aspect-[3/4] rounded-2xl overflow-hidden border border-white/10 bg-black/40 shadow-[0_18px_50px_-20px_rgba(0,0,0,0.8)]">
+                  <HeadshotCard />
+                  <div className="absolute inset-0 ring-1 ring-inset ring-white/10 pointer-events-none" />
+                </div>
+                <div className="grid sm:grid-cols-2 gap-4 w-full">
+                  <FunMetricCard
+                    title="Pixels panned per day"
+                    value="4.2 mi"
+                    description="Average distance dragged across Figma canvases."
+                    accentStops={["#00c6ff", "#005bea", "#002c8a"]}
+                    variant="sparkline"
+                    data={PIXELS_SERIES}
+                  />
+                  <FunMetricCard
+                    title="Keyshot espresso time"
+                    value="7:00 AM"
+                    description="Daily ritual before the first design sprint kicks in."
+                    accentStops={["#bbf7d0", "#4ade80", "#166534"]}
+                    variant="clock"
+                    data={ESPRESSO_SERIES}
+                  />
+                </div>
               </div>
-            </div>
           </div>
         </div>
       </section>
@@ -307,6 +327,33 @@ export default function Home() {
 
 const DISABLED_SLUGS = [];
 
+const CAPABILITY_METRICS = [
+  { label: "Branding", icon: PenTool, progress: 95, accent: "from-[#ff5f6d] to-[#ffc371]" },
+  { label: "Marketing", icon: Megaphone, progress: 88, accent: "from-[#3f2b96] via-[#a8c0ff] to-[#00d4ff]" },
+  { label: "Strategy", icon: Cpu, progress: 92, accent: "from-[#8360c3] to-[#2ebf91]" },
+  { label: "Art Direction", icon: Camera, progress: 90, accent: "from-[#f83600] to-[#f9d423]" },
+];
+
+const PIXELS_SERIES = [
+  { label: "Mon", value: 3.8 },
+  { label: "Tue", value: 4.1 },
+  { label: "Wed", value: 4.6 },
+  { label: "Thu", value: 4.0 },
+  { label: "Fri", value: 4.4 },
+  { label: "Sat", value: 4.7 },
+  { label: "Sun", value: 3.9 },
+];
+
+const ESPRESSO_SERIES = [
+  { label: "Mon", value: 6.92, display: "6:55" },
+  { label: "Tue", value: 7.08, display: "7:05" },
+  { label: "Wed", value: 6.83, display: "6:50" },
+  { label: "Thu", value: 7.15, display: "7:09" },
+  { label: "Fri", value: 7.0, display: "7:00" },
+  { label: "Sat", value: 8.2, display: "8:12" },
+  { label: "Sun", value: 9.0, display: "9:00" },
+];
+
 export function ProjectCard({ project }) {
   const disabled = DISABLED_SLUGS.includes(project.slug);
   const { primary, secondary } = splitProjectTitle(project.title ?? "");
@@ -389,7 +436,7 @@ export function ProjectCard({ project }) {
 
 function HeadshotCard() {
   return (
-    <div className="profile-card" aria-label="Portrait of Travis Crawford">
+    <div className="profile-card profile-card--compact" aria-label="Portrait of Travis Crawford">
       <img
         src={HEADSHOT}
         alt="Travis Crawford"
@@ -512,6 +559,148 @@ function PosterSpotlight({ posters }) {
         />
       )}
     </>
+  );
+}
+
+function DashboardMetricCard({ className = "" }) {
+  return (
+    <div className={`w-full rounded-2xl border border-white/10 bg-[#090909]/85 backdrop-blur-sm p-6 shadow-[0_12px_40px_-20px_rgba(0,0,0,0.85)] space-y-5 flex flex-col ${className}`}>
+      <div className="flex items-center justify-between text-xs uppercase tracking-[0.3em] text-white/40">
+        <span>Capabilities Pulse</span>
+        <span className="inline-flex items-center gap-1 text-white/55">
+          <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+          Live
+        </span>
+      </div>
+      <div className="capability-gauges space-y-4 pt-2 flex-1">
+        {CAPABILITY_METRICS.map(({ label, icon: Icon, progress, accent }) => (
+          <div key={label} className="capability-gauge">
+            <div className="flex items-center justify-between text-sm text-white/60 mb-2">
+              <span className="inline-flex items-center gap-2">
+                <Icon className="w-4 h-4" /> {label}
+              </span>
+              <span className="text-xs uppercase tracking-[0.3em] text-white/40">{progress}%</span>
+            </div>
+            <div className="gauge-bar">
+              <motion.div
+                className={`gauge-bar__fill bg-gradient-to-r ${accent}`}
+                initial={{ width: 0 }}
+                whileInView={{ width: `${progress}%` }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.9, ease: "easeOut" }}
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function FunMetricCard({ title, value, description, accentStops = [], variant, data = [] }) {
+  return (
+    <div className="fun-metric-card relative overflow-hidden rounded-2xl border border-white/10 bg-[#050505]/92 backdrop-blur-sm p-4 shadow-[0_10px_28px_-20px_rgba(0,0,0,0.85)]">
+      <div className="relative z-10 space-y-2.5">
+        <div className="text-[11px] uppercase tracking-[0.35em] text-white/45">{title}</div>
+        <div className="text-2xl font-black tracking-tight text-white">{value}</div>
+        <p className="text-xs text-white/60 leading-relaxed">{description}</p>
+        {variant === "sparkline" ? <PixelsSparkline data={data} stops={accentStops} /> : null}
+        {variant === "clock" ? <EspressoSunrise data={data} /> : null}
+      </div>
+    </div>
+  );
+}
+
+function PixelsSparkline({ data = [], stops = [] }) {
+  const gradientId = useId();
+  const gradientStops = stops.length ? stops : ["#4ade80", "#22d3ee"];
+  if (!data.length) return null;
+
+  const width = 220;
+  const height = 80;
+  const paddingX = 10;
+  const paddingY = 10;
+  const maxValue = Math.max(...data.map((point) => point.value));
+
+  const points = data.map((point, index) => {
+    const x = paddingX + (index / Math.max(data.length - 1, 1)) * (width - paddingX * 2);
+    const normalized = point.value / maxValue;
+    const y = height - paddingY - normalized * (height - paddingY * 2);
+    return { x, y, label: point.label, value: point.value };
+  });
+
+  const pathData = `M ${points.map((point) => `${point.x},${point.y}`).join(" L ")}`;
+  const areaData = `${pathData} L ${points[points.length - 1].x},${height - paddingY} L ${points[0].x},${height - paddingY} Z`;
+
+  return (
+    <svg className="fun-metric-card__sparkline" viewBox={`0 0 ${width} ${height}`} role="img" aria-label="Weekly Figma distance">
+      <defs>
+        <linearGradient id={`${gradientId}-stroke`} x1="0%" y1="0%" x2="100%" y2="0%">
+          {gradientStops.map((color, index) => (
+            <stop key={`${gradientId}-stroke-${color}`} offset={`${(index / Math.max(gradientStops.length - 1, 1)) * 100}%`} stopColor={color} />
+          ))}
+        </linearGradient>
+        <linearGradient id={`${gradientId}-fill`} x1="0%" y1="0%" x2="0%" y2="100%">
+          {gradientStops.map((color, index) => (
+            <stop
+              key={`${gradientId}-fill-${color}`}
+              offset={`${(index / Math.max(gradientStops.length - 1, 1)) * 100}%`}
+              stopColor={color}
+              stopOpacity={index === 0 ? 0.45 : 0.05}
+            />
+          ))}
+        </linearGradient>
+      </defs>
+      <path d={areaData} fill={`url(#${gradientId}-fill)`} opacity={0.25} />
+      <path d={pathData} stroke={`url(#${gradientId}-stroke)`} strokeWidth={2.2} fill="none" strokeLinecap="round" />
+      {points.map((point) => (
+        <circle key={`${point.label}-dot`} cx={point.x} cy={point.y} r={3} fill="rgba(255,255,255,0.9)" />
+      ))}
+      <line x1={paddingX} y1={height - paddingY} x2={width - paddingX} y2={height - paddingY} stroke="rgba(255,255,255,0.12)" strokeWidth={1} strokeDasharray="4 4" />
+      {points.map((point) => (
+        <text key={`${point.label}-label`} x={point.x} y={height - 2} fontSize="10" textAnchor="middle" fill="rgba(255,255,255,0.35)" letterSpacing="0.28em">
+          {point.label}
+        </text>
+      ))}
+    </svg>
+  );
+}
+
+function EspressoSunrise({ data = [] }) {
+  const current = data.find((point) => point.label === "Fri") ?? data[data.length - 1];
+  const hourValue = current?.value ?? 7;
+  const hours = Math.floor(hourValue);
+  const minutes = Math.round((hourValue - hours) * 60);
+  const totalHours = hours + minutes / 60;
+  const normalized = Math.min(Math.max((totalHours - 5) / 6, 0), 1);
+  const display = current?.display ?? `${hours}:${minutes.toString().padStart(2, "0")}`;
+
+  return (
+    <div className="fun-metric-card__sunrise" role="img" aria-label="Espresso ritual timeline">
+      <svg viewBox="0 0 140 80" className="sunrise-timeline">
+        <defs>
+          <linearGradient id="timeline-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#0f172a" />
+            <stop offset="30%" stopColor="#2563eb" />
+            <stop offset="60%" stopColor="#facc15" />
+            <stop offset="100%" stopColor="#f97316" />
+          </linearGradient>
+        </defs>
+        <rect x="0" y="0" width="140" height="80" fill="url(#timeline-gradient)" opacity="0.22" />
+        <line x1="12" y1="60" x2="128" y2="60" stroke="rgba(255,255,255,0.18)" strokeWidth="1.3" strokeLinecap="round" />
+        {[6, 9, 12].map((hour) => (
+          <g key={hour}>
+            <line x1={12 + ((hour - 4) / 8) * 116} y1="58" x2={12 + ((hour - 4) / 8) * 116} y2="62" stroke="rgba(255,255,255,0.3)" strokeWidth="1" />
+            <text x={12 + ((hour - 4) / 8) * 116} y="70" textAnchor="middle" fontSize="9" fill="rgba(255,255,255,0.5)" letterSpacing="0.3em">
+              {hour} AM
+            </text>
+          </g>
+        ))}
+        <circle cx={12 + normalized * 116} cy="60" r="6" fill="rgba(255, 243, 133, 0.95)" stroke="rgba(255,255,255,0.35)" strokeWidth="1.5" />
+        <circle cx={12 + normalized * 116} cy="60" r="16" fill="rgba(255, 200, 0, 0.15)" />
+      </svg>
+      <div className="sunrise-time sunrise-time--timeline">{display}</div>
+    </div>
   );
 }
 

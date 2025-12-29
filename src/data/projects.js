@@ -13,13 +13,6 @@ export const projects = [
     heroVideo: "https://txbi6s0cie448na3.public.blob.vercel-storage.com/5529207-hd_1920_1080_30fps.mp4",
     textureImage: "https://images.unsplash.com/photo-1521123845560-14093637aa7d?q=80&w=1600&auto=format&fit=crop",
     textureCopy: "Quote marks, modular grids, and confident type — systemized into tokens teams can actually use.",
-    colorPalette: [
-      { name: "Buttermilk Foam", hex: "#F2E7D8" },
-      { name: "Deep Espresso", hex: "#1B100C" },
-      { name: "Copper Pull", hex: "#C74F2B" },
-      { name: "Walnut Shell", hex: "#8A5C3A" },
-      { name: "Patio Sage", hex: "#AABF96" },
-    ],
     socialPosts: [
       { type: "image", src: "/images/Ad_1.png", alt: "Civil Goat carousel ad promoting seasonal roast" },
       { type: "image", src: "/images/Ad_2.png", alt: "Civil Goat Instagram story with conversational headline" },
