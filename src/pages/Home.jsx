@@ -43,7 +43,7 @@ const ABOUT_TEXT_STATS = [
   { k: "Awards", v: "Graphis Gold + 6x Silver" },
 ];
 
-const FEATURED_SLUGS = ["civil-goat-coffee", "aluma-skincare", "barbican-refresh"];
+const FEATURED_SLUGS = ["civil-goat-coffee", "atlas-coffee-club", "barbican-refresh"];
 const FEATURED_COL_SPANS = ["md:col-span-7", "md:col-span-5", "md:col-span-5", "md:col-span-7"];
 const baseFeaturedProjects = FEATURED_SLUGS.map((slug) => projects.find((project) => project.slug === slug)).filter(Boolean);
 const featuredProjects = posterProject
@@ -305,7 +305,7 @@ export default function Home() {
   );
 }
 
-const DISABLED_SLUGS = ["mntwire"];
+const DISABLED_SLUGS = [];
 
 export function ProjectCard({ project }) {
   const disabled = DISABLED_SLUGS.includes(project.slug);
