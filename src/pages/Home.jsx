@@ -1,13 +1,12 @@
 import { useCallback, useEffect, useMemo, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowUpRight, Github, Instagram, Linkedin, Mail, Menu, X, Megaphone, Camera, PenTool, Cpu } from "lucide-react";
+import { ArrowUpRight, Instagram, Linkedin, Mail, Menu, X, Megaphone, Camera, PenTool, Cpu } from "lucide-react";
 
 import { projects } from "../data/projects.js";
 import { posterProject } from "../data/posters.js";
 import CodeCloud from "../components/CodeCloud.jsx";
 
-const HEADSHOT = "/images/headshot.jpg";
 const MotionDiv = motion.div;
 const MotionOutline = motion.div;
 const POSTER_IMAGES = Array.from({ length: 19 }, (_, index) => `/images/Poster_${index + 1}.png`);
@@ -38,6 +37,18 @@ const PRIMARY_NAV = [
   { label: "Posters", type: "route", to: "/posters" },
   { label: "About", type: "anchor", href: "#about" },
   { label: "Contact", type: "anchor", href: "#contact" },
+];
+const HERO_SOCIAL_LINKS = [
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/travis-crawford-67759b24a",
+    icon: Linkedin,
+  },
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/treves_/",
+    icon: Instagram,
+  },
 ];
 const ABOUT_TEXT_STATS = [
   { k: "Years", v: "5+" },
@@ -171,9 +182,48 @@ export default function Home() {
                   <DashboardMetricCard />
             </div>
               <div className="md:col-span-5 flex flex-col gap-4">
-                <div className="relative w-full aspect-[3/4] sm:aspect-[4/5] md:aspect-[3/4] rounded-2xl overflow-hidden border border-white/10 bg-black/40 shadow-[0_18px_50px_-20px_rgba(0,0,0,0.8)]">
-                  <HeadshotCard />
-                  <div className="absolute inset-0 ring-1 ring-inset ring-white/10 pointer-events-none" />
+                <div className="hero-connection-card relative rounded-[28px] border border-white/15 bg-black/55 backdrop-blur-sm px-6 py-8 md:px-8 md:py-10 shadow-[0_24px_70px_-45px_rgba(0,0,0,0.9)]">
+                  <div className="space-y-6">
+                    <div className="space-y-3">
+                      <div className="text-[11px] uppercase tracking-[0.35em] text-white/45">Now partnering with</div>
+                      <p className="text-white/70 leading-relaxed">
+                        Brand-led teams shipping identities, marketing systems, and digital experiences that balance clarity with surprise.
+                      </p>
+                      <p className="text-xs uppercase tracking-[0.3em] text-white/45">Based in Texas — Remote friendly</p>
+                    </div>
+                    <div className="space-y-4">
+                      <a
+                        href="mailto:tcrawford.design@gmail.com"
+                        className="inline-flex items-center gap-3 rounded-full bg-white text-black px-4 py-2 text-sm font-medium hover:contrast-125 transition"
+                      >
+                        <Mail className="w-4 h-4" />
+                        tcrawford.design@gmail.com
+                      </a>
+                      <div className="flex flex-wrap gap-2">
+                        {HERO_SOCIAL_LINKS.map((link) => (
+                          <a
+                            key={link.label}
+                            href={link.href}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="inline-flex items-center gap-2 rounded-full border border-white/20 px-3 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-white/60 transition hover:border-white/50 hover:text-white"
+                          >
+                            <link.icon className="w-4 h-4" />
+                            <span>{link.label}</span>
+                          </a>
+                        ))}
+                      </div>
+                      <a
+                        href="/TravisCrawford_Resume.pdf"
+                        className="inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-2 text-sm font-medium text-white/70 transition hover:border-white/40 hover:text-white"
+                        download
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        Download CV
+                      </a>
+                    </div>
+                  </div>
                 </div>
               </div>
           </div>
@@ -399,38 +449,6 @@ export function ProjectCard({ project }) {
     <Link to={linkTarget} className="block group" aria-label={ariaLabel}>
       {cardContent}
     </Link>
-  );
-}
-
-function HeadshotCard() {
-  return (
-    <div className="profile-card profile-card--compact" aria-label="Portrait of Travis Crawford">
-      <img
-        src={HEADSHOT}
-        alt="Travis Crawford"
-        className="profile-card__image"
-        loading="eager"
-        fetchpriority="high"
-        decoding="async"
-      />
-      <div className="profile-card__overlay" />
-      <div className="profile-card__border">
-        <div className="profile-card__name">Travis Crawford</div>
-        <div className="profile-card__icons" aria-label="Social links">
-          <a
-            href="https://www.linkedin.com/in/travis-crawford-67759b24a"
-            target="_blank"
-            rel="noreferrer"
-            aria-label="LinkedIn"
-          >
-            <Linkedin className="w-5 h-5" />
-          </a>
-          <a href="https://www.instagram.com/treves_/" target="_blank" rel="noreferrer" aria-label="Instagram">
-            <Instagram className="w-5 h-5" />
-          </a>
-        </div>
-      </div>
-    </div>
   );
 }
 
