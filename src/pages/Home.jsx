@@ -328,7 +328,6 @@ export default function Home() {
                   {SOFTWARE_ICONS.map((icon) => (
                     <div key={icon.name} className="software-icon flex flex-col items-center gap-2 text-center">
                       <img src={icon.src} alt={icon.name} className="h-12 w-12 object-contain" loading="lazy" decoding="async" />
-                      <span className="software-icon__label text-[11px] uppercase tracking-[0.28em] text-white/60">{icon.name}</span>
                     </div>
                   ))}
                 </div>
