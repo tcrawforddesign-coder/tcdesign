@@ -237,12 +237,11 @@ h3 {
   height: 100%;
   object-fit: cover;
   object-position: center;
-  transition: transform 0.8s ease, filter 0.8s ease;
+  transition: filter 0.8s ease;
   transform-origin: center;
 }
 
 .profile-card:hover .profile-card__image {
-  transform: scale(1.18) translateX(-4%);
   filter: saturate(108%);
 }
 
@@ -265,19 +264,13 @@ h3 {
   height: calc(100% - 18px);
   width: calc(100% - 18px);
   border-radius: inherit;
-  border: 1px solid transparent;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
   padding: 28px 24px;
   gap: 20px;
-  transition: border-color 0.8s ease;
   background: linear-gradient(transparent, rgba(0, 0, 0, 0.55));
-}
-
-.profile-card:hover .profile-card__border {
-  border-color: rgba(255, 255, 255, 0.6);
 }
 
 .profile-card__name {

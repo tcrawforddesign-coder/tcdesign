@@ -165,7 +165,6 @@ export default function Home() {
 
       <section id="home" className="relative overflow-hidden">
         <CodeCloud />
-        <div className="hero-gradient" aria-hidden="true" />
             <div className="relative z-10 max-w-7xl mx-auto px-4 pt-20 pb-14 md:pt-28 md:pb-24">
               <div className="grid md:grid-cols-12 gap-8 items-start">
                 <div className="md:col-span-7 flex flex-col gap-5">
@@ -206,17 +205,9 @@ export default function Home() {
               <div className="md:col-span-5 flex flex-col gap-4">
                 <div className="relative w-full aspect-[3/4] sm:aspect-[4/5] md:aspect-[3/4] overflow-hidden border-2 border-white/20 bg-black shadow-brut">
                   <HeadshotCard />
-                  <div className="absolute inset-0 border-2 border-white/10 pointer-events-none" />
                 </div>
                 <div className="hero-connection-card relative border-2 border-white/25 bg-neutral-950 px-6 py-8 md:px-8 md:py-10 shadow-brut">
                   <div className="space-y-6">
-                    <div className="space-y-3">
-                      <div className="text-[10px] font-bold uppercase tracking-[0.4em] text-white/40">Now partnering with</div>
-                      <p className="text-white/70 leading-relaxed text-sm">
-                        Brand-led teams shipping identities, marketing systems, and digital experiences that balance clarity with surprise.
-                      </p>
-                      <p className="text-[10px] font-bold uppercase tracking-[0.35em] text-white/35">Based in Texas — Remote friendly</p>
-                    </div>
                     <div className="space-y-3">
                       <a
                         href="mailto:tcrawford.design@gmail.com"
@@ -407,24 +398,23 @@ export function ProjectCard({ project }) {
       initial={{ opacity: 0.95 }}
       whileHover={clickable ? { y: -5 } : undefined}
       transition={{ type: "spring", stiffness: 380, damping: 28 }}
-      className="group-hover:shadow-brut relative aspect-square overflow-hidden border-2 border-white/20 bg-black shadow-brut-sm transition-shadow duration-200"
+      className="relative aspect-square overflow-hidden border-2 border-white/20 bg-black shadow-brut-sm transition-shadow duration-200 hover:shadow-brut"
     >
       {hasImage ? (
         <img
           src={project.cover}
           alt=""
-          className={`w-full h-full object-cover transition ${disabled ? "opacity-40" : "opacity-90 group-hover:opacity-100"}`}
+          className={`w-full h-full object-cover transition ${disabled ? "opacity-40" : "opacity-90 group-hover/card:opacity-100"}`}
           loading="lazy"
           decoding="async"
           sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 90vw"
         />
       ) : (
         <div
-          className={`w-full h-full transition ${disabled ? "opacity-40" : "opacity-90 group-hover:opacity-100"} bg-black/50`}
+          className={`w-full h-full transition ${disabled ? "opacity-40" : "opacity-90 group-hover/card:opacity-100"} bg-black/50`}
           aria-hidden="true"
         />
       )}
-      <div className={`card-hover-border ${disabled ? "card-hover-border--disabled" : ""}`} aria-hidden />
       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-black/0 pointer-events-none" />
       <div className="absolute bottom-0 left-0 right-0 p-4 flex items-end justify-between border-t-2 border-white/15 bg-black/85 backdrop-blur-[2px]">
         <div className="space-y-1">
@@ -437,7 +427,7 @@ export function ProjectCard({ project }) {
           </div>
         </div>
         {clickable ? (
-          <ArrowUpRight className="w-5 h-5 opacity-80 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition" />
+          <ArrowUpRight className="w-5 h-5 opacity-80 transition-all duration-200 group-hover/card:scale-[1.75] group-hover/card:text-[var(--accent-red)] group-hover/card:translate-x-0.5 group-hover/card:-translate-y-0.5" />
         ) : (
           <span className="text-[11px] uppercase tracking-[0.35em] text-white/50">Coming Soon</span>
         )}
@@ -452,7 +442,7 @@ export function ProjectCard({ project }) {
 
   if (disabled) {
     return (
-      <div className="block group pointer-events-none" aria-disabled="true" title="Coming soon">
+      <div className="block group/card pointer-events-none" aria-disabled="true" title="Coming soon">
         {cardContent}
       </div>
     );
@@ -460,14 +450,14 @@ export function ProjectCard({ project }) {
 
   if (!clickable) {
     return (
-      <div className="block group cursor-default" aria-disabled="true" aria-label={ariaLabel} title="Case study coming soon">
+      <div className="block group/card cursor-default" aria-disabled="true" aria-label={ariaLabel} title="Case study coming soon">
         {cardContent}
       </div>
     );
   }
 
   return (
-    <Link to={linkTarget} className="block group" aria-label={ariaLabel}>
+    <Link to={linkTarget} className="block group/card" aria-label={ariaLabel}>
       {cardContent}
     </Link>
   );
