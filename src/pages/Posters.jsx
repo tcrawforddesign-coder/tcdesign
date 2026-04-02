@@ -53,21 +53,21 @@ export default function PostersPage() {
   }, [activeFilter]);
 
   return (
-    <div className="min-h-screen bg-[#030303] text-white">
-      <header className="sticky top-0 z-40 backdrop-blur supports-[backdrop-filter]:bg-black/40 border-b border-white/10">
+    <div className="min-h-screen bg-[#050505] text-white font-mono">
+      <header className="sticky top-0 z-40 border-b-2 border-white bg-black">
         <div className="max-w-7xl mx-auto px-4">
           <div className="h-16 flex items-center justify-between">
-            <Link to="/" className="font-black tracking-tight text-lg md:text-xl inline-flex items-center">
+            <Link to="/" className="font-display font-extrabold tracking-tighter text-lg md:text-xl uppercase">
               <span>Travis Crawford</span>
             </Link>
 
-            <nav aria-label="Primary" className="hidden md:flex items-center gap-3 absolute left-1/2 -translate-x-1/2">
+            <nav aria-label="Primary" className="hidden md:flex items-center gap-0 absolute left-1/2 -translate-x-1/2 divide-x divide-white/20 border border-white/25">
               {NAV_LINKS.map((item) => (
                 <Link
                   key={item.label}
                   to={item.to}
-                  className={`px-4 py-2 rounded-full border border-white/15 hover:border-white/40 transition backdrop-blur bg-white/5 hover:bg-white/10 ${
-                    item.label === "Posters" ? "bg-white/10 border-white/30" : ""
+                  className={`px-4 py-3 text-[10px] font-bold uppercase tracking-[0.28em] transition-colors ${
+                    item.label === "Posters" ? "bg-white text-black" : "text-white/85 hover:bg-white hover:text-black"
                   }`}
                 >
                   {item.label}
@@ -75,14 +75,19 @@ export default function PostersPage() {
               ))}
             </nav>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
               <Link
                 to={{ pathname: "/", hash: "#contact" }}
-                className="hidden sm:inline-flex items-center gap-2 px-3 py-2 rounded-full bg-white text-black font-medium hover:contrast-125 transition"
+                className="hidden sm:inline-flex items-center gap-2 px-4 py-2 border-2 border-white bg-white text-black text-[10px] font-bold uppercase tracking-[0.22em] hover:bg-transparent hover:text-white transition-colors"
               >
                 <ArrowUpRight className="w-4 h-4" /> Contact
               </Link>
-              <button className="md:hidden p-2 rounded border border-white/15" aria-label="Open menu" onClick={() => setOpen(true)}>
+              <button
+                type="button"
+                className="md:hidden p-2.5 border-2 border-white/30 hover:bg-white/10"
+                aria-label="Open menu"
+                onClick={() => setOpen(true)}
+              >
                 <Menu className="w-5 h-5" />
               </button>
             </div>
@@ -90,20 +95,27 @@ export default function PostersPage() {
         </div>
 
         {open && (
-          <div role="dialog" aria-modal className="fixed inset-0 z-50 bg-black/80">
+          <div role="dialog" aria-modal className="fixed inset-0 z-50 bg-black border-2 border-white">
             <div className="absolute top-4 right-4">
-              <button className="p-2 rounded border border-white/15" onClick={() => setOpen(false)} aria-label="Close menu">
+              <button
+                type="button"
+                className="p-2.5 border-2 border-white hover:bg-white hover:text-black"
+                onClick={() => setOpen(false)}
+                aria-label="Close menu"
+              >
                 <X className="w-5 h-5" />
               </button>
             </div>
-            <div className="min-h-full grid place-items-center">
-              <ul className="space-y-6 text-center text-2xl">
+            <div className="min-h-full grid place-items-center px-6">
+              <ul className="space-y-4 text-center w-full max-w-sm">
                 {NAV_LINKS.map((item) => (
-                  <li key={item.label}>
+                  <li key={item.label} className="border border-white/25">
                     <Link
                       to={item.to}
                       onClick={() => setOpen(false)}
-                      className="px-6 py-3 rounded-full border border-white/15 inline-block bg-white/5 hover:bg-white/10"
+                      className={`block py-4 text-sm font-bold uppercase tracking-[0.35em] transition-colors ${
+                        item.label === "Posters" ? "bg-white text-black" : "hover:bg-white hover:text-black"
+                      }`}
                     >
                       {item.label}
                     </Link>
@@ -118,8 +130,10 @@ export default function PostersPage() {
       <main className="max-w-7xl mx-auto px-4 lg:px-10 py-16 md:py-24 space-y-20">
         <section className="grid md:grid-cols-12 gap-10 md:gap-12 items-start">
           <div className="md:col-span-7 space-y-6">
-            <p className="text-[11px] uppercase tracking-[0.4em] text-white/50">Poster Archive</p>
-            <h1 className="text-4xl md:text-5xl font-black leading-tight tracking-tight">{posterProject.spotlight.headline}</h1>
+            <p className="text-[10px] font-bold uppercase tracking-[0.45em] text-white/45">Poster Archive</p>
+            <h1 className="font-display text-4xl md:text-5xl font-extrabold leading-[0.95] tracking-tighter uppercase">
+              {posterProject.spotlight.headline}
+            </h1>
             <p className="text-white/70 leading-relaxed max-w-3xl">{posterProject.summary}</p>
             <div className="space-y-4 text-white/70 leading-relaxed max-w-3xl">
               {posterProject.intro.map((paragraph) => (
@@ -128,27 +142,27 @@ export default function PostersPage() {
             </div>
             <div className="flex flex-wrap gap-3 pt-2">
               {posterProject.roles.map((role) => (
-                <span key={role} className="px-3 py-1 rounded-full text-xs border border-white/15 bg-[#0c0c0c]/60 backdrop-blur-sm">
+                <span key={role} className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] border border-white/25 bg-black">
                   {role}
                 </span>
               ))}
               {posterProject.tools.map((tool) => (
-                <span key={tool} className="px-3 py-1 rounded-full text-xs border border-white/15 bg-[#0c0c0c]/60 backdrop-blur-sm">
+                <span key={tool} className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] border border-white/25 bg-black">
                   {tool}
                 </span>
               ))}
             </div>
           </div>
           <aside className="md:col-span-5 space-y-5">
-            <div className="rounded-2xl border border-white/10 bg-black/40 p-6 md:p-7 space-y-4">
-              <div className="flex items-center gap-3 text-sm uppercase tracking-[0.3em] text-white/50">
+            <div className="border-2 border-white/20 bg-black p-6 md:p-7 space-y-4 shadow-brut-sm">
+              <div className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.35em] text-white/45">
                 <Sparkles className="w-4 h-4 text-white/70" />
                 Personal Lab
               </div>
               <p className="text-white/70 text-sm leading-relaxed">{posterProject.spotlight.copy}</p>
             </div>
-            <div className="rounded-2xl border border-white/10 bg-black/35 p-6 md:p-7">
-              <h2 className="text-lg font-semibold tracking-tight text-white">Why posters?</h2>
+            <div className="border-2 border-white/15 bg-black p-6 md:p-7">
+              <h2 className="font-display text-lg font-bold tracking-tight uppercase text-white">Why posters?</h2>
               <p className="mt-3 text-sm text-white/65 leading-relaxed">
                 Client work thrives on clarity. Posters give me permission to move fast, remix palettes, and stress-test type before rolling the ideas into
                 product or campaign systems.
@@ -163,14 +177,14 @@ export default function PostersPage() {
               <p className="text-[11px] uppercase tracking-[0.4em] text-white/50">Filter the archive</p>
               <h2 className="mt-3 text-2xl font-semibold tracking-tight">Curate by color energy</h2>
             </div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/40 p-1">
+            <div className="inline-flex items-stretch border-2 border-white/25 bg-black">
               {FILTER_TABS.map((tab) => (
                 <button
                   key={tab.value}
                   type="button"
                   onClick={() => setActiveFilter(tab.value)}
-                  className={`px-4 py-2 rounded-full text-xs uppercase tracking-[0.28em] transition ${
-                    activeFilter === tab.value ? "bg-white text-black font-semibold" : "text-white/60 hover:text-white"
+                  className={`px-4 py-3 text-[10px] font-bold uppercase tracking-[0.28em] border-l border-white/20 first:border-l-0 transition-colors ${
+                    activeFilter === tab.value ? "bg-white text-black" : "text-white/55 hover:text-white hover:bg-white/10"
                   }`}
                 >
                   {tab.label} <span className="ml-1 text-white/40">({filterCounts[tab.value]})</span>

@@ -72,23 +72,27 @@ export default function Home() {
   const outlineScale = useTransform(scrollYProgress, [0, 1], [1, 1.12]);
 
   return (
-    <div className="min-h-screen bg-[#030303] text-white antialiased selection:bg-white selection:text-black">
-      <MotionDiv style={{ width }} className="fixed top-0 left-0 h-[3px] bg-[var(--brand-red)] z-50" aria-hidden />
+    <div className="min-h-screen bg-[#050505] text-white antialiased font-mono selection:bg-white/20 selection:text-white">
+      <MotionDiv
+        style={{ width }}
+        className="scroll-progress-led fixed top-0 left-0 h-[2px] bg-[var(--accent-red)] z-50"
+        aria-hidden
+      />
 
-      <header className="sticky top-0 z-40 backdrop-blur supports-[backdrop-filter]:bg-black/40 border-b border-white/10">
+      <header className="sticky top-0 z-40 border-b-2 border-white bg-black">
         <div className="max-w-7xl mx-auto px-4">
           <div className="h-16 flex items-center justify-between">
-            <a href="#home" className="font-black tracking-tight text-lg md:text-xl inline-flex items-center">
+            <a href="#home" className="font-display font-extrabold tracking-tighter text-lg md:text-xl inline-flex items-center uppercase">
               <span>Travis Crawford</span>
             </a>
 
-            <nav aria-label="Primary" className="hidden md:flex items-center gap-3 absolute left-1/2 -translate-x-1/2">
+            <nav aria-label="Primary" className="hidden md:flex items-center gap-0 absolute left-1/2 -translate-x-1/2 divide-x divide-white/20 border border-white/25">
               {PRIMARY_NAV.map((item) =>
                 item.type === "route" ? (
                   <Link
                     key={item.label}
                     to={item.to}
-                    className="px-4 py-2 rounded-full border border-white/15 hover:border-white/40 transition backdrop-blur bg-white/5 hover:bg-white/10"
+                    className="px-4 py-3 text-[10px] font-bold uppercase tracking-[0.28em] text-white/85 hover:bg-white hover:text-black transition-colors"
                   >
                     {item.label}
                   </Link>
@@ -96,7 +100,7 @@ export default function Home() {
                   <a
                     key={item.label}
                     href={item.href}
-                    className="px-4 py-2 rounded-full border border-white/15 hover:border-white/40 transition backdrop-blur bg-white/5 hover:bg-white/10"
+                    className="px-4 py-3 text-[10px] font-bold uppercase tracking-[0.28em] text-white/85 hover:bg-white hover:text-black transition-colors"
                   >
                     {item.label}
                   </a>
@@ -104,11 +108,19 @@ export default function Home() {
               )}
             </nav>
 
-            <div className="flex items-center gap-3">
-              <a href="#contact" className="hidden sm:inline-flex items-center gap-2 px-3 py-2 rounded-full bg-white text-black font-medium hover:contrast-125 transition">
+            <div className="flex items-center gap-2">
+              <a
+                href="#contact"
+                className="hidden sm:inline-flex items-center gap-2 px-4 py-2 border-2 border-white bg-white text-black text-[10px] font-bold uppercase tracking-[0.22em] hover:bg-transparent hover:text-white transition-colors"
+              >
                 <ArrowUpRight className="w-4 h-4" /> Contact
               </a>
-              <button className="md:hidden p-2 rounded border border-white/15" aria-label="Open menu" onClick={() => setOpen(true)}>
+              <button
+                type="button"
+                className="md:hidden p-2.5 border-2 border-white/30 hover:bg-white/10"
+                aria-label="Open menu"
+                onClick={() => setOpen(true)}
+              >
                 <Menu className="w-5 h-5" />
               </button>
             </div>
@@ -116,21 +128,26 @@ export default function Home() {
         </div>
 
         {open && (
-          <div role="dialog" aria-modal className="fixed inset-0 z-50 bg-black/80">
+          <div role="dialog" aria-modal className="fixed inset-0 z-50 bg-black border-2 border-white">
             <div className="absolute top-4 right-4">
-              <button className="p-2 rounded border border-white/15" onClick={() => setOpen(false)} aria-label="Close menu">
+              <button
+                type="button"
+                className="p-2.5 border-2 border-white hover:bg-white hover:text-black"
+                onClick={() => setOpen(false)}
+                aria-label="Close menu"
+              >
                 <X className="w-5 h-5" />
               </button>
             </div>
-            <div className="min-h-full grid place-items-center">
-              <ul className="space-y-6 text-center text-2xl">
+            <div className="min-h-full grid place-items-center px-6">
+              <ul className="space-y-4 text-center w-full max-w-sm">
                 {PRIMARY_NAV.map((item) => (
-                  <li key={item.label}>
+                  <li key={item.label} className="border border-white/25">
                     {item.type === "route" ? (
                       <Link
                         to={item.to}
                         onClick={() => setOpen(false)}
-                        className="px-6 py-3 rounded-full border border-white/15 inline-block bg-white/5 hover:bg-white/10"
+                        className="block py-4 text-sm font-bold uppercase tracking-[0.35em] hover:bg-white hover:text-black transition-colors"
                       >
                         {item.label}
                       </Link>
@@ -138,7 +155,7 @@ export default function Home() {
                       <a
                         href={item.href}
                         onClick={() => setOpen(false)}
-                        className="px-6 py-3 rounded-full border border-white/15 inline-block bg-white/5 hover:bg-white/10"
+                        className="block py-4 text-sm font-bold uppercase tracking-[0.35em] hover:bg-white hover:text-black transition-colors"
                       >
                         {item.label}
                       </a>
@@ -157,7 +174,7 @@ export default function Home() {
             <div className="relative z-10 max-w-7xl mx-auto px-4 pt-20 pb-14 md:pt-28 md:pb-24">
               <div className="grid md:grid-cols-12 gap-8 items-start">
                 <div className="md:col-span-7 flex flex-col gap-5">
-                  <div className="hero-intro-card relative rounded-[28px] border border-white/15 bg-black/55 backdrop-blur-sm px-6 py-8 md:px-10 md:py-12 shadow-[0_30px_80px_-50px_rgba(0,0,0,0.9)]">
+                  <div className="hero-intro-card relative border-2 border-white/25 bg-neutral-950 px-6 py-8 md:px-10 md:py-12 shadow-brut">
                     <MotionOutline
                       style={{ rotate: outlineRotation, opacity: outlineOpacity, scale: outlineScale }}
                       className="hero-heading__outline hidden md:block"
@@ -165,16 +182,25 @@ export default function Home() {
                     >
                       TC
                     </MotionOutline>
-                    <div className="space-y-5 relative z-10">
-                      <h1 className="hero-heading text-4xl md:text-6xl font-black leading-[1.05] tracking-tight">
-                        Visual designer crafting <span className="text-[var(--brand-red)]">bold</span> brand systems.
+                    <div className="space-y-6 relative z-10">
+                      <h1 className="hero-heading font-display text-4xl md:text-6xl font-extrabold leading-[0.95] tracking-tighter uppercase">
+                        Visual designer crafting{" "}
+                        <span className="text-[var(--accent-red)] [text-shadow:4px_4px_0_rgba(0,0,0,1)]">bold</span> brand systems.
                       </h1>
-                      <p className="text-white/70 max-w-xl">Simple, intentional, and not afraid to experiment.</p>
+                      <p className="text-white/65 max-w-xl text-sm leading-relaxed border-l-2 border-white/20 pl-4">
+                        Simple, intentional, and not afraid to experiment.
+                      </p>
                       <div className="flex flex-wrap gap-3">
-                        <a href="#work" className="px-4 py-2 rounded-full bg-white text-black font-medium hover:contrast-125 transition">
+                        <a
+                          href="#work"
+                          className="px-5 py-3 border-2 border-white bg-white text-black text-[10px] font-bold uppercase tracking-[0.28em] hover:bg-transparent hover:text-white transition-colors shadow-brut-sm"
+                        >
                           View work
                         </a>
-                        <a href="#contact" className="px-4 py-2 rounded-full border border-white/20 hover:border-white/40">
+                        <a
+                          href="#contact"
+                          className="px-5 py-3 border-2 border-white/35 text-[10px] font-bold uppercase tracking-[0.28em] text-white/90 hover:bg-white/10"
+                        >
                           Get in touch
                         </a>
                       </div>
@@ -183,23 +209,23 @@ export default function Home() {
                   <DashboardMetricCard />
             </div>
               <div className="md:col-span-5 flex flex-col gap-4">
-                <div className="relative w-full aspect-[3/4] sm:aspect-[4/5] md:aspect-[3/4] rounded-2xl overflow-hidden border border-white/10 bg-black/40 shadow-[0_18px_50px_-20px_rgba(0,0,0,0.8)]">
+                <div className="relative w-full aspect-[3/4] sm:aspect-[4/5] md:aspect-[3/4] overflow-hidden border-2 border-white/20 bg-black shadow-brut">
                   <HeadshotCard />
-                  <div className="absolute inset-0 ring-1 ring-inset ring-white/10 pointer-events-none" />
+                  <div className="absolute inset-0 border-2 border-white/10 pointer-events-none" />
                 </div>
-                <div className="hero-connection-card relative rounded-[28px] border border-white/15 bg-black/55 backdrop-blur-sm px-6 py-8 md:px-8 md:py-10 shadow-[0_24px_70px_-45px_rgba(0,0,0,0.9)]">
+                <div className="hero-connection-card relative border-2 border-white/25 bg-neutral-950 px-6 py-8 md:px-8 md:py-10 shadow-brut">
                   <div className="space-y-6">
                     <div className="space-y-3">
-                      <div className="text-[11px] uppercase tracking-[0.35em] text-white/45">Now partnering with</div>
-                      <p className="text-white/70 leading-relaxed">
+                      <div className="text-[10px] font-bold uppercase tracking-[0.4em] text-white/40">Now partnering with</div>
+                      <p className="text-white/70 leading-relaxed text-sm">
                         Brand-led teams shipping identities, marketing systems, and digital experiences that balance clarity with surprise.
                       </p>
-                      <p className="text-xs uppercase tracking-[0.3em] text-white/45">Based in Texas — Remote friendly</p>
+                      <p className="text-[10px] font-bold uppercase tracking-[0.35em] text-white/35">Based in Texas — Remote friendly</p>
                     </div>
-                    <div className="space-y-4">
+                    <div className="space-y-3">
                       <a
                         href="mailto:tcrawford.design@gmail.com"
-                        className="inline-flex items-center gap-3 rounded-full bg-white text-black px-4 py-2 text-sm font-medium hover:contrast-125 transition"
+                        className="inline-flex items-center gap-3 border-2 border-white bg-white text-black px-4 py-2.5 text-[10px] font-bold uppercase tracking-[0.25em] hover:bg-transparent hover:text-white transition-colors"
                       >
                         <Mail className="w-4 h-4" />
                         tcrawford.design@gmail.com
@@ -211,7 +237,7 @@ export default function Home() {
                             href={link.href}
                             target="_blank"
                             rel="noreferrer"
-                            className="inline-flex items-center gap-2 rounded-full border border-white/20 px-3 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-white/60 transition hover:border-white/50 hover:text-white"
+                            className="inline-flex items-center gap-2 border border-white/30 px-3 py-2 text-[10px] font-bold uppercase tracking-[0.28em] text-white/70 transition hover:border-white hover:bg-white hover:text-black"
                           >
                             <link.icon className="w-4 h-4" />
                             <span>{link.label}</span>
@@ -220,7 +246,7 @@ export default function Home() {
                       </div>
                       <a
                         href="/TravisCrawford_Resume.pdf"
-                        className="inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-2 text-sm font-medium text-white/70 transition hover:border-white/40 hover:text-white"
+                        className="inline-flex items-center gap-2 border-2 border-white/30 px-4 py-2.5 text-[10px] font-bold uppercase tracking-[0.22em] text-white/80 transition hover:border-[var(--accent-red)] hover:text-[var(--accent-red)]"
                         download
                         target="_blank"
                         rel="noreferrer"
@@ -238,11 +264,11 @@ export default function Home() {
       <main id="content">
         <section id="work" className="relative">
           <div className="max-w-7xl mx-auto px-4 py-14 md:py-24">
-            <div className="flex items-end justify-between mb-8 gap-4 flex-wrap">
-              <h2 className="text-2xl md:text-4xl font-black tracking-tight">Selected Work</h2>
+            <div className="flex items-end justify-between mb-10 gap-4 flex-wrap border-b-2 border-white/15 pb-6">
+              <h2 className="font-display text-2xl md:text-4xl font-extrabold tracking-tighter uppercase">Selected Work</h2>
               <Link
                 to={{ pathname: "/projects", hash: "#top" }}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-black font-semibold shadow-[0_10px_30px_-12px_rgba(255,255,255,0.65)] hover:shadow-[0_14px_34px_-10px_rgba(255,255,255,0.75)] hover:translate-y-[-2px] transition-transform transition-shadow"
+                className="inline-flex items-center gap-2 px-5 py-3 border-2 border-white bg-white text-black text-[10px] font-bold uppercase tracking-[0.28em] hover:bg-transparent hover:text-white transition-colors shadow-brut-sm"
               >
                 See all work <ArrowUpRight className="w-4 h-4" />
               </Link>
@@ -260,30 +286,33 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="about" className="relative border-y border-white/10 bg-[#0d0d0d]">
+        <section id="about" className="relative border-y-2 border-white/20 bg-[#080808]">
           <div
-            className="pointer-events-none absolute inset-0 opacity-20"
+            className="pointer-events-none absolute inset-0 opacity-30"
             aria-hidden
             style={{
               backgroundImage:
-                "repeating-linear-gradient(0deg, rgba(255,255,255,.12) 0 1px, transparent 1px 3px), repeating-linear-gradient(90deg, rgba(255,255,255,.10) 0 2px, transparent 2px 6px)",
+                "repeating-linear-gradient(0deg, rgba(255,255,255,.08) 0 1px, transparent 1px 4px), repeating-linear-gradient(90deg, rgba(255,255,255,.06) 0 2px, transparent 2px 8px)",
             }}
           />
           <div className="max-w-7xl mx-auto px-4 py-16 md:py-24 grid md:grid-cols-12 gap-10 items-center">
             <div className="md:col-span-7">
-              <h2 className="text-2xl md:text-4xl font-black tracking-tight">About</h2>
+              <h2 className="font-display text-2xl md:text-4xl font-extrabold tracking-tighter uppercase">About</h2>
               <p className="mt-4 text-white/70 leading-relaxed max-w-2xl">
                 I&apos;m Travis Crawford, a designer from Texas who focuses on branding and digital experiences. I like creating work
                 that feels intentional but still has room to surprise people. When I&apos;m not working on client projects, I&apos;m usually
                 designing posters for fun. It&apos;s my way of staying curious.
               </p>
-              <div className="mt-8 flex gap-3">
-                <a href="#contact" className="px-4 py-2 rounded-full bg-[var(--brand-red)] text-black font-medium hover:contrast-125 transition">
+              <div className="mt-8 flex flex-wrap gap-3">
+                <a
+                  href="#contact"
+                  className="px-5 py-3 border-2 border-white bg-white text-black text-[10px] font-bold uppercase tracking-[0.28em] hover:bg-transparent hover:text-white transition-colors"
+                >
                   Work together
                 </a>
                 <a
                   href="/TravisCrawford_Resume.pdf"
-                  className="px-4 py-2 rounded-full border border-white/20 hover:border-white/40"
+                  className="px-5 py-3 border-2 border-white/35 text-[10px] font-bold uppercase tracking-[0.22em] text-white/85 hover:border-[var(--accent-red)] hover:text-[var(--accent-red)]"
                   download
                   target="_blank"
                   rel="noreferrer"
@@ -293,8 +322,8 @@ export default function Home() {
               </div>
             </div>
             <aside className="md:col-span-5 space-y-4 text-sm relative z-0">
-              <div className="p-4 rounded-xl border border-white/10 bg-black/30 relative z-10">
-                <div className="text-white/50">Tools</div>
+              <div className="p-4 border-2 border-white/20 bg-black relative z-10 shadow-brut-sm">
+                <div className="text-[10px] font-bold uppercase tracking-[0.35em] text-white/45">Tools</div>
                 <div className="mt-4 grid grid-cols-3 sm:grid-cols-4 gap-4">
                   {SOFTWARE_ICONS.map((icon) => (
                     <div key={icon.name} className="software-icon flex flex-col items-center gap-2 text-center">
@@ -306,7 +335,7 @@ export default function Home() {
               </div>
               <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {ABOUT_TEXT_STATS.map((stat) => (
-                  <li key={stat.k} className="p-4 rounded-xl border border-white/10 bg-black/30">
+                  <li key={stat.k} className="p-4 border-2 border-white/15 bg-black">
                     <div className="text-white/50">{stat.k}</div>
                     <div className="text-lg font-semibold mt-1">{stat.v}</div>
                   </li>
@@ -316,24 +345,24 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="contact" className="relative overflow-hidden">
+        <section id="contact" className="relative overflow-hidden border-t-2 border-white/15">
           <div className="max-w-7xl mx-auto px-4 py-16 md:py-24">
             <div className="grid md:grid-cols-12 gap-10 items-center">
               <div className="md:col-span-7">
-                <h2 className="text-2xl md:text-4xl font-black tracking-tight">Let’s build something sharp.</h2>
+                <h2 className="font-display text-2xl md:text-4xl font-extrabold tracking-tighter uppercase">Let’s build something sharp.</h2>
                 <p className="mt-4 text-white/70 max-w-xl">
                   Send a note about your goals, timeline, and any references. I’ll reply within 1–2 business days with next steps.
                 </p>
                 <div className="mt-8 flex flex-wrap gap-3">
                   <a
                     href="mailto:tcrawford.design@gmail.com"
-                    className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white text-black font-medium hover:contrast-125"
+                    className="inline-flex items-center gap-2 px-5 py-3 border-2 border-white bg-white text-black text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-transparent hover:text-white transition-colors"
                   >
                     <Mail className="w-4 h-4" /> tcrawford.design@gmail.com
                   </a>
                   <a
                     href="https://www.linkedin.com/in/travis-crawford-67759b24a"
-                    className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 hover:border-white/40"
+                    className="inline-flex items-center gap-2 px-5 py-3 border-2 border-white/35 text-[10px] font-bold uppercase tracking-[0.22em] text-white/85 hover:border-white hover:bg-white hover:text-black transition-colors"
                   >
                     <Linkedin className="w-4 h-4" /> LinkedIn
                   </a>
@@ -345,8 +374,8 @@ export default function Home() {
         </section>
       </main>
 
-      <footer className="border-t border-white/10">
-        <div className="max-w-7xl mx-auto px-4 py-8 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-white/60">
+      <footer className="border-t-2 border-white/25 bg-black">
+        <div className="max-w-7xl mx-auto px-4 py-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-white/50 uppercase tracking-[0.2em]">
           <p>© {new Date().getFullYear()} TC Design</p>
           <div className="flex gap-4">
             <a href="#work" className="hover:text-white">
@@ -371,10 +400,10 @@ export default function Home() {
 const DISABLED_SLUGS = [];
 
 const CAPABILITY_METRICS = [
-  { label: "Branding", icon: PenTool, progress: 95, accent: "from-[#ff5f6d] to-[#ffc371]" },
-  { label: "Marketing", icon: Megaphone, progress: 88, accent: "from-[#3f2b96] via-[#a8c0ff] to-[#00d4ff]" },
-  { label: "Strategy", icon: Cpu, progress: 92, accent: "from-[#8360c3] to-[#2ebf91]" },
-  { label: "Art Direction", icon: Camera, progress: 90, accent: "from-[#f83600] to-[#f9d423]" },
+  { label: "Branding", icon: PenTool, progress: 95, accent: "from-white to-white/45" },
+  { label: "Marketing", icon: Megaphone, progress: 88, accent: "from-white to-white/40" },
+  { label: "Strategy", icon: Cpu, progress: 92, accent: "from-white to-white/42" },
+  { label: "Art Direction", icon: Camera, progress: 90, accent: "from-white to-white/38" },
 ];
 
 export function ProjectCard({ project }) {
@@ -388,10 +417,10 @@ export function ProjectCard({ project }) {
 
   const cardContent = (
     <MotionDiv
-      initial={{ opacity: 0.9 }}
-      whileHover={clickable ? { scale: 1.015 } : undefined}
-      transition={{ type: "spring", stiffness: 200, damping: 20 }}
-      className="relative aspect-square rounded-2xl overflow-hidden border border-white/10 bg-black/40"
+      initial={{ opacity: 0.95 }}
+      whileHover={clickable ? { y: -5 } : undefined}
+      transition={{ type: "spring", stiffness: 380, damping: 28 }}
+      className="group-hover:shadow-brut relative aspect-square overflow-hidden border-2 border-white/20 bg-black shadow-brut-sm transition-shadow duration-200"
     >
       {hasImage ? (
         <img
@@ -410,11 +439,11 @@ export function ProjectCard({ project }) {
       )}
       <div className={`card-hover-border ${disabled ? "card-hover-border--disabled" : ""}`} aria-hidden />
       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-black/0 pointer-events-none" />
-      <div className="absolute bottom-0 left-0 right-0 p-5 flex items-end justify-between">
+      <div className="absolute bottom-0 left-0 right-0 p-4 flex items-end justify-between border-t-2 border-white/15 bg-black/85 backdrop-blur-[2px]">
         <div className="space-y-1">
-          <span className="inline-block text-xs tracking-wide uppercase text-white/70">{project.tag}</span>
+          <span className="inline-block text-[10px] font-bold tracking-[0.35em] uppercase text-white/55">{project.tag}</span>
           <div className="space-y-1">
-            <h3 className="text-lg md:text-xl font-semibold leading-tight max-w-xl">{primary}</h3>
+            <h3 className="font-display text-lg md:text-xl font-bold leading-tight max-w-xl tracking-tight">{primary}</h3>
             {secondary ? (
               <span className="block text-[11px] uppercase tracking-[0.35em] text-white/50">{secondary}</span>
             ) : null}
@@ -427,7 +456,7 @@ export function ProjectCard({ project }) {
         )}
       </div>
       {isComingSoon && (
-        <div className="absolute inset-0 bg-black/60 backdrop-blur-sm grid place-items-center">
+        <div className="absolute inset-0 bg-black/75 grid place-items-center border-2 border-white/20">
           <span className="text-white/80 text-sm uppercase tracking-[0.3em]">Coming Soon</span>
         </div>
       )}
@@ -587,11 +616,13 @@ function PosterSpotlight({ posters }) {
 
 function DashboardMetricCard({ className = "" }) {
   return (
-    <div className={`w-full rounded-2xl border border-white/10 bg-[#090909]/85 backdrop-blur-sm p-6 shadow-[0_12px_40px_-20px_rgba(0,0,0,0.85)] space-y-5 flex flex-col ${className}`}>
-      <div className="flex items-center justify-between text-xs uppercase tracking-[0.3em] text-white/40">
-        <span>Capabilities Pulse</span>
-        <span className="inline-flex items-center gap-1 text-white/55">
-          <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+    <div
+      className={`w-full border-2 border-white/20 bg-black p-6 shadow-brut space-y-5 flex flex-col ${className}`}
+    >
+      <div className="flex items-center justify-between text-[10px] font-bold uppercase tracking-[0.35em] text-white/40">
+        <span>Capabilities</span>
+        <span className="inline-flex items-center gap-2 text-white/50">
+          <span className="inline-block h-2 w-2 bg-[var(--accent-red)] shadow-[0_0_8px_var(--accent-red)] animate-pulse" />
           Live
         </span>
       </div>
@@ -740,7 +771,7 @@ export function LogoGlitchWord({ text, className = "" }) {
   }, [text, runGlitch, clearTimers]);
 
   return (
-    <span className={`inline-block ${isGlitching ? "text-white" : "text-[var(--brand-red)]"} ${className}`} aria-label={text}>
+    <span className={`inline-block ${isGlitching ? "text-white" : "text-[var(--accent-red)]"} ${className}`} aria-label={text}>
       {displayText}
     </span>
   );
@@ -762,19 +793,21 @@ function MagnetCTA() {
 
   return (
     <div className="md:col-span-5">
-      <div ref={ref} className="relative p-8 rounded-2xl border border-white/10 bg-black/40 overflow-hidden">
+      <div ref={ref} className="relative border-2 border-white/20 bg-black p-8 overflow-hidden shadow-brut">
         <div
-          className="pointer-events-none absolute -inset-20 opacity-40"
+          className="pointer-events-none absolute -inset-20 opacity-30"
           style={{
-            background: `radial-gradient(400px 200px at calc(50% + ${pos.x / 10}px) calc(50% + ${pos.y / 10}px), rgba(255,255,255,.22), transparent 60%)`,
+            background: `radial-gradient(400px 200px at calc(50% + ${pos.x / 10}px) calc(50% + ${pos.y / 10}px), rgba(255,255,255,.18), transparent 60%)`,
           }}
           aria-hidden
         />
-        <h3 className="text-xl font-semibold">Have a brief?</h3>
-        <p className="mt-2 text-white/70">Send 3–5 bullets about the challenge. I’ll respond with an approach & timeline.</p>
+        <h3 className="font-display text-xl font-bold tracking-tight uppercase">Have a brief?</h3>
+        <p className="mt-3 text-sm text-white/65 leading-relaxed">
+          Send 3–5 bullets about the challenge. I’ll respond with an approach & timeline.
+        </p>
         <a
           href="mailto:tcrawford.design@gmail.com"
-          className="mt-6 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white text-black font-medium hover:contrast-125 transition"
+          className="mt-6 inline-flex items-center gap-2 border-2 border-white bg-white px-5 py-3 text-[10px] font-bold uppercase tracking-[0.28em] text-black hover:bg-transparent hover:text-white transition-colors"
         >
           Share your brief
         </a>

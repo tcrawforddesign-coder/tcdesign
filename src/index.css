@@ -1,8 +1,15 @@
 @import "tailwindcss";
 
 :root {
-  --brand-red: #ffffff;
-  --brand-black: #030303;
+  /* Rare “status LED” red — use only for accents that should pop */
+  --accent-red: #ff2a3a;
+  --brand-red: var(--accent-red);
+  --brand-black: #050505;
+  /* Brutalist structure */
+  --brut-shadow: 6px 6px 0 0 rgba(255, 255, 255, 0.14);
+  --brut-shadow-sm: 4px 4px 0 0 rgba(255, 255, 255, 0.1);
+  --phosphor: #6ee7b7;
+  --phosphor-dim: rgba(110, 231, 183, 0.12);
 }
 
 html,
@@ -13,20 +20,125 @@ body,
 
 body {
   background-color: var(--brand-black);
-  color: #ffffff;
+  color: #e8ecef;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  letter-spacing: -0.02em;
   transition: background-color 0.4s ease, color 0.4s ease;
 }
 
+.font-display,
+h1,
+h2,
+h3 {
+  font-family: "Syne", system-ui, sans-serif;
+  letter-spacing: -0.04em;
+}
+
 ::selection {
-  background: #ffffff;
-  color: #000000;
+  background: rgba(110, 231, 183, 0.35);
+  color: #050608;
+}
+
+/* Retro shell: subtle scanlines + phosphor noise (no layout impact) */
+.app-retro {
+  position: relative;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+  background-size: 40px 40px;
+  background-attachment: fixed;
+}
+
+/* Apply the grid to page surfaces directly so it stays visible (not an overlay). */
+.app-retro .bg-\[\#050505\],
+.app-retro .bg-\[\#030303\] {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-size: 36px 36px;
+}
+
+.app-retro__crt {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.05) 0px,
+    rgba(255, 255, 255, 0.05) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  mix-blend-mode: overlay;
+  opacity: 0.55;
+}
+
+.app-retro__crt::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.5) 100%);
+  pointer-events: none;
+}
+
+.app-retro__led {
+  position: fixed;
+  bottom: 1.25rem;
+  right: 1.25rem;
+  z-index: 60;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--accent-red);
+  box-shadow:
+    0 0 8px rgba(255, 42, 58, 0.95),
+    0 0 16px rgba(255, 42, 58, 0.45);
+  animation: retro-led-pulse 2.8s ease-in-out infinite;
+}
+
+.app-retro__led-line {
+  position: fixed;
+  bottom: 1.55rem;
+  right: 2.25rem;
+  z-index: 60;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 9px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.28);
+  pointer-events: none;
+}
+
+.scroll-progress-led {
+  box-shadow: 0 0 14px rgba(255, 42, 58, 0.55);
+  animation: retro-led-pulse 3.2s ease-in-out infinite;
+}
+
+@keyframes retro-led-pulse {
+  0%,
+  100% {
+    opacity: 0.88;
+    filter: brightness(1);
+  }
+  50% {
+    opacity: 1;
+    filter: brightness(1.15);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-retro__led,
+  .scroll-progress-led {
+    animation: none;
+  }
 }
 
 .profile-card {
   position: relative;
   width: 100%;
   height: 100%;
-  border-radius: inherit;
+  border-radius: 0;
   background-color: rgba(255, 255, 255, 0.04);
   transition: transform 0.4s ease;
   display: flex;
@@ -151,6 +263,19 @@ body {
   letter-spacing: 0.12em;
 }
 
+.hero-connection-card {
+  transition:
+    box-shadow 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.15s ease;
+}
+
+.hero-connection-card:hover {
+  border-color: rgba(255, 255, 255, 0.45);
+  box-shadow: var(--brut-shadow);
+  transform: translate(-2px, -2px);
+}
+
 .hero-intro-card::before {
   content: "";
   position: absolute;
@@ -241,17 +366,18 @@ body {
 
 .gauge-bar {
   position: relative;
-  height: 8px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.08);
+  height: 6px;
+  border-radius: 0;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.06);
   overflow: hidden;
 }
 
 .gauge-bar__fill {
   position: absolute;
   inset: 0;
-  border-radius: inherit;
-  box-shadow: 0 8px 20px -12px rgba(255, 255, 255, 0.7);
+  border-radius: 0;
+  box-shadow: none;
 }
 
 .code-cloud {
@@ -308,11 +434,10 @@ body {
   z-index: 1;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.93) 0%,
-    rgba(0, 0, 0, 0.78) 20%,
-    rgba(0, 0, 0, 0.52) 40%,
-    rgba(0, 0, 0, 0.15) 60%,
-    rgba(0, 0, 0, 0) 75%
+    rgba(0, 0, 0, 0.97) 0%,
+    rgba(0, 0, 0, 0.85) 35%,
+    rgba(0, 0, 0, 0.4) 55%,
+    rgba(0, 0, 0, 0) 72%
   );
 }
 
@@ -343,11 +468,11 @@ body {
 
 .poster-gallery {
   position: relative;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.22);
+  border-radius: 0;
   padding: 22px;
-  background: linear-gradient(180deg, rgba(15, 15, 15, 0.8) 0%, rgba(7, 7, 7, 0.6) 100%);
-  backdrop-filter: blur(18px);
+  background: #0a0a0a;
+  box-shadow: var(--brut-shadow-sm);
   min-height: 340px;
   display: flex;
   flex-direction: column;
@@ -418,7 +543,7 @@ body {
   position: relative;
   transform: rotate(var(--poster-rotation, 0deg));
   transition: transform 0.35s ease, filter 0.35s ease, box-shadow 0.35s ease;
-  filter: drop-shadow(0 26px 40px rgba(0, 0, 0, 0.7));
+  filter: drop-shadow(4px 8px 0 rgba(0, 0, 0, 0.85));
 }
 
 .poster-gallery__item::before {
@@ -449,7 +574,8 @@ body {
   display: block;
   object-fit: contain;
   background: rgba(12, 12, 12, 0.9);
-  filter: saturate(110%);
+  filter: saturate(105%);
+  border-radius: 0;
 }
 
 .poster-gallery__img--blur {
@@ -949,4 +1075,16 @@ body {
 
 :root[data-theme="light"] .accent-button:hover {
   filter: brightness(0.95);
+}
+
+/* Brutalist enforcement for case-study pages */
+.brutalist-project .rounded-full,
+.brutalist-project .rounded-2xl,
+.brutalist-project .rounded-xl {
+  border-radius: 0 !important;
+}
+
+.brutalist-project .backdrop-blur,
+.brutalist-project .backdrop-blur-sm {
+  backdrop-filter: none !important;
 }

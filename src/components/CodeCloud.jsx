@@ -5,8 +5,6 @@ const ALPHABET = "TRAVISCRAWFORDDESIGNWEBPOSTERYXQKHMN";
 
 const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
 
-const ACCENT_HEX = "#FFFFFF";
-
 const CodeCloud = () => {
   const wrapRef = useRef(null);
   const scanRef = useRef(null);
@@ -16,9 +14,9 @@ const CodeCloud = () => {
     if (!wrap) return undefined;
 
     const rootStyles = window.getComputedStyle(document.documentElement);
-    const accentHex = rootStyles.getPropertyValue("--brand-red").trim() || "#ffffff";
-    const baseLetterColor = "#ffffff";
-    const accentLetterColor = accentHex || "#ffffff";
+    const accentHex = rootStyles.getPropertyValue("--brand-red").trim() || "#ff2a3a";
+    const baseLetterColor = "#e8ecef";
+    const accentLetterColor = accentHex || "#ff2a3a";
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setPixelRatio(clamp(window.devicePixelRatio, 1, 2));
@@ -73,7 +71,7 @@ const CodeCloud = () => {
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
       ctx.font = "900 180px Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif";
-      ctx.fillStyle = tint ? ACCENT_HEX : "#FFFFFF";
+      ctx.fillStyle = tint ? accentLetterColor : "#e8ecef";
       ctx.fillText(char, 128, 140);
       const texture = new THREE.CanvasTexture(canvas);
       texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
@@ -96,7 +94,7 @@ const CodeCloud = () => {
     const sprites = [];
     for (let i = 0; i < spriteCount; i += 1) {
       const letter = ALPHABET[Math.floor(Math.random() * ALPHABET.length)];
-      const tint = Math.random() < 0.22;
+      const tint = Math.random() < 0.14;
       const texture = makeLetterTexture(letter, tint);
       const material = new THREE.SpriteMaterial({
         map: texture,

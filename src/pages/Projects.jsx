@@ -23,15 +23,15 @@ export default function ProjectsPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#030303] text-white" id="top">
-      <header className="sticky top-0 z-40 backdrop-blur supports-[backdrop-filter]:bg-black/40 border-b border-white/10">
+    <div className="min-h-screen bg-[#050505] text-white font-mono" id="top">
+      <header className="sticky top-0 z-40 border-b-2 border-white bg-black">
         <div className="max-w-7xl mx-auto px-4">
           <div className="h-16 flex items-center justify-between">
-            <Link to="/" className="font-black tracking-tight text-lg md:text-xl">
+            <Link to="/" className="font-display font-extrabold tracking-tighter text-lg md:text-xl uppercase">
               Travis Crawford
             </Link>
 
-            <nav aria-label="Primary" className="hidden md:flex items-center gap-3 absolute left-1/2 -translate-x-1/2">
+            <nav aria-label="Primary" className="hidden md:flex items-center gap-0 absolute left-1/2 -translate-x-1/2 divide-x divide-white/20 border border-white/25">
               {[
                 { label: "Work", to: { pathname: "/", hash: "#work" } },
                 { label: "Projects", to: "/projects" },
@@ -42,21 +42,26 @@ export default function ProjectsPage() {
                 <Link
                   key={item.label}
                   to={item.to}
-                  className="px-4 py-2 rounded-full border border-white/15 hover:border-white/40 transition backdrop-blur bg-white/5 hover:bg-white/10"
+                  className="px-4 py-3 text-[10px] font-bold uppercase tracking-[0.28em] text-white/85 hover:bg-white hover:text-black transition-colors"
                 >
                   {item.label}
                 </Link>
               ))}
             </nav>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
               <Link
                 to={{ pathname: "/", hash: "#contact" }}
-                className="hidden sm:inline-flex items-center gap-2 px-3 py-2 rounded-full bg-white text-black font-medium hover:contrast-125 transition"
+                className="hidden sm:inline-flex items-center gap-2 px-4 py-2 border-2 border-white bg-white text-black text-[10px] font-bold uppercase tracking-[0.22em] hover:bg-transparent hover:text-white transition-colors"
               >
                 <ArrowUpRight className="w-4 h-4" /> Contact
               </Link>
-              <button className="md:hidden p-2 rounded border border-white/15" aria-label="Open menu" onClick={() => setOpen(true)}>
+              <button
+                type="button"
+                className="md:hidden p-2.5 border-2 border-white/30 hover:bg-white/10"
+                aria-label="Open menu"
+                onClick={() => setOpen(true)}
+              >
                 <Menu className="w-5 h-5" />
               </button>
             </div>
@@ -64,14 +69,19 @@ export default function ProjectsPage() {
         </div>
 
         {open && (
-          <div role="dialog" aria-modal className="fixed inset-0 z-50 bg-black/80">
+          <div role="dialog" aria-modal className="fixed inset-0 z-50 bg-black border-2 border-white">
             <div className="absolute top-4 right-4">
-              <button className="p-2 rounded border border-white/15" onClick={() => setOpen(false)} aria-label="Close menu">
+              <button
+                type="button"
+                className="p-2.5 border-2 border-white hover:bg-white hover:text-black"
+                onClick={() => setOpen(false)}
+                aria-label="Close menu"
+              >
                 <X className="w-5 h-5" />
               </button>
             </div>
-            <div className="min-h-full grid place-items-center">
-              <ul className="space-y-6 text-center text-2xl">
+            <div className="min-h-full grid place-items-center px-6">
+              <ul className="space-y-4 text-center w-full max-w-sm">
                 {[
                   { label: "Work", to: { pathname: "/", hash: "#work" } },
                   { label: "Projects", to: "/projects" },
@@ -79,11 +89,11 @@ export default function ProjectsPage() {
                   { label: "About", to: { pathname: "/", hash: "#about" } },
                   { label: "Contact", to: { pathname: "/", hash: "#contact" } },
                 ].map((item) => (
-                  <li key={item.label}>
+                  <li key={item.label} className="border border-white/25">
                     <Link
                       to={item.to}
                       onClick={() => setOpen(false)}
-                      className="px-6 py-3 rounded-full border border-white/15 inline-block bg-white/5 hover:bg-white/10"
+                      className="block py-4 text-sm font-bold uppercase tracking-[0.35em] hover:bg-white hover:text-black transition-colors"
                     >
                       {item.label}
                     </Link>
@@ -96,16 +106,19 @@ export default function ProjectsPage() {
       </header>
 
       <main className="max-w-7xl mx-auto px-4 lg:px-10 py-16 md:py-24">
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12 border-b-2 border-white/15 pb-8">
           <div>
-            <p className="text-[11px] uppercase tracking-[0.4em] text-white/60">All Projects</p>
-            <h1 className="mt-3 text-4xl md:text-5xl font-black tracking-tight">Extended Portfolio</h1>
-            <p className="mt-4 max-w-2xl text-white/70">
+            <p className="text-[10px] font-bold uppercase tracking-[0.45em] text-white/45">All Projects</p>
+            <h1 className="font-display mt-3 text-4xl md:text-5xl font-extrabold tracking-tighter uppercase">Extended Portfolio</h1>
+            <p className="mt-4 max-w-2xl text-sm text-white/65 leading-relaxed">
               A deeper archive of visual systems, brand campaigns, and digital experiences spanning client launches, concept
               studies, and collaborations.
             </p>
           </div>
-          <Link to={{ pathname: "/", hash: "#contact" }} className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white text-black font-medium hover:contrast-125 transition">
+          <Link
+            to={{ pathname: "/", hash: "#contact" }}
+            className="inline-flex items-center gap-2 px-5 py-3 border-2 border-white bg-white text-black text-[10px] font-bold uppercase tracking-[0.28em] hover:bg-transparent hover:text-white transition-colors shadow-brut-sm"
+          >
             Start a project <ArrowUpRight className="w-4 h-4" />
           </Link>
         </div>

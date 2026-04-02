@@ -50,13 +50,15 @@ export default function ProjectDetailsPage() {
 
   if (!project) {
     return (
-      <div className="min-h-screen bg-[#030303] text-white grid place-items-center px-6">
-        <div className="text-center space-y-4">
-          <p className="text-sm uppercase tracking-[0.4em] text-white/50">Project not found</p>
-          <h1 className="text-3xl font-bold">The case study you’re looking for has been archived.</h1>
+      <div className="min-h-screen bg-[#050505] text-white font-mono grid place-items-center px-6">
+        <div className="text-center space-y-6 max-w-md border-2 border-white/25 p-10 shadow-brut">
+          <p className="text-[10px] font-bold uppercase tracking-[0.45em] text-white/45">Project not found</p>
+          <h1 className="font-display text-2xl font-extrabold tracking-tight uppercase">
+            The case study you’re looking for has been archived.
+          </h1>
           <Link
             to="/"
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 hover:border-white/40 transition"
+            className="inline-flex items-center gap-2 border-2 border-white px-5 py-3 text-[10px] font-bold uppercase tracking-[0.28em] hover:bg-white hover:text-black transition-colors"
           >
             <ChevronLeft className="w-4 h-4" /> Back to work
           </Link>
@@ -66,15 +68,15 @@ export default function ProjectDetailsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#030303] text-white">
-      <header className="sticky top-0 z-40 backdrop-blur supports-[backdrop-filter]:bg-black/40 border-b border-white/10">
+    <div className="brutalist-project min-h-screen bg-[#050505] text-white font-mono">
+      <header className="sticky top-0 z-40 border-b-2 border-white bg-black">
         <div className="max-w-7xl mx-auto px-4">
           <div className="h-16 flex items-center justify-between">
-            <Link to="/" className="font-black tracking-tight text-lg md:text-xl inline-flex items-center">
+            <Link to="/" className="font-display font-extrabold tracking-tighter text-lg md:text-xl uppercase">
               <span>Travis Crawford</span>
             </Link>
 
-            <nav aria-label="Primary" className="hidden md:flex items-center gap-3 absolute left-1/2 -translate-x-1/2">
+            <nav aria-label="Primary" className="hidden md:flex items-center gap-0 absolute left-1/2 -translate-x-1/2 divide-x divide-white/20 border border-white/25">
               {[
                 { label: "Work", to: { pathname: "/", hash: "#work" } },
                 { label: "Projects", to: "/projects" },
@@ -85,21 +87,26 @@ export default function ProjectDetailsPage() {
                 <Link
                   key={item.label}
                   to={item.to}
-                  className="px-4 py-2 rounded-full border border-white/15 hover:border-white/40 transition backdrop-blur bg-white/5 hover:bg-white/10"
+                  className="px-4 py-3 text-[10px] font-bold uppercase tracking-[0.28em] text-white/85 hover:bg-white hover:text-black transition-colors"
                 >
                   {item.label}
                 </Link>
               ))}
             </nav>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
               <Link
                 to={{ pathname: "/", hash: "#contact" }}
-                className="hidden sm:inline-flex items-center gap-2 px-3 py-2 rounded-full bg-white text-black font-medium hover:contrast-125 transition"
+                className="hidden sm:inline-flex items-center gap-2 px-4 py-2 border-2 border-white bg-white text-black text-[10px] font-bold uppercase tracking-[0.22em] hover:bg-transparent hover:text-white transition-colors"
               >
                 <ArrowUpRight className="w-4 h-4" /> Contact
               </Link>
-              <button className="md:hidden p-2 rounded border border-white/15" aria-label="Open menu" onClick={() => setOpen(true)}>
+              <button
+                type="button"
+                className="md:hidden p-2.5 border-2 border-white/30 hover:bg-white/10"
+                aria-label="Open menu"
+                onClick={() => setOpen(true)}
+              >
                 <Menu className="w-5 h-5" />
               </button>
             </div>
@@ -107,14 +114,19 @@ export default function ProjectDetailsPage() {
         </div>
 
         {open && (
-          <div role="dialog" aria-modal className="fixed inset-0 z-50 bg-black/80">
+          <div role="dialog" aria-modal className="fixed inset-0 z-50 bg-black border-2 border-white">
             <div className="absolute top-4 right-4">
-              <button className="p-2 rounded border border-white/15" onClick={() => setOpen(false)} aria-label="Close menu">
+              <button
+                type="button"
+                className="p-2.5 border-2 border-white hover:bg-white hover:text-black"
+                onClick={() => setOpen(false)}
+                aria-label="Close menu"
+              >
                 <X className="w-5 h-5" />
               </button>
             </div>
-            <div className="min-h-full grid place-items-center">
-              <ul className="space-y-6 text-center text-2xl">
+            <div className="min-h-full grid place-items-center px-6">
+              <ul className="space-y-4 text-center w-full max-w-sm">
                 {[
                   { label: "Work", to: { pathname: "/", hash: "#work" } },
                   { label: "Projects", to: "/projects" },
@@ -122,11 +134,11 @@ export default function ProjectDetailsPage() {
                   { label: "About", to: { pathname: "/", hash: "#about" } },
                   { label: "Contact", to: { pathname: "/", hash: "#contact" } },
                 ].map((item) => (
-                  <li key={item.label}>
+                  <li key={item.label} className="border border-white/25">
                     <Link
                       to={item.to}
                       onClick={() => setOpen(false)}
-                      className="px-6 py-3 rounded-full border border-white/15 inline-block bg-white/5 hover:bg-white/10"
+                      className="block py-4 text-sm font-bold uppercase tracking-[0.35em] hover:bg-white hover:text-black transition-colors"
                     >
                       {item.label}
                     </Link>
@@ -154,9 +166,9 @@ export default function ProjectDetailsPage() {
         <LongformCopy {...project.outcomes} id="outcomes" />
         <PrevNext prev={prev} next={next} />
       </div>
-      <footer className="border-t border-white/10 py-10 text-center text-xs text-white/50">
+      <footer className="border-t-2 border-white/25 bg-black py-10 text-center text-[10px] uppercase tracking-[0.25em] text-white/45">
         © {new Date().getFullYear()} Travis Crawford — Portfolio
-        <div className="mt-3 flex justify-center gap-4 text-white/60">
+        <div className="mt-4 flex justify-center gap-6 text-white/55">
           <a href="mailto:tcrawford.design@gmail.com" className="inline-flex items-center gap-2 hover:text-white" target="_blank" rel="noreferrer">
             <Mail className="w-4 h-4" /> Email
           </a>
@@ -174,7 +186,7 @@ function Hero({ project }) {
   return (
     <header className="relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-10 pt-16 pb-8">
-        <div className="flex items-center gap-3 mb-3 text-[12px] tracking-widest uppercase text-white/60">
+        <div className="flex items-center gap-3 mb-3 text-[11px] font-bold tracking-[0.35em] uppercase text-white/60">
           <span>{project.tag}</span>
           <span className="opacity-40">•</span>
           <span>{project.timeframe}</span>
@@ -183,19 +195,19 @@ function Hero({ project }) {
           initial={{ y: 14, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.45 }}
-          className="text-5xl md:text-6xl font-black leading-[0.95]"
+          className="font-display text-5xl md:text-6xl font-extrabold tracking-tighter leading-[0.92] uppercase"
         >
           <span className="block">{primary}</span>
         </MotionHeading>
         {secondary ? (
-          <div className="mt-2 text-[12px] uppercase tracking-[0.4em] text-white/60">{secondary}</div>
+          <div className="mt-2 text-[11px] font-bold uppercase tracking-[0.4em] text-white/60">{secondary}</div>
         ) : null}
-        <p className="mt-4 max-w-2xl text-white/70">{project.summary}</p>
+        <p className="mt-4 max-w-2xl text-sm text-white/70 leading-relaxed">{project.summary}</p>
         <div className="mt-6 flex flex-wrap gap-2">
           {project.roles.map((role) => (
             <span
               key={role}
-              className="px-3 py-1 rounded-full text-xs border border-white/15 bg-[#0c0c0c]/60 backdrop-blur-sm"
+              className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.22em] border border-white/25 bg-black"
             >
               {role}
             </span>
@@ -203,12 +215,12 @@ function Hero({ project }) {
           {project.tools.map((tool) => (
             <span
               key={tool}
-              className="px-3 py-1 rounded-full text-xs border border-white/15 bg-[#0c0c0c]/60 backdrop-blur-sm"
+              className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.22em] border border-white/25 bg-black"
             >
               {tool}
             </span>
           ))}
-          <span className="px-3 py-1 rounded-full text-xs border border-white/15 bg-[#0c0c0c]/60 backdrop-blur-sm">
+          <span className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.22em] border border-white/25 bg-black">
             {project.timeframe}
           </span>
         </div>
@@ -258,10 +270,10 @@ function HoverSpotlight({ className = "", children }) {
 function LongformCopy({ id, kicker, title, paragraphs }) {
   return (
     <section id={id}>
-      <div className="text-[11px] uppercase tracking-widest text-white/60 mb-2">{kicker}</div>
-      <HoverSpotlight className="rounded-2xl border border-white/10 bg-[#0c0c0c]/60 p-6 md:p-8">
-        <h2 className="text-xl md:text-2xl font-bold tracking-tight">{title}</h2>
-        <div className="mt-3 space-y-3 text-white/80 max-w-3xl">
+      <div className="text-[10px] font-bold uppercase tracking-[0.42em] text-white/55 mb-2">{kicker}</div>
+      <HoverSpotlight className="border-2 border-white/20 bg-black p-6 md:p-8 shadow-brut-sm">
+        <h2 className="font-display text-xl md:text-2xl font-extrabold tracking-tight uppercase">{title}</h2>
+        <div className="mt-3 space-y-3 text-sm text-white/80 max-w-3xl leading-relaxed">
           {paragraphs.map((paragraph, index) => (
             <p key={index}>{paragraph}</p>
           ))}
@@ -274,19 +286,19 @@ function LongformCopy({ id, kicker, title, paragraphs }) {
 function IconCards({ highlights }) {
   return (
     <section>
-      <div className="text-[11px] uppercase tracking-widest text-white/60 mb-2">System Highlights</div>
+      <div className="text-[10px] font-bold uppercase tracking-[0.42em] text-white/55 mb-2">System Highlights</div>
       <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {highlights.map(({ icon, title, copy }) => {
           const Icon = iconComponents[icon] ?? PenTool;
           return (
-            <HoverSpotlight key={title} className="rounded-2xl border border-white/10 bg-[#0c0c0c]/60 p-5">
+            <HoverSpotlight key={title} className="border-2 border-white/20 bg-black p-5 shadow-brut-sm">
               <div className="flex items-start gap-3">
-                <div className="shrink-0 rounded-full border border-white/15 p-2">
+                <div className="shrink-0 border border-white/30 p-2">
                   <Icon className="w-4 h-4" />
                 </div>
                 <div>
-                  <h3 className="text-sm font-semibold tracking-tight">{title}</h3>
-                  <p className="mt-1 text-sm text-white/70">{copy}</p>
+                  <h3 className="font-display text-sm font-bold tracking-tight uppercase">{title}</h3>
+                  <p className="mt-1 text-sm text-white/70 leading-relaxed">{copy}</p>
                 </div>
               </div>
             </HoverSpotlight>
@@ -304,7 +316,7 @@ function TextureBanner({ project }) {
   }
 
   return (
-    <HoverSpotlight className="rounded-2xl overflow-hidden border border-white/10">
+    <HoverSpotlight className="overflow-hidden border-2 border-white/20 shadow-brut-sm">
       <div className="relative aspect-[21/9]">
         {project.textureImage ? (
           <div
@@ -341,11 +353,11 @@ function TextureBanner({ project }) {
 function ColorPalette({ palette }) {
   return (
     <section>
-      <div className="text-[11px] uppercase tracking-widest text-white/60 mb-2">Color System</div>
-      <HoverSpotlight className="relative rounded-2xl border border-white/10 bg-[#060606]/85 p-6 md:p-8 overflow-hidden backdrop-blur">
+      <div className="text-[10px] font-bold uppercase tracking-[0.42em] text-white/55 mb-2">Color System</div>
+      <HoverSpotlight className="relative border-2 border-white/20 bg-black p-6 md:p-8 overflow-hidden shadow-brut-sm">
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 relative">
           <div className="lg:w-80 space-y-4">
-            <h3 className="text-xl font-semibold tracking-tight text-white">Palette Fundamentals</h3>
+            <h3 className="font-display text-xl font-bold tracking-tight uppercase text-white">Palette Fundamentals</h3>
             <p className="text-sm text-white/70 leading-relaxed">
               Foam, espresso, copper, walnut, and sage presented as straightforward swatches so you can read contrast and temperature without any animation getting in the way.
             </p>
@@ -363,11 +375,11 @@ function PalettePlayground({ palette }) {
       {palette.map((swatch) => (
         <div
           key={swatch.hex}
-          className="flex flex-col gap-3 p-4 rounded-2xl border border-white/12 bg-black/30"
+          className="flex flex-col gap-3 p-4 border-2 border-white/18 bg-black"
           style={{ boxShadow: "0 20px 55px -32px rgba(0,0,0,0.85)" }}
         >
-          <div className="h-20 rounded-xl border border-white/6" style={{ backgroundColor: swatch.hex }} aria-hidden />
-          <div className="flex items-center justify-between text-[11px] uppercase tracking-[0.32em] text-white/60">
+          <div className="h-20 border border-white/15" style={{ backgroundColor: swatch.hex }} aria-hidden />
+          <div className="flex items-center justify-between text-[10px] font-bold uppercase tracking-[0.28em] text-white/60">
             <span>{swatch.name}</span>
             <span>{swatch.hex}</span>
           </div>
@@ -436,7 +448,7 @@ function Gallery({ project, socialSection }) {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm flex items-center justify-center p-6"
+              className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-6"
               onClick={handleClose}
             >
               <motion.div
@@ -495,7 +507,7 @@ function Gallery({ project, socialSection }) {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true, margin: "-15%" }}
                         transition={{ duration: 0.35, delay: index * 0.05 }}
-                        className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#0c0c0c]/60 cursor-zoom-in"
+                        className="relative overflow-hidden border-2 border-white/18 bg-black cursor-zoom-in shadow-brut-sm"
                         role="button"
                         tabIndex={0}
                         onClick={() => handleOpen(media)}
@@ -551,7 +563,7 @@ function Gallery({ project, socialSection }) {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-15%" }}
                   transition={{ duration: 0.35, delay: index * 0.05 }}
-                  className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#0c0c0c]/60 cursor-zoom-in"
+                  className="relative overflow-hidden border-2 border-white/18 bg-black cursor-zoom-in shadow-brut-sm"
                   role="button"
                   tabIndex={0}
                   onClick={() => handleOpen(media)}
@@ -602,7 +614,7 @@ function Gallery({ project, socialSection }) {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-15%" }}
         transition={{ duration: 0.35, delay: (index % 5) * 0.04 }}
-        className={`group/spot relative overflow-hidden rounded-xl border border-white/10 ${colClass}`}
+        className={`group/spot relative overflow-hidden border-2 border-white/18 ${colClass}`}
         onMouseMove={(event) => {
           const rect = event.currentTarget.getBoundingClientRect();
           event.currentTarget.style.setProperty("--mx", `${event.clientX - rect.left}px`);
@@ -651,7 +663,7 @@ function Gallery({ project, socialSection }) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm flex items-center justify-center p-6"
+            className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-6"
             onClick={handleClose}
           >
             <motion.div
@@ -727,7 +739,7 @@ function CarouselMediaGroup({ title, items, aspectRatio, onOpen }) {
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.28, delay: offset * 0.04 }}
-                className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#0c0c0c]/60"
+                className="relative overflow-hidden border-2 border-white/18 bg-black shadow-brut-sm"
               >
                 <button
                   type="button"
@@ -743,7 +755,7 @@ function CarouselMediaGroup({ title, items, aspectRatio, onOpen }) {
                       loading="lazy"
                       decoding="async"
                     />
-                    <span className="pointer-events-none absolute bottom-4 left-1/2 -translate-x-1/2 rounded-full bg-black/55 px-3 py-1 text-[11px] uppercase tracking-[0.35em] text-white/70 opacity-0 transition group-hover/carousel:opacity-100">
+                    <span className="pointer-events-none absolute bottom-4 left-1/2 -translate-x-1/2 border border-white/30 bg-black/75 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.32em] text-white/70 opacity-0 transition group-hover/carousel:opacity-100">
                       View larger
                     </span>
                   </div>
@@ -755,7 +767,7 @@ function CarouselMediaGroup({ title, items, aspectRatio, onOpen }) {
         <button
           type="button"
           onClick={handlePrevious}
-          className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full border border-white/15 bg-black/50 p-2 text-white/80 hover:bg-black/70 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 disabled:opacity-40 disabled:hover:bg-black/50"
+          className="absolute left-3 top-1/2 -translate-y-1/2 border-2 border-white/25 bg-black/80 p-2 text-white/80 hover:bg-white hover:text-black focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 disabled:opacity-40 disabled:hover:bg-black/80"
           aria-label="Previous frames"
           disabled={navigationDisabled}
         >
@@ -764,7 +776,7 @@ function CarouselMediaGroup({ title, items, aspectRatio, onOpen }) {
         <button
           type="button"
           onClick={handleNext}
-          className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full border border-white/15 bg-black/50 p-2 text-white/80 hover:bg-black/70 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 disabled:opacity-40 disabled:hover:bg-black/50"
+          className="absolute right-3 top-1/2 -translate-y-1/2 border-2 border-white/25 bg-black/80 p-2 text-white/80 hover:bg-white hover:text-black focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 disabled:opacity-40 disabled:hover:bg-black/80"
           aria-label="Next frames"
           disabled={navigationDisabled}
         >
@@ -792,7 +804,7 @@ function TextureCard({ project, className = "" }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-15%" }}
       transition={{ duration: 0.35 }}
-      className={`group/spot relative overflow-hidden rounded-xl border border-white/10 ${className}`}
+      className={`group/spot relative overflow-hidden border-2 border-white/18 ${className}`}
       onMouseMove={(event) => {
         const rect = event.currentTarget.getBoundingClientRect();
         event.currentTarget.style.setProperty("--mx", `${event.clientX - rect.left}px`);
@@ -852,7 +864,7 @@ function NavCard({ direction, label, slug }) {
   return (
     <Link
       to={`/projects/${slug}`}
-      className={`group inline-flex items-center justify-center rounded-full border border-white/20 px-6 py-3 text-sm font-medium bg-[#0c0c0c]/60 hover:bg-white/5 transition-all ${
+      className={`group inline-flex items-center justify-center border-2 border-white/25 px-6 py-3 text-[10px] font-bold uppercase tracking-[0.24em] bg-black hover:bg-white hover:text-black transition-colors ${
         isNext ? "md:ml-auto" : "md:mr-auto"
       }`}
       style={{ borderColor: "rgba(255,255,255,0.14)", width: "fit-content", minWidth: "160px" }}
@@ -910,10 +922,10 @@ function SocialFeedSection({ posts, projectName }) {
 
   return (
     <section>
-      <div className="text-[11px] uppercase tracking-widest text-white/60 mb-3">Ads &amp; Social</div>
+      <div className="text-[10px] font-bold uppercase tracking-[0.42em] text-white/55 mb-3">Ads &amp; Social</div>
       <div className="grid md:grid-cols-12 gap-10 items-center">
         <div className="md:col-span-5 space-y-4">
-          <h2 className="text-2xl md:text-3xl font-bold tracking-tight">Instagram content system</h2>
+          <h2 className="font-display text-2xl md:text-3xl font-extrabold tracking-tight uppercase">Instagram content system</h2>
           <p className="text-white/70 text-sm leading-relaxed">
             A swipeable set of promos for {projectName} showing how the conversational identity flexes across social placements. Motion and static stories share
             the same typography, color energy, and conversational copy structure.
@@ -990,8 +1002,8 @@ function SocialFeedSection({ posts, projectName }) {
             return (
               <li
                 key={key}
-                className={`relative flex-shrink-0 w-40 h-40 rounded-xl border border-white/10 bg-black/30 overflow-hidden ${
-                  index === active ? "ring-2 ring-white/70" : "ring-1 ring-white/10"
+                className={`relative flex-shrink-0 w-40 h-40 border-2 bg-black/30 overflow-hidden ${
+                  index === active ? "border-[var(--accent-red)]" : "border-white/20"
                 }`}
               >
                 <button
