@@ -42,10 +42,41 @@ export default function ProjectDetailsPage() {
   const project = useMemo(() => findProjectBySlug(slug), [slug]);
   const { prev, next } = useMemo(() => getAdjacentProjects(slug), [slug]);
   const [open, setOpen] = useState(false);
+  const [bootState, setBootState] = useState({ active: true, progress: 6, phase: 0 });
   const isCivilGoat = project?.slug === "civil-goat-coffee";
+  const moduleLabel = slug ? slug.replaceAll("-", " ").toUpperCase() : "CASE STUDY";
+
+  const bootSteps = [
+    "Initializing archive bus",
+    "Syncing visual tokens",
+    "Mounting media arrays",
+    "Compiling interaction shell",
+    "Brutalist core online",
+  ];
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "auto" });
+  }, [slug]);
+
+  useEffect(() => {
+    setBootState({ active: true, progress: 6, phase: 0 });
+
+    const intervalId = window.setInterval(() => {
+      setBootState((prev) => ({
+        ...prev,
+        progress: Math.min(prev.progress + 3 + Math.random() * 7, 94),
+        phase: (prev.phase + 1) % 5,
+      }));
+    }, 120);
+
+    const timeoutId = window.setTimeout(() => {
+      setBootState({ active: false, progress: 100, phase: 4 });
+    }, 1800);
+
+    return () => {
+      window.clearInterval(intervalId);
+      window.clearTimeout(timeoutId);
+    };
   }, [slug]);
 
   if (!project) {
@@ -149,6 +180,54 @@ export default function ProjectDetailsPage() {
           </div>
         )}
       </header>
+
+      <AnimatePresence>
+        {bootState.active ? (
+          <motion.div
+            key={`boot-${slug}`}
+            initial={{ opacity: 1, scale: 1.015 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.32 }}
+            className="case-boot fixed inset-0 z-[70] bg-black border-b-2 border-white/20 pointer-events-none overflow-hidden"
+            aria-hidden
+          >
+            <div className="case-boot__wipe" />
+            <div className="case-boot__scan" />
+            <div className="h-full w-full max-w-7xl mx-auto px-6 lg:px-10 py-10 flex items-center">
+              <div className="w-full max-w-4xl border-2 border-white/30 p-6 md:p-10 bg-black shadow-brut">
+                <div className="flex flex-wrap items-center justify-between gap-3 text-[10px] uppercase tracking-[0.35em] text-white/45">
+                  <span>Booting Case Study Module</span>
+                  <span className="text-[var(--accent-red)]">Phase {bootState.phase + 1}/5</span>
+                </div>
+                <div className="mt-5 case-boot__headline font-display text-4xl md:text-6xl font-black uppercase leading-[0.9] tracking-tighter">
+                  {moduleLabel}
+                </div>
+                <div className="mt-3 text-[10px] uppercase tracking-[0.3em] text-white/45">/projects/{slug}</div>
+                <div className="mt-6 h-4 border-2 border-white/30 bg-black overflow-hidden">
+                  <motion.div
+                    className="h-full case-boot__bar"
+                    initial={{ width: 0 }}
+                    animate={{ width: `${bootState.progress}%` }}
+                    transition={{ duration: 0.1, ease: "linear" }}
+                  />
+                </div>
+                <div className="mt-3 text-[10px] uppercase tracking-[0.35em] text-white/65">{Math.round(bootState.progress)}%</div>
+                <div className="mt-5 space-y-1.5 text-[10px] uppercase tracking-[0.26em] text-white/50">
+                  {bootSteps.map((step, index) => (
+                    <div
+                      key={step}
+                      className={`transition-opacity duration-150 ${bootState.progress >= (index + 1) * 18 ? "opacity-100" : "opacity-25"}`}
+                    >
+                      [{bootState.progress >= (index + 1) * 18 ? "ok" : ".."}] {step}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
 
       <Hero project={project} />
       <div className="max-w-7xl mx-auto px-6 lg:px-10 py-14 space-y-16">
@@ -697,10 +776,11 @@ function Gallery({ project, socialSection }) {
 
 function CarouselMediaGroup({ title, items, aspectRatio, onOpen }) {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const itemsSignature = useMemo(() => items.map((item) => item.full ?? item.preview ?? "").join("|"), [items]);
 
   useEffect(() => {
     setCurrentIndex(0);
-  }, [items]);
+  }, [itemsSignature]);
 
   const total = items.length;
   if (!total) {

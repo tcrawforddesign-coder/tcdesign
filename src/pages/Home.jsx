@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowUpRight, Instagram, Linkedin, Mail, Menu, X, Megaphone, Camera, PenTool, Cpu } from "lucide-react";
+import { ArrowUpRight, Instagram, Linkedin, Mail, Menu, X, Megaphone, Camera, PenTool, Cpu, MapPin } from "lucide-react";
 
 import { projects } from "../data/projects.js";
 import { posterProject } from "../data/posters.js";
@@ -51,11 +51,6 @@ const HERO_SOCIAL_LINKS = [
     icon: Instagram,
   },
 ];
-const ABOUT_TEXT_STATS = [
-  { k: "Years", v: "5+" },
-  { k: "Awards", v: "Graphis Gold + 6x Silver" },
-];
-
 const FEATURED_SLUGS = ["civil-goat-coffee", "atlas-coffee-club", "barbican-refresh"];
 const FEATURED_COL_SPANS = ["md:col-span-7", "md:col-span-5", "md:col-span-5", "md:col-span-7"];
 const baseFeaturedProjects = FEATURED_SLUGS.map((slug) => projects.find((project) => project.slug === slug)).filter(Boolean);
@@ -322,6 +317,7 @@ export default function Home() {
               </div>
             </div>
             <aside className="md:col-span-5 space-y-4 text-sm relative z-0">
+              <LocationCard />
               <div className="p-4 border-2 border-white/20 bg-black relative z-10 shadow-brut-sm">
                 <div className="text-[10px] font-bold uppercase tracking-[0.35em] text-white/45">Tools</div>
                 <div className="mt-4 grid grid-cols-3 sm:grid-cols-4 gap-4">
@@ -332,14 +328,6 @@ export default function Home() {
                   ))}
                 </div>
               </div>
-              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {ABOUT_TEXT_STATS.map((stat) => (
-                  <li key={stat.k} className="p-4 border-2 border-white/15 bg-black">
-                    <div className="text-white/50">{stat.k}</div>
-                    <div className="text-lg font-semibold mt-1">{stat.v}</div>
-                  </li>
-                ))}
-              </ul>
             </aside>
           </div>
         </section>
@@ -512,6 +500,124 @@ function HeadshotCard() {
             <Instagram className="w-5 h-5" />
           </a>
         </div>
+      </div>
+    </div>
+  );
+}
+
+function LocationCard() {
+  const mapRef = useRef(null);
+  const mapInstanceRef = useRef(null);
+  const [mapReady, setMapReady] = useState(false);
+  const [mapError, setMapError] = useState(false);
+
+  useEffect(() => {
+    let destroyed = false;
+    const timeoutIds = [];
+    let leafletModule = null;
+
+    const initMap = async () => {
+      if (!mapRef.current || mapInstanceRef.current) return;
+      leafletModule = await import("leaflet");
+      if (destroyed || !mapRef.current) return;
+
+      const L = leafletModule.default;
+      const map = L.map(mapRef.current, {
+        zoomControl: false,
+        attributionControl: false,
+        dragging: false,
+        scrollWheelZoom: false,
+        doubleClickZoom: false,
+        boxZoom: false,
+        keyboard: false,
+        tap: false,
+      });
+
+      const austin = [30.2672, -97.7431];
+      map.setView(austin, 12);
+
+      const tiles = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        subdomains: "abc",
+        maxZoom: 19,
+      });
+      tiles.on("load", () => setMapReady(true));
+      tiles.on("tileerror", () => setMapError(true));
+      tiles.addTo(map);
+
+      mapInstanceRef.current = map;
+      window.setTimeout(() => map.invalidateSize(), 120);
+      const onResize = () => map.invalidateSize();
+      window.addEventListener("resize", onResize);
+
+      const runLoop = () => {
+        if (destroyed || !mapInstanceRef.current) return;
+        const instance = mapInstanceRef.current;
+        instance.flyTo(austin, 3, { duration: 8.5, easeLinearity: 0.12, animate: true });
+        timeoutIds.push(window.setTimeout(() => {
+          if (!destroyed && mapInstanceRef.current) {
+            mapInstanceRef.current.flyTo(austin, 12, { duration: 7.4, easeLinearity: 0.14, animate: true });
+          }
+        }, 9800));
+        timeoutIds.push(window.setTimeout(runLoop, 20500));
+      };
+
+      runLoop();
+
+      timeoutIds.push({
+        __cleanup: () => window.removeEventListener("resize", onResize),
+      });
+    };
+
+    initMap();
+
+    return () => {
+      destroyed = true;
+      timeoutIds.forEach((id) => {
+        if (typeof id === "number") window.clearTimeout(id);
+        if (id && typeof id === "object" && typeof id.__cleanup === "function") id.__cleanup();
+      });
+      if (mapInstanceRef.current) {
+        mapInstanceRef.current.remove();
+        mapInstanceRef.current = null;
+      }
+    };
+  }, []);
+
+  return (
+    <div className="location-card border-2 border-white/20 bg-black p-4 shadow-brut-sm">
+      <div className="flex items-center justify-between">
+        <div className="text-[10px] font-bold uppercase tracking-[0.35em] text-white/45">My Location</div>
+        <div className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] text-white/55">
+          <span className="inline-block w-2 h-2 bg-[var(--accent-red)] animate-pulse" />
+          Online
+        </div>
+      </div>
+
+      <div className="location-map mt-4" role="img" aria-label="Animated GPS-style zoom map centered on Austin, Texas">
+        <div ref={mapRef} className="location-map__leaflet" />
+        {!mapReady ? (
+          <div className="location-map__status" aria-live="polite">
+            {mapError ? "Map unavailable" : "Loading map..."}
+          </div>
+        ) : null}
+        <div className="location-map__vignette" aria-hidden />
+        <div className="location-map__crosshair" aria-hidden />
+        <div className="location-map__pin-wrap" aria-hidden>
+          <span className="location-map__pulse" />
+          <span className="location-map__dot" />
+        </div>
+        <div className="location-map__hud" aria-hidden>
+          tracking austin_node::tx
+        </div>
+        <div className="location-map__scanline" aria-hidden />
+      </div>
+
+      <div className="mt-3 flex items-center justify-between text-[10px] uppercase tracking-[0.2em] text-white/55">
+        <span className="inline-flex items-center gap-2">
+          <MapPin className="w-3.5 h-3.5 text-[var(--accent-red)]" />
+          Austin, Texas
+        </span>
+        <span>30.2672° N / 97.7431° W</span>
       </div>
     </div>
   );

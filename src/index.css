@@ -10,6 +10,10 @@
   --brut-shadow-sm: 4px 4px 0 0 rgba(255, 255, 255, 0.1);
   --phosphor: #6ee7b7;
   --phosphor-dim: rgba(110, 231, 183, 0.12);
+  --grid-focus-x: 50%;
+  --grid-focus-y: 50%;
+  --grid-scroll-offset: 0px;
+  --grid-strength: 0.08;
 }
 
 html,
@@ -43,9 +47,18 @@ h3 {
 .app-retro {
   position: relative;
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+    radial-gradient(
+      520px 300px at var(--grid-focus-x) var(--grid-focus-y),
+      rgba(255, 255, 255, calc(var(--grid-strength) * 1.2)),
+      transparent 68%
+    ),
+    linear-gradient(rgba(255, 255, 255, calc(var(--grid-strength) * 0.7)) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, calc(var(--grid-strength) * 0.7)) 1px, transparent 1px);
   background-size: 40px 40px;
+  background-position:
+    0 0,
+    0 var(--grid-scroll-offset),
+    0 var(--grid-scroll-offset);
   background-attachment: fixed;
 }
 
@@ -53,9 +66,10 @@ h3 {
 .app-retro .bg-\[\#050505\],
 .app-retro .bg-\[\#030303\] {
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+    linear-gradient(rgba(255, 255, 255, calc(var(--grid-strength) * 0.9)) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, calc(var(--grid-strength) * 0.9)) 1px, transparent 1px);
   background-size: 36px 36px;
+  background-position: 0 var(--grid-scroll-offset), 0 var(--grid-scroll-offset);
 }
 
 .app-retro__crt {
@@ -110,6 +124,72 @@ h3 {
   pointer-events: none;
 }
 
+.case-boot__wipe {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 28%;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 42, 58, 0) 0%,
+    rgba(255, 42, 58, 0.2) 45%,
+    rgba(255, 42, 58, 0.05) 100%
+  );
+  animation: caseBootSweep 0.7s linear infinite;
+}
+
+.case-boot__scan {
+  position: absolute;
+  inset: 0;
+  opacity: 0.35;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.08) 0px,
+    rgba(255, 255, 255, 0.08) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+}
+
+.case-boot__headline {
+  color: #fff;
+  text-shadow:
+    2px 0 0 rgba(255, 42, 58, 0.6),
+    -2px 0 0 rgba(110, 231, 183, 0.22);
+  animation: caseBootGlitch 0.18s steps(2, jump-none) infinite;
+}
+
+.case-boot__bar {
+  background:
+    linear-gradient(90deg, var(--accent-red), #ff7b84 48%, var(--accent-red) 100%);
+  box-shadow: 0 0 14px rgba(255, 42, 58, 0.65);
+}
+
+@keyframes caseBootSweep {
+  from {
+    transform: translateX(-120%);
+  }
+  to {
+    transform: translateX(460%);
+  }
+}
+
+@keyframes caseBootGlitch {
+  0%,
+  100% {
+    transform: translate(0, 0);
+    opacity: 0.95;
+  }
+  30% {
+    transform: translate(1px, -1px);
+    opacity: 1;
+  }
+  60% {
+    transform: translate(-1px, 1px);
+    opacity: 0.88;
+  }
+}
+
 .scroll-progress-led {
   box-shadow: 0 0 14px rgba(255, 42, 58, 0.55);
   animation: retro-led-pulse 3.2s ease-in-out infinite;
@@ -129,7 +209,9 @@ h3 {
 
 @media (prefers-reduced-motion: reduce) {
   .app-retro__led,
-  .scroll-progress-led {
+  .scroll-progress-led,
+  .case-boot__wipe,
+  .case-boot__headline {
     animation: none;
   }
 }
@@ -576,6 +658,149 @@ h3 {
   background: rgba(12, 12, 12, 0.9);
   filter: saturate(105%);
   border-radius: 0;
+}
+
+.location-map {
+  position: relative;
+  height: 200px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  background: #060606;
+  overflow: hidden;
+}
+
+.location-map__leaflet {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  filter: grayscale(1) saturate(0) contrast(1.28) brightness(0.9);
+}
+
+.location-map__vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: radial-gradient(circle at center, transparent 42%, rgba(0, 0, 0, 0.58) 100%);
+  pointer-events: none;
+}
+
+.location-map__status {
+  position: absolute;
+  inset: 0;
+  z-index: 7;
+  display: grid;
+  place-items: center;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.28em;
+  color: rgba(255, 255, 255, 0.6);
+  background: rgba(0, 0, 0, 0.35);
+  pointer-events: none;
+}
+
+.location-map__crosshair {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 36px;
+  height: 36px;
+  z-index: 4;
+  transform: translate(-50%, -50%);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  pointer-events: none;
+}
+
+.location-map__crosshair::before,
+.location-map__crosshair::after {
+  content: "";
+  position: absolute;
+  background: rgba(255, 255, 255, 0.24);
+}
+
+.location-map__crosshair::before {
+  width: 1px;
+  height: 50px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.location-map__crosshair::after {
+  width: 50px;
+  height: 1px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.location-map__hud {
+  position: absolute;
+  left: 10px;
+  bottom: 8px;
+  z-index: 5;
+  padding: 3px 6px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(0, 0, 0, 0.62);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: rgba(255, 255, 255, 0.6);
+  pointer-events: none;
+}
+
+.location-map__scanline {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.1) 0,
+    rgba(255, 255, 255, 0.1) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  opacity: 0.12;
+  pointer-events: none;
+}
+
+.location-map__pin-wrap {
+  position: absolute;
+  left: 55%;
+  top: 48%;
+  transform: translate(-50%, -50%);
+  z-index: 6;
+  pointer-events: none;
+}
+
+.location-map__dot {
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--accent-red);
+  box-shadow: 0 0 0 2px #060606, 0 0 12px rgba(255, 42, 58, 0.8);
+}
+
+.location-map__pulse {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  border: 1px solid rgba(255, 42, 58, 0.75);
+  border-radius: 999px;
+  transform: translate(-50%, -50%);
+  animation: mapPulse 1.8s ease-out infinite;
+}
+
+@keyframes mapPulse {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.85;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(5.8);
+    opacity: 0;
+  }
 }
 
 .poster-gallery__img--blur {

@@ -94,6 +94,7 @@ export const projects = [
     tools: ["Photoshop", "Illustrator", "Figma"],
     cover: "/images/AtlasCoffee_projectcard.png",
     heroImage: "/images/A-Look-At-Atlas-Coffee-Club.png",
+    heroVideo: "https://assets.mixkit.co/videos/8402/8402-720.mp4",
     textureImage: null,
     textureCopy: null,
     galleryAspect: "4 / 5",
@@ -191,14 +192,6 @@ export const projects = [
           "/images/Atlas_bogo_8.png",
         ],
       },
-      {
-        title: "Body+Mind benefits set",
-        description: "Ingredient-forward frames highlighting Atlas+ benefits for energy, focus, and recovery.",
-        items: [
-          { preview: "/images/Body+Mind_1_1080x1350.png", full: "/images/Body+Mind_1.png" },
-          { preview: "/images/Body+Mind_2_1080x1350.png", full: "/images/Body+Mind_2.png" },
-        ],
-      },
     ],
     deliverables: [
       {
@@ -228,10 +221,6 @@ export const projects = [
       {
         title: "Black Friday sale ad set",
         description: "Nine Meta ad variants focused on the limited-time sale offer, urgency messaging, and first-bag incentives.",
-      },
-      {
-        title: "Body+Mind benefits set",
-        description: "Ingredient storytelling highlighting Atlas+ impact on energy, focus, and recovery.",
       },
       {
         title: "Price comparison series",

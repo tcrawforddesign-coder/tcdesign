@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -12,9 +13,53 @@ export default function App() {
 
 function AppRoutes() {
   const location = useLocation();
+  const appRef = useRef(null);
+
+  useEffect(() => {
+    const host = appRef.current;
+    if (!host) return undefined;
+
+    const target = { x: 50, y: 50 };
+    const current = { x: 50, y: 50 };
+    let scrollPct = 0;
+    let rafId = 0;
+
+    const updateScroll = () => {
+      const maxScroll = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
+      scrollPct = Math.min(Math.max(window.scrollY / maxScroll, 0), 1);
+    };
+
+    const onPointerMove = (event) => {
+      target.x = (event.clientX / window.innerWidth) * 100;
+      target.y = (event.clientY / window.innerHeight) * 100;
+    };
+
+    const tick = () => {
+      current.x += (target.x - current.x) * 0.12;
+      current.y += (target.y - current.y) * 0.12;
+
+      host.style.setProperty("--grid-focus-x", `${current.x.toFixed(2)}%`);
+      host.style.setProperty("--grid-focus-y", `${current.y.toFixed(2)}%`);
+      host.style.setProperty("--grid-scroll-offset", `${(scrollPct * 40).toFixed(2)}px`);
+      host.style.setProperty("--grid-strength", `${(0.08 + scrollPct * 0.06).toFixed(3)}`);
+
+      rafId = window.requestAnimationFrame(tick);
+    };
+
+    updateScroll();
+    window.addEventListener("pointermove", onPointerMove, { passive: true });
+    window.addEventListener("scroll", updateScroll, { passive: true });
+    rafId = window.requestAnimationFrame(tick);
+
+    return () => {
+      window.cancelAnimationFrame(rafId);
+      window.removeEventListener("pointermove", onPointerMove);
+      window.removeEventListener("scroll", updateScroll);
+    };
+  }, []);
 
   return (
-    <div className="app-retro min-h-full">
+    <div ref={appRef} className="app-retro min-h-full">
       <AnimatePresence mode="wait" initial={false}>
         <motion.div
           key={location.pathname}
