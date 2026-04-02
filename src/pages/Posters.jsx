@@ -197,35 +197,37 @@ export default function PostersPage() {
         </section>
 
         <section>
-          <div className="text-[11px] uppercase tracking-[0.4em] text-white/50 mb-4">What I track</div>
+          <div className="text-[10px] font-bold uppercase tracking-[0.4em] text-white/50 mb-4">What I track</div>
           <div className="grid md:grid-cols-3 gap-4">
             {PILLARS.map((item) => (
-              <div key={item.title} className="rounded-2xl border border-white/10 bg-black/35 p-6 md:p-7">
-                <h3 className="text-lg font-semibold tracking-tight">{item.title}</h3>
+              <div key={item.title} className="border-2 border-white/20 bg-black p-6 md:p-7 shadow-brut-sm">
+                <h3 className="font-display text-lg font-extrabold tracking-tighter uppercase">{item.title}</h3>
                 <p className="mt-3 text-sm text-white/65 leading-relaxed">{item.copy}</p>
               </div>
             ))}
           </div>
         </section>
 
-        <section className="rounded-2xl border border-white/10 bg-black/30 p-8 md:p-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+        <section className="border-2 border-white/20 bg-black p-8 md:p-10 shadow-brut flex flex-col md:flex-row md:items-center md:justify-between gap-6">
           <div>
-            <p className="text-[11px] uppercase tracking-[0.4em] text-white/50">Need this energy in your launch?</p>
-            <h2 className="mt-3 text-2xl md:text-3xl font-black tracking-tight">Let’s bend these experiments into your campaign.</h2>
-            <p className="mt-3 text-white/65 max-w-xl">
+            <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-white/50">Need this energy in your launch?</p>
+            <h2 className="font-display mt-3 text-2xl md:text-3xl font-extrabold tracking-tighter uppercase">
+              Let’s bend these experiments into your campaign.
+            </h2>
+            <p className="mt-3 text-sm text-white/65 leading-relaxed max-w-xl">
               Share a brief or a mood board. I’ll respond with how this poster lab translates into brand systems, product UI, or launch storytelling.
             </p>
           </div>
           <div className="flex flex-col sm:flex-row gap-3">
             <a
               href="mailto:tcrawford.design@gmail.com"
-              className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-white text-black font-medium hover:contrast-125 transition"
+              className="inline-flex items-center justify-center gap-2 px-5 py-3 border-2 border-white bg-white text-black text-[10px] font-bold uppercase tracking-[0.24em] hover:bg-transparent hover:text-white transition-colors"
             >
               <Mail className="w-4 h-4" /> Email Travis
             </a>
             <Link
               to={{ pathname: "/", hash: "#contact" }}
-              className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full border border-white/20 hover:border-white/40 transition"
+              className="inline-flex items-center justify-center gap-2 px-5 py-3 border-2 border-white/35 text-[10px] font-bold uppercase tracking-[0.22em] text-white/85 hover:border-white hover:bg-white hover:text-black transition-colors"
             >
               View contact options
             </Link>
@@ -233,9 +235,9 @@ export default function PostersPage() {
         </section>
       </main>
 
-      <footer className="border-t border-white/10 py-10 text-center text-xs text-white/50">
+      <footer className="border-t-2 border-white/25 bg-black py-10 text-center text-[10px] uppercase tracking-[0.25em] text-white/45">
         © {new Date().getFullYear()} Travis Crawford — Poster Archive
-        <div className="mt-3 flex justify-center gap-4 text-white/60">
+        <div className="mt-4 flex justify-center gap-6 text-white/55">
           <a href="mailto:tcrawford.design@gmail.com" className="inline-flex items-center gap-2 hover:text-white">
             <Mail className="w-4 h-4" /> Email
           </a>

@@ -6,6 +6,7 @@ import { ArrowUpRight, Instagram, Linkedin, Mail, Menu, X, Megaphone, Camera, Pe
 import { projects } from "../data/projects.js";
 import { posterProject } from "../data/posters.js";
 import CodeCloud from "../components/CodeCloud.jsx";
+import FloatingFaceCard from "../components/FloatingFaceCard.jsx";
 
 const HEADSHOT = "/images/headshot.jpg";
 const MotionDiv = motion.div;
@@ -371,6 +372,7 @@ export default function Home() {
           </div>
         </div>
       </footer>
+      <FloatingFaceCard showAfter={260} />
     </div>
   );
 }

@@ -338,6 +338,91 @@ h3 {
   letter-spacing: 0.12em;
 }
 
+.floating-face {
+  position: fixed;
+  right: 1rem;
+  bottom: 4.5rem;
+  width: 92px;
+  height: 92px;
+  z-index: 58;
+  opacity: 0;
+  transform: translateY(10px) scale(0.94);
+  pointer-events: none;
+  transition: opacity 0.28s ease, transform 0.28s ease;
+}
+
+.floating-face--visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.floating-face__shell {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.floating-face__contact {
+  position: absolute;
+  right: calc(100% + 8px);
+  top: 50%;
+  transform: translateY(-50%);
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  background: #000;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  padding: 7px 10px 7px 12px;
+  white-space: nowrap;
+  transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+}
+
+.floating-face__contact:hover {
+  border-color: var(--accent-red);
+  color: var(--accent-red);
+}
+
+.profile-card--floating .profile-card__border {
+  height: 100%;
+  width: 100%;
+  padding: 8px 8px 10px;
+  justify-content: flex-end;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.82));
+}
+
+.profile-card--floating .profile-card__name {
+  display: none;
+}
+
+.profile-card--floating .profile-card__icons {
+  flex-direction: row;
+  gap: 6px;
+}
+
+.profile-card--floating .profile-card__icons a {
+  width: 26px;
+  height: 26px;
+}
+
+@media (max-width: 640px) {
+  .floating-face {
+    width: 78px;
+    height: 78px;
+    right: 0.75rem;
+    bottom: 4.25rem;
+  }
+
+  .floating-face__contact {
+    font-size: 8px;
+    letter-spacing: 0.18em;
+    padding: 6px 8px 6px 10px;
+    right: calc(100% + 6px);
+  }
+}
+
 .hero-connection-card {
   transition:
     box-shadow 0.15s ease,
@@ -648,9 +733,46 @@ h3 {
   height: 100%;
   display: block;
   object-fit: contain;
-  background: rgba(12, 12, 12, 0.9);
+  background: transparent;
   filter: saturate(105%);
   border-radius: 0;
+}
+
+.poster-gallery__button {
+  position: relative;
+}
+
+.poster-gallery__image-placeholder {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(120deg, rgba(255, 255, 255, 0.04) 20%, rgba(255, 255, 255, 0.12) 38%, rgba(255, 255, 255, 0.04) 55%),
+    linear-gradient(180deg, rgba(35, 35, 35, 0.65), rgba(18, 18, 18, 0.85));
+  background-size: 220% 100%, 100% 100%;
+  animation: posterShimmer 1.25s linear infinite;
+  transition: opacity 0.28s ease;
+}
+
+.poster-gallery__image-placeholder--hidden {
+  opacity: 0;
+}
+
+.poster-gallery__image {
+  opacity: 0;
+  transition: opacity 0.32s ease;
+}
+
+.poster-gallery__image--loaded {
+  opacity: 1;
+}
+
+@keyframes posterShimmer {
+  from {
+    background-position: 120% 0, 0 0;
+  }
+  to {
+    background-position: -120% 0, 0 0;
+  }
 }
 
 .location-map {

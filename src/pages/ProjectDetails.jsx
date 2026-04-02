@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpRight, ChevronLeft, ChevronRight, Github, Linkedin, Mail, Menu, X, Megaphone, Camera, PenTool, Cpu } from "lucide-react";
 
 import { findProjectBySlug, getAdjacentProjects } from "../data/projects.js";
+import FloatingFaceCard from "../components/FloatingFaceCard.jsx";
 const MotionHeading = motion.h1;
 const MotionFigure = motion.figure;
 
@@ -256,6 +257,7 @@ export default function ProjectDetailsPage() {
           </a>
         </div>
       </footer>
+      <FloatingFaceCard showAfter={300} />
     </div>
   );
 }

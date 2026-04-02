@@ -34,6 +34,7 @@ export default function PosterGallery({
   const curated = useMemo(() => normalizePosters(posters), [posters]);
   const [order, setOrder] = useState(curated);
   const [selected, setSelected] = useState(null);
+  const [loadedPosterIds, setLoadedPosterIds] = useState(() => new Set());
   const [visibleCount, setVisibleCount] = useState(() => {
     const initial =
       variant === "expanded"
@@ -46,6 +47,10 @@ export default function PosterGallery({
 
   useEffect(() => {
     setOrder(curated);
+  }, [curated]);
+
+  useEffect(() => {
+    setLoadedPosterIds(new Set());
   }, [curated]);
 
   useEffect(() => {
@@ -130,6 +135,15 @@ export default function PosterGallery({
     [order, visibleCount],
   );
 
+  const markPosterLoaded = (posterId) => {
+    setLoadedPosterIds((prev) => {
+      if (prev.has(posterId)) return prev;
+      const next = new Set(prev);
+      next.add(posterId);
+      return next;
+    });
+  };
+
   return (
     <>
       <section className={`poster-gallery ${variant === "expanded" ? "poster-gallery--expanded" : ""}`}>
@@ -165,11 +179,21 @@ export default function PosterGallery({
                   }}
                   aria-label={`View poster ${index + 1}`}
                 >
+                  <div
+                    className={`poster-gallery__image-placeholder ${
+                      loadedPosterIds.has(poster.id) ? "poster-gallery__image-placeholder--hidden" : ""
+                    }`}
+                    aria-hidden
+                  />
                   <img
                     src={poster.src}
                     alt=""
-                    loading="lazy"
+                    className={`poster-gallery__image ${loadedPosterIds.has(poster.id) ? "poster-gallery__image--loaded" : ""}`}
+                    loading={index < 6 ? "eager" : "lazy"}
                     decoding="async"
+                    fetchPriority={index < 2 ? "high" : "auto"}
+                    onLoad={() => markPosterLoaded(poster.id)}
+                    onError={() => markPosterLoaded(poster.id)}
                   />
                 </button>
               </figure>
