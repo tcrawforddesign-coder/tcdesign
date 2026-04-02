@@ -7,6 +7,7 @@ import { projects } from "../data/projects.js";
 import { posterProject } from "../data/posters.js";
 import CodeCloud from "../components/CodeCloud.jsx";
 
+const HEADSHOT = "/images/headshot.jpg";
 const MotionDiv = motion.div;
 const MotionOutline = motion.div;
 const POSTER_IMAGES = Array.from({ length: 19 }, (_, index) => `/images/Poster_${index + 1}.png`);
@@ -182,6 +183,10 @@ export default function Home() {
                   <DashboardMetricCard />
             </div>
               <div className="md:col-span-5 flex flex-col gap-4">
+                <div className="relative w-full aspect-[3/4] sm:aspect-[4/5] md:aspect-[3/4] rounded-2xl overflow-hidden border border-white/10 bg-black/40 shadow-[0_18px_50px_-20px_rgba(0,0,0,0.8)]">
+                  <HeadshotCard />
+                  <div className="absolute inset-0 ring-1 ring-inset ring-white/10 pointer-events-none" />
+                </div>
                 <div className="hero-connection-card relative rounded-[28px] border border-white/15 bg-black/55 backdrop-blur-sm px-6 py-8 md:px-8 md:py-10 shadow-[0_24px_70px_-45px_rgba(0,0,0,0.9)]">
                   <div className="space-y-6">
                     <div className="space-y-3">
@@ -449,6 +454,38 @@ export function ProjectCard({ project }) {
     <Link to={linkTarget} className="block group" aria-label={ariaLabel}>
       {cardContent}
     </Link>
+  );
+}
+
+function HeadshotCard() {
+  return (
+    <div className="profile-card profile-card--compact" aria-label="Portrait of Travis Crawford">
+      <img
+        src={HEADSHOT}
+        alt="Travis Crawford"
+        className="profile-card__image"
+        loading="eager"
+        fetchPriority="high"
+        decoding="async"
+      />
+      <div className="profile-card__overlay" />
+      <div className="profile-card__border">
+        <div className="profile-card__name">Travis Crawford</div>
+        <div className="profile-card__icons" aria-label="Social links">
+          <a
+            href="https://www.linkedin.com/in/travis-crawford-67759b24a"
+            target="_blank"
+            rel="noreferrer"
+            aria-label="LinkedIn"
+          >
+            <Linkedin className="w-5 h-5" />
+          </a>
+          <a href="https://www.instagram.com/treves_/" target="_blank" rel="noreferrer" aria-label="Instagram">
+            <Instagram className="w-5 h-5" />
+          </a>
+        </div>
+      </div>
+    </div>
   );
 }
 
