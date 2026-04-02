@@ -187,7 +187,7 @@ export default function PosterGallery({
                   />
                   <img
                     src={poster.src}
-                    alt=""
+                    alt={poster.title}
                     className={`poster-gallery__image ${loadedPosterIds.has(poster.id) ? "poster-gallery__image--loaded" : ""}`}
                     loading={index < 6 ? "eager" : "lazy"}
                     decoding="async"
@@ -268,7 +268,7 @@ function PosterLightbox({ poster, onClose, index, total }) {
           Close
         </button>
         <div className="poster-modal__image">
-          <img src={poster.src} alt="Poster detail" loading="lazy" decoding="async" />
+          <img src={poster.src} alt={poster.title} loading="lazy" decoding="async" />
         </div>
         <div className="poster-modal__info" aria-hidden>
           <span className="poster-modal__tag">

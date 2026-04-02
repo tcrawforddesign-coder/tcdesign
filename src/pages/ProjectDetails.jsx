@@ -4,7 +4,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpRight, ChevronLeft, ChevronRight, Github, Linkedin, Mail, Menu, X, Megaphone, Camera, PenTool, Cpu } from "lucide-react";
 
 import { findProjectBySlug, getAdjacentProjects } from "../data/projects.js";
-import FloatingFaceCard from "../components/FloatingFaceCard.jsx";
 const MotionHeading = motion.h1;
 const MotionFigure = motion.figure;
 
@@ -257,7 +256,6 @@ export default function ProjectDetailsPage() {
           </a>
         </div>
       </footer>
-      <FloatingFaceCard showAfter={300} />
     </div>
   );
 }
@@ -318,7 +316,7 @@ function Hero({ project }) {
             <source src={project.heroVideo} type="video/mp4" />
           </video>
         ) : project.heroImage ? (
-          <img src={project.heroImage} alt="Project hero" className="w-full aspect-[16/6] object-cover" />
+          <img src={project.heroImage} alt={`${project.title} hero visual`} className="w-full aspect-[16/6] object-cover" />
         ) : (
           <div className="w-full aspect-[16/6] bg-gradient-to-br from-[#090909] to-[#141414]" />
         )}
@@ -1094,7 +1092,7 @@ function SocialFeedSection({ posts, projectName }) {
                   className="absolute inset-0"
                   aria-label={`Show social post ${index + 1}`}
                 >
-                  <img src={post.src} alt="" className="w-full h-full object-cover" loading="lazy" decoding="async" />
+                  <img src={post.src} alt={post.alt} className="w-full h-full object-cover" loading="lazy" decoding="async" />
                 </button>
               </li>
             );

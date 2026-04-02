@@ -6,6 +6,7 @@ import Home from "./pages/Home.jsx";
 import ProjectsPage from "./pages/Projects.jsx";
 import PostersPage from "./pages/Posters.jsx";
 import ProjectDetailsPage from "./pages/ProjectDetails.jsx";
+import FloatingFaceCard from "./components/FloatingFaceCard.jsx";
 
 export default function App() {
   return <AppRoutes />;
@@ -14,6 +15,63 @@ export default function App() {
 function AppRoutes() {
   const location = useLocation();
   const appRef = useRef(null);
+  const siteOrigin = "https://traviscrawforddesign.com";
+
+  useEffect(() => {
+    if (location.hash) return;
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  }, [location.pathname, location.hash]);
+
+  useEffect(() => {
+    const routeMeta = {
+      "/": {
+        title: "TC Design — Portfolio",
+        description:
+          "Portfolio of Travis Crawford, a Texas-based visual designer focused on branding, campaign creative, and digital experiences.",
+      },
+      "/projects": {
+        title: "Projects — TC Design",
+        description: "Selected branding, campaign, and product design projects by Travis Crawford.",
+      },
+      "/posters": {
+        title: "Poster Archive — TC Design",
+        description: "Curated poster archive featuring concept and campaign visual design work.",
+      },
+    };
+
+    const current = routeMeta[location.pathname] ?? {
+      title: "Project Case Study — TC Design",
+      description: "Project case study from the TC Design portfolio.",
+    };
+
+    document.title = current.title;
+
+    const upsertMeta = (selector, attrs) => {
+      let el = document.head.querySelector(selector);
+      if (!el) {
+        el = document.createElement("meta");
+        document.head.appendChild(el);
+      }
+      Object.entries(attrs).forEach(([key, value]) => {
+        el.setAttribute(key, value);
+      });
+    };
+
+    upsertMeta("meta[name='description']", { name: "description", content: current.description });
+    upsertMeta("meta[property='og:title']", { property: "og:title", content: current.title });
+    upsertMeta("meta[property='og:description']", { property: "og:description", content: current.description });
+    upsertMeta("meta[property='og:url']", { property: "og:url", content: `${siteOrigin}${location.pathname}` });
+    upsertMeta("meta[name='twitter:title']", { name: "twitter:title", content: current.title });
+    upsertMeta("meta[name='twitter:description']", { name: "twitter:description", content: current.description });
+
+    let canonical = document.head.querySelector("link[rel='canonical']");
+    if (!canonical) {
+      canonical = document.createElement("link");
+      canonical.setAttribute("rel", "canonical");
+      document.head.appendChild(canonical);
+    }
+    canonical.setAttribute("href", `${siteOrigin}${location.pathname}`);
+  }, [location.pathname, siteOrigin]);
 
   useEffect(() => {
     const host = appRef.current;
@@ -83,6 +141,7 @@ function AppRoutes() {
       <span className="app-retro__led-line" aria-hidden>
         run
       </span>
+      <FloatingFaceCard showAfter={260} />
     </div>
   );
 }
