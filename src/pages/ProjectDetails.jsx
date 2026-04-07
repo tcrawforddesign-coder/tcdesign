@@ -764,18 +764,22 @@ function YellowBikePaletteSection({ palette = [] }) {
         <div
           className="relative border-2 border-white/20 overflow-hidden bg-black min-h-[240px] md:min-h-[280px]"
         >
+          <div
+            className="absolute inset-y-0 left-0 w-12 pointer-events-none"
+            style={{ backgroundColor: palette[0]?.hex ?? "#FFD800", zIndex: 1 }}
+            aria-hidden
+          />
+          <div
+            className="absolute inset-y-0 right-0 w-12 pointer-events-none"
+            style={{ backgroundColor: palette[palette.length - 1]?.hex ?? "#B7DF00", zIndex: 1 }}
+            aria-hidden
+          />
           <div className="absolute inset-0 flex">
             {palette.map((swatch, index) => (
               <motion.div
                 key={swatch.hex}
-                className={`relative flex-1 ${index === 0 ? "ml-0" : "-ml-12"} ${index === palette.length - 1 ? "mr-0" : ""}`}
+                className="relative flex-1 overflow-visible"
                 style={{
-                  clipPath:
-                    index === 0
-                      ? "polygon(-2% 0, 102% 0, 88% 100%, -2% 100%)"
-                      : index === palette.length - 1
-                        ? "polygon(12% 0, 102% 0, 102% 100%, -2% 100%)"
-                        : "polygon(12% 0, 102% 0, 88% 100%, -2% 100%)",
                   zIndex: hoveredIndex === index ? 20 : 10,
                 }}
                 onMouseEnter={() => setHoveredIndex(index)}
@@ -785,7 +789,17 @@ function YellowBikePaletteSection({ palette = [] }) {
                 }}
                 transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
               >
-                <div className="absolute inset-0" style={{ backgroundColor: swatch.hex }} aria-hidden />
+                <div
+                  className="absolute inset-y-0"
+                  style={{
+                    left: index === 0 ? "-32px" : "-22px",
+                    right: index === palette.length - 1 ? "-32px" : "-22px",
+                    backgroundColor: swatch.hex,
+                    transform: "skewX(-14deg)",
+                    transformOrigin: index === 0 ? "left center" : index === palette.length - 1 ? "right center" : "center",
+                  }}
+                  aria-hidden
+                />
                 <div className="absolute inset-x-0 bottom-0 px-2 py-2">
                   <div
                     className="text-[10px] font-bold uppercase tracking-[0.14em]"

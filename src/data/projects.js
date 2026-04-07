@@ -4,10 +4,10 @@ export const projects = [
     slug: "yellow-bike",
     title: "Yellow Bike App",
     tag: "UX/UI Project",
-    timeframe: "2026",
+    timeframe: "2024",
     summary: "Gamifying Bike Safety for Everyday Riders",
-    roles: ["UX Research", "UX/UI Design", "Product Strategy"],
-    team: ["Travis Crawford (Solo Designer)"],
+    roles: ["UX Research", "UX/UI Design", "Product Strategy", "Branding"],
+    team: ["1 of 4"],
     tools: ["Figma", "FigJam", "Photoshop"],
     cover: "https://images.unsplash.com/photo-1544191696-102dbdaeeaa0?q=80&w=1400&auto=format&fit=crop",
     heroImage: "/images/yellow-bike-header.png",
@@ -24,13 +24,13 @@ export const projects = [
         title: "Building a biking community",
         copy:
           "Yellow Bike will keep Austinites connected and in friendly competition with one another. Reach out to a friend to go for a ride or try to beat them on that weeks leaderboard.",
-        image: "/images/Community-1.png",
+        image: "/images/Community-2.png",
       },
       {
         title: "Gamified Learning",
         copy:
           "Yellow Bike transforms road safety and biking education into an engaging experience through gamified elements. Users earn Biking Experience Points (BXP) by completing quizzes, participating in challenges, and attending events, which can be redeemed for rewards.",
-        image: "/images/Community-2.png",
+        image: "/images/Community-1.png",
       },
     ],
     yellowBikePalette: [
