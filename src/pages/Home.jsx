@@ -173,7 +173,7 @@ export default function Home() {
                       TC
                     </MotionOutline>
                     <div className="space-y-6 relative z-10">
-                      <h1 className="hero-heading font-display text-4xl md:text-6xl font-extrabold leading-[0.95] tracking-tighter uppercase">
+                      <h1 className="hero-heading font-display text-4xl md:text-6xl font-extrabold leading-[0.95] tracking-tighter uppercase max-w-full break-words [overflow-wrap:anywhere]">
                         Visual designer crafting{" "}
                         <span className="text-[var(--accent-red)] [text-shadow:4px_4px_0_rgba(0,0,0,1)]">bold</span> brand systems.
                       </h1>

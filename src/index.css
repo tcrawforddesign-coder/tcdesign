@@ -866,6 +866,10 @@ h3 {
   66%, 100% { opacity: 0; transform: translate3d(2px, 0, 0); filter: none; clip-path: inset(0 0 0 0); }
 }
 
+.hero-intro-card {
+  overflow: hidden;
+}
+
 .hero-intro-card::before {
   content: "";
   position: absolute;
@@ -1004,6 +1008,9 @@ h3 {
 }
 
 .hero-heading {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: normal;
   text-shadow:
     0 22px 70px rgba(0, 0, 0, 0.9),
     0 12px 40px rgba(0, 0, 0, 0.78),
