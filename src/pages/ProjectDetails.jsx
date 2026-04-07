@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useInView } from "framer-motion";
 import { ArrowUpRight, ChevronLeft, ChevronRight, Github, Linkedin, Mail, Menu, X, Megaphone, Camera, PenTool, Cpu } from "lucide-react";
 
 import { findProjectBySlug, getAdjacentProjects } from "../data/projects.js";
@@ -930,11 +930,14 @@ function SurveyPieCard({ title, question, responses, data }) {
 
 function SurveyBarCard({ title, question, responses, data }) {
   const max = Math.max(...data.map((item) => item.value), 1);
+  const barsRef = useRef(null);
+  const barsInView = useInView(barsRef, { once: true, amount: 0.35, margin: "-10% 0px" });
+
   return (
     <HoverSpotlight className="h-full flex flex-col border-2 border-white/20 bg-black p-6 shadow-brut-sm">
       <h3 className="font-display text-lg font-bold tracking-tight uppercase">{title}</h3>
       {question ? <p className="mt-2 text-sm text-white/70">{question}</p> : null}
-      <ul className="mt-4 space-y-3">
+      <ul ref={barsRef} className="mt-4 space-y-3">
         {data.map((item, index) => (
           <li key={item.label}>
             <div className="flex items-center justify-between text-xs text-white/75 mb-1">
@@ -945,8 +948,7 @@ function SurveyBarCard({ title, question, responses, data }) {
               <motion.div
                 className="h-full"
                 initial={{ width: 0 }}
-                whileInView={{ width: `${(item.value / max) * 100}%` }}
-                viewport={{ once: true, margin: "-10%" }}
+                animate={{ width: barsInView ? `${(item.value / max) * 100}%` : "0%" }}
                 transition={{ duration: 0.55, delay: index * 0.07, ease: "easeOut" }}
                 style={{
                   backgroundColor: CHART_COLORS[index % CHART_COLORS.length],
