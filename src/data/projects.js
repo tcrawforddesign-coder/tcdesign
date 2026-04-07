@@ -1,5 +1,199 @@
 export const projects = [
   {
+    id: 7,
+    slug: "yellow-bike",
+    title: "Yellow Bike App",
+    tag: "UX/UI Project",
+    timeframe: "2026",
+    summary: "Gamifying Bike Safety for Everyday Riders",
+    roles: ["UX Research", "UX/UI Design", "Product Strategy"],
+    team: ["Travis Crawford (Solo Designer)"],
+    tools: ["Figma", "FigJam", "Photoshop"],
+    cover: "https://images.unsplash.com/photo-1544191696-102dbdaeeaa0?q=80&w=1400&auto=format&fit=crop",
+    heroImage: "/images/yellow-bike-header.png",
+    heroVideo: "https://assets.mixkit.co/videos/50108/50108-720.mp4",
+    prototypeEmbedSrc:
+      "https://embed.figma.com/proto/4ehmgOBbsxNbAFeWxHANOu/Yellow-Bike-Branded-Wireframes?node-id=671-14647&viewport=-818%2C-7299%2C0.32&scaling=scale-down&content-scaling=fixed&starting-point-node-id=671%3A14647&page-id=0%3A1&embed-host=share",
+    flowImage: "/images/yellow-bike-onboarding-flow.png",
+    eventChallengesFlowImage: "/images/yellow-bike-event-challenges-flow.png",
+    paperPrototypeImage: "/images/yellow-bike-paper-prototypes.png",
+    existingLogoImage: "/images/Existing Logo.jpg",
+    proposedLogoImage: "/images/Proposed Logo.jpg",
+    communitySections: [
+      {
+        title: "Building a biking community",
+        copy:
+          "Yellow Bike will keep Austinites connected and in friendly competition with one another. Reach out to a friend to go for a ride or try to beat them on that weeks leaderboard.",
+        image: "/images/Community-1.png",
+      },
+      {
+        title: "Gamified Learning",
+        copy:
+          "Yellow Bike transforms road safety and biking education into an engaging experience through gamified elements. Users earn Biking Experience Points (BXP) by completing quizzes, participating in challenges, and attending events, which can be redeemed for rewards.",
+        image: "/images/Community-2.png",
+      },
+    ],
+    yellowBikePalette: [
+      { name: "Ride Yellow", hex: "#FFD800" },
+      { name: "Safety Orange", hex: "#FF6B00" },
+      { name: "Road Black", hex: "#0B0B0B" },
+      { name: "Cloud White", hex: "#F7F7F2" },
+      { name: "Sky Blue", hex: "#6ED7FF" },
+      { name: "Signal Lime", hex: "#B7DF00" },
+    ],
+    challenge: {
+      kicker: "Project Scope",
+      title: "Translating community impact into a digital product",
+      paragraphs: [
+        "The objective was to take an existing nonprofit and design a mobile app that extends its mission.",
+        "This included translating a physical, community-based organization into a digital experience, rebranding for a mobile-first audience, and designing learning through interaction rather than instruction.",
+      ],
+    },
+    approach: {
+      kicker: "Design Approach",
+      title: "Clarity, progression, and motivation",
+      paragraphs: [
+        "The experience is built around gamified lessons, progress tracking, and achievement-based feedback.",
+        "Navigation and learning paths were simplified to reduce friction, while a modernized YBP identity balances community warmth with digital usability.",
+      ],
+    },
+    outcomes: {
+      kicker: "Outcome",
+      title: "Participatory safety education",
+      paragraphs: [
+        "The result is a concept that demonstrates how nonprofit education can be transformed into an interactive product.",
+        "By gamifying the learning process, the app encourages consistent engagement and helps users build safer riding habits over time.",
+      ],
+    },
+    highlights: [
+      {
+        icon: "Cpu",
+        title: "Gamified Learning",
+        copy: "Structured lessons, progress loops, and rewards to reinforce safer riding behaviors.",
+      },
+      {
+        icon: "PenTool",
+        title: "Mobile-first Rebrand",
+        copy: "A refreshed YBP identity adapted for app navigation, onboarding, and micro-interactions.",
+      },
+      {
+        icon: "Megaphone",
+        title: "Community Activation",
+        copy: "Campaign ideas and events designed to keep local riders engaged beyond a single session.",
+      },
+      {
+        icon: "Camera",
+        title: "Research-led Decisions",
+        copy: "Journey mapping and survey findings translated into practical UX priorities.",
+      },
+    ],
+    yellowBikeResearch: {
+      journey_map: {
+        phases: [
+          "Preparing for the event",
+          "Setting up the pop-up shop",
+          "Engaging with the community during the event",
+          "Reflecting on the event",
+          "Gathering feedback for future improvements",
+        ],
+        doing: [
+          "Securing a location and gathering necessary supplies",
+          "Setting up specific events at each tent",
+          "Offering repair services and conducting safety demonstrations",
+          "Offering a help desk area for questions or booking guidance",
+          "Repairing bicycles",
+          "Providing hands-on training sessions",
+          "Hosting community events and activities",
+          "Collecting feedback and testimonials from participants",
+        ],
+        thinking: [
+          "Strategizing ways to attract and engage community members",
+          "Evaluating the effectiveness of different outreach methods",
+          "Reflecting on the impact of the event on participants' knowledge and behaviors",
+          "Is the complexity of building a bike preventing people from seeing it as accessible?",
+        ],
+        feeling: ["Empowered", "Connected", "Inspired", "Grateful"],
+        outcomes: [
+          "Newfound knowledge and skills",
+          "A supportive community of cyclists",
+          "Incorporating cycling into daily routines",
+          "Opportunity to access affordable transportation options",
+          "Sense of renewal after accomplishing activities and gaining something practical",
+        ],
+      },
+      future_state: {
+        campaigns: [
+          { title: "Ride Together", tagline: "Catch the biking wave" },
+          { title: "Thrive Together" },
+          { title: "Wellness in Motion", tagline: "Pedal the change" },
+          { title: "Green Tracks, Happy Hearts", tagline: "Gear up, go green" },
+          { title: "Pedal Power", tagline: "Cycle through life" },
+        ],
+        doing: [
+          "Organize community bike rides",
+          "Set up interactive workshops",
+          "Implement a try-before-you-buy program",
+          "Collaborate with local businesses",
+          "Conduct surveys to understand barriers",
+          "Host bike maintenance and safety classes",
+          "Host bike-movie drive-in events",
+          "Set up temporary bike lanes",
+          "Offer bike-sharing programs",
+        ],
+        thinking: [
+          "Accessibility is key",
+          "Safety first enhances confidence of riders",
+          "Reflect on how biking can be integrated into daily life",
+          "Consider incentives to motivate non-bikers",
+          "Think about efficient use of space for bikes",
+        ],
+        feeling: ["Inclusivity", "Excitement", "Empowerment", "Belonging"],
+        outcomes: [
+          "Feeling of joy from participating in the community",
+          "Sense of accomplishment from learning to ride",
+          "Satisfaction from contributing to a greener planet",
+          "Empowerment from having more transportation options",
+        ],
+      },
+      survey_results: {
+        barriers_to_cycling: {
+          question: "What are the main barriers to cycling in your community?",
+          responses: 47,
+          data: [
+            { label: "Safety concerns", value: 46.8 },
+            { label: "Lack of infrastructure", value: 31.9 },
+            { label: "Other", value: 8.5 },
+            { label: "Physical ability", value: 6.4 },
+            { label: "Lack of knowledge about cycling benefits", value: 6.4 },
+          ],
+        },
+        cycling_motivation: {
+          question: "What would encourage you to cycle more often to local businesses?",
+          responses: 47,
+          data: [
+            { label: "Better cycling infrastructure", value: 63.8 },
+            { label: "More knowledge about cycling routes", value: 12.8 },
+            { label: "Other", value: 10.6 },
+            { label: "Incentives or discounts from businesses", value: 6.4 },
+            { label: "More secure bike parking", value: 6.4 },
+          ],
+        },
+        bikeability_rating: {
+          question: "Rate the bike-ability of your community",
+          responses: 47,
+          scale: [1, 2, 3, 4, 5],
+          data: [
+            { rating: 1, count: 5, percentage: 10.6 },
+            { rating: 2, count: 11, percentage: 23.4 },
+            { rating: 3, count: 22, percentage: 46.8 },
+            { rating: 4, count: 9, percentage: 19.1 },
+            { rating: 5, count: 0, percentage: 0 },
+          ],
+        },
+      },
+    },
+  },
+  {
     id: 1,
     slug: "civil-goat-coffee",
     title: "Civil Goat Coffee — Conversational Brand System",

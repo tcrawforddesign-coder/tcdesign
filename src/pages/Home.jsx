@@ -4,7 +4,6 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowUpRight, Instagram, Linkedin, Mail, Menu, X, Megaphone, Camera, PenTool, Cpu, MapPin } from "lucide-react";
 
 import { projects } from "../data/projects.js";
-import { posterProject } from "../data/posters.js";
 import CodeCloud from "../components/CodeCloud.jsx";
 
 const HEADSHOT = "/images/headshot.jpg";
@@ -51,12 +50,9 @@ const HERO_SOCIAL_LINKS = [
     icon: Instagram,
   },
 ];
-const FEATURED_SLUGS = ["civil-goat-coffee", "atlas-coffee-club", "barbican-refresh"];
+const FEATURED_SLUGS = ["yellow-bike", "civil-goat-coffee", "atlas-coffee-club", "barbican-refresh"];
 const FEATURED_COL_SPANS = ["md:col-span-7", "md:col-span-5", "md:col-span-5", "md:col-span-7"];
-const baseFeaturedProjects = FEATURED_SLUGS.map((slug) => projects.find((project) => project.slug === slug)).filter(Boolean);
-const featuredProjects = posterProject
-  ? [baseFeaturedProjects[0], posterProject, ...baseFeaturedProjects.slice(1)].filter(Boolean)
-  : baseFeaturedProjects;
+const featuredProjects = FEATURED_SLUGS.map((slug) => projects.find((project) => project.slug === slug)).filter(Boolean);
 
 export default function Home() {
   const [open, setOpen] = useState(false);

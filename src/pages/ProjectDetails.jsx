@@ -44,6 +44,7 @@ export default function ProjectDetailsPage() {
   const [open, setOpen] = useState(false);
   const [bootState, setBootState] = useState({ active: true, progress: 6, phase: 0 });
   const isCivilGoat = project?.slug === "civil-goat-coffee";
+  const isYellowBike = project?.slug === "yellow-bike";
   const moduleLabel = slug ? slug.replaceAll("-", " ").toUpperCase() : "CASE STUDY";
 
   const bootSteps = [
@@ -229,22 +230,28 @@ export default function ProjectDetailsPage() {
         ) : null}
       </AnimatePresence>
 
-      <Hero project={project} />
-      <div className="max-w-7xl mx-auto px-6 lg:px-10 py-14 space-y-16">
-        <LongformCopy {...project.challenge} id="challenge" />
-        <IconCards highlights={project.highlights} />
-        <TextureBanner project={project} />
-        {project.colorPalette ? <ColorPalette palette={project.colorPalette} /> : null}
-        <LongformCopy {...project.approach} id="approach" />
-        <Gallery
-          project={project}
-          socialSection={
-            isCivilGoat && project.socialPosts ? <SocialFeedSection posts={project.socialPosts} projectName={project.title} /> : null
-          }
-        />
-        <LongformCopy {...project.outcomes} id="outcomes" />
-        <PrevNext prev={prev} next={next} />
-      </div>
+      {isYellowBike ? (
+        <YellowBikeCaseStudy project={project} prev={prev} next={next} />
+      ) : (
+        <>
+          <Hero project={project} />
+          <div className="max-w-7xl mx-auto px-6 lg:px-10 py-14 space-y-16">
+            <LongformCopy {...project.challenge} id="challenge" />
+            <IconCards highlights={project.highlights} />
+            <TextureBanner project={project} />
+            {project.colorPalette ? <ColorPalette palette={project.colorPalette} /> : null}
+            <LongformCopy {...project.approach} id="approach" />
+            <Gallery
+              project={project}
+              socialSection={
+                isCivilGoat && project.socialPosts ? <SocialFeedSection posts={project.socialPosts} projectName={project.title} /> : null
+              }
+            />
+            <LongformCopy {...project.outcomes} id="outcomes" />
+            <PrevNext prev={prev} next={next} />
+          </div>
+        </>
+      )}
       <footer className="border-t-2 border-white/25 bg-black py-10 text-center text-[10px] uppercase tracking-[0.25em] text-white/45">
         © {new Date().getFullYear()} Travis Crawford — Portfolio
         <div className="mt-4 flex justify-center gap-6 text-white/55">
@@ -464,6 +471,547 @@ function PalettePlayground({ palette }) {
           </div>
         </div>
       ))}
+    </div>
+  );
+}
+
+const CHART_COLORS = ["#ef4444", "#f97316", "#facc15", "#22c55e", "#38bdf8", "#a78bfa"];
+
+function YellowBikeCaseStudy({ project, prev, next }) {
+  const research = project.yellowBikeResearch ?? {};
+  const survey = research.survey_results ?? {};
+
+  const scopeItems = [
+    "Translating a physical, community-based organization into a digital experience",
+    "Rebranding the organization for a mobile-first audience",
+    "Designing a system that encourages learning through interaction rather than instruction",
+  ];
+
+  return (
+    <>
+      <Hero project={project} />
+      <div className="max-w-7xl mx-auto px-6 lg:px-10 py-14 space-y-16">
+        <section className="border-2 border-white/20 bg-black p-6 md:p-8 shadow-brut-sm">
+          <div className="text-[10px] font-bold uppercase tracking-[0.42em] text-white/55 mb-2">Yellow Bike App</div>
+          <h2 className="font-display text-2xl md:text-3xl font-extrabold tracking-tight uppercase">
+            Gamifying Bike Safety for Everyday Riders
+          </h2>
+          <p className="mt-4 max-w-4xl text-sm text-white/80 leading-relaxed">
+            The Yellow Bike App is a UX/UI concept that reimagines the Yellow Bike Project as a digital product. The project explores
+            how a community-driven nonprofit can evolve into an engaging mobile experience by transforming bike safety education into
+            an interactive, gamified system.
+          </p>
+        </section>
+        <RoleTimelineTeamSection roles={project.roles} timeframe={project.timeframe} team={project.team} />
+
+        <section>
+          <div className="text-[10px] font-bold uppercase tracking-[0.42em] text-white/55 mb-2">Project Scope</div>
+          <HoverSpotlight className="border-2 border-white/20 bg-black p-6 md:p-8 shadow-brut-sm">
+            <p className="text-sm text-white/80 leading-relaxed max-w-4xl">
+              The objective was to take an existing nonprofit and design a mobile app that extends its mission. This included:
+            </p>
+            <ul className="mt-4 space-y-2 text-sm text-white/75 leading-relaxed list-disc pl-5">
+              {scopeItems.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </HoverSpotlight>
+        </section>
+
+        <LongformCopy
+          id="problem"
+          kicker="The Problem"
+          title="Bike safety education is often passive and overlooked"
+          paragraphs={[
+            "Riders are expected to learn through static resources or real-world experience, which can be inconsistent and, at times, unsafe.",
+          ]}
+        />
+
+        <LongformCopy
+          id="solution"
+          kicker="The Solution"
+          title="From informational to participatory"
+          paragraphs={[
+            "The Yellow Bike App introduces a gamified learning experience where users progress through safety lessons, challenges, and real-world scenarios.",
+            "Instead of simply reading guidelines, users actively engage with content, reinforcing knowledge through completion, repetition, and reward.",
+            "This approach shifts safety from something informational to something participatory.",
+          ]}
+        />
+
+        <LongformCopy
+          id="design-approach"
+          kicker="Design Approach"
+          title="Built around clarity, progression, and motivation"
+          paragraphs={[
+            "Gamification: Structured lessons, progress tracking, and achievement-based feedback.",
+            "UX Focus: Simplified navigation and clear learning paths to reduce friction.",
+            "Rebrand: A modernized identity centered around the YBP mark, balancing community warmth with digital usability.",
+            "The goal was to maintain the grassroots spirit of Yellow Bike while making it scalable and engaging in a digital format.",
+          ]}
+        />
+        <LogoComparisonSection
+          existingLogo={project.existingLogoImage}
+          proposedLogo={project.proposedLogoImage}
+        />
+        <YellowBikePaletteSection palette={project.yellowBikePalette} />
+
+        <section>
+          <div className="text-[10px] font-bold uppercase tracking-[0.42em] text-white/55 mb-2">Research Insights</div>
+          <div className="grid lg:grid-cols-1 gap-6">
+            <SurveyPieCard
+              title="Barriers to Cycling"
+              question={survey.barriers_to_cycling?.question}
+              responses={survey.barriers_to_cycling?.responses}
+              data={survey.barriers_to_cycling?.data ?? []}
+            />
+          </div>
+          <div className="mt-6 grid lg:grid-cols-2 gap-6">
+            <SurveyBarCard
+              title="Cycling Motivation"
+              question={survey.cycling_motivation?.question}
+              responses={survey.cycling_motivation?.responses}
+              data={survey.cycling_motivation?.data ?? []}
+            />
+            <BikeabilityChartCard
+              title="Community Bike-ability Rating"
+              question={survey.bikeability_rating?.question}
+              responses={survey.bikeability_rating?.responses}
+              data={survey.bikeability_rating?.data ?? []}
+            />
+          </div>
+        </section>
+        <YellowBikeFlowSection
+          title="Paper Prototypes"
+          imageSrc={project.paperPrototypeImage}
+          alt="Hand-drawn paper prototype sketches for Yellow Bike app screens, challenge flow, and interaction notes"
+        />
+        <PrototypeEmbedSection embedSrc={project.prototypeEmbedSrc} />
+        <YellowBikeFlowSection
+          title="User Onboarding Flow"
+          imageSrc={project.flowImage}
+          alt="Yellow Bike app onboarding, event participation, and route summary user flow across mobile screens"
+        />
+        <YellowBikeFlowSection
+          title="Event Challenges Flow"
+          imageSrc={project.eventChallengesFlowImage}
+          alt="Yellow Bike app event challenge flow showing check-in, quiz interactions, score progression, leaderboard, and rewards redemption"
+        />
+        <CommunityShowcase sections={project.communitySections} />
+
+        <LongformCopy
+          id="outcome"
+          kicker="Outcome"
+          title="A concept for safer, sustained riding habits"
+          paragraphs={[
+            "The result is a concept that demonstrates how nonprofit education can be transformed into an interactive product.",
+            "By gamifying the learning process, the app encourages consistent engagement and helps users build safer riding habits over time.",
+          ]}
+        />
+        <ImproveNextSection />
+        <PrevNext prev={prev} next={next} />
+      </div>
+    </>
+  );
+}
+
+function RoleTimelineTeamSection({ roles = [], timeframe, team = [] }) {
+  return (
+    <section>
+      <div className="text-[10px] font-bold uppercase tracking-[0.42em] text-white/55 mb-2">Role + Timeline + Team</div>
+      <div className="grid md:grid-cols-3 gap-4">
+        <HoverSpotlight className="border-2 border-white/20 bg-black p-4 shadow-brut-sm">
+          <div className="text-[10px] font-bold uppercase tracking-[0.26em] text-white/50">Role</div>
+          <div className="mt-3 flex flex-wrap gap-2">
+            {roles.map((role) => (
+              <span key={role} className="px-2.5 py-1 border border-white/25 text-[10px] uppercase tracking-[0.2em] text-white/80">
+                {role}
+              </span>
+            ))}
+          </div>
+        </HoverSpotlight>
+        <HoverSpotlight className="border-2 border-white/20 bg-black p-4 shadow-brut-sm">
+          <div className="text-[10px] font-bold uppercase tracking-[0.26em] text-white/50">Timeline</div>
+          <p className="mt-3 text-sm text-white/85 leading-relaxed">{timeframe ?? "2026"}</p>
+        </HoverSpotlight>
+        <HoverSpotlight className="border-2 border-white/20 bg-black p-4 shadow-brut-sm">
+          <div className="text-[10px] font-bold uppercase tracking-[0.26em] text-white/50">Team</div>
+          <div className="mt-3 space-y-2">
+            {(team.length ? team : ["Solo designer"]).map((member) => (
+              <p key={member} className="text-sm text-white/85 leading-relaxed">
+                {member}
+              </p>
+            ))}
+          </div>
+        </HoverSpotlight>
+      </div>
+    </section>
+  );
+}
+
+function ImproveNextSection() {
+  const items = [
+    "Run moderated usability tests with first-time riders to validate onboarding comprehension and challenge clarity.",
+    "Add adaptive challenge difficulty so confidence grows without overwhelming new cyclists.",
+    "Test reminder timing and reward cadence to improve 30-day return behavior.",
+    "Expand accessibility support for low-vision users and reduce cognitive load in route mode.",
+  ];
+  return (
+    <section>
+      <div className="text-[10px] font-bold uppercase tracking-[0.42em] text-white/55 mb-2">What I'd Improve Next</div>
+      <HoverSpotlight className="border-2 border-white/20 bg-black p-6 md:p-7 shadow-brut-sm">
+        <ul className="space-y-3 list-disc pl-5 text-sm text-white/80 leading-relaxed">
+          {items.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
+      </HoverSpotlight>
+    </section>
+  );
+}
+
+function CommunityShowcase({ sections = [] }) {
+  if (!sections.length) return null;
+  return (
+    <section className="space-y-6">
+      {sections.map((item, index) => {
+        const imageFirst = index % 2 === 0;
+        return (
+          <HoverSpotlight key={item.title} className="border-2 border-white/20 bg-black p-4 md:p-6 shadow-brut-sm">
+            <div className="grid md:grid-cols-12 gap-5 md:gap-8 items-center">
+              <div className={`md:col-span-6 ${imageFirst ? "md:order-1" : "md:order-2"}`}>
+                <img
+                  src={item.image}
+                  alt={`${item.title} Yellow Bike feature`}
+                  className="w-full h-auto border border-white/15 object-cover"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div className={`md:col-span-6 ${imageFirst ? "md:order-2" : "md:order-1"}`}>
+                <div className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/45">Community</div>
+                <h3 className="mt-2 font-display text-2xl md:text-3xl font-extrabold tracking-tight uppercase">{item.title}</h3>
+                <p className="mt-3 text-sm text-white/75 leading-relaxed">{item.copy}</p>
+              </div>
+            </div>
+          </HoverSpotlight>
+        );
+      })}
+    </section>
+  );
+}
+
+function YellowBikeFlowSection({ title, imageSrc, alt }) {
+  if (!imageSrc) return null;
+  return (
+    <section>
+      <div className="text-[10px] font-bold uppercase tracking-[0.42em] text-white/55 mb-2">{title}</div>
+      <HoverSpotlight className="border-2 border-white/20 bg-black p-3 md:p-5 shadow-brut-sm">
+        <img
+          src={imageSrc}
+          alt={alt}
+          className="w-full h-auto object-contain border border-white/15"
+          loading="lazy"
+          decoding="async"
+        />
+      </HoverSpotlight>
+    </section>
+  );
+}
+
+function LogoComparisonSection({ existingLogo, proposedLogo }) {
+  if (!existingLogo && !proposedLogo) return null;
+  return (
+    <section>
+      <div className="text-[10px] font-bold uppercase tracking-[0.42em] text-white/55 mb-2">Logo</div>
+      <div className="grid md:grid-cols-2 gap-4">
+        {existingLogo ? (
+          <HoverSpotlight className="border-2 border-white/20 bg-black p-4 shadow-brut-sm">
+            <div className="text-[10px] font-bold uppercase tracking-[0.32em] text-white/55 mb-3">Existing Logo</div>
+            <img
+              src={existingLogo}
+              alt="Yellow Bike existing logo design"
+              className="w-full h-auto object-contain border border-white/15"
+              loading="lazy"
+              decoding="async"
+            />
+          </HoverSpotlight>
+        ) : null}
+        {proposedLogo ? (
+          <HoverSpotlight className="border-2 border-white/20 bg-black p-4 shadow-brut-sm">
+            <div className="text-[10px] font-bold uppercase tracking-[0.32em] text-white/55 mb-3">Proposed Logo</div>
+            <img
+              src={proposedLogo}
+              alt="Yellow Bike proposed logo design"
+              className="w-full h-auto object-contain border border-white/15"
+              loading="lazy"
+              decoding="async"
+            />
+          </HoverSpotlight>
+        ) : null}
+      </div>
+    </section>
+  );
+}
+
+function YellowBikePaletteSection({ palette = [] }) {
+  if (!palette.length) return null;
+  const [hoveredIndex, setHoveredIndex] = useState(null);
+
+  return (
+    <section>
+      <div className="text-[10px] font-bold uppercase tracking-[0.42em] text-white/55 mb-2">Color Palette</div>
+      <HoverSpotlight className="border-2 border-white/20 bg-black p-5 shadow-brut-sm">
+        <div
+          className="relative border-2 border-white/20 overflow-hidden bg-black min-h-[240px] md:min-h-[280px]"
+        >
+          <div className="absolute inset-0 flex">
+            {palette.map((swatch, index) => (
+              <motion.div
+                key={swatch.hex}
+                className={`relative flex-1 ${index === 0 ? "ml-0" : "-ml-12"} ${index === palette.length - 1 ? "mr-0" : ""}`}
+                style={{
+                  clipPath:
+                    index === 0
+                      ? "polygon(-2% 0, 102% 0, 88% 100%, -2% 100%)"
+                      : index === palette.length - 1
+                        ? "polygon(12% 0, 102% 0, 102% 100%, -2% 100%)"
+                        : "polygon(12% 0, 102% 0, 88% 100%, -2% 100%)",
+                  zIndex: hoveredIndex === index ? 20 : 10,
+                }}
+                onMouseEnter={() => setHoveredIndex(index)}
+                onMouseLeave={() => setHoveredIndex(null)}
+                animate={{
+                  flexGrow: hoveredIndex === null ? 1 : hoveredIndex === index ? 1.8 : 0.72,
+                }}
+                transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <div className="absolute inset-0" style={{ backgroundColor: swatch.hex }} aria-hidden />
+                <div className="absolute inset-x-0 bottom-0 px-2 py-2">
+                  <div
+                    className="text-[10px] font-bold uppercase tracking-[0.14em]"
+                    style={{
+                      color: swatch.hex?.toUpperCase() === "#FF6B00" ? "#0b0b0b" : getReadableTextColor(swatch.hex),
+                      textShadow: "0 1px 2px rgba(0,0,0,0.28)",
+                    }}
+                  >
+                    {swatch.name}
+                  </div>
+                  <div
+                    className="mt-0.5 text-[11px]"
+                    style={{
+                      color: swatch.hex?.toUpperCase() === "#FF6B00" ? "#0b0b0b" : getReadableTextColor(swatch.hex),
+                      textShadow: "0 1px 2px rgba(0,0,0,0.28)",
+                    }}
+                  >
+                    {swatch.hex}
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+          <div
+            className="absolute inset-0 opacity-20 pointer-events-none"
+            style={{
+              backgroundImage:
+                "repeating-linear-gradient(90deg, rgba(255,255,255,.20) 0 1px, transparent 1px 58px)",
+            }}
+            aria-hidden
+          />
+        </div>
+      </HoverSpotlight>
+    </section>
+  );
+}
+
+function PrototypeEmbedSection({ embedSrc }) {
+  if (!embedSrc) return null;
+  return (
+    <section>
+      <div className="text-[10px] font-bold uppercase tracking-[0.42em] text-white/55 mb-2">Try the App</div>
+      <HoverSpotlight className="border-2 border-white/20 bg-black/60 p-3 md:p-4 shadow-brut-sm">
+        <div className="w-full aspect-[16/10]">
+          <iframe
+            title="Yellow Bike interactive prototype"
+            src={embedSrc}
+            className="w-full h-full border-0"
+            loading="lazy"
+            allowFullScreen
+          />
+        </div>
+      </HoverSpotlight>
+    </section>
+  );
+}
+
+function SurveyPieCard({ title, question, responses, data }) {
+  const total = data.reduce((sum, item) => sum + item.value, 0) || 100;
+  let running = 0;
+  const segments = data.map((item, index) => {
+    const start = running;
+    const amount = (item.value / total) * 100;
+    running += amount;
+    return `${CHART_COLORS[index % CHART_COLORS.length]} ${start}% ${running}%`;
+  });
+
+  return (
+    <HoverSpotlight className="h-full flex flex-col border-2 border-white/20 bg-black p-6 shadow-brut-sm">
+      <h3 className="font-display text-lg font-bold tracking-tight uppercase">{title}</h3>
+      {question ? <p className="mt-2 text-sm text-white/70">{question}</p> : null}
+      <div className="mt-4 flex flex-col md:flex-row gap-5 md:items-center">
+        <motion.div
+          className="survey-pie-circle w-44 h-44 shrink-0"
+          style={{ background: `conic-gradient(${segments.join(", ")})` }}
+          role="img"
+          aria-label={`${title} pie chart`}
+          initial={{ opacity: 0, scale: 0.82, rotate: -35 }}
+          whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+          viewport={{ once: true, margin: "-10%" }}
+          transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+        />
+        <ul className="space-y-2 text-xs text-white/75">
+          {data.map((item, index) => (
+            <motion.li
+              key={item.label}
+              className="flex items-center gap-2"
+              initial={{ opacity: 0, y: 6 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-10%" }}
+              transition={{ duration: 0.35, delay: index * 0.05 }}
+            >
+              <span className="inline-block w-3 h-3" style={{ backgroundColor: CHART_COLORS[index % CHART_COLORS.length] }} aria-hidden />
+              <span className="uppercase tracking-[0.12em]">{item.label}</span>
+              <span className="text-white/55">{item.value}%</span>
+            </motion.li>
+          ))}
+        </ul>
+      </div>
+      <p className="mt-auto pt-4 text-[11px] uppercase tracking-[0.28em] text-white/45">{responses ?? 0} responses</p>
+    </HoverSpotlight>
+  );
+}
+
+function SurveyBarCard({ title, question, responses, data }) {
+  const max = Math.max(...data.map((item) => item.value), 1);
+  return (
+    <HoverSpotlight className="h-full flex flex-col border-2 border-white/20 bg-black p-6 shadow-brut-sm">
+      <h3 className="font-display text-lg font-bold tracking-tight uppercase">{title}</h3>
+      {question ? <p className="mt-2 text-sm text-white/70">{question}</p> : null}
+      <ul className="mt-4 space-y-3">
+        {data.map((item, index) => (
+          <li key={item.label}>
+            <div className="flex items-center justify-between text-xs text-white/75 mb-1">
+              <span className="max-w-[75%]">{item.label}</span>
+              <span>{item.value}%</span>
+            </div>
+            <div className="h-3 border border-white/25 bg-black">
+              <motion.div
+                className="h-full"
+                initial={{ width: 0 }}
+                whileInView={{ width: `${(item.value / max) * 100}%` }}
+                viewport={{ once: true, margin: "-10%" }}
+                transition={{ duration: 0.55, delay: index * 0.07, ease: "easeOut" }}
+                style={{
+                  backgroundColor: CHART_COLORS[index % CHART_COLORS.length],
+                }}
+              />
+            </div>
+          </li>
+        ))}
+      </ul>
+      <p className="mt-auto pt-4 text-[11px] uppercase tracking-[0.28em] text-white/45">{responses ?? 0} responses</p>
+    </HoverSpotlight>
+  );
+}
+
+function BikeabilityChartCard({ title, question, responses, data }) {
+  const maxCount = Math.max(...data.map((item) => item.count), 1);
+  return (
+    <HoverSpotlight className="h-full flex flex-col border-2 border-white/20 bg-black p-6 shadow-brut-sm">
+      <h3 className="font-display text-lg font-bold tracking-tight uppercase">{title}</h3>
+      {question ? <p className="mt-2 text-sm text-white/70">{question}</p> : null}
+      <div className="mt-6 grid grid-cols-5 gap-3 items-end h-48">
+        {data.map((item, index) => (
+          <div key={item.rating} className="flex flex-col items-center gap-2">
+            <div className="w-full h-40 border border-white/25 bg-black flex items-end">
+              <motion.div
+                className="w-full"
+                initial={{ height: 0 }}
+                whileInView={{ height: `${(item.count / maxCount) * 100}%` }}
+                viewport={{ once: true, margin: "-10%" }}
+                transition={{ duration: 0.6, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
+                style={{
+                  backgroundColor: CHART_COLORS[index % CHART_COLORS.length],
+                }}
+              />
+            </div>
+            <div className="text-[11px] text-white/70">#{item.rating}</div>
+            <div className="text-[10px] text-white/50">{item.percentage}%</div>
+          </div>
+        ))}
+      </div>
+      <p className="mt-auto pt-4 text-[11px] uppercase tracking-[0.28em] text-white/45">{responses ?? 0} responses</p>
+    </HoverSpotlight>
+  );
+}
+
+function JourneyGrid({ data }) {
+  const blocks = [
+    { label: "Phases", items: data.phases ?? [] },
+    { label: "Doing", items: data.doing ?? [] },
+    { label: "Thinking", items: data.thinking ?? [] },
+    { label: "Feeling", items: data.feeling ?? [] },
+    { label: "Outcomes", items: data.outcomes ?? [] },
+  ];
+  return (
+    <div className="grid lg:grid-cols-2 gap-4">
+      {blocks.map((block) => (
+        <HoverSpotlight key={block.label} className="border-2 border-white/20 bg-black p-5 shadow-brut-sm">
+          <h3 className="font-display text-sm font-bold uppercase tracking-[0.12em]">{block.label}</h3>
+          <ul className="mt-3 space-y-2 text-sm text-white/75 leading-relaxed list-disc pl-5">
+            {block.items.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </HoverSpotlight>
+      ))}
+    </div>
+  );
+}
+
+function FutureStateGrid({ data }) {
+  const blocks = [
+    { label: "Doing", items: data.doing ?? [] },
+    { label: "Thinking", items: data.thinking ?? [] },
+    { label: "Feeling", items: data.feeling ?? [] },
+    { label: "Outcomes", items: data.outcomes ?? [] },
+  ];
+
+  return (
+    <div className="space-y-4">
+      <HoverSpotlight className="border-2 border-white/20 bg-black p-5 shadow-brut-sm">
+        <h3 className="font-display text-sm font-bold uppercase tracking-[0.12em]">Campaign Directions</h3>
+        <div className="mt-3 grid md:grid-cols-2 gap-3">
+          {(data.campaigns ?? []).map((campaign) => (
+            <div key={campaign.title} className="border border-white/20 p-3 bg-black/50">
+              <p className="text-xs uppercase tracking-[0.18em] text-white/85">{campaign.title}</p>
+              {campaign.tagline ? <p className="mt-1 text-xs text-white/55">{campaign.tagline}</p> : null}
+            </div>
+          ))}
+        </div>
+      </HoverSpotlight>
+
+      <div className="grid lg:grid-cols-2 gap-4">
+        {blocks.map((block) => (
+          <HoverSpotlight key={block.label} className="border-2 border-white/20 bg-black p-5 shadow-brut-sm">
+            <h3 className="font-display text-sm font-bold uppercase tracking-[0.12em]">{block.label}</h3>
+            <ul className="mt-3 space-y-2 text-sm text-white/75 leading-relaxed list-disc pl-5">
+              {block.items.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </HoverSpotlight>
+        ))}
+      </div>
     </div>
   );
 }

@@ -1424,6 +1424,10 @@ h3 {
   border-radius: 0 !important;
 }
 
+.brutalist-project .survey-pie-circle {
+  border-radius: 9999px !important;
+}
+
 .brutalist-project .backdrop-blur,
 .brutalist-project .backdrop-blur-sm {
   backdrop-filter: none !important;
