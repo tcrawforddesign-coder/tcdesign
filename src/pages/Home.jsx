@@ -461,7 +461,7 @@ export function ProjectCard({ project }) {
 
 function HeadshotCard() {
   return (
-    <div className="profile-card profile-card--compact" aria-label="Portrait of Travis Crawford">
+    <div className="profile-card profile-card--compact profile-card--hud" aria-label="Portrait of Travis Crawford">
       <img
         src={HEADSHOT}
         alt="Travis Crawford"
@@ -470,22 +470,41 @@ function HeadshotCard() {
         fetchPriority="high"
         decoding="async"
       />
-      <div className="profile-card__overlay" />
-      <div className="profile-card__border">
-        <div className="profile-card__name">Travis Crawford</div>
-        <div className="profile-card__icons" aria-label="Social links">
-          <a
-            href="https://www.linkedin.com/in/travis-crawford-67759b24a"
-            target="_blank"
-            rel="noreferrer"
-            aria-label="LinkedIn"
-          >
-            <Linkedin className="w-5 h-5" />
+      <div className="profile-card__hud-grid" aria-hidden />
+      <div className="profile-card__hud-vignette" aria-hidden />
+
+      <div className="profile-card__hud-top-right">
+        <h3 className="hud-name">TRAVIS CRAWFORD</h3>
+        <p className="hud-role">VISUAL DESIGNER</p>
+      </div>
+
+      <div className="profile-card__hud-links">
+        <div className="profile-card__icons profile-card__icons--hud" aria-label="Social links">
+          <a href="https://www.linkedin.com/in/travis-crawford-67759b24a" target="_blank" rel="noreferrer" aria-label="LinkedIn">
+            <Linkedin className="w-4 h-4" />
           </a>
           <a href="https://www.instagram.com/treves_/" target="_blank" rel="noreferrer" aria-label="Instagram">
-            <Instagram className="w-5 h-5" />
+            <Instagram className="w-4 h-4" />
           </a>
         </div>
+      </div>
+
+      <div className="profile-card__hud-identify-corners" aria-hidden>
+        <span className="hud-identify-corner hud-identify-corner--tl" />
+        <span className="hud-identify-corner hud-identify-corner--tr" />
+        <span className="hud-identify-corner hud-identify-corner--bl" />
+        <span className="hud-identify-corner hud-identify-corner--br" />
+      </div>
+
+      <div className="profile-card__hud-footer">
+        <span>Height: 5'9"</span>
+        <span>Weight: 165 lbs</span>
+        <span>Hair: Dark Brown</span>
+        <span>Eyes: Blue</span>
+        <span>Texas, USA</span>
+        <span>ID #TC-0915</span>
+        <span>Last Seen: San Antonio, TX</span>
+        <span>Threat: LOW</span>
       </div>
     </div>
   );
