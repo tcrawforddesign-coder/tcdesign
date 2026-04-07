@@ -1,5 +1,98 @@
 export const projects = [
   {
+    id: 8,
+    slug: "ritual-coffee",
+    title: "Ritual Coffee — Brutalist Shop Branding System",
+    tag: "Branding System",
+    timeframe: "2024",
+    summary: "A compact identity system for a brutalist coffee shop balancing sharp typography, stark contrast, and emotive icon marks.",
+    roles: ["Brand Identity", "Art Direction", "Visual Systems"],
+    tools: ["Illustrator", "Photoshop", "Figma"],
+    cover: "/images/hdh.png",
+    heroImage: "/images/hdh.png",
+    challenge: {
+      kicker: "Challenge",
+      title: "Create a coffee brand with hard edges and human emotion",
+      paragraphs: [
+        "Ritual Coffee needed a visual system that felt distinctly brutalist while still expressing personality and warmth.",
+        "The system had to scale from in-shop touchpoints to social content without losing consistency.",
+      ],
+    },
+    approach: {
+      kicker: "Approach",
+      title: "Modular brand parts built for speed and consistency",
+      paragraphs: [
+        "The identity uses strict typographic hierarchy, high-contrast assets, and modular graphic treatments to maintain recognition across formats.",
+        "A simple mark system with emotional variation (smile/frown) creates a subtle glitch motif for campaign moments.",
+      ],
+    },
+    outcomes: {
+      kicker: "Outcome",
+      title: "A system that is bold, flexible, and memorable",
+      paragraphs: [
+        "The resulting kit supports quick creative iteration while preserving a recognizable brutalist signature across brand applications.",
+      ],
+    },
+    highlights: [
+      {
+        icon: "PenTool",
+        title: "Identity Core",
+        copy: "Wordmark, icon behavior, and typographic constraints designed as a reusable core.",
+      },
+      {
+        icon: "Cpu",
+        title: "Application Toolkit",
+        copy: "A practical rollout kit covering menus, packaging, posters, and social placements so the identity stays consistent in real use.",
+      },
+      {
+        icon: "Camera",
+        title: "Brutalist Visual Direction",
+        copy: "High-contrast type, stark composition, and reduced color create a sharp brutalist tone that holds up across print and digital.",
+      },
+      {
+        icon: "Megaphone",
+        title: "Campaign Language",
+        copy: "A glitching mood-mark treatment for expressive campaign moments and social cutdowns.",
+      },
+    ],
+    glitchFaces: {
+      smile: "/images/Smile.png",
+      frown: "/images/Frown.png",
+      title: "Mood Mark Glitch",
+      subtitle: "Smile / Frown mark alternates to create a deliberate signal distortion effect.",
+    },
+    galleryLayout: "meta",
+    galleryGroups: [
+      {
+        title: "Brand Applications",
+        carousel: false,
+        items: [
+          "/images/hdh.png",
+          "/images/hdh1.png",
+          "/images/hdh2.png",
+          "/images/hdh3.png",
+          "/images/hdh4.png",
+          "/images/hdh5.png",
+          "/images/hdh6.png",
+          "/images/hdh7.png",
+        ],
+      },
+      {
+        title: "Instagram Posts",
+        carousel: false,
+        items: [
+          { src: "/images/Instagram post - 10.png", aspectRatio: "1 / 1", alt: "Ritual Coffee Instagram post 10" },
+          { src: "/images/Instagram post - 11.png", aspectRatio: "1 / 1", alt: "Ritual Coffee Instagram post 11" },
+          { src: "/images/Instagram post - 12.png", aspectRatio: "1 / 1", alt: "Ritual Coffee Instagram post 12" },
+          { src: "/images/Instagram post - 17.png", aspectRatio: "1 / 1", alt: "Ritual Coffee Instagram post 17" },
+          { src: "/images/Instagram post - 18.png", aspectRatio: "1 / 1", alt: "Ritual Coffee Instagram post 18" },
+          { src: "/images/Instagram post - 19.png", aspectRatio: "1 / 1", alt: "Ritual Coffee Instagram post 19" },
+        ],
+      },
+    ],
+    gallery: [],
+  },
+  {
     id: 7,
     slug: "yellow-bike",
     title: "Yellow Bike App",

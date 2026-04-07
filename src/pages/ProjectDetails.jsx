@@ -238,6 +238,7 @@ export default function ProjectDetailsPage() {
           <div className="max-w-7xl mx-auto px-6 lg:px-10 py-14 space-y-16">
             <LongformCopy {...project.challenge} id="challenge" />
             <IconCards highlights={project.highlights} />
+            {project.glitchFaces ? <GlitchMoodSection glitchFaces={project.glitchFaces} /> : null}
             <TextureBanner project={project} />
             {project.colorPalette ? <ColorPalette palette={project.colorPalette} /> : null}
             <LongformCopy {...project.approach} id="approach" />
@@ -350,6 +351,29 @@ function HoverSpotlight({ className = "", children }) {
       />
       <div className="absolute inset-0 rounded-xl ring-0 ring-white/0 group-hover/spot:ring-1 group-hover/spot:ring-white/10 transition-all" />
     </div>
+  );
+}
+
+function GlitchMoodSection({ glitchFaces }) {
+  if (!glitchFaces?.smile || !glitchFaces?.frown) return null;
+  return (
+    <section>
+      <div className="text-[10px] font-bold uppercase tracking-[0.42em] text-white/55 mb-2">{glitchFaces.title ?? "Mood Mark Glitch"}</div>
+      <HoverSpotlight className="border-2 border-white/20 bg-black p-5 md:p-6 shadow-brut-sm">
+        <div className="grid md:grid-cols-12 gap-6 items-center">
+          <div className="md:col-span-7">
+            <h3 className="font-display text-xl md:text-2xl font-extrabold tracking-tight uppercase">Mood mark glitch loop</h3>
+            {glitchFaces.subtitle ? <p className="text-sm text-white/65 mt-3">{glitchFaces.subtitle}</p> : null}
+          </div>
+          <div className="md:col-span-5 md:justify-self-end">
+            <div className="ritual-glitch ritual-glitch--square">
+              <img src={glitchFaces.smile} alt="Ritual Coffee smile mark" className="ritual-glitch__layer ritual-glitch__layer--smile" loading="lazy" decoding="async" />
+              <img src={glitchFaces.frown} alt="Ritual Coffee frown mark" className="ritual-glitch__layer ritual-glitch__layer--frown" loading="lazy" decoding="async" />
+            </div>
+          </div>
+        </div>
+      </HoverSpotlight>
+    </section>
   );
 }
 
@@ -1054,14 +1078,15 @@ function Gallery({ project, socialSection }) {
   const normalizeMediaItem = (item, altFallback) => {
     if (!item) return null;
     if (typeof item === "string") {
-      return { preview: item, full: item, alt: altFallback };
+      return { preview: item, full: item, alt: altFallback, aspectRatio: undefined };
     }
     if (typeof item === "object") {
       const preview = item.preview ?? item.src ?? item.full;
       if (!preview) return null;
       const full = item.full ?? item.src ?? preview;
       const alt = item.alt ?? altFallback;
-      return { preview, full, alt };
+      const mediaAspectRatio = item.aspectRatio;
+      return { preview, full, alt, aspectRatio: mediaAspectRatio };
     }
     return null;
   };
@@ -1141,7 +1166,9 @@ function Gallery({ project, socialSection }) {
               } else if (hasItems) {
                 content = (
                   <div className="grid gap-5 md:grid-cols-3">
-                    {normalizedItems.map((media, index) => (
+                    {normalizedItems.map((media, index) => {
+                      const tileAspectRatio = media.aspectRatio ?? aspectRatio;
+                      return (
                       <MotionFigure
                         key={`${group.title}-${media.preview}-${index}`}
                         initial={{ opacity: 0, y: 12 }}
@@ -1159,11 +1186,12 @@ function Gallery({ project, socialSection }) {
                           }
                         }}
                       >
-                        <div className="w-full" style={{ aspectRatio }}>
+                        <div className="w-full" style={{ aspectRatio: tileAspectRatio }}>
                           <img src={media.preview} alt={media.alt} className="w-full h-full object-cover" loading="lazy" decoding="async" />
                         </div>
                       </MotionFigure>
-                    ))}
+                      );
+                    })}
                   </div>
                 );
               } else if (group.confidential) {
@@ -1197,6 +1225,7 @@ function Gallery({ project, socialSection }) {
             {galleryItems.map((item, index) => {
               const media = normalizeMediaItem(item, "Meta placement static");
               if (!media) return null;
+              const tileAspectRatio = media.aspectRatio ?? aspectRatio;
               return (
                 <MotionFigure
                   key={`${media.preview}-${index}`}
@@ -1215,7 +1244,7 @@ function Gallery({ project, socialSection }) {
                     }
                   }}
                 >
-                  <div className="w-full" style={{ aspectRatio }}>
+                  <div className="w-full" style={{ aspectRatio: tileAspectRatio }}>
                     <img src={media.preview} alt={media.alt} className="w-full h-full object-cover" loading="lazy" decoding="async" />
                   </div>
                 </MotionFigure>
@@ -1245,6 +1274,7 @@ function Gallery({ project, socialSection }) {
     if (!media) {
       return;
     }
+    const tileAspectRatio = media.aspectRatio ?? aspectRatio;
     const wide = index % 5 === 0;
     const colClass = wide ? "sm:col-span-12" : "sm:col-span-6";
 
@@ -1262,7 +1292,7 @@ function Gallery({ project, socialSection }) {
           event.currentTarget.style.setProperty("--my", `${event.clientY - rect.top}px`);
         }}
       >
-        <div className="w-full" style={{ aspectRatio }}>
+        <div className="w-full" style={{ aspectRatio: tileAspectRatio }}>
           <div className={`w-full h-full ${isContain ? "bg-black/60 flex items-center justify-center p-5" : ""}`}>
             <button
               type="button"

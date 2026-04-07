@@ -817,6 +817,55 @@ h3 {
   transform: translate(-2px, -2px);
 }
 
+.ritual-glitch {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 8;
+  border: 2px solid rgba(255, 255, 255, 0.22);
+  background: #020202;
+  overflow: hidden;
+}
+
+.ritual-glitch--square {
+  width: min(100%, 320px);
+  aspect-ratio: 1 / 1;
+}
+
+.ritual-glitch__layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  padding: 18px;
+}
+
+.ritual-glitch__layer--smile {
+  animation: ritualSmileFlicker 2.1s steps(1, end) infinite;
+}
+
+.ritual-glitch__layer--frown {
+  animation: ritualFrownFlicker 2.1s steps(1, end) infinite;
+}
+
+@keyframes ritualSmileFlicker {
+  0%, 38% { opacity: 1; transform: translate3d(0, 0, 0); filter: none; clip-path: inset(0 0 0 0); }
+  40% { opacity: 1; transform: translate3d(-3px, 1px, 0); filter: contrast(1.4); clip-path: inset(8% 0 70% 0); }
+  43%, 60% { opacity: 0; transform: translate3d(-2px, 0, 0); }
+  62% { opacity: 1; transform: translate3d(2px, -1px, 0); filter: contrast(1.35); clip-path: inset(58% 0 10% 0); }
+  65%, 100% { opacity: 1; transform: translate3d(0, 0, 0); filter: none; clip-path: inset(0 0 0 0); }
+}
+
+@keyframes ritualFrownFlicker {
+  0%, 38% { opacity: 0; transform: translate3d(2px, 0, 0); }
+  40% { opacity: 0; transform: translate3d(2px, 0, 0); }
+  43%, 58% { opacity: 1; transform: translate3d(0, 0, 0); filter: none; clip-path: inset(0 0 0 0); }
+  60% { opacity: 1; transform: translate3d(3px, -1px, 0); filter: contrast(1.45); clip-path: inset(12% 0 62% 0); }
+  63% { opacity: 1; transform: translate3d(-2px, 1px, 0); filter: contrast(1.3); clip-path: inset(65% 0 8% 0); }
+  66%, 100% { opacity: 0; transform: translate3d(2px, 0, 0); filter: none; clip-path: inset(0 0 0 0); }
+}
+
 .hero-intro-card::before {
   content: "";
   position: absolute;
