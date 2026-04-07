@@ -38,12 +38,12 @@ export default function PosterGallery({
   const [visibleCount, setVisibleCount] = useState(() => {
     const initial =
       variant === "expanded"
-        ? Math.min(12, curated.length)
+        ? Math.min(6, curated.length)
         : Math.min(8, curated.length);
     return initial || curated.length;
   });
   const loadMoreRef = useRef(null);
-  const batchSize = variant === "expanded" ? 9 : 6;
+  const batchSize = variant === "expanded" ? 6 : 6;
 
   useEffect(() => {
     setOrder(curated);
@@ -57,7 +57,7 @@ export default function PosterGallery({
     setVisibleCount((prev) => {
       const base =
         variant === "expanded"
-          ? Math.min(12, curated.length)
+          ? Math.min(6, curated.length)
           : Math.min(8, curated.length);
 
       if (!base) return curated.length;
@@ -123,7 +123,7 @@ export default function PosterGallery({
           }
         });
       },
-      { rootMargin: "200px 0px" },
+      { rootMargin: "120px 0px" },
     );
 
     observer.observe(element);
@@ -189,9 +189,9 @@ export default function PosterGallery({
                     src={poster.src}
                     alt={poster.title}
                     className={`poster-gallery__image ${loadedPosterIds.has(poster.id) ? "poster-gallery__image--loaded" : ""}`}
-                    loading={index < 6 ? "eager" : "lazy"}
+                    loading={index < 1 ? "eager" : "lazy"}
                     decoding="async"
-                    fetchPriority={index < 2 ? "high" : "auto"}
+                    fetchPriority={index < 1 ? "high" : "low"}
                     onLoad={() => markPosterLoaded(poster.id)}
                     onError={() => markPosterLoaded(poster.id)}
                   />
