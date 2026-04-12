@@ -391,6 +391,17 @@ export const projects = [
       "Meta placements ship primarily as 4:5 static frames; some sets include 9:16 for Stories and full-height units. Each treatment keeps promo clarity tight within the safe zone.",
     galleryGroups: [
       {
+        title: "Flavor Journey ad set",
+        description: "Dual-format flavor-led concept set with matched 4:5 and 9:16 variants for feed and Stories delivery.",
+        carousel: true,
+        items: [
+          { preview: "/images/Flavor_Journey_Ad1_1080x1350.png", full: "/images/Flavor_Journey_Ad1_1080x1920.png", alt: "Flavor Journey ad 1" },
+          { preview: "/images/Flavor_Journey_Ad2_1080x1350.png", full: "/images/Flavor_Journey_Ad2_1080x1920.png", alt: "Flavor Journey ad 2" },
+          { preview: "/images/Flavor_Journey_Ad3_1080x1350.png", full: "/images/Flavor_Journey_Ad3_1080x1920.png", alt: "Flavor Journey ad 3" },
+          { preview: "/images/Flavor_Journey_Ad4_1080x1350.png", full: "/images/Flavor_Journey_Ad4_1080x1920.png", alt: "Flavor Journey ad 4" },
+        ],
+      },
+      {
         title: "9 PM coffee set",
         description: "Evening-focused 4:5 statics for late-day coffee moments and wind-down positioning.",
         carousel: true,
@@ -481,6 +492,10 @@ export const projects = [
       },
     ],
     deliverables: [
+      {
+        title: "Flavor Journey ad set",
+        description: "Eight static exports across 1080×1350 and 1080×1920 placements to keep flavor-story messaging consistent by channel.",
+      },
       {
         title: "9 PM coffee set",
         description: "Five static 4:5 placements for evening coffee storytelling and routine-based hooks.",
