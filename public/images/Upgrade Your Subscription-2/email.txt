@@ -1,0 +1,39 @@
+Turn cameras into proactive campus sensors
+Hi [First Name],
+I wanted to share a quick look at how AI video analytics is helping campuses turn existing camera systems into proactive tools for safety, operations, and decision-making.
+Across Texas, many organizations are still dealing with limited visibility across buildings and systems. That makes it harder to detect issues early, respond quickly, and confidently plan upgrades or expansions.
+In most cases, the issue isn’t a lack of cameras, it’s a lack of usable insight. Security teams are often relying on manual monitoring or reacting after something happens, rather than having real-time awareness across their environment.
+AI analytics layers onto your existing or planned camera systems and starts:
+Real-Time Threat Detection
+Identifies intrusion, loitering, and unusual behavior.
+Object Classification
+Distinguishes people, vehicles, and movement patterns.
+Automated Alerts
+Triggers notifications based on defined rules.
+Smart Search & Forensics
+Quickly locate incidents using metadata filters.
+FEATURED TECHNOLOGY
+Axis Object Analytics
+AI-powered analytics built into supported Axis cameras to classify people and vehicles, detect movement patterns, and create smarter event-based awareness.
+Download Data Sheet
+
+
+How Axis Object Analytics Works
+Object counting data can be integrated through automatic data push (1) to either an MQTT message broker (2) or AXIS Camera Station (3). The collected data can be visualized using a reporting platform such as AXIS Data Insights Dashboard (4). Alternatively, third-party applications request data directly from the device through a built-in API (5).
+Source: Axis Communications (axis.com)
+Other AI Analytics Solutions with 3Sixty Integrated
+Hanwha Vision – Wisenet AI Cameras Edge-based AI analytics that classify objects and reduce false alarms at the camera level
+Bosch – Intelligent Video Analytics Advanced perimeter detection and rule-based alerts designed for complex environments
+i-PRO – Active Guard AI-assisted search and alerting that improves operator speed and situational awareness
+Want to explore where AI analytics could fit on your campus?
+We can help evaluate opportunities across parking, perimeter, dorms, and public areas.
+Contact Us
+
+Best,  Brenda Constantine Account Manager 3Sixty Integrated San Antonio (713) 447-3619 bconstantin@3sixtyintegrated.com
+
+
+
+
+1218 Arion Parkway, Suite 120, San Antonio, TX 78216
+Texas Security License: B10864
+© 3Sixty Integrated Inc.

@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { AnimatePresence, motion, useInView } from "framer-motion";
-import { ArrowUpRight, ChevronLeft, ChevronRight, Github, Linkedin, Mail, Menu, X, Megaphone, Camera, PenTool, Cpu } from "lucide-react";
+import { ArrowUpRight, ChevronLeft, ChevronRight, Github, Linkedin, Mail, Menu, X, Megaphone, Camera, PenTool, Cpu, Folder } from "lucide-react";
 
 import { findProjectBySlug, getAdjacentProjects } from "../data/projects.js";
 const MotionHeading = motion.h1;
@@ -45,6 +45,7 @@ export default function ProjectDetailsPage() {
   const [bootState, setBootState] = useState({ active: true, progress: 6, phase: 0 });
   const isCivilGoat = project?.slug === "civil-goat-coffee";
   const isYellowBike = project?.slug === "yellow-bike";
+  const isThreeSixty = project?.slug === "3sixty-integrated-marketing";
   const moduleLabel = slug ? slug.replaceAll("-", " ").toUpperCase() : "CASE STUDY";
 
   const bootSteps = [
@@ -232,6 +233,8 @@ export default function ProjectDetailsPage() {
 
       {isYellowBike ? (
         <YellowBikeCaseStudy project={project} prev={prev} next={next} />
+      ) : isThreeSixty ? (
+        <ThreeSixtyMarketingCaseStudy project={project} prev={prev} next={next} />
       ) : (
         <>
           <Hero project={project} />
@@ -349,7 +352,7 @@ function HoverSpotlight({ className = "", children }) {
         className="pointer-events-none absolute inset-0 opacity-0 group-hover/spot:opacity-100 transition-opacity"
         style={{ background: "radial-gradient(600px at var(--mx) var(--my), rgba(255,255,255,0.07), transparent 60%)" }}
       />
-      <div className="absolute inset-0 rounded-xl ring-0 ring-white/0 group-hover/spot:ring-1 group-hover/spot:ring-white/10 transition-all" />
+      <div className="pointer-events-none absolute inset-0 rounded-xl ring-0 ring-white/0 group-hover/spot:ring-1 group-hover/spot:ring-white/10 transition-all" />
     </div>
   );
 }
@@ -635,6 +638,410 @@ function YellowBikeCaseStudy({ project, prev, next }) {
         <PrevNext prev={prev} next={next} />
       </div>
     </>
+  );
+}
+
+function ThreeSixtyMarketingCaseStudy({ project, prev, next }) {
+  const whatIDo = project.whatIDo ?? [];
+  const communication = project.communicationStrategyExecution ?? {};
+  const socialStrategy = project.socialStrategy ?? {};
+  const thoughtLeadershipSeries = project.thoughtLeadershipSeries ?? {};
+  const securityPricingCampaign = project.securityPricingCampaign ?? {};
+  const emailCampaignMockup = project.emailCampaignMockup ?? {};
+  const technical = project.technicalTranslationStorytelling ?? {};
+  const sales = project.salesEnablementBusinessCommunication ?? {};
+  const salesEnablementLibrary = project.salesEnablementLibrary ?? {};
+  const internal = project.internalCommunicationsEngagement ?? {};
+  const internalCommsFeatureImages = project.internalCommsFeatureImages ?? [];
+  const internalSocialAnnouncementImage = project.internalSocialAnnouncementImage;
+  const internalCommsAdditionalImages = project.internalCommsAdditionalImages ?? [];
+  const onboardingEmailTemplate = project.onboardingEmailTemplate ?? [];
+  const operations = project.operationsPlanningCoordination ?? {};
+  const designExecution = project.designContentExecution ?? {};
+  const impact = project.impact ?? [];
+  const salesLibraryAssets = salesEnablementLibrary.assets ?? [];
+  const salesCaseStudies = salesLibraryAssets.filter((asset) => /case[\s_-]?study/i.test(asset));
+  const salesOnePagers = salesLibraryAssets.filter((asset) => !/case[\s_-]?study/i.test(asset));
+  const roleSummary = (project.roles ?? []).join(" + ");
+  const teamSummary = (project.team ?? []).join(", ");
+
+  return (
+    <>
+      <Hero project={project} />
+      <div className="max-w-7xl mx-auto px-6 lg:px-10 py-14 space-y-16">
+        <section className="border-2 border-white/20 bg-black p-6 md:p-8 shadow-brut-sm">
+          <div className="text-[10px] font-bold uppercase tracking-[0.42em] text-white/55 mb-2">3Sixty Integrated</div>
+          <h2 className="font-display text-2xl md:text-3xl font-extrabold tracking-tight uppercase">
+            Digital marketing beyond visual execution
+          </h2>
+          <p className="mt-4 max-w-4xl text-sm text-white/80 leading-relaxed">
+            This case study is structured to show communication leadership across campaigns, technical storytelling, sales
+            enablement, internal engagement, and execution planning.
+          </p>
+          <div className="mt-5 grid grid-cols-2 md:grid-cols-4 gap-3">
+            <div className="border border-white/20 bg-black/45 px-3 py-3">
+              <div className="text-[10px] font-bold uppercase tracking-[0.24em] text-white/45">Role Scope</div>
+              <p className="mt-2 text-xs text-white/85 leading-snug">{roleSummary || "Marketing + Communications"}</p>
+            </div>
+            <div className="border border-white/20 bg-black/45 px-3 py-3">
+              <div className="text-[10px] font-bold uppercase tracking-[0.24em] text-white/45">Timeline</div>
+              <p className="mt-2 text-xs text-white/85 leading-snug">{project.timeframe ?? "2024"}</p>
+            </div>
+            <div className="border border-white/20 bg-black/45 px-3 py-3">
+              <div className="text-[10px] font-bold uppercase tracking-[0.24em] text-white/45">Team Model</div>
+              <p className="mt-2 text-xs text-white/85 leading-snug">{teamSummary || "Cross-functional collaboration"}</p>
+            </div>
+            <div className="border border-white/20 bg-black/45 px-3 py-3">
+              <div className="text-[10px] font-bold uppercase tracking-[0.24em] text-white/45">Hiring Fit</div>
+              <p className="mt-2 text-xs text-white/85 leading-snug">Hybrid marketing, content, and sales enablement roles</p>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <div className="text-[10px] font-bold uppercase tracking-[0.42em] text-white/55 mb-2">What I do</div>
+          <HoverSpotlight className="border-2 border-white/20 bg-black p-6 md:p-8 shadow-brut-sm">
+            <ScannableBulletList items={whatIDo} limit={4} />
+          </HoverSpotlight>
+        </section>
+
+        <section>
+          <div className="text-[10px] font-bold uppercase tracking-[0.42em] text-white/55 mb-2">Communication Strategy and Campaign Execution</div>
+          <HoverSpotlight className="border-2 border-white/20 bg-black p-6 md:p-8 shadow-brut-sm">
+            <p className="text-sm text-white/80 leading-relaxed">{communication.statement}</p>
+            <ScannableBulletList items={communication.examples ?? []} limit={3} className="mt-3" />
+            {securityPricingCampaign.title ? (
+              <div className="mt-4 pt-4 border-t border-white/15">
+                <h3 className="font-display text-lg font-bold tracking-tight uppercase">{securityPricingCampaign.title}</h3>
+                {securityPricingCampaign.copy ? <p className="mt-2 text-sm text-white/70 leading-relaxed">{securityPricingCampaign.copy}</p> : null}
+                {(securityPricingCampaign.assets ?? []).length ? (
+                  <div className="mt-3 grid grid-cols-2 gap-3">
+                    {securityPricingCampaign.assets.map((asset) => (
+                      <div key={asset.src} className="border border-white/15 bg-black/30 p-1">
+                        <img
+                          src={asset.src}
+                          alt={`${securityPricingCampaign.title} ${asset.label ?? "asset"}`}
+                          className="w-full h-auto object-cover"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                        {asset.label ? (
+                          <div className="px-1.5 pt-1.5 text-[10px] uppercase tracking-[0.22em] text-white/55">{asset.label}</div>
+                        ) : null}
+                      </div>
+                    ))}
+                  </div>
+                ) : null}
+              </div>
+            ) : null}
+            {emailCampaignMockup.title ? (
+              <div className="mt-4 pt-4 border-t border-white/15">
+                <h3 className="font-display text-lg font-bold tracking-tight uppercase">{emailCampaignMockup.title}</h3>
+                {emailCampaignMockup.subtitle ? <p className="mt-2 text-sm text-white/70 leading-relaxed">{emailCampaignMockup.subtitle}</p> : null}
+                {emailCampaignMockup.iframeSrc ? (
+                  <div className="mt-4 border border-white/20 bg-white overflow-hidden">
+                    <div className="border-b border-black/15 px-4 py-2.5 text-[10px] font-bold uppercase tracking-[0.18em] text-black/70">
+                      Subject: {emailCampaignMockup.subject ?? "Campaign email"}
+                    </div>
+                    <div className="p-2 bg-black/[0.02]">
+                      <div className="border border-black/10 bg-white">
+                        <iframe
+                          src={emailCampaignMockup.iframeSrc}
+                          title={`${emailCampaignMockup.title} email mockup`}
+                          className="w-full h-[760px] bg-white"
+                          style={{ border: 0 }}
+                          loading="lazy"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                ) : null}
+              </div>
+            ) : null}
+          </HoverSpotlight>
+        </section>
+
+        {project.socialPosts?.length ? (
+          <section className="space-y-4">
+            <div className="text-[10px] font-bold uppercase tracking-[0.42em] text-white/55">Social Strategy</div>
+            <HoverSpotlight className="border-2 border-white/20 bg-black p-6 md:p-8 shadow-brut-sm">
+              {socialStrategy.title ? (
+                <h3 className="font-display text-xl md:text-2xl font-extrabold tracking-tight uppercase">{socialStrategy.title}</h3>
+              ) : null}
+              {socialStrategy.copy ? <p className="mt-3 text-sm text-white/75 leading-relaxed">{socialStrategy.copy}</p> : null}
+              {(socialStrategy.pillars ?? []).length ? (
+                <ScannableBulletList items={socialStrategy.pillars ?? []} limit={3} className="mt-3" />
+              ) : null}
+              {(thoughtLeadershipSeries.images ?? []).length ? (
+                <div className="mt-5 pt-4 border-t border-white/15">
+                  <h4 className="font-display text-lg font-bold tracking-tight uppercase">
+                    {thoughtLeadershipSeries.title ?? "Thought leadership series"}
+                  </h4>
+                  {thoughtLeadershipSeries.copy ? <p className="mt-2 text-sm text-white/70 leading-relaxed">{thoughtLeadershipSeries.copy}</p> : null}
+                  <ThoughtLeadershipAssetStrip images={thoughtLeadershipSeries.images} title={thoughtLeadershipSeries.title} />
+                </div>
+              ) : null}
+            </HoverSpotlight>
+            <SocialFeedSection
+              posts={project.socialPosts}
+              projectName={project.title}
+              sectionTitle="Social content system"
+              sectionCopy="A reusable social content system for 3Sixty showing how educational, promotional, and urgency-focused posts stay visually consistent while serving different communication goals."
+              accountName={project.socialAccountName ?? "3Sixty Integrated"}
+              captionCopy={project.socialCaptionCopy ?? "Building awareness through clear, consistent communication."}
+              mediaAspectRatio="1 / 1"
+              reverseOrder
+              collapseThumbnails
+            />
+          </section>
+        ) : null}
+
+        <section>
+          <div className="text-[10px] font-bold uppercase tracking-[0.42em] text-white/55 mb-2">Technical Translation and Sales Enablement</div>
+          <HoverSpotlight className="border-2 border-white/20 bg-black p-6 md:p-8 shadow-brut-sm">
+            <div className="grid md:grid-cols-2 gap-6">
+              <div>
+                <div className="text-[10px] font-bold uppercase tracking-[0.24em] text-white/45">Technical Translation</div>
+                <p className="mt-2 text-sm text-white/80 leading-relaxed">{technical.statement}</p>
+                <ScannableBulletList items={technical.examples ?? []} limit={3} className="mt-3" />
+              </div>
+              <div>
+                <div className="text-[10px] font-bold uppercase tracking-[0.24em] text-white/45">Sales Enablement</div>
+                <p className="mt-2 text-sm text-white/80 leading-relaxed">{sales.statement}</p>
+                <ScannableBulletList items={sales.examples ?? []} limit={3} className="mt-3" />
+              </div>
+            </div>
+          </HoverSpotlight>
+        </section>
+
+        {salesLibraryAssets.length ? (
+          <section>
+            <div className="text-[10px] font-bold uppercase tracking-[0.42em] text-white/55 mb-2">
+              {salesEnablementLibrary.title ?? "Sales Enablement Library"}
+            </div>
+            <HoverSpotlight className="border-2 border-white/20 bg-black p-6 md:p-8 shadow-brut-sm">
+              <div className="inline-flex items-center gap-3 px-4 py-2 border border-[#69a7ff] bg-[#1f6bff]/25 mb-4">
+                <Folder className="w-5 h-5 text-[#8cbcff]" />
+                <span className="text-[11px] font-bold uppercase tracking-[0.22em] text-[#d8e8ff]">Sales Enablement</span>
+              </div>
+              {salesEnablementLibrary.copy ? (
+                <p className="text-sm text-white/75 leading-relaxed mb-4">{salesEnablementLibrary.copy}</p>
+              ) : null}
+              {salesOnePagers.length ? (
+                <div>
+                  <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/50 mb-2">One-pagers</div>
+                  <ul className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                    {salesOnePagers.map((src, index) => (
+                      <li key={`${src}-${index}`} className="border border-white/15 bg-black/30 p-1">
+                        <img
+                          src={src}
+                          alt={`Sales enablement one-pager ${index + 1}`}
+                          className="w-full aspect-[4/5] object-contain bg-black/40"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ) : null}
+              {salesCaseStudies.length ? (
+                <div className="mt-5 pt-4 border-t border-white/15">
+                  <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/50 mb-2">Case studies</div>
+                  <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    {salesCaseStudies.map((src, index) => (
+                      <li key={`${src}-${index}`} className="border border-white/15 bg-black/30 p-1">
+                        <img
+                          src={src}
+                          alt={`Sales enablement case study ${index + 1}`}
+                          className="w-full h-auto object-contain bg-black/40"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ) : null}
+            </HoverSpotlight>
+          </section>
+        ) : null}
+
+        <section>
+          <div className="text-[10px] font-bold uppercase tracking-[0.42em] text-white/55 mb-2">Internal Communications and Engagement</div>
+          <HoverSpotlight className="border-2 border-white/20 bg-black p-6 md:p-8 shadow-brut-sm">
+            <div className="grid md:grid-cols-12 gap-6 items-start">
+              <div className="md:col-span-6">
+                <p className="text-sm text-white/80 leading-relaxed">{internal.statement}</p>
+                <ScannableBulletList items={internal.examples ?? []} limit={4} className="mt-3" />
+                {internalSocialAnnouncementImage ? (
+                  <div className="mt-4">
+                    <div className="text-[10px] font-bold uppercase tracking-[0.28em] text-white/45 mb-2">Social welcome post</div>
+                    <img
+                      src={internalSocialAnnouncementImage}
+                      alt="New employee welcome post for social channels"
+                      className="w-full h-auto border border-white/15 object-cover"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                ) : null}
+                {internalCommsAdditionalImages.length ? (
+                  <div className="mt-4">
+                    <div className="text-[10px] font-bold uppercase tracking-[0.28em] text-white/45 mb-2">Internal campaign collateral</div>
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+                      {internalCommsAdditionalImages.map((imageSrc, index) => (
+                        <div key={`${imageSrc}-${index}`} className="border border-white/15 bg-black/30 p-1">
+                          <img
+                            src={imageSrc}
+                            alt={`Internal communication asset ${index + 1}`}
+                            className="w-full aspect-[4/5] object-cover"
+                            loading="lazy"
+                            decoding="async"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ) : null}
+              </div>
+              <div className="md:col-span-6">
+                <div>
+                  <div className="text-[10px] font-bold uppercase tracking-[0.28em] text-white/45 mb-2">Email send-out mockup</div>
+                  <div className="border border-white/20 bg-white text-black shadow-brut-sm">
+                    <div className="border-b border-black/15 px-4 py-2.5 text-[10px] font-bold uppercase tracking-[0.18em] text-black/70">
+                      Subject: Welcome to the Team
+                    </div>
+                    {internalCommsFeatureImages[0] ? (
+                      <img
+                        src={internalCommsFeatureImages[0]}
+                        alt="Welcome to the team email banner"
+                        className="w-full h-auto object-cover border-b border-black/10"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    ) : null}
+                    {internalCommsFeatureImages[1] ? (
+                      <img
+                        src={internalCommsFeatureImages[1]}
+                        alt="Field technician new-hire announcement banner"
+                        className="w-full h-auto object-cover border-b border-black/10"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    ) : null}
+                    <div className="px-4 py-4 text-[13px] leading-relaxed space-y-2">
+                      {onboardingEmailTemplate.map((line, index) => (
+                        <p key={`single-email-${line}-${index}`} className={line ? "" : "h-2"}>{line}</p>
+                      ))}
+                      <div className="mt-4 pt-3 border-t border-black/15">
+                        <p className="text-[11px] font-semibold tracking-[0.04em] text-black">Travis Crawford</p>
+                        <p className="text-[11px] text-black/70">Marketing and Communications</p>
+                        <p className="text-[11px] text-black/70">3Sixty Integrated</p>
+                        <p className="text-[11px] text-black/70">A division of The Cook and Boardman Group</p>
+                        <img
+                          src="/images/3Sixty Logo C&B Color Transparent 5.png"
+                          alt="3Sixty Integrated logo"
+                          className="h-12 w-auto object-contain mt-3"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </HoverSpotlight>
+        </section>
+
+        <section>
+          <div className="text-[10px] font-bold uppercase tracking-[0.42em] text-white/55 mb-2">Operations, Planning and Coordination</div>
+          <HoverSpotlight className="border-2 border-white/20 bg-black p-6 md:p-8 shadow-brut-sm">
+            <p className="text-sm text-white/80 leading-relaxed">{operations.statement}</p>
+            <ScannableBulletList items={operations.examples ?? []} limit={3} className="mt-3" />
+          </HoverSpotlight>
+        </section>
+
+        <section>
+          <div className="text-[10px] font-bold uppercase tracking-[0.42em] text-white/55 mb-2">Design and Content Execution</div>
+          <HoverSpotlight className="border-2 border-white/20 bg-black p-6 md:p-8 shadow-brut-sm">
+            <p className="text-sm text-white/80 leading-relaxed">{designExecution.statement}</p>
+            <ScannableBulletList items={designExecution.examples ?? []} limit={3} className="mt-3" />
+          </HoverSpotlight>
+        </section>
+
+        <section>
+          <div className="text-[10px] font-bold uppercase tracking-[0.42em] text-white/55 mb-2">Tools</div>
+          <HoverSpotlight className="border-2 border-white/20 bg-black p-5 shadow-brut-sm">
+            <div className="flex flex-wrap gap-2">
+              {project.tools.map((tool) => (
+                <span key={tool} className="px-2.5 py-1 border border-white/25 text-[10px] uppercase tracking-[0.2em] text-white/80">
+                  {tool}
+                </span>
+              ))}
+            </div>
+          </HoverSpotlight>
+        </section>
+
+        <section>
+          <div className="text-[10px] font-bold uppercase tracking-[0.42em] text-white/55 mb-2">Impact</div>
+          <HoverSpotlight className="border-2 border-white/20 bg-black p-6 md:p-8 shadow-brut-sm">
+            <ScannableBulletList items={impact} limit={4} />
+          </HoverSpotlight>
+        </section>
+
+        <IconCards highlights={project.highlights} />
+        <PrevNext prev={prev} next={next} />
+      </div>
+    </>
+  );
+}
+
+function ScannableBulletList({ items = [], limit = 4, className = "" }) {
+  const [expanded, setExpanded] = useState(false);
+  if (!items.length) return null;
+  const hasMore = items.length > limit;
+  const visibleItems = expanded || !hasMore ? items : items.slice(0, limit);
+
+  return (
+    <div className={className}>
+      <ul className="space-y-2 text-sm text-white/80 leading-relaxed list-disc pl-5">
+        {visibleItems.map((item) => (
+          <li key={item}>{item}</li>
+        ))}
+      </ul>
+      {hasMore ? (
+        <button
+          type="button"
+          onClick={() => setExpanded((prev) => !prev)}
+          className="mt-3 text-[10px] font-bold uppercase tracking-[0.2em] text-white/70 hover:text-white transition-colors"
+        >
+          {expanded ? "Show less" : `Show all (${items.length})`}
+        </button>
+      ) : null}
+    </div>
+  );
+}
+
+function ThoughtLeadershipAssetStrip({ images = [], title = "Thought leadership series" }) {
+  if (!images.length) return null;
+  return (
+    <div className="mt-3">
+      <ul className="grid grid-cols-2 md:grid-cols-5 gap-2">
+        {images.map((src, index) => (
+          <li key={`${src}-${index}`} className="border border-white/15 bg-black/30 overflow-hidden">
+            <img
+              src={src}
+              alt={`${title} carousel slide ${index + 1}`}
+              className="w-full aspect-[4/5] object-contain bg-black/40"
+              loading="lazy"
+              decoding="async"
+            />
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
 
@@ -1558,28 +1965,54 @@ function NavCard({ direction, label, slug }) {
   );
 }
 
-function SocialFeedSection({ posts, projectName }) {
+function SocialFeedSection({
+  posts,
+  projectName,
+  sectionTitle = "Instagram content system",
+  sectionCopy,
+  accountName,
+  captionCopy,
+  mediaAspectRatio = "4 / 5",
+  reverseOrder = false,
+  collapseThumbnails = false,
+}) {
   const normalizedPosts = useMemo(
-    () =>
-      posts
-        ?.map((post, index) => {
-          if (typeof post === "string") {
-            return { src: post, alt: `${projectName} social post ${index + 1}` };
-          }
-          if (post?.src) {
-            return { src: post.src, alt: post.alt ?? `${projectName} social post ${index + 1}` };
-          }
-          return null;
-        })
-        .filter(Boolean) ?? [],
-    [posts, projectName],
+    () => {
+      const mapped =
+        posts
+          ?.map((post, index) => {
+            if (typeof post === "string") {
+              return { src: post, alt: `${projectName} social post ${index + 1}` };
+            }
+            if (post?.src) {
+              return { src: post.src, alt: post.alt ?? `${projectName} social post ${index + 1}` };
+            }
+            return null;
+          })
+          .filter(Boolean) ?? [];
+
+      const seen = new Set();
+      const deduped = mapped.filter((post) => {
+        if (!post?.src || seen.has(post.src)) return false;
+        seen.add(post.src);
+        return true;
+      });
+
+      return reverseOrder ? [...deduped].reverse() : deduped;
+    },
+    [posts, projectName, reverseOrder],
   );
 
   const [active, setActive] = useState(0);
+  const [showThumbnails, setShowThumbnails] = useState(!collapseThumbnails);
 
   useEffect(() => {
     setActive(0);
   }, [normalizedPosts]);
+
+  useEffect(() => {
+    setShowThumbnails(!collapseThumbnails);
+  }, [collapseThumbnails, normalizedPosts]);
 
   useEffect(() => {
     if (normalizedPosts.length <= 1) return undefined;
@@ -1593,17 +2026,19 @@ function SocialFeedSection({ posts, projectName }) {
 
   const current = normalizedPosts[active];
   const transitionKey = current.src;
+  const resolvedSectionCopy =
+    sectionCopy ??
+    `A swipeable set of promos for ${projectName} showing how the conversational identity flexes across social placements. Motion and static stories share the same typography, color energy, and conversational copy structure.`;
+  const resolvedAccountName = accountName ?? projectName;
+  const resolvedCaptionCopy = captionCopy ?? "Talking to fans across every channel.";
 
   return (
     <section>
       <div className="text-[10px] font-bold uppercase tracking-[0.42em] text-white/55 mb-3">Ads &amp; Social</div>
       <div className="grid md:grid-cols-12 gap-10 items-center">
         <div className="md:col-span-5 space-y-4">
-          <h2 className="font-display text-2xl md:text-3xl font-extrabold tracking-tight uppercase">Instagram content system</h2>
-          <p className="text-white/70 text-sm leading-relaxed">
-            A swipeable set of promos for {projectName} showing how the conversational identity flexes across social placements. Motion and static stories share
-            the same typography, color energy, and conversational copy structure.
-          </p>
+          <h2 className="font-display text-2xl md:text-3xl font-extrabold tracking-tight uppercase">{sectionTitle}</h2>
+          <p className="text-white/70 text-sm leading-relaxed">{resolvedSectionCopy}</p>
         </div>
         <div className="md:col-span-7 flex justify-center">
           <div className="iphone-frame">
@@ -1622,13 +2057,13 @@ function SocialFeedSection({ posts, projectName }) {
                   <div className="insta-header__left">
                     <span className="insta-avatar" aria-hidden />
                     <div>
-                      <div className="insta-name">Civil Goat Coffee</div>
+                      <div className="insta-name">{resolvedAccountName}</div>
                       <div className="insta-meta">Sponsored</div>
                     </div>
                   </div>
                   <span className="insta-more" aria-hidden>•••</span>
                 </div>
-                <div className="insta-media">
+                <div className="insta-media" style={{ aspectRatio: mediaAspectRatio }}>
                   <AnimatePresence mode="wait" initial={false}>
                     <motion.div
                       key={transitionKey}
@@ -1649,8 +2084,8 @@ function SocialFeedSection({ posts, projectName }) {
                   <span className="insta-action insta-action--save" />
                 </div>
                 <div className="insta-caption">
-                  <span className="insta-name">Civil Goat Coffee</span>
-                  <span className="insta-caption__copy"> Talking to fans across every channel.</span>
+                  <span className="insta-name">{resolvedAccountName}</span>
+                  <span className="insta-caption__copy"> {resolvedCaptionCopy}</span>
                 </div>
               </div>
             </div>
@@ -1669,30 +2104,45 @@ function SocialFeedSection({ posts, projectName }) {
           />
         ))}
       </div>
-      <div className="mt-10">
-        <ul className="flex flex-wrap gap-4">
-          {normalizedPosts.map((post, index) => {
-            const key = post.src ?? index;
-            return (
-              <li
-                key={key}
-                className={`relative flex-shrink-0 w-40 h-40 border-2 bg-black/30 overflow-hidden ${
-                  index === active ? "border-[var(--accent-red)]" : "border-white/20"
-                }`}
-              >
-                <button
-                  type="button"
-                  onClick={() => setActive(index)}
-                  className="absolute inset-0"
-                  aria-label={`Show social post ${index + 1}`}
+      {collapseThumbnails ? (
+        <div className="mt-8 flex justify-center">
+          <button
+            type="button"
+            onClick={() => setShowThumbnails((prev) => !prev)}
+            className="inline-flex items-center gap-2 px-4 py-2 border border-white/25 text-[10px] font-bold uppercase tracking-[0.22em] text-white/75 hover:text-white hover:border-white/50 transition-colors"
+            aria-expanded={showThumbnails}
+          >
+            {showThumbnails ? "Hide posts" : "View posts"}
+            <ChevronRight className={`w-4 h-4 transition-transform ${showThumbnails ? "rotate-90" : ""}`} />
+          </button>
+        </div>
+      ) : null}
+      {showThumbnails ? (
+        <div className="mt-10">
+          <ul className="flex flex-wrap gap-4">
+            {normalizedPosts.map((post, index) => {
+              const key = post.src ?? index;
+              return (
+                <li
+                  key={key}
+                  className={`relative flex-shrink-0 w-40 h-40 border-2 bg-black/30 overflow-hidden ${
+                    index === active ? "border-[var(--accent-red)]" : "border-white/20"
+                  }`}
                 >
-                  <img src={post.src} alt={post.alt} className="w-full h-full object-cover" loading="lazy" decoding="async" />
-                </button>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
+                  <button
+                    type="button"
+                    onClick={() => setActive(index)}
+                    className="absolute inset-0"
+                    aria-label={`Show social post ${index + 1}`}
+                  >
+                    <img src={post.src} alt={post.alt} className="w-full h-full object-cover" loading="lazy" decoding="async" />
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      ) : null}
     </section>
   );
 }
