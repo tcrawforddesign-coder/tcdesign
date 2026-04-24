@@ -15,6 +15,7 @@ export const projects = [
       "Plan and execute communication initiatives that connect messaging to business goals.",
       "Develop campaign communication across paid, social, email, and sales materials.",
       "Translate complex technical and operational topics into structured, audience-ready communication.",
+      "Generate qualified leads through LinkedIn form campaigns and follow-up-ready intake workflows.",
     ],
     communicationStrategyExecution: {
       statement:
@@ -40,7 +41,7 @@ export const projects = [
     thoughtLeadershipSeries: {
       title: "Security facts carousel post",
       copy:
-        "A single educational carousel post designed to position 3Sixty as a trusted thought leader by delivering concise, practical security insights for operations audiences.",
+        "An example of positioning 3Sixty as a thought leader and educator in the security space through concise, practical insights built for operations audiences.",
       images: [
         "/images/3fact1.jpg",
         "/images/3fact2.jpg",

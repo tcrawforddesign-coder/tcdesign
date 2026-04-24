@@ -774,8 +774,9 @@ function ThreeSixtyMarketingCaseStudy({ project, prev, next }) {
               ) : null}
               {(thoughtLeadershipSeries.images ?? []).length ? (
                 <div className="mt-5 pt-4 border-t border-white/15">
-                  <h4 className="font-display text-lg font-bold tracking-tight uppercase">
-                    {thoughtLeadershipSeries.title ?? "Thought leadership series"}
+                  <div className="text-[10px] font-bold uppercase tracking-[0.24em] text-white/45">Thought Leadership Example</div>
+                  <h4 className="mt-2 font-display text-lg font-bold tracking-tight uppercase">
+                    {thoughtLeadershipSeries.title ?? "Security facts carousel post"}
                   </h4>
                   {thoughtLeadershipSeries.copy ? <p className="mt-2 text-sm text-white/70 leading-relaxed">{thoughtLeadershipSeries.copy}</p> : null}
                   <ThoughtLeadershipAssetStrip images={thoughtLeadershipSeries.images} title={thoughtLeadershipSeries.title} />
