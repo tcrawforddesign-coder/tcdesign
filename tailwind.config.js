@@ -4,13 +4,14 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        display: ['"Syne"', "system-ui", "sans-serif"],
+        display: ['"Manrope"', "system-ui", "sans-serif"],
+        sans: ['"Inter"', "system-ui", "sans-serif"],
         mono: ['"IBM Plex Mono"', "ui-monospace", "monospace"],
       },
       boxShadow: {
-        brut: "6px 6px 0 0 rgba(255, 255, 255, 0.12)",
-        "brut-sm": "4px 4px 0 0 rgba(255, 255, 255, 0.1)",
-        "brut-red": "5px 5px 0 0 var(--accent-red)",
+        brut: "0 28px 70px -44px rgba(15, 23, 42, 0.36)",
+        "brut-sm": "0 18px 44px -32px rgba(15, 23, 42, 0.26)",
+        "brut-red": "0 18px 44px -28px rgba(255, 59, 48, 0.38)",
       },
     },
   },

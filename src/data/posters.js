@@ -204,7 +204,7 @@ export const posterProject = {
   tag: "Poster Series",
   timeframe: "2019 — 2025",
   summary: "Personal poster lab exploring typographic heat, color, and motion cues when there’s no brief to obey.",
-  cover: "/images/Poster_13.png",
+  cover: "/images/Poster_6.png",
   href: "/posters",
   roles: ["Personal Work", "Art Direction", "Motion Studies"],
   tools: ["Photoshop", "Illustrator", "Cinema 4D"],

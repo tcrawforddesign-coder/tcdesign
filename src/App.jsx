@@ -1,12 +1,15 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, useMotionValue, useReducedMotion, useSpring } from "framer-motion";
 
+import PageTransition from "./components/animations/PageTransition.jsx";
+import { useSmoothScroll } from "./hooks/useSmoothScroll.js";
 import Home from "./pages/Home.jsx";
 import ProjectsPage from "./pages/Projects.jsx";
 import PostersPage from "./pages/Posters.jsx";
 import ProjectDetailsPage from "./pages/ProjectDetails.jsx";
-import FloatingFaceCard from "./components/FloatingFaceCard.jsx";
+
+const MotionDiv = motion.div;
 
 export default function App() {
   return <AppRoutes />;
@@ -14,11 +17,25 @@ export default function App() {
 
 function AppRoutes() {
   const location = useLocation();
-  const appRef = useRef(null);
   const siteOrigin = "https://traviscrawforddesign.com";
+  useSmoothScroll();
 
   useEffect(() => {
-    if (location.hash) return;
+    if (location.hash) {
+      const target = document.querySelector(location.hash);
+      if (!target) return;
+
+      requestAnimationFrame(() => {
+        window.__studioLenis?.scrollTo(target, { offset: -96 });
+      });
+      return;
+    }
+
+    if (window.__studioLenis) {
+      window.__studioLenis.scrollTo(0, { immediate: true });
+      return;
+    }
+
     window.scrollTo({ top: 0, left: 0, behavior: "auto" });
   }, [location.pathname, location.hash]);
 
@@ -73,90 +90,78 @@ function AppRoutes() {
     canonical.setAttribute("href", `${siteOrigin}${location.pathname}`);
   }, [location.pathname, siteOrigin]);
 
+  return (
+    <div className="min-h-full">
+      <StudioCursor />
+      <PageTransition routeKey={location.pathname}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/projects" element={<ProjectsPage />} />
+          <Route path="/posters" element={<PostersPage />} />
+          <Route path="/projects/:slug" element={<ProjectDetailsPage />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </PageTransition>
+    </div>
+  );
+}
+
+function StudioCursor() {
+  const reduceMotion = useReducedMotion();
+  const x = useSpring(useMotionValue(-100), { stiffness: 500, damping: 40, mass: 0.4 });
+  const y = useSpring(useMotionValue(-100), { stiffness: 500, damping: 40, mass: 0.4 });
+  const [state, setState] = useState({ visible: false, variant: "default" });
+
   useEffect(() => {
-    const host = appRef.current;
-    if (!host) return undefined;
+    const canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    if (reduceMotion || !canHover) return undefined;
 
-    const target = { x: 50, y: 50 };
-    const current = { x: 50, y: 50 };
-    let scrollPct = 0;
-    let rafId = 0;
+    const updateCursor = (event) => {
+      x.set(event.clientX);
+      y.set(event.clientY);
 
-    const updateScroll = () => {
-      const maxScroll = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
-      scrollPct = Math.min(Math.max(window.scrollY / maxScroll, 0), 1);
+      const target = event.target.closest?.("[data-cursor], [data-cursor-zone], a, button, input, textarea, select");
+      const zone = target?.dataset.cursorZone;
+      const cursor = target?.dataset.cursor;
+      const variant = zone === "tilt-card" ? "card" : cursor === "default" ? "default" : target ? "pointer" : "default";
+      setState({ visible: true, variant });
     };
 
-    const onPointerMove = (event) => {
-      target.x = (event.clientX / window.innerWidth) * 100;
-      target.y = (event.clientY / window.innerHeight) * 100;
-    };
+    const hideCursor = () => setState((current) => ({ ...current, visible: false }));
 
-    const tick = () => {
-      current.x += (target.x - current.x) * 0.12;
-      current.y += (target.y - current.y) * 0.12;
-
-      host.style.setProperty("--grid-focus-x", `${current.x.toFixed(2)}%`);
-      host.style.setProperty("--grid-focus-y", `${current.y.toFixed(2)}%`);
-      host.style.setProperty("--grid-scroll-offset", `${(scrollPct * 40).toFixed(2)}px`);
-      host.style.setProperty("--grid-strength", `${(0.08 + scrollPct * 0.06).toFixed(3)}`);
-
-      rafId = window.requestAnimationFrame(tick);
-    };
-
-    updateScroll();
-    window.addEventListener("pointermove", onPointerMove, { passive: true });
-    window.addEventListener("scroll", updateScroll, { passive: true });
-    rafId = window.requestAnimationFrame(tick);
+    window.addEventListener("pointermove", updateCursor);
+    window.addEventListener("pointerleave", hideCursor);
 
     return () => {
-      window.cancelAnimationFrame(rafId);
-      window.removeEventListener("pointermove", onPointerMove);
-      window.removeEventListener("scroll", updateScroll);
+      window.removeEventListener("pointermove", updateCursor);
+      window.removeEventListener("pointerleave", hideCursor);
     };
-  }, []);
+  }, [reduceMotion, x, y]);
+
+  if (reduceMotion) return null;
 
   return (
-    <div ref={appRef} className="app-retro min-h-full">
-      <AnimatePresence mode="wait" initial={false}>
-        <motion.div
-          key={location.pathname}
-          className="min-h-full"
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -6 }}
-          transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-        >
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/projects" element={<ProjectsPage />} />
-            <Route path="/posters" element={<PostersPage />} />
-            <Route path="/projects/:slug" element={<ProjectDetailsPage />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </motion.div>
-      </AnimatePresence>
-      <div className="app-retro__crt" aria-hidden />
-      <div className="app-retro__led" aria-hidden title="Status" />
-      <span className="app-retro__led-line" aria-hidden>
-        run
-      </span>
-      <FloatingFaceCard showAfter={260} />
-    </div>
+    <MotionDiv
+      aria-hidden
+      className={`studio-cursor studio-cursor--${state.variant}`}
+      style={{ x, y }}
+      animate={{
+        opacity: state.visible ? 1 : 0,
+        scale: state.variant === "card" ? 1.9 : state.variant === "pointer" ? 1.35 : 1,
+      }}
+      transition={{ type: "spring", stiffness: 500, damping: 35 }}
+    />
   );
 }
 
 function NotFound() {
   return (
-    <div className="min-h-screen bg-[#050505] text-white font-mono grid place-items-center px-6 py-16">
-      <div className="max-w-md w-full border-2 border-white/30 p-10 text-center space-y-6 shadow-brut">
-        <p className="text-[10px] font-bold uppercase tracking-[0.5em] text-white/40">404</p>
-        <h1 className="font-display text-2xl md:text-3xl font-extrabold tracking-tight uppercase">That page drifted off-grid.</h1>
-        <a
-          href="/"
-          className="inline-flex items-center justify-center gap-2 w-full border-2 border-white bg-white px-5 py-3 text-[10px] font-bold uppercase tracking-[0.28em] text-black hover:bg-transparent hover:text-white transition-colors"
-        >
-          ← Back to portfolio
+    <div className="studio-page min-h-screen bg-stone-50 text-black grid place-items-center px-gutter py-24">
+      <div className="studio-case-panel max-w-md w-full p-10 text-center space-y-6">
+        <p className="text-lg font-bold text-stone-500 opsz-lg">404</p>
+        <h1 className="text-[2rem]/9 font-bold opsz-5xl">That page drifted off-grid.</h1>
+        <a href="/" className="inline-flex items-center justify-center rounded-[1.25rem] bg-black px-6 py-3 text-lg font-bold text-cloud-dancer squircle" data-cursor="default">
+          Back to home
         </a>
       </div>
     </div>

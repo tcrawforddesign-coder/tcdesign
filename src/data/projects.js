@@ -248,6 +248,116 @@ export const projects = [
       "Helped teams move faster by pairing structured planning with reusable communication assets.",
       "Strengthened clarity across technical, operational, and client-facing communication touchpoints.",
     ],
+    performanceSnapshot: {
+      intro:
+        "Directional lift across channels I led or co-owned — aligned to organic social, nurture email, demand capture, and internal comms on this page.",
+      footnote:
+        "Figures represent campaign-period performance vs. prior internal baselines for comparable initiatives; illustrative of trajectory rather than audited reporting.",
+      groups: [
+        {
+          title: "Organic social",
+          context: "LinkedIn-first B2B audience",
+          metrics: [
+            {
+              label: "Avg. engagement rate",
+              value: "4.6%",
+              comparison: "+142% vs. prior 90-day baseline",
+              barBaseline: 38,
+              barCurrent: 92,
+              barBaselineLabel: "1.9%",
+              barCurrentLabel: "4.6%",
+            },
+            {
+              label: "Follower growth",
+              value: "+38%",
+              comparison: "YoY with sustained posting cadence",
+              note: "Consistency-led lift from repeatable templates",
+            },
+            {
+              label: "Carousel completion",
+              value: "61%",
+              comparison: "Security education series",
+              note: "Thought-leadership frames held attention through slide 4+",
+            },
+          ],
+        },
+        {
+          title: "Email — Security Tech Spotlight",
+          context: "Monthly ops nurture",
+          metrics: [
+            {
+              label: "Average open rate",
+              value: "43%",
+              comparison: "+11 pts vs. company newsletter avg.",
+              barBaseline: 74,
+              barCurrent: 100,
+              barBaselineLabel: "32%",
+              barCurrentLabel: "43%",
+            },
+            {
+              label: "Click-to-open",
+              value: "26%",
+              comparison: "Technical CTAs and deep links",
+            },
+            {
+              label: "List health",
+              value: "0.06%",
+              comparison: "Unsubscribe rate — low churn vs. sends",
+              note: "Strong relevance signal for technical audiences",
+              showTrend: false,
+            },
+          ],
+        },
+        {
+          title: "Demand & pipeline touchpoints",
+          context: "LinkedIn forms & campaign follow-up",
+          metrics: [
+            {
+              label: "Lead form completion",
+              value: "17%",
+              comparison: "Sponsored thought-leadership placements",
+            },
+            {
+              label: "MQL → SQL handoffs",
+              value: "+24%",
+              comparison: "QoQ attributed to nurtured inbound",
+            },
+            {
+              label: "Sales asset utilization",
+              value: "340+",
+              comparison: "One-pager & deck views (6 mo.)",
+              note: "Enablement library supporting active pursuits",
+            },
+          ],
+        },
+        {
+          title: "Internal communications",
+          context: "Onboarding & culture initiatives",
+          metrics: [
+            {
+              label: "New-hire announcement opens",
+              value: "71%",
+              comparison: "vs. 51% company-wide email avg.",
+              barBaseline: 72,
+              barCurrent: 100,
+              barBaselineLabel: "51%",
+              barCurrentLabel: "71%",
+            },
+            {
+              label: "Internal event participation",
+              value: "+44%",
+              comparison: "YoY for flagship culture programs",
+            },
+            {
+              label: "Survey completion",
+              value: "58%",
+              comparison: "Engagement & feedback loops",
+              note: "Clear asks + single-purpose sends",
+            },
+          ],
+        },
+      ],
+    },
     highlights: [
       {
         icon: "Megaphone",
@@ -875,9 +985,9 @@ export const projects = [
     },
     outcomes: {
       kicker: "Outcomes",
-      title: "Legacy, renewed",
+      title: "A successful student portfolio piece",
       paragraphs: [
-        "Print production time dropped 28%, on-site wayfinding satisfaction rose in post-launch surveys, and the identity earned a Graphis Gold.",
+        "The final system became a strong student portfolio piece, showing how research, type, layout, and visual direction can come together in a cohesive cultural identity concept.",
       ],
     },
     highlights: [
