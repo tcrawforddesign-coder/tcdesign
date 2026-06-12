@@ -1,5 +1,5 @@
 import { ContactSection, Marquee, PortfolioLayout, PortfolioReveal, SectionHeading } from "../components/portfolio/PortfolioLayout.jsx";
-import { ProjectDataCard } from "../components/portfolio/PortfolioCards.jsx";
+import { PortfolioProjectCarousel, ProjectDataCard } from "../components/portfolio/PortfolioCards.jsx";
 import { projects } from "../data/projects.js";
 import { posterProject } from "../data/posters.js";
 
@@ -32,11 +32,11 @@ export default function ProjectsPage() {
 
       <section className="portfolio-section portfolio-work-section">
         <SectionHeading eyebrow="Projects" title="Brand systems, campaign visuals, product concepts, and visual experiments." />
-        <div className="portfolio-project-grid">
+        <PortfolioProjectCarousel label="Projects">
           {orderedProjects.map((project) => (
             <ProjectDataCard key={project.id} project={project} />
           ))}
-        </div>
+        </PortfolioProjectCarousel>
       </section>
 
       <ContactSection />

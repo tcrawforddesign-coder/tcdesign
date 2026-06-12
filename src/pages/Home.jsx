@@ -1,15 +1,24 @@
 import { ContactSection, Marquee, PortfolioLayout, PortfolioReveal, SectionHeading } from "../components/portfolio/PortfolioLayout.jsx";
-import { getProjectCover, PortfolioProjectCard } from "../components/portfolio/PortfolioCards.jsx";
+import { PortfolioProjectCarousel, ProjectDataCard } from "../components/portfolio/PortfolioCards.jsx";
 import { projects } from "../data/projects.js";
 import { posterProject } from "../data/posters.js";
 
-const bySlug = (slug) => projects.find((project) => project.slug === slug);
+const FEATURED_PROJECT_SLUGS = ["atlas-coffee-club", "civil-goat-coffee"];
+const TOP_PROJECT_SLUG = "3sixty-integrated-marketing";
+const PRIORITY_SLUGS = ["data-dog-analytics"];
+
+const topProject = projects.find((project) => project.slug === TOP_PROJECT_SLUG);
+const homepageProjects = [
+  ...FEATURED_PROJECT_SLUGS.map((slug) => projects.find((project) => project.slug === slug)).filter(Boolean),
+  topProject,
+  posterProject,
+  ...PRIORITY_SLUGS.map((slug) => projects.find((project) => project.slug === slug)).filter(Boolean),
+  ...projects.filter(
+    (project) => !FEATURED_PROJECT_SLUGS.includes(project.slug) && project.slug !== TOP_PROJECT_SLUG && !PRIORITY_SLUGS.includes(project.slug),
+  ),
+].filter(Boolean);
 
 export default function Home() {
-  const atlas = bySlug("atlas-coffee-club");
-  const civilGoat = bySlug("civil-goat-coffee");
-  const barbican = bySlug("barbican-refresh");
-
   return (
     <PortfolioLayout>
       <section className="portfolio-hero portfolio-section">
@@ -30,48 +39,12 @@ export default function Home() {
       <Marquee />
 
       <section id="work" className="portfolio-section portfolio-work-section">
-        <SectionHeading eyebrow="Selected Work" title="A focused mix of paid ads, identity systems, and poster-driven design." />
-        <div className="portfolio-project-grid">
-          <PortfolioProjectCard
-            project={atlas}
-            eyebrow="Paid Meta Ads"
-            year="2026"
-            title={atlas?.title}
-            copy="Performance-minded layouts with strong hooks, clean hierarchy, and visual consistency across campaign variations."
-            image={getProjectCover(atlas)}
-            imageClass="portfolio-image-one"
-          />
-          <PortfolioProjectCard
-            project={civilGoat}
-            eyebrow="Brand Identity"
-            year="School Project"
-            title={civilGoat?.title}
-            copy="A conversational brand system using warmth, type, and approachable structure to create a memorable coffee identity."
-            image={getProjectCover(civilGoat)}
-            imageClass="portfolio-image-two"
-          />
-          <PortfolioProjectCard
-            to="/posters"
-            eyebrow="Poster Design"
-            year="Series"
-            title="Poster Archive"
-            copy="Experimental compositions exploring contrast, pacing, negative space, and expressive type within a tight visual frame."
-            image="/images/Poster_6.png"
-            imageClass="portfolio-image-three"
-          />
-          <PortfolioProjectCard
-            project={barbican}
-            eyebrow="Cultural Space"
-            year="Student Project"
-            title={barbican?.title}
-            copy="A student identity concept exploring cultural branding, brutalist influence, typography, and structured visual direction."
-            image={getProjectCover(barbican)}
-            imageClass="portfolio-image-four"
-          />
-        </div>
-        <PortfolioReveal className="portfolio-section-action">
-          <a href="/projects" className="portfolio-button portfolio-primary">View All Projects</a>
-        </PortfolioReveal>
+        <SectionHeading eyebrow="Projects" title="Brand systems, campaign visuals, product concepts, and visual experiments." />
+        <PortfolioProjectCarousel label="Projects">
+          {homepageProjects.map((project) => (
+            <ProjectDataCard key={project.id} project={project} />
+          ))}
+        </PortfolioProjectCarousel>
       </section>
 
       <section id="paid-social" className="portfolio-section portfolio-split-section">

@@ -81,6 +81,36 @@ export function PortfolioProjectCard({ project, to, eyebrow, year, title, copy, 
   return <article className="portfolio-project-card portfolio-desk-card portfolio-reveal" {...deskHover}>{content}</article>;
 }
 
+export function PortfolioProjectCarousel({ children, label = "Projects" }) {
+  const rowRef = useRef(null);
+
+  const scrollProjects = (direction) => {
+    const row = rowRef.current;
+    if (!row) return;
+
+    row.scrollBy({
+      left: direction * Math.max(row.clientWidth * 0.82, 320),
+      behavior: "smooth",
+    });
+  };
+
+  return (
+    <div className="portfolio-project-carousel">
+      <div className="portfolio-project-carousel-controls" aria-label={`${label} carousel controls`}>
+        <button type="button" onClick={() => scrollProjects(-1)} aria-label={`Previous ${label.toLowerCase()}`}>
+          ←
+        </button>
+        <button type="button" onClick={() => scrollProjects(1)} aria-label={`Next ${label.toLowerCase()}`}>
+          →
+        </button>
+      </div>
+      <div ref={rowRef} className="portfolio-project-row">
+        {children}
+      </div>
+    </div>
+  );
+}
+
 export function ProjectDataCard({ project }) {
   return (
     <PortfolioProjectCard
@@ -112,7 +142,7 @@ export function splitProjectTitle(title = "") {
 
 export function getProjectCover(project = {}) {
   const preferredCovers = {
-    "3sixty-integrated-marketing": "/images/3Sixty Socials /1751997917122.jpeg",
+    "3sixty-integrated-marketing": "/images/3Sixty Socials /1768231836946.jpeg",
     "yellow-bike": project.heroImage,
     "civil-goat-coffee": "/images/CG_1.png",
     "atlas-coffee-club": "/images/Flavor_Journey_Ad1_1080x1350.png",
@@ -128,14 +158,14 @@ export function getProjectCover(project = {}) {
 
 function getProjectAlternateCover(project = {}, title = "") {
   const alternateCovers = {
-    "3sixty-integrated-marketing": "/images/3Sixty Socials /1754451545290.jpeg",
+    "3sixty-integrated-marketing": "/images/3Sixty Socials /1755111849129.jpeg",
     "yellow-bike": "/images/yellow-bike-onboarding-flow.png",
     "civil-goat-coffee": "/images/CG_9.png",
     "atlas-coffee-club": "/images/Flavor_Journey_Ad2_1080x1350.png",
     "barbican-refresh": "/images/B_1.png",
     "aluma-skincare": "/images/A_2.png",
     "data-dog-analytics": "/images/DD_12.png",
-    "ritual-coffee": "/images/Dribbble shot HD - 1.png",
+    "ritual-coffee": "/images/Instagram post - 10.png",
     "poster-archive": "/images/Poster_1.png",
   };
 

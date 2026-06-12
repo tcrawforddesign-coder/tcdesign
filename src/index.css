@@ -2463,12 +2463,12 @@ html.lenis body {
 }
 
 .portfolio-site {
-  --portfolio-bg: #f4f0e8;
+  --portfolio-bg: #ffffff;
   --portfolio-ink: #111111;
   --portfolio-muted: #6f6a61;
   --portfolio-line: rgba(17, 17, 17, 0.16);
   --portfolio-accent: #e2482d;
-  --portfolio-card: #ebe5da;
+  --portfolio-card: #f3f3f1;
   --spotlight-x: 50vw;
   --spotlight-y: 50vh;
   min-height: 100vh;
@@ -2539,7 +2539,7 @@ html.lenis body {
   width: 100%;
   height: 34vh;
   pointer-events: none;
-  background: rgba(244, 240, 232, 0.08);
+  background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   mask-image: linear-gradient(to bottom, transparent 0%, #000 24%, #000 76%, transparent 100%);
@@ -2723,6 +2723,85 @@ html.lenis body {
   gap: 28px;
 }
 
+.portfolio-project-carousel {
+  position: relative;
+}
+
+.portfolio-project-carousel-controls {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.portfolio-project-carousel-controls button {
+  display: grid;
+  width: 46px;
+  height: 46px;
+  place-items: center;
+  border: 1px solid var(--portfolio-line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--portfolio-ink);
+  font-size: 20px;
+  transition: background 0.25s ease, color 0.25s ease, transform 0.25s ease;
+}
+
+.portfolio-project-carousel-controls button:hover {
+  background: var(--portfolio-ink);
+  color: var(--portfolio-bg);
+  transform: translateY(-2px);
+}
+
+.portfolio-project-row {
+  display: flex;
+  gap: 22px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0 32px 18px 0;
+  scroll-behavior: smooth;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+}
+
+.portfolio-project-row::-webkit-scrollbar {
+  display: none;
+}
+
+.portfolio-project-row .portfolio-project-card {
+  flex: 0 0 clamp(280px, 26vw, 400px);
+  scroll-snap-align: start;
+  transition: flex-basis 0.55s cubic-bezier(0.2, 0.7, 0.2, 1);
+  will-change: flex-basis;
+}
+
+.portfolio-project-row .portfolio-project-card:hover {
+  flex-basis: clamp(390px, 40vw, 600px);
+  z-index: 2;
+}
+
+.portfolio-project-row .portfolio-project-image {
+  height: auto;
+  aspect-ratio: 4 / 5;
+  transition:
+    aspect-ratio 0.55s cubic-bezier(0.2, 0.7, 0.2, 1),
+    transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1),
+    border-radius 0.5s cubic-bezier(0.2, 0.7, 0.2, 1),
+    box-shadow 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.portfolio-project-row .portfolio-project-card:hover .portfolio-project-image {
+  aspect-ratio: 1 / 1;
+}
+
+.portfolio-project-row .portfolio-project-card h3 {
+  font-size: clamp(26px, 2.5vw, 40px);
+}
+
+.portfolio-project-row .portfolio-project-card p {
+  font-size: 15px;
+}
+
 .portfolio-section-action {
   display: flex;
   justify-content: center;
@@ -2825,6 +2904,19 @@ html.lenis body {
   color: var(--portfolio-muted);
   font-size: 18px;
   line-height: 1.45;
+}
+
+.portfolio-split-content p + p,
+.portfolio-about-text p + p,
+.portfolio-contact-section p + p {
+  margin-top: 1.1em;
+}
+
+.portfolio-split-content h2 + p,
+.portfolio-about-copy h2 + p,
+.portfolio-rich-content h2 + p,
+.portfolio-campaign-feature h3 + p {
+  margin-top: 28px;
 }
 
 .portfolio-split-section {
@@ -3366,7 +3458,6 @@ html.lenis body {
   .portfolio-split-section,
   .portfolio-about-section,
   .portfolio-campaign-gallery-heading,
-  .portfolio-project-grid,
   .portfolio-case-meta,
   .portfolio-metric-grid,
   .portfolio-mini-card-grid,
@@ -3379,6 +3470,24 @@ html.lenis body {
 
   .portfolio-project-image {
     height: 360px;
+  }
+
+  .portfolio-project-row {
+    gap: 16px;
+    padding-right: 18px;
+  }
+
+  .portfolio-project-row .portfolio-project-card {
+    flex-basis: min(74vw, 330px);
+  }
+
+  .portfolio-project-row .portfolio-project-card:hover {
+    flex-basis: min(86vw, 390px);
+  }
+
+  .portfolio-project-row .portfolio-project-image {
+    height: auto;
+    aspect-ratio: 4 / 5;
   }
 
   .portfolio-sticky-label {
