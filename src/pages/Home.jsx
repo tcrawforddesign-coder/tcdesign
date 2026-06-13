@@ -96,7 +96,7 @@ export default function Home() {
         <SectionHeading eyebrow="Playground" title="Poster studies, type experiments, unused concepts, doodles, and visual explorations." />
         <div className="tc-playground-grid">
           {playgroundItems.map((item) => (
-            <a key={item.title} className={`tc-playground-card tc-tone-${item.tone}`} href="/posters">
+            <a key={item.title} className={`tc-playground-card tc-tone-${item.tone}`} href="/experiments">
               <img src={item.image} alt="" loading="lazy" decoding="async" />
               <div>
                 <span>{item.label}</span>

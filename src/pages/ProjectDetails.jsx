@@ -166,7 +166,12 @@ function ProjectVisuals({ project, galleryItems }) {
   return (
     <section className="portfolio-section portfolio-work-section">
       <SectionHeading eyebrow="Selected Visuals" title="Project frames, campaign assets, and supporting material." />
-      <GuidedVisualGroup items={galleryItems} label="Lead visual" fallbackAlt={project.title} />
+      <GuidedVisualGroup
+        items={galleryItems}
+        label="Lead visual"
+        fallbackAlt={project.title}
+        variant={project.slug === "ritual-coffee" ? "contain" : undefined}
+      />
     </section>
   );
 }
@@ -187,14 +192,14 @@ function ThreeSixtyVisualPreview({ project }) {
   );
 }
 
-function GuidedVisualGroup({ items = [], label = "Lead visual", fallbackAlt = "Project visual" }) {
+function GuidedVisualGroup({ items = [], label = "Lead visual", fallbackAlt = "Project visual", variant }) {
   const normalized = items.map(normalizeMediaItem).filter(Boolean);
   if (!normalized.length) return null;
 
   const [lead, ...supporting] = normalized;
 
   return (
-    <div className="portfolio-guided-visuals">
+    <div className={`portfolio-guided-visuals ${variant ? `portfolio-guided-visuals--${variant}` : ""}`}>
       <figure className="portfolio-guided-visual-feature portfolio-reveal">
         <span>{label}</span>
         <img src={lead.src} alt={lead.alt || `${fallbackAlt} lead visual`} loading="lazy" decoding="async" />

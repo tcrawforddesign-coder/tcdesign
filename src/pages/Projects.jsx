@@ -7,10 +7,20 @@ const TOP_PROJECT_SLUG = "3sixty-integrated-marketing";
 const PRIORITY_SLUGS = ["data-dog-analytics"];
 
 const topProject = projects.find((project) => project.slug === TOP_PROJECT_SLUG);
+const experimentsProject = {
+  id: "experiments-archive",
+  slug: "experiments",
+  title: "Experiments & Abandoned Projects",
+  tag: "One-offs, Motion, Visual Studies",
+  href: "/experiments",
+  cover: "/images/experiments/comp-1-3.mp4",
+  coverType: "video",
+};
 
 const orderedProjects = [
   topProject,
   posterProject,
+  experimentsProject,
   ...PRIORITY_SLUGS.map((slug) => projects.find((project) => project.slug === slug)).filter(Boolean),
   ...projects.filter((project) => project.slug !== TOP_PROJECT_SLUG && !PRIORITY_SLUGS.includes(project.slug)),
 ].filter(Boolean);
@@ -50,7 +60,11 @@ function ProjectGridCard({ project }) {
   return (
     <a className={`tc-project-card tc-project-card-${project.slug} portfolio-reveal`} href={project.href ?? `/projects/${project.slug}`}>
       <div className="tc-project-thumb">
-        <img src={getProjectCover(project)} alt="" loading="lazy" decoding="async" />
+        {project.coverType === "video" ? (
+          <video src={getProjectCover(project)} autoPlay muted loop playsInline preload="metadata" />
+        ) : (
+          <img src={getProjectCover(project)} alt="" loading="lazy" decoding="async" />
+        )}
       </div>
       <div className="tc-project-meta">
         <div>

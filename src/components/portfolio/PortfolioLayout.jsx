@@ -20,7 +20,7 @@ export function PortfolioLayout({ children }) {
         <nav aria-label="Primary navigation">
           <Link to="/#work">Work</Link>
           <Link to="/#about">About</Link>
-          <Link to="/#playground">Playground</Link>
+          <Link to="/experiments">Experiments</Link>
           <Link to="/#contact">Contact</Link>
         </nav>
       </header>

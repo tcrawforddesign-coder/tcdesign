@@ -4080,7 +4080,8 @@ html.lenis body {
   transition: opacity 0.3s ease;
 }
 
-.tc-project-thumb img {
+.tc-project-thumb img,
+.tc-project-thumb video {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -4093,22 +4094,14 @@ html.lenis body {
   transform: scale(1.12);
 }
 
-.tc-project-card-ritual-coffee .tc-project-thumb img {
-  object-position: center center;
-  transform: scale(1.12) translateY(5%);
-}
-
-.tc-project-card:hover .tc-project-thumb img {
+.tc-project-card:hover .tc-project-thumb img,
+.tc-project-card:hover .tc-project-thumb video {
   transform: scale(1.055);
   filter: saturate(1.08) contrast(1.02);
 }
 
 .tc-project-card-civil-goat-coffee:hover .tc-project-thumb img {
   transform: scale(1.18);
-}
-
-.tc-project-card-ritual-coffee:hover .tc-project-thumb img {
-  transform: scale(1.16) translateY(5%);
 }
 
 .tc-project-card:hover .tc-project-thumb::after {
@@ -4302,6 +4295,132 @@ html.lenis body {
   background: var(--tc-yellow);
 }
 
+.tc-experiments-section {
+  border-top: 1.5px solid var(--tc-ink);
+}
+
+.tc-experiment-feature {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(280px, 0.72fr);
+  gap: clamp(28px, 5vw, 70px);
+  align-items: end;
+  margin-top: clamp(32px, 5vw, 72px);
+}
+
+.tc-experiment-note {
+  border: 1.5px solid var(--tc-ink);
+  border-radius: 14px;
+  padding: clamp(22px, 3vw, 34px);
+  background: var(--tc-lime);
+  box-shadow: 10px 12px 0 rgba(17, 17, 17, 0.12);
+}
+
+.tc-experiment-note p {
+  margin: 0;
+  color: var(--tc-ink);
+  font-size: clamp(18px, 2vw, 28px);
+  font-weight: 850;
+  letter-spacing: -0.035em;
+  line-height: 1.12;
+}
+
+.tc-experiment-note p + p {
+  margin-top: 18px;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.45;
+}
+
+.tc-experiment-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(18px, 3vw, 34px);
+  margin-top: clamp(36px, 6vw, 84px);
+}
+
+.tc-experiment-card {
+  display: flex;
+  min-height: 420px;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  border: 1.5px solid var(--tc-ink);
+  border-radius: 14px;
+  padding: 16px;
+  color: var(--tc-ink);
+  box-shadow: 0 0 0 rgba(17, 17, 17, 0);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.tc-experiment-card:hover {
+  transform: translateY(-8px) rotate(-0.75deg);
+  box-shadow: 10px 12px 0 rgba(17, 17, 17, 0.16);
+}
+
+.tc-experiment-card button {
+  display: grid;
+  width: 100%;
+  min-height: 0;
+  flex: 1;
+  place-items: center;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.tc-experiment-card img,
+.tc-experiment-card video {
+  display: block;
+  width: 100%;
+  max-height: 420px;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.tc-experiment-card:not(.tc-experiment-card-feature):nth-child(4n + 2) img,
+.tc-experiment-card:not(.tc-experiment-card-feature):nth-child(4n + 2) video,
+.tc-experiment-card:not(.tc-experiment-card-feature):nth-child(4n + 3) img,
+.tc-experiment-card:not(.tc-experiment-card-feature):nth-child(4n + 3) video {
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+
+.tc-experiment-card-feature {
+  min-height: 620px;
+}
+
+.tc-experiment-card-feature img,
+.tc-experiment-card-feature video {
+  max-height: 660px;
+}
+
+.tc-experiment-card span {
+  display: block;
+  margin-top: 20px;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.tc-experiment-card h3 {
+  margin: 8px 0 0;
+  font-size: clamp(26px, 3vw, 46px);
+  font-weight: 950;
+  letter-spacing: -0.07em;
+  line-height: 0.9;
+  text-transform: uppercase;
+}
+
+.tc-experiment-lightbox-content img,
+.tc-experiment-lightbox-content video {
+  max-width: min(92vw, 1180px);
+  max-height: 86vh;
+  object-fit: contain;
+}
+
 .tc-contact-section {
   display: grid;
   min-height: 72vh;
@@ -4368,8 +4487,13 @@ html.lenis body {
   }
 
   .tc-project-grid,
-  .tc-playground-grid {
+  .tc-playground-grid,
+  .tc-experiment-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .tc-experiment-feature {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -4399,6 +4523,7 @@ html.lenis body {
 
   .tc-project-grid,
   .tc-playground-grid,
+  .tc-experiment-grid,
   .tc-skill-list,
   .portfolio-footer {
     grid-template-columns: 1fr;
@@ -4842,6 +4967,13 @@ html.lenis body {
 
 .portfolio-guided-visual-grid .portfolio-gallery-item:nth-child(3n + 1) img {
   height: clamp(420px, 56vw, 760px);
+}
+
+.portfolio-guided-visuals--contain .portfolio-guided-visual-grid .portfolio-gallery-item img,
+.portfolio-guided-visuals--contain .portfolio-guided-visual-grid .portfolio-gallery-item:nth-child(3n + 1) img {
+  height: auto;
+  max-height: 78vh;
+  object-fit: contain;
 }
 
 @media (max-width: 720px) {

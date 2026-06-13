@@ -7,6 +7,7 @@ import { useSmoothScroll } from "./hooks/useSmoothScroll.js";
 import Home from "./pages/Home.jsx";
 import ProjectsPage from "./pages/Projects.jsx";
 import PostersPage from "./pages/Posters.jsx";
+import ExperimentsPage from "./pages/Experiments.jsx";
 import ProjectDetailsPage from "./pages/ProjectDetails.jsx";
 
 const MotionDiv = motion.div;
@@ -54,6 +55,10 @@ function AppRoutes() {
         title: "Poster Archive — Travis Crawford",
         description: "Curated poster archive featuring concept and campaign visual design work.",
       },
+      "/experiments": {
+        title: "Experiments — Travis Crawford",
+        description: "One-off, experimental, and abandoned visual design directions by Travis Crawford.",
+      },
     };
 
     const current = routeMeta[location.pathname] ?? {
@@ -98,6 +103,7 @@ function AppRoutes() {
           <Route path="/" element={<Home />} />
           <Route path="/projects" element={<ProjectsPage />} />
           <Route path="/posters" element={<PostersPage />} />
+          <Route path="/experiments" element={<ExperimentsPage />} />
           <Route path="/projects/:slug" element={<ProjectDetailsPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

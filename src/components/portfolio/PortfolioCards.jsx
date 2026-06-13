@@ -149,7 +149,7 @@ export function getProjectCover(project = {}) {
     "barbican-refresh": "/images/B_11.png",
     "aluma-skincare": "/images/A_1.png",
     "data-dog-analytics": "/images/DD_6.jpg",
-    "ritual-coffee": "/images/hdh6.png",
+    "ritual-coffee": "/images/Instagram post - 12.png",
     "poster-archive": "/images/Poster_6.png",
   };
 
