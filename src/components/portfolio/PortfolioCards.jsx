@@ -144,12 +144,12 @@ export function getProjectCover(project = {}) {
   const preferredCovers = {
     "3sixty-integrated-marketing": "/images/3Sixty Socials /1768231836946.jpeg",
     "yellow-bike": project.heroImage,
-    "civil-goat-coffee": "/images/CG_1.png",
+    "civil-goat-coffee": "/images/CG_6.png",
     "atlas-coffee-club": "/images/Flavor_Journey_Ad1_1080x1350.png",
-    "barbican-refresh": "/images/B_9.png",
+    "barbican-refresh": "/images/B_11.png",
     "aluma-skincare": "/images/A_1.png",
-    "data-dog-analytics": "/images/DD_13.png",
-    "ritual-coffee": "/images/hdh.png",
+    "data-dog-analytics": "/images/DD_6.jpg",
+    "ritual-coffee": "/images/hdh6.png",
     "poster-archive": "/images/Poster_6.png",
   };
 

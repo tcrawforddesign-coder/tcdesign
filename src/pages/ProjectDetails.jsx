@@ -32,6 +32,7 @@ export default function ProjectDetailsPage() {
   const galleryItems = collectGalleryItems(project);
   const heroImage = project.heroImage ?? project.cover;
   const isThreeSixty = project.slug === "3sixty-integrated-marketing";
+  const isYellowBike = project.slug === "yellow-bike";
 
   return (
     <PortfolioLayout>
@@ -84,6 +85,7 @@ export default function ProjectDetailsPage() {
 
       {project.challenge ? <CopySection block={project.challenge} /> : null}
       {project.approach ? <CopySection block={project.approach} /> : null}
+      {isYellowBike ? <YellowBikeUXSections project={project} /> : null}
       {isThreeSixty ? <ThreeSixtyMarketingSections project={project} /> : null}
 
       {project.highlights?.length ? (
@@ -100,7 +102,7 @@ export default function ProjectDetailsPage() {
         </section>
       ) : null}
 
-      {!isThreeSixty && (galleryItems.length || project.galleryGroups?.length) ? <ProjectVisuals project={project} galleryItems={galleryItems} /> : null}
+      {!isThreeSixty && !isYellowBike && (galleryItems.length || project.galleryGroups?.length) ? <ProjectVisuals project={project} galleryItems={galleryItems} /> : null}
 
       {project.outcomes ? <CopySection block={project.outcomes} /> : null}
 
@@ -180,6 +182,143 @@ function ProjectVisuals({ project, galleryItems }) {
         })}
       </div>
     </section>
+  );
+}
+
+function YellowBikeUXSections({ project }) {
+  const research = project.yellowBikeResearch ?? {};
+  const journey = research.journey_map ?? {};
+  const futureState = research.future_state ?? {};
+  const surveyResults = research.survey_results ?? {};
+  const flowImages = [
+    { src: "/images/User Onboarding _ Event _ Route Summary Flow.png", title: "Onboarding, event, and route summary flow" },
+    { src: "/images/Event Challenges Flow.png", title: "Event challenges flow" },
+  ];
+
+  return (
+    <>
+      {project.prototypeEmbedSrc ? (
+        <MarketingSection eyebrow="Prototype" title="A mobile product concept for learning, riding, and staying connected.">
+          <p>
+            The prototype brings the Yellow Bike experience into a structured app flow, connecting onboarding, challenges,
+            rewards, community events, and educational moments into one product system.
+          </p>
+          <div className="portfolio-prototype-frame">
+            <iframe src={project.prototypeEmbedSrc} title="Yellow Bike Figma prototype" allowFullScreen loading="lazy" />
+          </div>
+        </MarketingSection>
+      ) : null}
+
+      <section className="portfolio-section portfolio-work-section">
+        <SectionHeading eyebrow="Research Findings" title="Survey responses shaped the app around safety, access, and confidence." />
+        <div className="portfolio-yellow-survey-grid">
+          {Object.values(surveyResults).map((result) => (
+            <SurveyResultCard key={result.question} result={result} />
+          ))}
+        </div>
+      </section>
+
+      <MarketingSection eyebrow="Experience Strategy" title="Mapping the current community experience into a future product journey.">
+        <div className="portfolio-yellow-map-grid">
+          <JourneyMap title="Current community event journey" map={journey} />
+          <JourneyMap title="Future state product opportunities" map={futureState} />
+        </div>
+      </MarketingSection>
+
+      <section className="portfolio-section portfolio-work-section">
+        <SectionHeading eyebrow="UX Flows" title="Core screens and flows translate the mission into repeatable product behavior." />
+        <div className="portfolio-asset-grid portfolio-yellow-flow-grid">
+          {flowImages.map((item) => (
+            <figure key={item.src} className="portfolio-gallery-item portfolio-reveal">
+              <img src={item.src} alt={item.title} loading="lazy" decoding="async" />
+              <figcaption>{item.title}</figcaption>
+            </figure>
+          ))}
+        </div>
+      </section>
+
+      {project.communitySections?.length ? (
+        <section className="portfolio-section portfolio-work-section">
+          <SectionHeading eyebrow="Product Moments" title="Community and gamification became the core interaction model." />
+          <div className="portfolio-mini-card-grid portfolio-two-up">
+            {project.communitySections.map((item) => (
+              <article key={item.title} className="portfolio-mini-card portfolio-reveal">
+                <h3>{item.title}</h3>
+                <p>{item.copy}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+      ) : null}
+
+      {project.yellowBikePalette?.length ? (
+        <MarketingSection eyebrow="Visual System" title="A bright, safety-forward palette for a mobile-first biking experience.">
+          <div className="portfolio-yellow-palette">
+            {project.yellowBikePalette.map((color) => (
+              <div key={color.hex} className="portfolio-yellow-swatch">
+                <span style={{ background: color.hex }} />
+                <strong>{color.name}</strong>
+                <small>{color.hex}</small>
+              </div>
+            ))}
+          </div>
+        </MarketingSection>
+      ) : null}
+    </>
+  );
+}
+
+function SurveyResultCard({ result }) {
+  if (!result) return null;
+
+  return (
+    <article className="portfolio-yellow-survey-card portfolio-reveal">
+      <span>{result.responses} responses</span>
+      <h3>{result.question}</h3>
+      <div>
+        {result.data?.map((item) => {
+          const label = item.label ?? `Rating ${item.rating}`;
+          const value = item.value ?? item.percentage ?? 0;
+          return (
+            <div key={label} className="portfolio-yellow-bar-row">
+              <div>
+                <p>{label}</p>
+                <strong>{value}%</strong>
+              </div>
+              <span style={{ "--bar-width": `${value}%` }} />
+            </div>
+          );
+        })}
+      </div>
+    </article>
+  );
+}
+
+function JourneyMap({ title, map }) {
+  const groups = [
+    ["Phases", map.phases],
+    ["Doing", map.doing],
+    ["Thinking", map.thinking],
+    ["Feeling", map.feeling],
+    ["Outcomes", map.outcomes],
+  ].filter(([, items]) => items?.length);
+
+  if (!groups.length) return null;
+
+  return (
+    <article className="portfolio-yellow-map portfolio-reveal">
+      <h3>{title}</h3>
+      {groups.map(([label, items]) => (
+        <div key={label}>
+          <span>{label}</span>
+          <ul>
+            {items.slice(0, 5).map((item) => (
+              <li key={item.title ?? item}>{item.title ? `${item.title}${item.tagline ? `: ${item.tagline}` : ""}` : item}</li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </article>
   );
 }
 

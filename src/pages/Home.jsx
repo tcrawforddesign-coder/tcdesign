@@ -1,106 +1,163 @@
-import { ContactSection, Marquee, PortfolioLayout, PortfolioReveal, SectionHeading } from "../components/portfolio/PortfolioLayout.jsx";
-import { PortfolioProjectCarousel, ProjectDataCard } from "../components/portfolio/PortfolioCards.jsx";
+import { Marquee, PortfolioLayout, PortfolioReveal, SectionHeading } from "../components/portfolio/PortfolioLayout.jsx";
+import { getProjectCover, splitProjectTitle } from "../components/portfolio/PortfolioCards.jsx";
 import { projects } from "../data/projects.js";
-import { posterProject } from "../data/posters.js";
 
-const FEATURED_PROJECT_SLUGS = ["atlas-coffee-club", "civil-goat-coffee"];
-const TOP_PROJECT_SLUG = "3sixty-integrated-marketing";
-const PRIORITY_SLUGS = ["data-dog-analytics"];
+const selectedProjectSlugs = [
+  "civil-goat-coffee",
+  "barbican-refresh",
+  "yellow-bike",
+  "atlas-coffee-club",
+  "data-dog-analytics",
+  "3sixty-integrated-marketing",
+];
 
-const topProject = projects.find((project) => project.slug === TOP_PROJECT_SLUG);
-const homepageProjects = [
-  ...FEATURED_PROJECT_SLUGS.map((slug) => projects.find((project) => project.slug === slug)).filter(Boolean),
-  topProject,
-  posterProject,
-  ...PRIORITY_SLUGS.map((slug) => projects.find((project) => project.slug === slug)).filter(Boolean),
-  ...projects.filter(
-    (project) => !FEATURED_PROJECT_SLUGS.includes(project.slug) && project.slug !== TOP_PROJECT_SLUG && !PRIORITY_SLUGS.includes(project.slug),
-  ),
-].filter(Boolean);
+const selectedProjects = selectedProjectSlugs.map((slug) => projects.find((project) => project.slug === slug)).filter(Boolean);
+
+const projectCategories = {
+  "civil-goat-coffee": "Branding, Identity",
+  "barbican-refresh": "Brand Refresh, Editorial System",
+  "yellow-bike": "UX/UI, App Design",
+  "atlas-coffee-club": "Paid Social Ads, Campaign Design",
+  "data-dog-analytics": "UX/UI, Analytics Platform",
+  "3sixty-integrated-marketing": "Marketing Design, B2B Campaigns",
+};
+
+const playgroundItems = [
+  { title: "Poster Studies", label: "Type, color, motion cues", image: "/images/Poster_6.png", tone: "lime" },
+  { title: "Typography Experiments", label: "Scale tests and bold systems", image: "/images/Poster_13.png", tone: "lavender" },
+  { title: "Unused Concepts", label: "Directions worth remembering", image: "/images/Poster_18.png", tone: "orange" },
+  { title: "Visual Explorations", label: "Doodles, marks, and sparks", image: "/images/Poster_1.png", tone: "yellow" },
+];
+
+const skills = ["Brand Identity", "Campaign Design", "Art Direction", "Paid Social Ads", "Print & Digital Design", "Marketing Systems"];
 
 export default function Home() {
   return (
     <PortfolioLayout>
-      <section className="portfolio-hero portfolio-section">
-        <PortfolioReveal className="portfolio-hero-kicker">Portfolio / Brand / Campaign / Poster</PortfolioReveal>
-        <PortfolioReveal as="h1" className="portfolio-hero-title">
-          Clean visual systems for brands, campaigns, and paid social creative.
-        </PortfolioReveal>
-        <PortfolioReveal as="p" className="portfolio-hero-copy">
-          Travis Crawford is a Texas-based multidisciplinary designer creating polished campaign visuals,
-          paid Meta ads, brand systems, and poster-led design work with clarity, rhythm, and intention.
-        </PortfolioReveal>
-        <PortfolioReveal className="portfolio-hero-actions">
-          <a href="#work" className="portfolio-button portfolio-primary">View Work</a>
-          <a href="#about" className="portfolio-button portfolio-secondary">About Travis</a>
-        </PortfolioReveal>
+      <section className="portfolio-hero portfolio-section tc-hero">
+        <div className="tc-hero-copy-block">
+          <PortfolioReveal className="portfolio-hero-kicker">Designer, Ad Creative, Problem Solver.</PortfolioReveal>
+          <PortfolioReveal as="div" className="tc-hero-logo-wrap">
+            <img src="/hero-logo.png" alt="Travis Crawford" />
+          </PortfolioReveal>
+          <PortfolioReveal as="h1" className="portfolio-hero-title">
+            Identity, campaigns, and creative systems.
+          </PortfolioReveal>
+          <PortfolioReveal as="p" className="portfolio-hero-copy">
+            I help brands communicate clearly through thoughtful design systems, campaign visuals, and expressive creative direction.
+          </PortfolioReveal>
+          <PortfolioReveal className="portfolio-hero-actions">
+            <a href="#work" className="portfolio-button portfolio-primary">View Work</a>
+            <a href="#about" className="portfolio-button portfolio-secondary">About Me</a>
+          </PortfolioReveal>
+        </div>
+        <HeroCollage />
       </section>
 
       <Marquee />
 
       <section id="work" className="portfolio-section portfolio-work-section">
-        <SectionHeading eyebrow="Projects" title="Brand systems, campaign visuals, product concepts, and visual experiments." />
-        <PortfolioProjectCarousel label="Projects">
-          {homepageProjects.map((project) => (
-            <ProjectDataCard key={project.id} project={project} />
+        <SectionHeading eyebrow="Selected Work" title="Identity systems, campaigns, products, and visual experiments built with clarity." />
+        <div className="tc-project-grid">
+          {selectedProjects.map((project) => (
+            <ProjectCard key={project.id} project={project} />
           ))}
-        </PortfolioProjectCarousel>
+        </div>
+        <PortfolioReveal className="tc-work-actions">
+          <a href="/projects" className="portfolio-button portfolio-secondary">See All Projects</a>
+        </PortfolioReveal>
       </section>
 
-      <section id="paid-social" className="portfolio-section portfolio-split-section">
-        <PortfolioReveal className="portfolio-sticky-label">
-          <p>Paid Social Creative</p>
+      <section id="about" className="portfolio-section tc-about-section">
+        <PortfolioReveal className="tc-about-image">
+          <img
+            className="tc-about-photo"
+            src="/about-headshot.png"
+            alt="Travis Crawford smiling portrait"
+            loading="lazy"
+            decoding="async"
+          />
         </PortfolioReveal>
-        <PortfolioReveal className="portfolio-split-content">
-          <h2>Designed for quick attention, clear hierarchy, and platform-first performance.</h2>
+        <PortfolioReveal className="tc-about-copy">
+          <p className="tc-section-kicker">About</p>
+          <h2>Hi, I’m Travis Crawford, a designer based in Texas.</h2>
           <p>
-            My paid Meta ad work focuses on making a message easy to understand in seconds. I build static ad systems with strong visual hooks,
-            clean typography, flexible layouts, and enough variation to support testing without losing brand consistency.
+            I create identity systems, campaign visuals, and thoughtful brand experiences that help ideas feel clear, useful, and memorable.
           </p>
-          <div className="portfolio-mini-grid">
-            <span>Static Ads</span>
-            <span>Campaign Concepts</span>
-            <span>Hook Testing</span>
-            <span>Visual Variations</span>
-          </div>
+          <ul className="tc-skill-list">
+            {skills.map((skill) => (
+              <li key={skill}>{skill}</li>
+            ))}
+          </ul>
         </PortfolioReveal>
       </section>
 
-      <section className="portfolio-section portfolio-large-type-section">
-        <PortfolioReveal as="h2">Clarity first. Then rhythm, tension, and a little visual bite.</PortfolioReveal>
+      <section id="playground" className="portfolio-section tc-playground-section">
+        <SectionHeading eyebrow="Playground" title="Poster studies, type experiments, unused concepts, doodles, and visual explorations." />
+        <div className="tc-playground-grid">
+          {playgroundItems.map((item) => (
+            <a key={item.title} className={`tc-playground-card tc-tone-${item.tone}`} href="/posters">
+              <img src={item.image} alt="" loading="lazy" decoding="async" />
+              <div>
+                <span>{item.label}</span>
+                <h3>{item.title}</h3>
+              </div>
+            </a>
+          ))}
+        </div>
       </section>
 
-      <section id="posters" className="portfolio-section portfolio-split-section portfolio-alt">
-        <PortfolioReveal className="portfolio-sticky-label">
-          <p>Poster Work</p>
-        </PortfolioReveal>
-        <PortfolioReveal className="portfolio-split-content">
-          <h2>Where typography, composition, and mood get more expressive.</h2>
-          <p>
-            Posters are where I push scale, contrast, and visual rhythm. They give the portfolio a sharper edge and show how I think through
-            hierarchy, atmosphere, and composition in a single frame.
-          </p>
+      <section id="contact" className="portfolio-section tc-contact-section">
+        <PortfolioReveal className="tc-contact-inner">
+          <p className="tc-section-kicker">Contact</p>
+          <h2>Let’s make something useful.</h2>
+          <p>Have a project, collaboration, or creative opportunity in mind? I’d love to hear from you.</p>
+          <a className="portfolio-button portfolio-primary" href="mailto:tcrawford.design@gmail.com">Email Me</a>
         </PortfolioReveal>
       </section>
-
-      <section id="about" className="portfolio-section portfolio-about-section">
-        <PortfolioReveal className="portfolio-about-copy">
-          <p>About</p>
-          <h2>I’m Travis Crawford, a Texas-based designer who cares about culture, clarity, and the small details that make something feel considered.</h2>
-        </PortfolioReveal>
-        <PortfolioReveal className="portfolio-about-text">
-          <p>
-            I’m drawn to design because it gives me a way to organize ideas, build a point of view, and make things feel more human. I like work that has
-            structure, but still leaves room for personality, rhythm, and a little tension.
-          </p>
-          <p>
-            Outside of the final visuals, I care about the process: asking better questions, paying attention to how people read and react, and finding the
-            details that can turn a simple idea into something memorable.
-          </p>
-        </PortfolioReveal>
-      </section>
-
-      <ContactSection />
     </PortfolioLayout>
+  );
+}
+
+function HeroCollage() {
+  return (
+    <PortfolioReveal className="tc-hero-collage">
+      <div className="tc-collage-card tc-collage-orange tc-poster-card">
+        <img src="/images/Poster_6.png" alt="Poster artwork by Travis Crawford" loading="eager" decoding="async" />
+      </div>
+      <div className="tc-collage-card tc-collage-lavender tc-poster-card">
+        <img src="/images/Poster_1.png" alt="Banana poster artwork by Travis Crawford" loading="eager" decoding="async" />
+      </div>
+      <div className="tc-collage-card tc-collage-black tc-poster-card">
+        <img src="/images/Poster_18.png" alt="Poster artwork by Travis Crawford" loading="eager" decoding="async" />
+      </div>
+      <div className="tc-collage-card tc-collage-lime tc-poster-card tc-chime-card">
+        <img src="/cg-icon.png" alt="Globe icon" loading="eager" decoding="async" />
+      </div>
+      <span className="tc-collage-logo-sticker" aria-hidden="true">
+        <img src="/favicon.png" alt="" />
+      </span>
+      <img className="tc-collage-smile" src="/smiley.png" alt="" aria-hidden="true" />
+    </PortfolioReveal>
+  );
+}
+
+function ProjectCard({ project }) {
+  const title = splitProjectTitle(project.title).primary;
+  const category = projectCategories[project.slug] ?? project.tag;
+
+  return (
+    <a className={`tc-project-card tc-project-card-${project.slug} portfolio-reveal`} href={project.href ?? `/projects/${project.slug}`}>
+      <div className="tc-project-thumb">
+        <img src={getProjectCover(project)} alt="" loading="lazy" decoding="async" />
+      </div>
+      <div className="tc-project-meta">
+        <div>
+          <h3>{title}</h3>
+          <p>{category}</p>
+        </div>
+        <span aria-hidden="true">→</span>
+      </div>
+    </a>
   );
 }
