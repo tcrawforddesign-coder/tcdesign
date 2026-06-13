@@ -42,23 +42,23 @@ function AppRoutes() {
   useEffect(() => {
     const routeMeta = {
       "/": {
-        title: "TC Design — Portfolio",
+        title: "Travis Crawford",
         description:
           "Portfolio of Travis Crawford, a Texas-based visual designer focused on branding, campaign creative, and digital experiences.",
       },
       "/projects": {
-        title: "Projects — TC Design",
+        title: "Projects — Travis Crawford",
         description: "Selected branding, campaign, and product design projects by Travis Crawford.",
       },
       "/posters": {
-        title: "Poster Archive — TC Design",
+        title: "Poster Archive — Travis Crawford",
         description: "Curated poster archive featuring concept and campaign visual design work.",
       },
     };
 
     const current = routeMeta[location.pathname] ?? {
-      title: "Project Case Study — TC Design",
-      description: "Project case study from the TC Design portfolio.",
+      title: "Project Case Study — Travis Crawford",
+      description: "Project case study from the Travis Crawford portfolio.",
     };
 
     document.title = current.title;
