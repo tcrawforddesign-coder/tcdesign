@@ -33,6 +33,7 @@ export default function ProjectDetailsPage() {
   const heroImage = project.heroImage ?? project.cover;
   const isThreeSixty = project.slug === "3sixty-integrated-marketing";
   const isYellowBike = project.slug === "yellow-bike";
+  const hasStandardVisuals = !isThreeSixty && !isYellowBike && (galleryItems.length || project.galleryGroups?.length);
 
   return (
     <PortfolioLayout>
@@ -83,9 +84,12 @@ export default function ProjectDetailsPage() {
         </PortfolioReveal>
       </section>
 
+      {hasStandardVisuals ? <ProjectVisuals project={project} galleryItems={galleryItems} /> : null}
+      {isYellowBike ? <YellowBikeUXSections project={project} /> : null}
+      {isThreeSixty ? <ThreeSixtyVisualPreview project={project} /> : null}
+
       {project.challenge ? <CopySection block={project.challenge} /> : null}
       {project.approach ? <CopySection block={project.approach} /> : null}
-      {isYellowBike ? <YellowBikeUXSections project={project} /> : null}
       {isThreeSixty ? <ThreeSixtyMarketingSections project={project} /> : null}
 
       {project.highlights?.length ? (
@@ -101,8 +105,6 @@ export default function ProjectDetailsPage() {
           </div>
         </section>
       ) : null}
-
-      {!isThreeSixty && !isYellowBike && (galleryItems.length || project.galleryGroups?.length) ? <ProjectVisuals project={project} galleryItems={galleryItems} /> : null}
 
       {project.outcomes ? <CopySection block={project.outcomes} /> : null}
 
@@ -152,13 +154,7 @@ function ProjectVisuals({ project, galleryItems }) {
                   <p>{group.title}</p>
                   {group.description ? <span>{group.description}</span> : null}
                 </div>
-                <div className="portfolio-gallery-grid portfolio-gallery-grid--campaign">
-                  {items.map((media, index) => (
-                    <figure key={`${group.title}-${media.src}-${index}`} className="portfolio-gallery-item">
-                      <img src={media.src} alt={media.alt || `${group.title} visual ${index + 1}`} loading="lazy" decoding="async" />
-                    </figure>
-                  ))}
-                </div>
+                <GuidedVisualGroup items={items} label={group.title} fallbackAlt={group.title} />
               </section>
             );
           })}
@@ -170,18 +166,49 @@ function ProjectVisuals({ project, galleryItems }) {
   return (
     <section className="portfolio-section portfolio-work-section">
       <SectionHeading eyebrow="Selected Visuals" title="Project frames, campaign assets, and supporting material." />
-      <div className="portfolio-gallery-grid">
-        {galleryItems.map((item, index) => {
-          const media = normalizeMediaItem(item);
-          if (!media) return null;
-          return (
-            <figure key={`${media.src}-${index}`} className="portfolio-gallery-item portfolio-reveal">
-              <img src={media.src} alt={media.alt || `${project.title} visual ${index + 1}`} loading="lazy" decoding="async" />
-            </figure>
-          );
-        })}
-      </div>
+      <GuidedVisualGroup items={galleryItems} label="Lead visual" fallbackAlt={project.title} />
     </section>
+  );
+}
+
+function ThreeSixtyVisualPreview({ project }) {
+  const items = [
+    ...getFeaturedSocialPosts(project.socialPosts).slice(0, 6),
+    ...(project.securityPricingCampaign?.assets ?? []).map((asset) => asset.src),
+  ].map(normalizeMediaItem).filter(Boolean);
+
+  if (!items.length) return null;
+
+  return (
+    <section className="portfolio-section portfolio-work-section">
+      <SectionHeading eyebrow="Campaign Visuals" title="A quick look at the marketing system before the strategy deep dive." />
+      <GuidedVisualGroup items={items} label="Campaign lead" fallbackAlt={`${project.title} campaign`} />
+    </section>
+  );
+}
+
+function GuidedVisualGroup({ items = [], label = "Lead visual", fallbackAlt = "Project visual" }) {
+  const normalized = items.map(normalizeMediaItem).filter(Boolean);
+  if (!normalized.length) return null;
+
+  const [lead, ...supporting] = normalized;
+
+  return (
+    <div className="portfolio-guided-visuals">
+      <figure className="portfolio-guided-visual-feature portfolio-reveal">
+        <span>{label}</span>
+        <img src={lead.src} alt={lead.alt || `${fallbackAlt} lead visual`} loading="lazy" decoding="async" />
+      </figure>
+      {supporting.length ? (
+        <div className="portfolio-guided-visual-grid">
+          {supporting.map((media, index) => (
+            <figure key={`${media.src}-${index}`} className="portfolio-gallery-item portfolio-reveal">
+              <img src={media.src} alt={media.alt || `${fallbackAlt} supporting visual ${index + 2}`} loading="lazy" decoding="async" />
+            </figure>
+          ))}
+        </div>
+      ) : null}
+    </div>
   );
 }
 

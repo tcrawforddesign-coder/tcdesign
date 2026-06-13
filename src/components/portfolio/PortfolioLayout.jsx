@@ -58,8 +58,7 @@ function PortfolioCursorSpotlight() {
     const updateSpotlight = (event) => {
       window.cancelAnimationFrame(animationFrame);
       animationFrame = window.requestAnimationFrame(() => {
-        spotlight.style.setProperty("--spotlight-x", `${event.clientX}px`);
-        spotlight.style.setProperty("--spotlight-y", `${event.clientY}px`);
+        spotlight.style.transform = `translate3d(${event.clientX}px, ${event.clientY}px, 0)`;
         spotlight.classList.add("is-visible");
       });
     };

@@ -2492,11 +2492,15 @@ html.lenis body {
 
 .portfolio-cursor-spotlight {
   position: fixed;
-  inset: 0;
+  left: 0;
+  top: 0;
   z-index: 80;
+  width: 0;
+  height: 0;
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.2s ease;
+  will-change: transform;
 }
 
 .portfolio-cursor-spotlight.is-visible {
@@ -2507,8 +2511,8 @@ html.lenis body {
 .portfolio-cursor-spotlight::after {
   content: "";
   position: absolute;
-  left: var(--spotlight-x);
-  top: var(--spotlight-y);
+  left: 0;
+  top: 0;
   border-radius: 999px;
   transform: translate(-50%, -50%);
 }
@@ -4015,7 +4019,46 @@ html.lenis body {
 
 .tc-project-card {
   display: block;
+  margin: -12px;
+  padding: 12px;
+  border-radius: 16px;
+  background: transparent;
   color: var(--tc-ink);
+  transition: background 0.28s ease, box-shadow 0.28s ease, transform 0.28s ease;
+}
+
+.tc-project-card:nth-child(6n + 1) {
+  --tc-project-hover: var(--tc-lime);
+}
+
+.tc-project-card:nth-child(6n + 2) {
+  --tc-project-hover: var(--tc-lavender);
+}
+
+.tc-project-card:nth-child(6n + 3) {
+  --tc-project-hover: var(--tc-orange);
+}
+
+.tc-project-card:nth-child(6n + 4) {
+  --tc-project-hover: var(--tc-yellow);
+}
+
+.tc-project-card:nth-child(6n + 5) {
+  --tc-project-hover: var(--tc-sage);
+}
+
+.tc-project-card:nth-child(6n + 6) {
+  --tc-project-hover: var(--tc-cream);
+}
+
+.tc-project-card.tc-project-card-data-dog-analytics {
+  --tc-project-hover: var(--tc-sage);
+}
+
+.tc-project-card:hover {
+  background: var(--tc-project-hover);
+  box-shadow: 10px 12px 0 rgba(17, 17, 17, 0.14);
+  transform: translateY(-6px) rotate(-0.5deg);
 }
 
 .tc-project-thumb {
@@ -4070,6 +4113,10 @@ html.lenis body {
 
 .tc-project-card:hover .tc-project-thumb::after {
   opacity: 0.2;
+}
+
+.tc-project-card:hover .tc-project-meta p {
+  color: rgba(17, 17, 17, 0.72);
 }
 
 .tc-project-meta {
@@ -4567,6 +4614,12 @@ html.lenis body {
 }
 
 @media (max-width: 720px) {
+  .portfolio-guided-visual-grid,
+  .portfolio-guided-visual-grid .portfolio-gallery-item:nth-child(3n + 1) {
+    grid-template-columns: 1fr;
+    grid-column: auto;
+  }
+
   .portfolio-yellow-flow-grid {
     grid-template-columns: 1fr;
   }
@@ -4727,6 +4780,81 @@ html.lenis body {
   border-radius: 8px;
   background: var(--tc-cream);
   box-shadow: 8px 10px 0 rgba(17, 17, 17, 0.08);
+}
+
+.portfolio-guided-visuals {
+  display: grid;
+  gap: clamp(22px, 4vw, 48px);
+  margin-top: clamp(28px, 4vw, 52px);
+}
+
+.portfolio-guided-visual-feature {
+  position: relative;
+  margin: 0;
+}
+
+.portfolio-guided-visual-feature span {
+  display: inline-flex;
+  margin-bottom: 12px;
+  border: 1.5px solid var(--tc-ink);
+  border-radius: 999px;
+  padding: 7px 12px;
+  background: var(--tc-lime);
+  color: var(--tc-ink);
+  font-size: 11px;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.portfolio-guided-visual-feature img {
+  display: block;
+  width: min(100%, 1180px);
+  max-height: 78vh;
+  object-fit: contain;
+  border: 1.5px solid var(--tc-ink);
+  border-radius: 8px;
+  background: var(--tc-cream);
+  box-shadow: 14px 16px 0 rgba(17, 17, 17, 0.12);
+}
+
+.portfolio-guided-visual-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(18px, 3vw, 32px);
+}
+
+.portfolio-guided-visual-grid .portfolio-gallery-item {
+  display: block;
+  margin: 0;
+}
+
+.portfolio-guided-visual-grid .portfolio-gallery-item:nth-child(3n + 1) {
+  grid-column: span 2;
+}
+
+.portfolio-guided-visual-grid .portfolio-gallery-item img {
+  width: 100%;
+  height: clamp(340px, 42vw, 640px);
+  object-fit: cover;
+  object-position: center;
+}
+
+.portfolio-guided-visual-grid .portfolio-gallery-item:nth-child(3n + 1) img {
+  height: clamp(420px, 56vw, 760px);
+}
+
+@media (max-width: 720px) {
+  .portfolio-guided-visual-grid,
+  .portfolio-guided-visual-grid .portfolio-gallery-item:nth-child(3n + 1) {
+    grid-template-columns: 1fr;
+    grid-column: auto;
+  }
+
+  .portfolio-guided-visual-grid .portfolio-gallery-item img,
+  .portfolio-guided-visual-grid .portfolio-gallery-item:nth-child(3n + 1) img {
+    height: clamp(280px, 78vw, 520px);
+  }
 }
 
 .portfolio-poster-grid {
