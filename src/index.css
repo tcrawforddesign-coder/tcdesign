@@ -3778,7 +3778,7 @@ html.lenis body {
   grid-template-columns: minmax(0, 0.86fr) minmax(380px, 1.14fr);
   align-items: center;
   gap: clamp(48px, 7vw, 120px);
-  padding-top: 140px;
+  padding-top: 96px;
 }
 
 .tc-hero-copy-block {
@@ -4328,7 +4328,7 @@ html.lenis body {
   }
 
   .tc-hero {
-    padding-top: 110px;
+    padding-top: 84px;
   }
 
   .tc-hero-collage {
