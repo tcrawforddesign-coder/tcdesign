@@ -4050,6 +4050,11 @@ html.lenis body {
   transform: scale(1.12);
 }
 
+.tc-project-card-ritual-coffee .tc-project-thumb img {
+  object-position: center center;
+  transform: scale(1.12) translateY(5%);
+}
+
 .tc-project-card:hover .tc-project-thumb img {
   transform: scale(1.055);
   filter: saturate(1.08) contrast(1.02);
@@ -4057,6 +4062,10 @@ html.lenis body {
 
 .tc-project-card-civil-goat-coffee:hover .tc-project-thumb img {
   transform: scale(1.18);
+}
+
+.tc-project-card-ritual-coffee:hover .tc-project-thumb img {
+  transform: scale(1.16) translateY(5%);
 }
 
 .tc-project-card:hover .tc-project-thumb::after {

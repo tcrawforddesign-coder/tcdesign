@@ -1,5 +1,5 @@
 import { ContactSection, Marquee, PortfolioLayout, PortfolioReveal, SectionHeading } from "../components/portfolio/PortfolioLayout.jsx";
-import { PortfolioProjectCarousel, ProjectDataCard } from "../components/portfolio/PortfolioCards.jsx";
+import { getProjectCover, splitProjectTitle } from "../components/portfolio/PortfolioCards.jsx";
 import { projects } from "../data/projects.js";
 import { posterProject } from "../data/posters.js";
 
@@ -32,14 +32,33 @@ export default function ProjectsPage() {
 
       <section className="portfolio-section portfolio-work-section">
         <SectionHeading eyebrow="Projects" title="Brand systems, campaign visuals, product concepts, and visual experiments." />
-        <PortfolioProjectCarousel label="Projects">
+        <div className="tc-project-grid">
           {orderedProjects.map((project) => (
-            <ProjectDataCard key={project.id} project={project} />
+            <ProjectGridCard key={project.id} project={project} />
           ))}
-        </PortfolioProjectCarousel>
+        </div>
       </section>
 
       <ContactSection />
     </PortfolioLayout>
+  );
+}
+
+function ProjectGridCard({ project }) {
+  const title = splitProjectTitle(project.title).primary;
+
+  return (
+    <a className={`tc-project-card tc-project-card-${project.slug} portfolio-reveal`} href={project.href ?? `/projects/${project.slug}`}>
+      <div className="tc-project-thumb">
+        <img src={getProjectCover(project)} alt="" loading="lazy" decoding="async" />
+      </div>
+      <div className="tc-project-meta">
+        <div>
+          <h3>{title}</h3>
+          <p>{project.tag}</p>
+        </div>
+        <span aria-hidden="true">→</span>
+      </div>
+    </a>
   );
 }
