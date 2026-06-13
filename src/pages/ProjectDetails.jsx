@@ -154,7 +154,7 @@ function ProjectVisuals({ project, galleryItems }) {
                   <p>{group.title}</p>
                   {group.description ? <span>{group.description}</span> : null}
                 </div>
-                <GuidedVisualGroup items={items} label={group.title} fallbackAlt={group.title} />
+                <GuidedVisualGroup items={items} label={group.title} fallbackAlt={group.title} variant="meta" />
               </section>
             );
           })}
@@ -195,6 +195,21 @@ function ThreeSixtyVisualPreview({ project }) {
 function GuidedVisualGroup({ items = [], label = "Lead visual", fallbackAlt = "Project visual", variant }) {
   const normalized = items.map(normalizeMediaItem).filter(Boolean);
   if (!normalized.length) return null;
+
+  if (variant === "meta") {
+    return (
+      <div className="portfolio-guided-visuals portfolio-guided-visuals--meta">
+        <div className="portfolio-guided-visual-grid">
+          {normalized.map((media, index) => (
+            <figure key={`${media.src}-${index}`} className="portfolio-gallery-item portfolio-reveal">
+              <span>{label}</span>
+              <img src={media.src} alt={media.alt || `${fallbackAlt} Meta ad visual ${index + 1}`} loading="lazy" decoding="async" />
+            </figure>
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   const [lead, ...supporting] = normalized;
 
