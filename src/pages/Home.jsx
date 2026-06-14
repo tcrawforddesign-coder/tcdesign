@@ -135,7 +135,7 @@ function HeroCollage() {
         <img src="/cg-icon.png" alt="Globe icon" loading="eager" decoding="async" />
       </div>
       <span className="tc-collage-logo-sticker" aria-hidden="true">
-        <img src="/favicon.png" alt="" />
+        <img src="/favicon-v3.png" alt="" />
       </span>
       <img className="tc-collage-smile" src="/smiley.png" alt="" aria-hidden="true" />
     </PortfolioReveal>

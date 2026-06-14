@@ -4381,17 +4381,10 @@ html.lenis body {
 .tc-experiment-card video {
   display: block;
   width: 100%;
+  height: auto;
   max-height: 420px;
   object-fit: contain;
   border-radius: 8px;
-}
-
-.tc-experiment-card:not(.tc-experiment-card-feature):nth-child(4n + 2) img,
-.tc-experiment-card:not(.tc-experiment-card-feature):nth-child(4n + 2) video,
-.tc-experiment-card:not(.tc-experiment-card-feature):nth-child(4n + 3) img,
-.tc-experiment-card:not(.tc-experiment-card-feature):nth-child(4n + 3) video {
-  aspect-ratio: 4 / 5;
-  object-fit: cover;
 }
 
 .tc-experiment-card-feature {
