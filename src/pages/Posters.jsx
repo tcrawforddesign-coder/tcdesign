@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 
 import { PosterCard } from "../components/portfolio/PortfolioCards.jsx";
-import { ContactSection, PortfolioLayout, PortfolioReveal, SectionHeading } from "../components/portfolio/PortfolioLayout.jsx";
-import { posterEntries, posterProject } from "../data/posters.js";
+import { ContactSection, PortfolioLayout, PortfolioReveal } from "../components/portfolio/PortfolioLayout.jsx";
+import { posterEntries } from "../data/posters.js";
 
 export default function PostersPage() {
   const [activePoster, setActivePoster] = useState(null);
@@ -39,8 +39,6 @@ export default function PostersPage() {
       </section>
 
       <section className="portfolio-section portfolio-work-section">
-        <SectionHeading eyebrow="Poster Archive" title={posterProject.summary} />
-
         <div className="portfolio-poster-grid">
           {posterEntries.map((poster) => (
             <PosterCard key={poster.id} poster={poster} onSelect={setActivePoster} />

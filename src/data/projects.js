@@ -931,6 +931,7 @@ export const projects = [
     roles: ["Brand Strategy", "Identity", "Print"],
     tools: ["Figma", "InDesign", "Photoshop"],
     cover: "/images/alena-stepanova-xelnNmDc8DQ-unsplash.jpg",
+    coverType: "video",
     heroImage: "/images/andreas-karamalikis-OZkRmwH9ueM-unsplash.jpg",
     textureImage: "/images/virgyl-sowah-lHOJYkpSZ0A-unsplash.jpg",
     textureCopy: "Concrete textures, modular grids, and typographic rhythm tuned for brutalist heritage.",
