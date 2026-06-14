@@ -925,7 +925,7 @@ export const projects = [
     id: 3,
     slug: "barbican-refresh",
     title: "Barbican Centre — Minimal Brutal Refresh",
-    tag: "Cultural Space",
+    tag: "Brand Refresh, Wayfinding",
     timeframe: "2022",
     summary: "A typographic refresh honoring the Barbican’s brutalist legacy while opening doors to new voices.",
     roles: ["Brand Strategy", "Identity", "Print"],

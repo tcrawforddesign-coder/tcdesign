@@ -28,7 +28,7 @@ const selectedProjects = [
 
 const projectCategories = {
   "civil-goat-coffee": "Branding, Identity",
-  "barbican-refresh": "Brand Refresh, Editorial System",
+  "barbican-refresh": "Brand Refresh, Wayfinding",
   "yellow-bike": "UX/UI, App Design",
   "atlas-coffee-club": "Paid Social Ads, Campaign Design",
   "experiments": "One-offs, Motion, Visual Studies",
