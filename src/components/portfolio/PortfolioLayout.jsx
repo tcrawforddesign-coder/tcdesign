@@ -19,6 +19,7 @@ export function PortfolioLayout({ children }) {
           <Link to="/#work">Work</Link>
           <Link to="/#about">About</Link>
           <Link to="/experiments">Experiments</Link>
+          <Link to="/posters">Posters</Link>
           <Link to="/#contact">Contact</Link>
         </nav>
       </header>
