@@ -1,25 +1,38 @@
 import { Marquee, PortfolioLayout, PortfolioReveal, SectionHeading } from "../components/portfolio/PortfolioLayout.jsx";
 import { getProjectCover, splitProjectTitle } from "../components/portfolio/PortfolioCards.jsx";
 import { projects } from "../data/projects.js";
+import { posterProject } from "../data/posters.js";
 
 const selectedProjectSlugs = [
   "civil-goat-coffee",
   "barbican-refresh",
   "yellow-bike",
   "atlas-coffee-club",
-  "data-dog-analytics",
-  "3sixty-integrated-marketing",
 ];
 
-const selectedProjects = selectedProjectSlugs.map((slug) => projects.find((project) => project.slug === slug)).filter(Boolean);
+const experimentsProject = {
+  id: "experiments-archive",
+  slug: "experiments",
+  title: "Experiments & Abandoned Projects",
+  tag: "One-offs, Motion, Visual Studies",
+  href: "/experiments",
+  cover: "/images/experiments/comp-1-3.mp4",
+  coverType: "video",
+};
+
+const selectedProjects = [
+  ...selectedProjectSlugs.map((slug) => projects.find((project) => project.slug === slug)).filter(Boolean),
+  experimentsProject,
+  posterProject,
+];
 
 const projectCategories = {
   "civil-goat-coffee": "Branding, Identity",
   "barbican-refresh": "Brand Refresh, Editorial System",
   "yellow-bike": "UX/UI, App Design",
   "atlas-coffee-club": "Paid Social Ads, Campaign Design",
-  "data-dog-analytics": "UX/UI, Analytics Platform",
-  "3sixty-integrated-marketing": "Marketing Coordination, Communications",
+  "experiments": "One-offs, Motion, Visual Studies",
+  "poster-archive": "Poster Series, Visual Experiments",
 };
 
 const playgroundItems = [
@@ -149,7 +162,11 @@ function ProjectCard({ project }) {
   return (
     <a className={`tc-project-card tc-project-card-${project.slug} portfolio-reveal`} href={project.href ?? `/projects/${project.slug}`}>
       <div className="tc-project-thumb">
-        <img src={getProjectCover(project)} alt="" loading="lazy" decoding="async" />
+        {project.coverType === "video" ? (
+          <video src={getProjectCover(project)} autoPlay muted loop playsInline preload="metadata" />
+        ) : (
+          <img src={getProjectCover(project)} alt="" loading="lazy" decoding="async" />
+        )}
       </div>
       <div className="tc-project-meta">
         <div>

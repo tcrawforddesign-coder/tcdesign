@@ -797,19 +797,6 @@ export const projects = [
         ],
       },
       {
-        title: "Gut-friendly benefit set",
-        description: "Atlas+ gut-health messaging across a six-variant Meta static set at 4:5.",
-        carousel: true,
-        items: [
-          "/images/Gut_Friendly_Ad_1080x1350.png",
-          "/images/Gut_Friendly_Ad_1080x1350-1.png",
-          "/images/Gut_Friendly_Ad_1080x1350-2.png",
-          "/images/Gut_Friendly_Ad_1080x1350-3.png",
-          "/images/Gut_Friendly_Ad_1080x1350-4.png",
-          "/images/Gut_Friendly_Ad_1080x1350-5.png",
-        ],
-      },
-      {
         title: "Longevity benefit set",
         description: "Longevity-forward Atlas+ frames for prospecting, built for thumb-stop clarity in-feed.",
         carousel: true,
@@ -819,18 +806,6 @@ export const projects = [
           "/images/Longevity_Ad_1080x1350-1.png",
           "/images/Longevity_Ad_1080x1350-2.png",
           "/images/Longevity_Ad_1080x1350-3.png",
-        ],
-      },
-      {
-        title: "Coffee you'll actually like",
-        description: "Taste-forward prospecting built on that line—bold type and clear CTAs in 4:5 and 9:16 for Feed and Stories.",
-        carousel: true,
-        items: [
-          "/images/Ad1_1080x1350.png",
-          "/images/Ad3_1080x1350.png",
-          "/images/Ad4_V2_1080x1920-1.png",
-          "/images/Ad5_1080x1920_1.png",
-          "/images/Ad6_1080x1350.png",
         ],
       },
       {
@@ -884,16 +859,8 @@ export const projects = [
         description: "Five static 4:5 placements for evening coffee storytelling and routine-based hooks.",
       },
       {
-        title: "Gut-friendly benefit set",
-        description: "Six-variant gut-health creative for Atlas+ supplement positioning in Meta feeds.",
-      },
-      {
         title: "Longevity benefit set",
         description: "Five longevity-focused static frames supporting Atlas+ benefit education and conversion.",
-      },
-      {
-        title: "Coffee you'll actually like",
-        description: "Five statics for the campaign—1080×1350 and 1080×1920 exports for feed and Stories.",
       },
       {
         title: "All-in-One comparison set",

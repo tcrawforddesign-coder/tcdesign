@@ -31,6 +31,7 @@ export default function ProjectDetailsPage() {
   const { primary } = splitProjectTitle(project.title ?? "");
   const galleryItems = collectGalleryItems(project);
   const heroImage = project.heroImage ?? project.cover;
+  const isAtlasCoffee = project.slug === "atlas-coffee-club";
   const isThreeSixty = project.slug === "3sixty-integrated-marketing";
   const isYellowBike = project.slug === "yellow-bike";
   const hasStandardVisuals = !isThreeSixty && !isYellowBike && (galleryItems.length || project.galleryGroups?.length);
@@ -88,11 +89,11 @@ export default function ProjectDetailsPage() {
       {isYellowBike ? <YellowBikeUXSections project={project} /> : null}
       {isThreeSixty ? <ThreeSixtyVisualPreview project={project} /> : null}
 
-      {project.challenge ? <CopySection block={project.challenge} /> : null}
+      {!isAtlasCoffee && project.challenge ? <CopySection block={project.challenge} /> : null}
       {project.approach ? <CopySection block={project.approach} /> : null}
       {isThreeSixty ? <ThreeSixtyMarketingSections project={project} /> : null}
 
-      {project.highlights?.length ? (
+      {!isAtlasCoffee && project.highlights?.length ? (
         <section className="portfolio-section portfolio-work-section">
           <SectionHeading eyebrow="System Highlights" title="A closer look at the thinking behind the work." />
           <div className="portfolio-mini-card-grid">

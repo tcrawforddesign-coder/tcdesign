@@ -14,13 +14,6 @@ export const posterEntries = [
     colorMode: "color",
   },
   {
-    id: "poster-02",
-    src: "/images/Poster_2.png",
-    title: "Signal Study",
-    year: 2023,
-    colorMode: "color",
-  },
-  {
     id: "poster-03",
     src: "/images/Poster_3.png",
     title: "Gradient Split",
