@@ -177,17 +177,14 @@ function ProjectVisuals({ project, galleryItems }) {
 }
 
 function ThreeSixtyVisualPreview({ project }) {
-  const items = [
-    ...getFeaturedSocialPosts(project.socialPosts).slice(0, 6),
-    ...(project.securityPricingCampaign?.assets ?? []).map((asset) => asset.src),
-  ].map(normalizeMediaItem).filter(Boolean);
+  const items = getFeaturedSocialPosts(project.socialPosts).slice(0, 6).map(normalizeMediaItem).filter(Boolean);
 
   if (!items.length) return null;
 
   return (
     <section className="portfolio-section portfolio-work-section">
-      <SectionHeading eyebrow="Campaign Visuals" title="A quick look at the marketing system before the strategy deep dive." />
-      <GuidedVisualGroup items={items} label="Campaign lead" fallbackAlt={`${project.title} campaign`} />
+      <SectionHeading eyebrow="Social Media Work" title="A compact look at the day-to-day content supporting 3Sixty's LinkedIn presence." />
+      <GuidedVisualGroup items={items} label="Social post" fallbackAlt={`${project.title} social post`} variant="social" />
     </section>
   );
 }
@@ -204,6 +201,20 @@ function GuidedVisualGroup({ items = [], label = "Lead visual", fallbackAlt = "P
             <figure key={`${media.src}-${index}`} className="portfolio-gallery-item portfolio-reveal">
               <span>{label}</span>
               <img src={media.src} alt={media.alt || `${fallbackAlt} Meta ad visual ${index + 1}`} loading="lazy" decoding="async" />
+            </figure>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  if (variant === "social") {
+    return (
+      <div className="portfolio-guided-visuals portfolio-guided-visuals--social">
+        <div className="portfolio-guided-visual-grid">
+          {normalized.map((media, index) => (
+            <figure key={`${media.src}-${index}`} className="portfolio-gallery-item portfolio-reveal">
+              <img src={media.src} alt={media.alt || `${fallbackAlt} ${index + 1}`} loading="lazy" decoding="async" />
             </figure>
           ))}
         </div>
@@ -386,11 +397,11 @@ function ThreeSixtyMarketingSections({ project }) {
     <>
       <PerformanceSnapshot snapshot={project.performanceSnapshot} />
 
-      <MarketingSection eyebrow="What I do" title="Marketing communication that connects strategy, creative, and execution.">
+      <MarketingSection eyebrow="Marketing Coordinator Role" title="Keeping social, email, sales support, and internal communication organized.">
         <BulletList items={project.whatIDo} />
       </MarketingSection>
 
-      <MarketingSection eyebrow="Communication Strategy and Campaign Execution" title="Campaign planning built around clear messaging and business goals.">
+      <MarketingSection eyebrow="Coordination and Communication" title="Planning, writing, organizing, and moving marketing work forward.">
         <p>{communication.statement}</p>
         <BulletList items={communication.examples} />
         <AssetStrip title={pricingCampaign.title} copy={pricingCampaign.copy} items={pricingCampaign.assets} />
@@ -407,20 +418,20 @@ function ThreeSixtyMarketingSections({ project }) {
         ) : null}
       </MarketingSection>
 
-      <MarketingSection eyebrow="Social Strategy" title={socialStrategy.title}>
+      <MarketingSection eyebrow="Social Media Management" title={socialStrategy.title}>
         <p>{socialStrategy.copy}</p>
         <BulletList items={socialStrategy.pillars} />
         <AssetStrip title={thoughtLeadership.title} copy={thoughtLeadership.copy} items={thoughtLeadership.images} />
         <AssetStrip
-          title="Social media content system"
-          copy="A set of social posts showing how educational, promotional, and urgency-focused content stays visually consistent across the 3Sixty feed."
+          title="Social media content support"
+          copy="A set of social posts showing how educational, promotional, company culture, and urgency-focused content stayed consistent across the 3Sixty feed."
           items={getFeaturedSocialPosts(project.socialPosts)}
           initialVisible={8}
         />
       </MarketingSection>
 
       <section className="portfolio-section portfolio-work-section">
-        <SectionHeading eyebrow="Technical Translation and Sales Enablement" title="Turning operational complexity into clearer sales and client communication." />
+        <SectionHeading eyebrow="Sales and Technical Support" title="Turning operational complexity into clearer client and sales communication." />
         <div className="portfolio-mini-card-grid portfolio-two-up">
           <article className="portfolio-mini-card portfolio-reveal">
             <h3>Technical Translation</h3>
@@ -440,28 +451,28 @@ function ThreeSixtyMarketingSections({ project }) {
         <AssetGrid items={salesLibrary.assets} title={salesLibrary.title} />
       </MarketingSection>
 
-      <MarketingSection eyebrow="Internal Communications and Engagement" title="Internal communication that keeps teams informed and aligned.">
+      <MarketingSection eyebrow="Internal Communications" title="Keeping teams informed, visible, and aligned.">
         <p>{internal.statement}</p>
         <BulletList items={internal.examples} />
       </MarketingSection>
 
       <section className="portfolio-section portfolio-work-section">
-        <SectionHeading eyebrow="Operations and Execution" title="Planning, coordination, and design production across active initiatives." />
+        <SectionHeading eyebrow="Execution Support" title="Planning, coordination, and content production across active initiatives." />
         <div className="portfolio-mini-card-grid portfolio-two-up">
           <article className="portfolio-mini-card portfolio-reveal">
-            <h3>Operations, Planning and Coordination</h3>
+            <h3>Operations, Planning, and Coordination</h3>
             <p>{operations.statement}</p>
             <BulletList items={operations.examples} />
           </article>
           <article className="portfolio-mini-card portfolio-reveal">
-            <h3>Design and Content Execution</h3>
+            <h3>Design as Communication Support</h3>
             <p>{designExecution.statement}</p>
             <BulletList items={designExecution.examples} />
           </article>
         </div>
       </section>
 
-      <MarketingSection eyebrow="Impact" title="A communication system supporting campaigns, sales, and internal initiatives.">
+      <MarketingSection eyebrow="Impact" title="A marketing coordination role supporting social, sales, and internal initiatives.">
         <BulletList items={project.impact} />
       </MarketingSection>
     </>

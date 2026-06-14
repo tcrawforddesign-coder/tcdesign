@@ -1,16 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
-import { motion, useMotionValue, useReducedMotion, useSpring } from "framer-motion";
 
 import PageTransition from "./components/animations/PageTransition.jsx";
+import { PortfolioPointerEffects } from "./components/portfolio/PortfolioLayout.jsx";
 import { useSmoothScroll } from "./hooks/useSmoothScroll.js";
 import Home from "./pages/Home.jsx";
 import ProjectsPage from "./pages/Projects.jsx";
 import PostersPage from "./pages/Posters.jsx";
 import ExperimentsPage from "./pages/Experiments.jsx";
 import ProjectDetailsPage from "./pages/ProjectDetails.jsx";
-
-const MotionDiv = motion.div;
 
 export default function App() {
   return <AppRoutes />;
@@ -97,7 +95,7 @@ function AppRoutes() {
 
   return (
     <div className="min-h-full">
-      <StudioCursor />
+      <PortfolioPointerEffects />
       <PageTransition routeKey={location.pathname}>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -109,54 +107,6 @@ function AppRoutes() {
         </Routes>
       </PageTransition>
     </div>
-  );
-}
-
-function StudioCursor() {
-  const reduceMotion = useReducedMotion();
-  const x = useSpring(useMotionValue(-100), { stiffness: 500, damping: 40, mass: 0.4 });
-  const y = useSpring(useMotionValue(-100), { stiffness: 500, damping: 40, mass: 0.4 });
-  const [state, setState] = useState({ visible: false, variant: "default" });
-
-  useEffect(() => {
-    const canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
-    if (reduceMotion || !canHover) return undefined;
-
-    const updateCursor = (event) => {
-      x.set(event.clientX);
-      y.set(event.clientY);
-
-      const target = event.target.closest?.("[data-cursor], [data-cursor-zone], a, button, input, textarea, select");
-      const zone = target?.dataset.cursorZone;
-      const cursor = target?.dataset.cursor;
-      const variant = zone === "tilt-card" ? "card" : cursor === "default" ? "default" : target ? "pointer" : "default";
-      setState({ visible: true, variant });
-    };
-
-    const hideCursor = () => setState((current) => ({ ...current, visible: false }));
-
-    window.addEventListener("pointermove", updateCursor);
-    window.addEventListener("pointerleave", hideCursor);
-
-    return () => {
-      window.removeEventListener("pointermove", updateCursor);
-      window.removeEventListener("pointerleave", hideCursor);
-    };
-  }, [reduceMotion, x, y]);
-
-  if (reduceMotion) return null;
-
-  return (
-    <MotionDiv
-      aria-hidden
-      className={`studio-cursor studio-cursor--${state.variant}`}
-      style={{ x, y }}
-      animate={{
-        opacity: state.visible ? 1 : 0,
-        scale: state.variant === "card" ? 1.9 : state.variant === "pointer" ? 1.35 : 1,
-      }}
-      transition={{ type: "spring", stiffness: 500, damping: 35 }}
-    />
   );
 }
 

@@ -19,7 +19,7 @@ const projectCategories = {
   "yellow-bike": "UX/UI, App Design",
   "atlas-coffee-club": "Paid Social Ads, Campaign Design",
   "data-dog-analytics": "UX/UI, Analytics Platform",
-  "3sixty-integrated-marketing": "Marketing Design, B2B Campaigns",
+  "3sixty-integrated-marketing": "Marketing Coordination, Communications",
 };
 
 const playgroundItems = [

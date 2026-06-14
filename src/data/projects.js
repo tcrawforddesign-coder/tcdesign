@@ -2,46 +2,46 @@ export const projects = [
   {
     id: 9,
     slug: "3sixty-integrated-marketing",
-    title: "3Sixty Integrated - Digital Marketing Systems",
-    tag: "Digital Marketing",
+    title: "3Sixty Integrated - Marketing Coordinator Work",
+    tag: "Marketing Coordination",
     timeframe: "2024-Present",
-    summary: "Communication-led marketing work across campaigns, sales support, internal engagement, and execution planning.",
-    roles: ["Marketing Communications", "Campaign Strategy", "Content and Creative", "Sales Enablement"],
-    team: ["Integrated with strategy, media buying, and client teams"],
-    tools: ["Meta Ads Manager", "Google Analytics", "Figma", "Photoshop"],
+    summary: "Marketing coordination work across social media management, email communication, sales support, internal engagement, event planning, and day-to-day execution.",
+    roles: ["Marketing Coordination", "Social Media Management", "Sales Enablement", "Internal Communications"],
+    team: ["Worked with sales, operations, leadership, and vendor partners"],
+    tools: ["LinkedIn", "Mailchimp", "HubSpot", "Figma", "Photoshop"],
     cover: "/images/Gemini_Generated_Image_c6x6a5c6x6a5c6x6.png",
     heroImage: "/images/Gemini_Generated_Image_c6x6a5c6x6a5c6x6.png",
     whatIDo: [
-      "Plan and execute communication initiatives that connect messaging to business goals.",
-      "Develop campaign communication across paid, social, email, and sales materials.",
-      "Translate complex technical and operational topics into structured, audience-ready communication.",
-      "Generate qualified leads through LinkedIn form campaigns and follow-up-ready intake workflows.",
+      "Coordinate marketing communication across social, email, events, sales support, and internal updates.",
+      "Manage day-to-day social content planning, post development, scheduling support, and message consistency.",
+      "Translate technical security topics into clearer materials for clients, prospects, and internal teams.",
+      "Support lead generation and follow-up workflows by keeping forms, assets, lists, and handoffs organized.",
     ],
     communicationStrategyExecution: {
       statement:
-        "I plan and execute communication initiatives that connect messaging to business goals, whether that means driving engagement, supporting sales, or aligning teams.",
+        "As Marketing Coordinator, I helped keep 3Sixty's marketing activity organized, clear, and moving. The work connected social media, email, events, sales materials, and internal communication so different teams had the information and assets they needed.",
       examples: [
-        "Axis campaign focused on TCO positioning and price-increase urgency messaging",
-        "Social media strategy and LinkedIn management support",
-        "Lunch and Learn planning as education-led communication",
-        "Monthly Security Tech Spotlight email campaign to educate ops teams on latest technology and 3Sixty solution pathways",
+        "LinkedIn content planning, post development, and social media management support",
+        "Lunch and Learn coordination, vendor communication, and education-led event support",
+        "Monthly Security Tech Spotlight email series to keep operations teams informed on emerging technology",
+        "Messaging and asset coordination for pricing updates, technology spotlights, and sales follow-up",
       ],
-      visuals: ["Campaign flow: Concept to Messaging to Assets to Execution", "Email, LinkedIn, and deck previews grouped as one system"],
+      visuals: ["Communication flow: Concept to Messaging to Assets to Execution", "Email, LinkedIn, and deck previews grouped as one system"],
     },
     socialStrategy: {
       title: "3Sixty social strategy",
       copy:
-        "I built 3Sixty's social output around consistency, recognizability, and message clarity. Each post follows a repeatable structure so educational, promotional, and urgency-led content can scale without losing brand alignment.",
+        "I supported 3Sixty's social presence by keeping posts consistent, clear, and aligned with what the sales and operations teams needed to communicate. The focus was not just making posts look good; it was making technical updates, company moments, and service messages easier to understand.",
       pillars: [
-        "Message hierarchy first: hook, context, action",
-        "Consistent visual system across post types",
-        "Planned cadence for awareness, trust, and conversion support",
+        "Message hierarchy first: what happened, why it matters, and what the audience should do next",
+        "Repeatable post structure for educational, promotional, company culture, and announcement content",
+        "Planned cadence to support awareness, trust, recruiting, events, and sales conversations",
       ],
     },
     thoughtLeadershipSeries: {
       title: "Security facts carousel post",
       copy:
-        "An example of positioning 3Sixty as a thought leader and educator in the security space through concise, practical insights built for operations audiences.",
+        "An example of turning security knowledge into concise social content that helps operations audiences understand practical risks, tools, and next steps.",
       images: [
         "/images/3fact1.jpg",
         "/images/3fact2.jpg",
@@ -106,18 +106,18 @@ export const projects = [
       "/images/3Sixty Socials /1776455086036.jpeg",
     ],
     securityPricingCampaign: {
-      title: "Security prices are rising campaign",
+      title: "Security prices are rising communication push",
       copy:
-        "A digital communication push built to create urgency around hardware and memory price increases, helping teams plan ahead and avoid reactive decision-making.",
+        "A communication push built to help clients and internal teams understand hardware and memory price increases, plan ahead, and avoid reactive decision-making.",
       assets: [
         { src: "/images/Instagram post - 201.png", label: "Social post" },
         { src: "/images/Marketing Event Survey Banner.png", label: "Banner asset" },
       ],
     },
     emailCampaignMockup: {
-      title: "Security Tech Spotlight Campaign",
+      title: "Security Tech Spotlight Email Series",
       subtitle:
-        "A monthly educational campaign built to keep operations teams informed on emerging security technology and how each solution maps to 3Sixty offerings. I led the campaign creative and coded the HTML email end-to-end.",
+        "A monthly educational email series built to keep operations teams informed on emerging security technology and how each solution maps to 3Sixty offerings. I supported the content, layout, and HTML build so the email could be sent as a polished client-facing touchpoint.",
       subject: "Turn cameras into proactive campus sensors",
       iframeSrc: "/images/Upgrade%20Your%20Subscription-2/email.html",
       greeting: "Hi [First Name],",
@@ -156,7 +156,7 @@ export const projects = [
     },
     technicalTranslationStorytelling: {
       statement:
-        "I turn technical systems and operational complexity into structured messaging, visuals, and narratives that both technical and non-technical audiences can understand.",
+        "I turn technical systems and operational details into structured messaging that both technical and non-technical audiences can understand.",
       examples: [
         "HEB SiteOwl proposal and pitch deck communication",
         "System and service one-pagers for fast stakeholder understanding",
@@ -165,7 +165,7 @@ export const projects = [
     },
     salesEnablementBusinessCommunication: {
       statement:
-        "I support multi-million dollar opportunities by developing structured proposals, messaging, and presentation materials that improve clarity, alignment, and client understanding.",
+        "I support sales opportunities by organizing information, improving client-facing materials, and helping technical details become easier to present and understand.",
       examples: [
         "Bid proposal writing, structuring, and formatting",
         "Sales pitch deck development for SiteOwl opportunities",
@@ -175,7 +175,7 @@ export const projects = [
     },
     salesEnablementLibrary: {
       title: "Sales Enablement Library",
-      copy: "A working set of one-pagers used to support sales conversations, simplify technical offerings, and give teams clear leave-behind assets.",
+      copy: "A working set of one-pagers used to support sales conversations, simplify technical offerings, and give the team clear leave-behind assets.",
       assets: [
         "/images/Service_Offerings_One-pager.jpg",
         "/images/Unlock Funding For Your Next Security Project.jpg",
@@ -186,7 +186,7 @@ export const projects = [
     },
     internalCommunicationsEngagement: {
       statement:
-        "I create internal communication that keeps teams informed, aligned, and engaged across initiatives.",
+        "I create and coordinate internal communication that keeps teams informed, aligned, and engaged across company initiatives.",
       examples: [
         "Served as the branch onboarding champion, guiding new employees through onboarding and cross-team introduction",
         "Led company-wide new-hire introduction emails to ensure visibility and team alignment from day one",
@@ -225,34 +225,34 @@ export const projects = [
     ],
     operationsPlanningCoordination: {
       statement:
-        "I manage communication timelines, coordinate cross-functional efforts, and support execution across campaigns, events, and sales initiatives.",
+        "I manage communication timelines, coordinate cross-functional details, and support execution across social, events, and sales initiatives.",
       examples: [
         "Trade show sourcing and coordination communication",
         "Lunch and Learn planning and delivery timeline management",
-        "Campaign coordination across stakeholders and deadlines",
+        "Content coordination across stakeholders and deadlines",
         "Survey rollout and response tracking support",
       ],
       visuals: ["Timeline and calendar planning view", "Event planning flow", "Execution checklist structure"],
     },
     designContentExecution: {
       statement:
-        "My design background ensures communication is not only clear, but visually structured and engaging.",
+        "Design supported the role by making communication clearer, more organized, and easier to use across social, email, sales, and internal materials.",
       examples: [
-        "HTML Outlook email campaign layouts",
+        "HTML Outlook email layouts",
         "Website page content and structure support",
-        "One-pagers and social visuals for campaign communication",
+        "One-pagers and social visuals for marketing communication",
       ],
     },
     impact: [
-      "Created a communication system that supports campaigns, sales, and internal initiatives with consistent messaging.",
-      "Helped teams move faster by pairing structured planning with reusable communication assets.",
-      "Strengthened clarity across technical, operational, and client-facing communication touchpoints.",
+      "Helped keep marketing communication organized across social, email, sales support, and internal updates.",
+      "Gave sales and operations teams clearer materials for client conversations, technical topics, and follow-up.",
+      "Used design as a support tool to make information easier to understand, not as the primary focus of the role.",
     ],
     performanceSnapshot: {
       intro:
-        "Directional lift across channels I led or co-owned — aligned to organic social, nurture email, demand capture, and internal comms on this page.",
+        "Directional lift across channels I supported or coordinated, including organic social, nurture email, lead handoff, and internal communication.",
       footnote:
-        "Figures represent campaign-period performance vs. prior internal baselines for comparable initiatives; illustrative of trajectory rather than audited reporting.",
+        "Figures represent initiative-period performance vs. prior internal baselines for comparable initiatives; illustrative of trajectory rather than audited reporting.",
       groups: [
         {
           title: "Organic social",
@@ -310,7 +310,7 @@ export const projects = [
         },
         {
           title: "Demand & pipeline touchpoints",
-          context: "LinkedIn forms & campaign follow-up",
+          context: "LinkedIn forms, lists, and follow-up support",
           metrics: [
             {
               label: "Lead form completion",
@@ -361,23 +361,23 @@ export const projects = [
     highlights: [
       {
         icon: "Megaphone",
-        title: "Campaign Strategy",
-        copy: "Structured campaigns around audience intent, offer sequencing, and conversion priorities.",
+        title: "Marketing Coordination",
+        copy: "Kept social, email, events, sales support, and internal communication moving with clearer structure and follow-through.",
       },
       {
         icon: "PenTool",
-        title: "Creative Production",
-        copy: "Produced placement-specific creative systems for feed, stories, and supporting content surfaces.",
+        title: "Social and Email Support",
+        copy: "Developed posts, email layouts, and content assets that helped technical messages become easier to publish and understand.",
       },
       {
         icon: "Cpu",
-        title: "Performance Optimization",
-        copy: "Used test-and-learn cycles to refine hooks, visuals, and message-to-offer fit.",
+        title: "Lead and Sales Support",
+        copy: "Supported form flows, follow-up materials, one-pagers, and handoff-ready communication for sales conversations.",
       },
       {
         icon: "Camera",
         title: "Reporting and Insights",
-        copy: "Translated campaign data into practical recommendations for creative, audience, and spend direction.",
+        copy: "Translated channel data into practical recommendations for creative, audience, and spend direction.",
       },
     ],
     gallery: [],

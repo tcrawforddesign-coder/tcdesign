@@ -11,8 +11,6 @@ export { CONTACT_EMAIL, LINKEDIN_URL, INSTAGRAM_URL, DRIBBBLE_URL };
 export function PortfolioLayout({ children }) {
   return (
     <div className="portfolio-site">
-      <PortfolioCursorSpotlight />
-      <PortfolioClickDrops />
       <header className="portfolio-header">
         <Link to="/" className="portfolio-logo" aria-label="Travis Crawford home">
           <img src="/travis-logo.png" alt="Travis Crawford" />
@@ -40,6 +38,15 @@ export function PortfolioLayout({ children }) {
         </div>
       </footer>
     </div>
+  );
+}
+
+export function PortfolioPointerEffects() {
+  return (
+    <>
+      <PortfolioCursorSpotlight />
+      <PortfolioClickDrops />
+    </>
   );
 }
 

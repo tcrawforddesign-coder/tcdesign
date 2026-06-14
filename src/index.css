@@ -2494,7 +2494,7 @@ html.lenis body {
   position: fixed;
   left: 0;
   top: 0;
-  z-index: 80;
+  z-index: 2147482999;
   width: 0;
   height: 0;
   pointer-events: none;
@@ -2520,7 +2520,7 @@ html.lenis body {
 .portfolio-cursor-spotlight::before {
   width: 8px;
   height: 8px;
-  background: var(--portfolio-ink);
+  background: var(--portfolio-ink, #111111);
 }
 
 .portfolio-cursor-spotlight::after {
@@ -2559,7 +2559,7 @@ html.lenis body {
   width: 34px;
   height: 8px;
   border-radius: 72% 28% 68% 32% / 58% 42% 56% 44%;
-  background: var(--tc-lime);
+  background: var(--tc-lime, #c3f73a);
   transform-origin: 0 50%;
   animation: portfolio-click-drop 0.82s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
@@ -3663,9 +3663,16 @@ html.lenis body {
   mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), transparent 85%);
 }
 
-.portfolio-site > * {
+.portfolio-site > :not(.portfolio-cursor-spotlight):not(.portfolio-click-drops) {
   position: relative;
   z-index: 1;
+}
+
+.portfolio-site > .portfolio-click-drops {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483000;
+  pointer-events: none;
 }
 
 .route-blur-swipe {
@@ -5000,6 +5007,30 @@ html.lenis body {
 .portfolio-guided-visuals--meta .portfolio-guided-visual-grid .portfolio-gallery-item img,
 .portfolio-guided-visuals--meta .portfolio-guided-visual-grid .portfolio-gallery-item:nth-child(3n + 1) img {
   aspect-ratio: 4 / 5;
+  height: auto;
+  object-fit: cover;
+  object-position: center;
+}
+
+.portfolio-guided-visuals--social {
+  justify-items: center;
+}
+
+.portfolio-guided-visuals--social .portfolio-guided-visual-grid {
+  width: min(100%, 980px);
+  grid-template-columns: repeat(auto-fit, minmax(190px, 280px));
+  justify-content: center;
+  gap: clamp(14px, 2vw, 24px);
+}
+
+.portfolio-guided-visuals--social .portfolio-guided-visual-grid .portfolio-gallery-item,
+.portfolio-guided-visuals--social .portfolio-guided-visual-grid .portfolio-gallery-item:nth-child(3n + 1) {
+  grid-column: auto;
+}
+
+.portfolio-guided-visuals--social .portfolio-guided-visual-grid .portfolio-gallery-item img,
+.portfolio-guided-visuals--social .portfolio-guided-visual-grid .portfolio-gallery-item:nth-child(3n + 1) img {
+  aspect-ratio: 1 / 1;
   height: auto;
   object-fit: cover;
   object-position: center;
