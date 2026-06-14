@@ -1,5 +1,12 @@
 export const posterEntries = [
   {
+    id: "roberta-flack-poster-02",
+    src: "/images/Roberta_flack_poster_2.png",
+    title: "Roberta Flack Poster",
+    year: 2025,
+    colorMode: "color",
+  },
+  {
     id: "poster-01",
     src: "/images/Poster_1.png",
     title: "Night Chorus",

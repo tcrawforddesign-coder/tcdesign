@@ -107,5 +107,5 @@ function ExperimentMedia({ experiment, isFeature = false, isPreview = false }) {
     );
   }
 
-  return <img src={experiment.src} alt={experiment.title} loading={isFeature ? "eager" : "lazy"} decoding="async" />;
+  return <img src={experiment.src} alt={experiment.title} loading={isFeature || isPreview ? "eager" : "lazy"} decoding="async" />;
 }

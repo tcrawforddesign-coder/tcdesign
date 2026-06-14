@@ -5,6 +5,7 @@ import { posterProject } from "../data/posters.js";
 
 const TOP_PROJECT_SLUG = "3sixty-integrated-marketing";
 const PRIORITY_SLUGS = ["data-dog-analytics"];
+const HIDDEN_PROJECT_SLUGS = ["aluma-skincare"];
 
 const topProject = projects.find((project) => project.slug === TOP_PROJECT_SLUG);
 const experimentsProject = {
@@ -23,7 +24,7 @@ const orderedProjects = [
   experimentsProject,
   ...PRIORITY_SLUGS.map((slug) => projects.find((project) => project.slug === slug)).filter(Boolean),
   ...projects.filter((project) => project.slug !== TOP_PROJECT_SLUG && !PRIORITY_SLUGS.includes(project.slug)),
-].filter(Boolean);
+].filter((project) => project && !HIDDEN_PROJECT_SLUGS.includes(project.slug));
 
 export default function ProjectsPage() {
   return (

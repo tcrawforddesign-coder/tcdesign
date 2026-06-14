@@ -4416,9 +4416,23 @@ html.lenis body {
 
 .tc-experiment-lightbox-content img,
 .tc-experiment-lightbox-content video {
+  display: block;
+  width: auto;
+  height: auto;
   max-width: min(92vw, 1180px);
   max-height: 86vh;
   object-fit: contain;
+  border: 1.5px solid var(--tc-cream);
+  border-radius: 0;
+  box-shadow: 0 32px 90px rgba(0, 0, 0, 0.34);
+}
+
+.tc-experiment-lightbox-content {
+  display: grid;
+  width: min-content;
+  max-width: 92vw;
+  max-height: 92vh;
+  place-items: center;
 }
 
 .tc-contact-section {
