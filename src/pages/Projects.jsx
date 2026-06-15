@@ -19,11 +19,11 @@ const experimentsProject = {
 };
 
 const orderedProjects = [
-  topProject,
   posterProject,
   experimentsProject,
   ...PRIORITY_SLUGS.map((slug) => projects.find((project) => project.slug === slug)).filter(Boolean),
   ...projects.filter((project) => project.slug !== TOP_PROJECT_SLUG && !PRIORITY_SLUGS.includes(project.slug)),
+  topProject,
 ].filter((project) => project && !HIDDEN_PROJECT_SLUGS.includes(project.slug));
 
 export default function ProjectsPage() {

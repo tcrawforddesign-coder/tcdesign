@@ -148,8 +148,8 @@ export function getProjectCover(project = {}) {
     "atlas-coffee-club": "/images/atlas-card-cover.png",
     "barbican-refresh": "/images/barbican-card-cover.mp4",
     "aluma-skincare": "/images/A_1.png",
-    "data-dog-analytics": "/images/DD_6.jpg",
-    "ritual-coffee": "/images/Instagram post - 12.png",
+    "data-dog-analytics": "/images/datadog-card-cover.png",
+    "ritual-coffee": "/images/ritual-card-cover.png",
     "poster-archive": "/images/poster-card-cover.png",
   };
 
