@@ -4,6 +4,11 @@ import { Link, useParams } from "react-router-dom";
 import { ContactSection, PortfolioLayout, PortfolioReveal, SectionHeading } from "../components/portfolio/PortfolioLayout.jsx";
 import { splitProjectTitle } from "../components/portfolio/PortfolioCards.jsx";
 import { findProjectBySlug, getAdjacentProjects } from "../data/projects.js";
+import {
+  getGroupGalleryVariant,
+  getProjectGalleryVariant,
+  normalizeMediaItem,
+} from "../utils/galleryMedia.js";
 
 export default function ProjectDetailsPage() {
   const { slug } = useParams();
@@ -140,13 +145,18 @@ function CopySection({ block }) {
 }
 
 function ProjectVisuals({ project, galleryItems }) {
-  if (project.slug === "atlas-coffee-club" && project.galleryGroups?.length) {
+  const visualsTitle =
+    project.slug === "atlas-coffee-club"
+      ? "Static ad work grouped by campaign and concept set."
+      : "Project frames, campaign assets, and supporting material.";
+
+  if (project.galleryGroups?.length) {
     return (
       <section className="portfolio-section portfolio-work-section">
-        <SectionHeading eyebrow="Selected Visuals" title="Static ad work grouped by campaign and concept set." />
+        <SectionHeading eyebrow="Selected Visuals" title={visualsTitle} />
         <div className="portfolio-campaign-gallery">
           {project.galleryGroups.map((group) => {
-            const items = (group.items ?? []).map(normalizeMediaItem).filter(Boolean);
+            const items = (group.items ?? []).map((item) => normalizeMediaItem(item, project.slug)).filter(Boolean);
             if (!items.length) return null;
 
             return (
@@ -155,12 +165,49 @@ function ProjectVisuals({ project, galleryItems }) {
                   <p>{group.title}</p>
                   {group.description ? <span>{group.description}</span> : null}
                 </div>
-                <GuidedVisualGroup items={items} label={group.title} fallbackAlt={group.title} variant="meta" />
+                <GuidedVisualGroup
+                  items={group.items}
+                  label={group.title}
+                  fallbackAlt={group.title}
+                  projectSlug={project.slug}
+                  variant={getGroupGalleryVariant(project, group)}
+                />
               </section>
             );
           })}
         </div>
       </section>
+    );
+  }
+
+  if (project.slug === "civil-goat-coffee") {
+    return (
+      <>
+        <section className="portfolio-section portfolio-work-section">
+          <SectionHeading eyebrow="Selected Visuals" title="Project frames, campaign assets, and supporting material." />
+          <GuidedVisualGroup
+            items={galleryItems}
+            label="Lead visual"
+            fallbackAlt={project.title}
+            projectSlug={project.slug}
+            variant="adaptive"
+          />
+        </section>
+        {project.socialPosts?.length ? (
+          <section className="portfolio-section portfolio-work-section">
+            <SectionHeading
+              eyebrow="Social & Campaign"
+              title="Paid social frames and feed posts built from the core identity system."
+            />
+            <GuidedVisualGroup
+              items={project.socialPosts}
+              fallbackAlt={`${project.title} social post`}
+              projectSlug={project.slug}
+              variant="civil-goat-social"
+            />
+          </section>
+        ) : null}
+      </>
     );
   }
 
@@ -171,27 +218,31 @@ function ProjectVisuals({ project, galleryItems }) {
         items={galleryItems}
         label="Lead visual"
         fallbackAlt={project.title}
-        variant={project.slug === "ritual-coffee" ? "contain" : undefined}
+        projectSlug={project.slug}
+        variant={getProjectGalleryVariant(project)}
       />
     </section>
   );
 }
 
 function ThreeSixtyVisualPreview({ project }) {
-  const items = getFeaturedSocialPosts(project.socialPosts).slice(0, 6).map(normalizeMediaItem).filter(Boolean);
+  const items = getFeaturedSocialPosts(project.socialPosts)
+    .slice(0, 6)
+    .map((item) => normalizeMediaItem(item, project.slug))
+    .filter(Boolean);
 
   if (!items.length) return null;
 
   return (
     <section className="portfolio-section portfolio-work-section">
       <SectionHeading eyebrow="Social Media Work" title="A compact look at the day-to-day content supporting 3Sixty's LinkedIn presence." />
-      <GuidedVisualGroup items={items} label="Social post" fallbackAlt={`${project.title} social post`} variant="social" />
+      <GuidedVisualGroup items={items} label="Social post" fallbackAlt={`${project.title} social post`} projectSlug={project.slug} variant="social" />
     </section>
   );
 }
 
-function GuidedVisualGroup({ items = [], label = "Lead visual", fallbackAlt = "Project visual", variant }) {
-  const normalized = items.map(normalizeMediaItem).filter(Boolean);
+function GuidedVisualGroup({ items = [], label = "Lead visual", fallbackAlt = "Project visual", projectSlug, variant }) {
+  const normalized = items.map((item) => normalizeMediaItem(item, projectSlug)).filter(Boolean);
   if (!normalized.length) return null;
 
   if (variant === "meta") {
@@ -199,10 +250,30 @@ function GuidedVisualGroup({ items = [], label = "Lead visual", fallbackAlt = "P
       <div className="portfolio-guided-visuals portfolio-guided-visuals--meta">
         <div className="portfolio-guided-visual-grid">
           {normalized.map((media, index) => (
-            <figure key={`${media.src}-${index}`} className="portfolio-gallery-item portfolio-reveal">
-              <span>{label}</span>
-              <img src={media.src} alt={media.alt || `${fallbackAlt} Meta ad visual ${index + 1}`} loading="lazy" decoding="async" />
-            </figure>
+            <GalleryFigure
+              key={`${media.src}-${index}`}
+              media={media}
+              className="portfolio-gallery-item portfolio-reveal"
+              label={<span>{label}</span>}
+              alt={media.alt || `${fallbackAlt} Meta ad visual ${index + 1}`}
+            />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  if (variant === "square") {
+    return (
+      <div className="portfolio-guided-visuals portfolio-guided-visuals--square">
+        <div className="portfolio-guided-visual-grid">
+          {normalized.map((media, index) => (
+            <GalleryFigure
+              key={`${media.src}-${index}`}
+              media={media}
+              className="portfolio-gallery-item portfolio-reveal"
+              alt={media.alt || `${fallbackAlt} ${index + 1}`}
+            />
           ))}
         </div>
       </div>
@@ -214,33 +285,78 @@ function GuidedVisualGroup({ items = [], label = "Lead visual", fallbackAlt = "P
       <div className="portfolio-guided-visuals portfolio-guided-visuals--social">
         <div className="portfolio-guided-visual-grid">
           {normalized.map((media, index) => (
-            <figure key={`${media.src}-${index}`} className="portfolio-gallery-item portfolio-reveal">
-              <img src={media.src} alt={media.alt || `${fallbackAlt} ${index + 1}`} loading="lazy" decoding="async" />
-            </figure>
+            <GalleryFigure
+              key={`${media.src}-${index}`}
+              media={media}
+              className="portfolio-gallery-item portfolio-reveal"
+              alt={media.alt || `${fallbackAlt} ${index + 1}`}
+            />
           ))}
         </div>
       </div>
     );
   }
 
+  if (variant === "civil-goat-social") {
+    return (
+      <div className="portfolio-guided-visuals portfolio-guided-visuals--civil-goat-social">
+        <div className="portfolio-civil-goat-social-grid">
+          {normalized.map((media, index) => (
+            <GalleryFigure
+              key={`${media.src}-${index}`}
+              media={{ ...media, orientation: "portrait", aspectRatio: "4 / 5" }}
+              className="portfolio-gallery-item portfolio-reveal"
+              alt={media.alt || `${fallbackAlt} ${index + 1}`}
+            />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  const layoutVariant = variant === "civil-goat" ? "adaptive" : variant || "adaptive";
+
   const [lead, ...supporting] = normalized;
 
   return (
-    <div className={`portfolio-guided-visuals ${variant ? `portfolio-guided-visuals--${variant}` : ""}`}>
-      <figure className="portfolio-guided-visual-feature portfolio-reveal">
-        <span>{label}</span>
-        <img src={lead.src} alt={lead.alt || `${fallbackAlt} lead visual`} loading="lazy" decoding="async" />
-      </figure>
+    <div className={`portfolio-guided-visuals portfolio-guided-visuals--${layoutVariant}`}>
+      <GalleryFigure
+        media={lead}
+        className="portfolio-guided-visual-feature portfolio-reveal"
+        label={<span>{label}</span>}
+        alt={lead.alt || `${fallbackAlt} lead visual`}
+      />
       {supporting.length ? (
         <div className="portfolio-guided-visual-grid">
           {supporting.map((media, index) => (
-            <figure key={`${media.src}-${index}`} className="portfolio-gallery-item portfolio-reveal">
-              <img src={media.src} alt={media.alt || `${fallbackAlt} supporting visual ${index + 2}`} loading="lazy" decoding="async" />
-            </figure>
+            <GalleryFigure
+              key={`${media.src}-${index}`}
+              media={media}
+              className="portfolio-gallery-item portfolio-reveal"
+              alt={media.alt || `${fallbackAlt} supporting visual ${index + 2}`}
+            />
           ))}
         </div>
       ) : null}
     </div>
+  );
+}
+
+function GalleryFigure({ media, className = "", label, alt }) {
+  const orientationClass = media.orientation ? `is-${media.orientation}` : "";
+  const fitClass = media.objectFit === "contain" ? "is-fit-contain" : media.objectFit === "cover" ? "is-fit-cover" : "";
+
+  return (
+    <figure className={`${className} ${orientationClass} ${fitClass}`.trim()}>
+      {label}
+      <img
+        src={media.src}
+        alt={alt}
+        loading="lazy"
+        decoding="async"
+        style={media.aspectRatio ? { aspectRatio: media.aspectRatio } : undefined}
+      />
+    </figure>
   );
 }
 
@@ -287,12 +403,17 @@ function YellowBikeUXSections({ project }) {
       <section className="portfolio-section portfolio-work-section">
         <SectionHeading eyebrow="UX Flows" title="Core screens and flows translate the mission into repeatable product behavior." />
         <div className="portfolio-asset-grid portfolio-yellow-flow-grid">
-          {flowImages.map((item) => (
-            <figure key={item.src} className="portfolio-gallery-item portfolio-reveal">
-              <img src={item.src} alt={item.title} loading="lazy" decoding="async" />
-              <figcaption>{item.title}</figcaption>
-            </figure>
-          ))}
+          {flowImages.map((item) => {
+            const media = normalizeMediaItem(item.src, project.slug);
+            if (!media) return null;
+
+            return (
+              <figure key={item.src} className="portfolio-gallery-item portfolio-reveal is-story is-fit-contain">
+                <img src={media.src} alt={item.title} loading="lazy" decoding="async" style={{ aspectRatio: "9 / 16" }} />
+                <figcaption>{item.title}</figcaption>
+              </figure>
+            );
+          })}
         </div>
       </section>
 
@@ -585,14 +706,19 @@ function getFeaturedSocialPosts(posts = []) {
   return ordered;
 }
 
-function AssetGrid({ items = [], title = "Asset" }) {
-  const normalized = items.map(normalizeMediaItem).filter(Boolean);
+function AssetGrid({ items = [], title = "Asset", projectSlug }) {
+  const normalized = items.map((item) => normalizeMediaItem(item, projectSlug)).filter(Boolean);
   if (!normalized.length) return null;
 
   return (
     <div className="portfolio-asset-grid">
       {normalized.map((item, index) => (
-        <img key={`${item.src}-${index}`} src={item.src} alt={item.alt || `${title} ${index + 1}`} loading="lazy" decoding="async" />
+        <GalleryFigure
+          key={`${item.src}-${index}`}
+          media={item}
+          className="portfolio-gallery-item"
+          alt={item.alt || `${title} ${index + 1}`}
+        />
       ))}
     </div>
   );
@@ -606,7 +732,7 @@ function collectGalleryItems(project) {
     project.paperPrototypeImage,
     project.existingLogoImage,
     project.proposedLogoImage,
-    ...(project.socialPosts ?? []).slice(0, 8),
+    ...(project.slug === "civil-goat-coffee" ? [] : (project.socialPosts ?? []).slice(0, 8)),
     ...(project.securityPricingCampaign?.assets ?? []).map((asset) => asset.src),
     ...(project.salesEnablementLibrary?.assets ?? []).slice(0, 4),
     ...(project.communitySections ?? []).map((item) => item.image),
@@ -617,12 +743,4 @@ function collectGalleryItems(project) {
     return [...project.galleryGroups.flatMap((group) => group.items ?? []), ...direct];
   }
   return direct;
-}
-
-function normalizeMediaItem(item) {
-  if (!item) return null;
-  if (typeof item === "string") return { src: item, alt: "" };
-  const src = item.preview ?? item.src ?? item.full;
-  if (!src) return null;
-  return { src, alt: item.alt ?? "" };
 }

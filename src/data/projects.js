@@ -444,10 +444,11 @@ export const projects = [
       title: "Mood Mark Glitch",
       subtitle: "Smile / Frown mark alternates to create a deliberate signal distortion effect.",
     },
-    galleryLayout: "meta",
+    galleryLayout: "grouped",
     galleryGroups: [
       {
         title: "Brand Applications",
+        layout: "adaptive",
         carousel: false,
         items: [
           "/images/hdh.png",
@@ -462,6 +463,7 @@ export const projects = [
       },
       {
         title: "Instagram Posts",
+        layout: "square",
         carousel: false,
         items: [
           { src: "/images/Instagram post - 10.png", aspectRatio: "1 / 1", alt: "Ritual Coffee Instagram post 10" },
@@ -683,6 +685,7 @@ export const projects = [
     heroVideo: "https://txbi6s0cie448na3.public.blob.vercel-storage.com/5529207-hd_1920_1080_30fps.mp4",
     textureImage: "https://images.unsplash.com/photo-1521123845560-14093637aa7d?q=80&w=1600&auto=format&fit=crop",
     textureCopy: "Quote marks, modular grids, and confident type — systemized into tokens teams can actually use.",
+    galleryLayout: "adaptive",
     socialPosts: [
       { type: "image", src: "/images/Ad_1.png", alt: "Civil Goat carousel ad promoting seasonal roast" },
       { type: "image", src: "/images/Ad_2.png", alt: "Civil Goat Instagram story with conversational headline" },
@@ -771,11 +774,11 @@ export const projects = [
     galleryObjectFit: "contain",
     galleryLayout: "meta",
     galleryNote:
-      "Meta placements ship primarily as 4:5 static frames; some sets include 9:16 for Stories and full-height units. Each treatment keeps promo clarity tight within the safe zone.",
+      "Meta placements ship as 4:5 static frames built for in-feed clarity and promo legibility.",
     galleryGroups: [
       {
         title: "Flavor Journey ad set",
-        description: "Dual-format flavor-led concept set with matched 4:5 and 9:16 variants for feed and Stories delivery.",
+        description: "Flavor-led concept set with matched 4:5 Meta feed frames.",
         carousel: true,
         items: [
           { preview: "/images/Flavor_Journey_Ad1_1080x1350.png", full: "/images/Flavor_Journey_Ad1_1080x1920.png", alt: "Flavor Journey ad 1" },
@@ -935,6 +938,7 @@ export const projects = [
     heroImage: "/images/andreas-karamalikis-OZkRmwH9ueM-unsplash.jpg",
     textureImage: "/images/virgyl-sowah-lHOJYkpSZ0A-unsplash.jpg",
     textureCopy: "Concrete textures, modular grids, and typographic rhythm tuned for brutalist heritage.",
+    galleryLayout: "adaptive",
     challenge: {
       kicker: "Challenge",
       title: "Respecting icons, welcoming newcomers",
@@ -1009,6 +1013,7 @@ export const projects = [
     heroImage: "/images/A_8.png",
     textureImage: "/images/aluma/texture.jpg",
     textureCopy: "Soft gradients, sculpted packaging silhouettes, and ingredient icons support a high-glow, high-trust ritual.",
+    galleryLayout: "adaptive",
     challenge: {
       kicker: "Challenge",
       title: "Making customization feel effortless",
@@ -1085,6 +1090,7 @@ export const projects = [
     heroImage: "/images/DD_13.png",
     textureImage: "/images/datadog/texture.jpg",
     textureCopy: "Bold pups, modular charts, and bright gradients communicate a friendly intelligence across product and campaign.",
+    galleryLayout: "adaptive",
     challenge: {
       kicker: "Challenge",
       title: "Humanizing data without losing rigor",

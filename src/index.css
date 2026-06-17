@@ -4990,10 +4990,125 @@ html.lenis body {
   object-fit: contain;
 }
 
+.portfolio-guided-visuals--civil-goat .portfolio-guided-visual-grid .portfolio-gallery-item img,
+.portfolio-guided-visuals--civil-goat .portfolio-guided-visual-grid .portfolio-gallery-item:nth-child(3n + 1) img,
+.portfolio-guided-visuals--civil-goat .portfolio-guided-visual-feature img,
+.portfolio-guided-visuals--adaptive .portfolio-guided-visual-grid .portfolio-gallery-item img,
+.portfolio-guided-visuals--adaptive .portfolio-guided-visual-grid .portfolio-gallery-item:nth-child(3n + 1) img,
+.portfolio-guided-visuals--adaptive .portfolio-guided-visual-feature img {
+  width: 100%;
+  max-height: none;
+}
+
+.portfolio-guided-visuals--civil-goat .is-landscape img,
+.portfolio-guided-visuals--adaptive .is-landscape img {
+  aspect-ratio: 16 / 9;
+  height: auto;
+  object-fit: cover;
+  object-position: center;
+}
+
+.portfolio-guided-visuals--civil-goat .is-fit-contain.is-landscape img,
+.portfolio-guided-visuals--adaptive .is-fit-contain.is-landscape img {
+  object-fit: contain;
+}
+
+.portfolio-guided-visuals--civil-goat .is-portrait img,
+.portfolio-guided-visuals--adaptive .is-portrait img {
+  aspect-ratio: 4 / 5;
+  height: auto;
+  max-width: min(100%, 420px);
+  object-fit: cover;
+  object-position: center;
+}
+
+.portfolio-guided-visuals--civil-goat .is-square img,
+.portfolio-guided-visuals--adaptive .is-square img {
+  aspect-ratio: 1 / 1;
+  height: auto;
+  max-width: min(100%, 420px);
+  object-fit: cover;
+  object-position: center;
+}
+
+.portfolio-guided-visuals--civil-goat .is-story img,
+.portfolio-guided-visuals--adaptive .is-story img {
+  aspect-ratio: 9 / 16;
+  height: auto;
+  max-width: min(100%, 360px);
+  object-fit: contain;
+  object-position: center;
+}
+
+.portfolio-guided-visuals--civil-goat .is-natural img,
+.portfolio-guided-visuals--adaptive .is-natural img {
+  width: 100%;
+  height: auto;
+  max-width: min(100%, 420px);
+  object-fit: contain;
+}
+
+.portfolio-guided-visuals--civil-goat .portfolio-guided-visual-grid .portfolio-gallery-item.is-landscape,
+.portfolio-guided-visuals--adaptive .portfolio-guided-visual-grid .portfolio-gallery-item.is-landscape {
+  grid-column: span 2;
+}
+
+.portfolio-guided-visuals--civil-goat .portfolio-guided-visual-grid .portfolio-gallery-item.is-portrait,
+.portfolio-guided-visuals--adaptive .portfolio-guided-visual-grid .portfolio-gallery-item.is-portrait,
+.portfolio-guided-visuals--civil-goat .portfolio-guided-visual-grid .portfolio-gallery-item.is-square,
+.portfolio-guided-visuals--adaptive .portfolio-gallery-item.is-square,
+.portfolio-guided-visuals--adaptive .portfolio-guided-visual-grid .portfolio-gallery-item.is-square,
+.portfolio-guided-visuals--civil-goat .portfolio-guided-visual-grid .portfolio-gallery-item.is-story,
+.portfolio-guided-visuals--adaptive .portfolio-guided-visual-grid .portfolio-gallery-item.is-story,
+.portfolio-guided-visuals--civil-goat .portfolio-guided-visual-grid .portfolio-gallery-item.is-natural,
+.portfolio-guided-visuals--adaptive .portfolio-guided-visual-grid .portfolio-gallery-item.is-natural {
+  grid-column: span 1;
+}
+
+.portfolio-guided-visuals--civil-goat-social {
+  margin-top: clamp(28px, 4vw, 52px);
+}
+
+.portfolio-civil-goat-social-grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: clamp(18px, 2.5vw, 32px);
+  max-width: 1180px;
+  margin-inline: auto;
+}
+
+.portfolio-civil-goat-social-grid .portfolio-gallery-item:nth-child(-n + 3) {
+  grid-column: span 4;
+}
+
+.portfolio-civil-goat-social-grid .portfolio-gallery-item:nth-child(4) {
+  grid-column: 3 / span 4;
+}
+
+.portfolio-civil-goat-social-grid .portfolio-gallery-item:nth-child(5) {
+  grid-column: 7 / span 4;
+}
+
+.portfolio-guided-visuals--civil-goat-social .portfolio-gallery-item {
+  margin: 0;
+}
+
+.portfolio-guided-visuals--civil-goat-social .portfolio-gallery-item img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  height: auto;
+  object-fit: cover;
+  object-position: center;
+}
+
 .portfolio-guided-visuals--meta .portfolio-guided-visual-grid {
-  grid-template-columns: repeat(auto-fit, minmax(220px, 320px));
+  grid-template-columns: repeat(auto-fit, minmax(160px, 220px));
   justify-content: center;
   align-items: start;
+  gap: clamp(14px, 2vw, 22px);
+  max-width: 1180px;
+  margin-inline: auto;
 }
 
 .portfolio-guided-visuals--meta .portfolio-guided-visual-grid .portfolio-gallery-item,
@@ -5013,7 +5128,53 @@ html.lenis body {
 
 .portfolio-guided-visuals--meta .portfolio-guided-visual-grid .portfolio-gallery-item img,
 .portfolio-guided-visuals--meta .portfolio-guided-visual-grid .portfolio-gallery-item:nth-child(3n + 1) img {
+  width: 100%;
+  height: auto;
   aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: center;
+}
+
+.portfolio-guided-visuals--meta .is-portrait img {
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+
+.portfolio-guided-visuals--meta .is-square img {
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+
+.portfolio-guided-visuals--meta .is-story img {
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+
+.portfolio-guided-visuals--meta .is-landscape img {
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+
+.portfolio-guided-visuals--square {
+  justify-items: center;
+}
+
+.portfolio-guided-visuals--square .portfolio-guided-visual-grid {
+  width: min(100%, 980px);
+  grid-template-columns: repeat(auto-fit, minmax(190px, 280px));
+  justify-content: center;
+  gap: clamp(14px, 2vw, 24px);
+  margin-inline: auto;
+}
+
+.portfolio-guided-visuals--square .portfolio-guided-visual-grid .portfolio-gallery-item,
+.portfolio-guided-visuals--square .portfolio-guided-visual-grid .portfolio-gallery-item:nth-child(3n + 1) {
+  grid-column: auto;
+}
+
+.portfolio-guided-visuals--square .portfolio-gallery-item img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
   height: auto;
   object-fit: cover;
   object-position: center;
@@ -5038,9 +5199,17 @@ html.lenis body {
 .portfolio-guided-visuals--social .portfolio-guided-visual-grid .portfolio-gallery-item img,
 .portfolio-guided-visuals--social .portfolio-guided-visual-grid .portfolio-gallery-item:nth-child(3n + 1) img {
   aspect-ratio: 1 / 1;
+  width: 100%;
   height: auto;
   object-fit: cover;
   object-position: center;
+}
+
+.portfolio-yellow-flow-grid .portfolio-gallery-item img {
+  width: 100%;
+  max-width: min(100%, 360px);
+  margin-inline: auto;
+  object-fit: contain;
 }
 
 @media (max-width: 720px) {
@@ -5053,6 +5222,39 @@ html.lenis body {
   .portfolio-guided-visual-grid .portfolio-gallery-item img,
   .portfolio-guided-visual-grid .portfolio-gallery-item:nth-child(3n + 1) img {
     height: clamp(280px, 78vw, 520px);
+  }
+
+  .portfolio-guided-visuals--civil-goat .portfolio-guided-visual-grid .portfolio-gallery-item.is-landscape,
+  .portfolio-guided-visuals--civil-goat .portfolio-guided-visual-grid .portfolio-gallery-item.is-portrait,
+  .portfolio-guided-visuals--adaptive .portfolio-guided-visual-grid .portfolio-gallery-item.is-landscape,
+  .portfolio-guided-visuals--adaptive .portfolio-guided-visual-grid .portfolio-gallery-item.is-portrait,
+  .portfolio-guided-visuals--adaptive .portfolio-guided-visual-grid .portfolio-gallery-item.is-square,
+  .portfolio-guided-visuals--adaptive .portfolio-guided-visual-grid .portfolio-gallery-item.is-story,
+  .portfolio-guided-visuals--adaptive .portfolio-guided-visual-grid .portfolio-gallery-item.is-natural {
+    grid-column: auto;
+  }
+
+  .portfolio-civil-goat-social-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .portfolio-civil-goat-social-grid .portfolio-gallery-item {
+    grid-column: auto !important;
+  }
+
+  .portfolio-civil-goat-social-grid .portfolio-gallery-item:last-child:nth-child(odd) {
+    grid-column: 1 / -1 !important;
+    width: min(100%, 320px);
+    justify-self: center;
+  }
+
+  .portfolio-guided-visuals--civil-goat .portfolio-guided-visual-grid .portfolio-gallery-item img,
+  .portfolio-guided-visuals--civil-goat .portfolio-guided-visual-grid .portfolio-gallery-item:nth-child(3n + 1) img,
+  .portfolio-guided-visuals--civil-goat .portfolio-guided-visual-feature img,
+  .portfolio-guided-visuals--adaptive .portfolio-guided-visual-grid .portfolio-gallery-item img,
+  .portfolio-guided-visuals--adaptive .portfolio-guided-visual-grid .portfolio-gallery-item:nth-child(3n + 1) img,
+  .portfolio-guided-visuals--adaptive .portfolio-guided-visual-feature img {
+    height: auto;
   }
 }
 
