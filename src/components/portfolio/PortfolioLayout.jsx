@@ -3,10 +3,9 @@ import { Link } from "react-router-dom";
 
 const CONTACT_EMAIL = "tcrawford.design@gmail.com";
 const LINKEDIN_URL = "https://www.linkedin.com/in/travis-crawford-67759b24a";
-const INSTAGRAM_URL = "https://www.instagram.com/tcrawford.design";
 const DRIBBBLE_URL = "https://dribbble.com/tcrawforddesign";
 
-export { CONTACT_EMAIL, LINKEDIN_URL, INSTAGRAM_URL, DRIBBBLE_URL };
+export { CONTACT_EMAIL, LINKEDIN_URL, DRIBBBLE_URL };
 
 export function PortfolioLayout({ children }) {
   return (
@@ -34,7 +33,6 @@ export function PortfolioLayout({ children }) {
         </div>
         <div className="portfolio-footer-social">
           <a href={LINKEDIN_URL} target="_blank" rel="noreferrer">LinkedIn</a>
-          <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer">Instagram</a>
           <a href={DRIBBBLE_URL} target="_blank" rel="noreferrer">Dribbble</a>
         </div>
       </footer>
