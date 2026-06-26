@@ -10,6 +10,7 @@ import PostersPage from "./pages/Posters.jsx";
 import ExperimentsPage from "./pages/Experiments.jsx";
 import ProjectDetailsPage from "./pages/ProjectDetails.jsx";
 import LogoQuestionnairePage from "./pages/LogoQuestionnaire.jsx";
+import { resolveOgImage } from "./utils/ogImage.js";
 
 export default function App() {
   return <AppRoutes />;
@@ -86,8 +87,10 @@ function AppRoutes() {
     upsertMeta("meta[property='og:title']", { property: "og:title", content: current.title });
     upsertMeta("meta[property='og:description']", { property: "og:description", content: current.description });
     upsertMeta("meta[property='og:url']", { property: "og:url", content: `${siteOrigin}${location.pathname}` });
+    upsertMeta("meta[property='og:image']", { property: "og:image", content: resolveOgImage(location.pathname, siteOrigin) });
     upsertMeta("meta[name='twitter:title']", { name: "twitter:title", content: current.title });
     upsertMeta("meta[name='twitter:description']", { name: "twitter:description", content: current.description });
+    upsertMeta("meta[name='twitter:image']", { name: "twitter:image", content: resolveOgImage(location.pathname, siteOrigin) });
 
     let canonical = document.head.querySelector("link[rel='canonical']");
     if (!canonical) {
