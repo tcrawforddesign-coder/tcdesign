@@ -7,6 +7,8 @@ import {
   validateStep,
 } from "../data/logoQuestionnaire.js";
 
+const STEP_TONES = ["lime", "lavender", "orange", "yellow"];
+
 export default function LogoQuestionnairePage() {
   const [stepIndex, setStepIndex] = useState(0);
   const [form, setForm] = useState(INITIAL_FORM);
@@ -15,6 +17,7 @@ export default function LogoQuestionnairePage() {
   const [submitError, setSubmitError] = useState("");
 
   const step = LOGO_QUESTIONNAIRE_STEPS[stepIndex];
+  const stepTone = STEP_TONES[stepIndex % STEP_TONES.length];
   const progress = useMemo(
     () => Math.round(((stepIndex + 1) / LOGO_QUESTIONNAIRE_STEPS.length) * 100),
     [stepIndex],
@@ -119,7 +122,7 @@ export default function LogoQuestionnairePage() {
     return (
       <PortfolioLayout>
         <section className="portfolio-section logo-questionnaire-page">
-          <div className="logo-questionnaire-shell logo-questionnaire-success portfolio-reveal">
+          <div className="logo-questionnaire-shell logo-questionnaire-success logo-questionnaire-tone-lime portfolio-reveal">
             <p className="tc-section-kicker">Submitted</p>
             <h1>Thanks — your logo brief is on its way.</h1>
             <p>
@@ -149,7 +152,7 @@ export default function LogoQuestionnairePage() {
       </section>
 
       <section className="portfolio-section logo-questionnaire-page">
-        <div className="logo-questionnaire-shell portfolio-reveal">
+        <div className={`logo-questionnaire-shell logo-questionnaire-tone-${stepTone} portfolio-reveal`}>
           <div className="logo-questionnaire-progress" aria-hidden="true">
             <span style={{ width: `${progress}%` }} />
           </div>
