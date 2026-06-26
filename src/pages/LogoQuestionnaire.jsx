@@ -30,17 +30,31 @@ export default function LogoQuestionnairePage() {
     });
   };
 
-  const toggleDeliverable = (option) => {
+  const toggleCheckboxOption = (fieldName, option) => {
     setForm((current) => {
-      const selected = new Set(current.deliverables);
+      const selected = new Set(Array.isArray(current[fieldName]) ? current[fieldName] : []);
       if (selected.has(option)) selected.delete(option);
       else selected.add(option);
-      return { ...current, deliverables: [...selected] };
+      return { ...current, [fieldName]: [...selected] };
     });
     setErrors((current) => {
-      if (!current.deliverables) return current;
+      if (!current[fieldName]) return current;
       const next = { ...current };
-      delete next.deliverables;
+      delete next[fieldName];
+      return next;
+    });
+  };
+
+  const appendPrompt = (fieldName, prompt) => {
+    setForm((current) => {
+      const existing = String(current[fieldName] ?? "").trim();
+      const nextValue = existing ? `${existing} ${prompt}` : prompt;
+      return { ...current, [fieldName]: nextValue };
+    });
+    setErrors((current) => {
+      if (!current[fieldName]) return current;
+      const next = { ...current };
+      delete next[fieldName];
       return next;
     });
   };
@@ -129,7 +143,8 @@ export default function LogoQuestionnairePage() {
           Logo Discovery Questionnaire
         </PortfolioReveal>
         <PortfolioReveal as="p" className="portfolio-hero-copy">
-          A guided brief to capture your business, goals, style, and project needs before we start designing.
+          A guided brief to capture your business, goals, style, and project needs. Select what fits — you don&apos;t
+          need perfect answers.
         </PortfolioReveal>
       </section>
 
@@ -156,15 +171,88 @@ export default function LogoQuestionnairePage() {
                     {field.required ? <span aria-hidden="true"> *</span> : null}
                   </label>
 
-                  {field.type === "textarea" ? (
-                    <textarea
-                      id={field.name}
-                      name={field.name}
-                      rows={4}
-                      value={form[field.name]}
-                      placeholder={field.placeholder}
-                      onChange={(event) => updateField(field.name, event.target.value)}
-                    />
+                  {field.hint ? <p className="logo-questionnaire-hint">{field.hint}</p> : null}
+
+                  {field.type === "textarea" || field.type === "textarea-with-prompts" ? (
+                    <>
+                      <textarea
+                        id={field.name}
+                        name={field.name}
+                        rows={4}
+                        value={form[field.name]}
+                        placeholder={field.placeholder}
+                        onChange={(event) => updateField(field.name, event.target.value)}
+                      />
+                      {field.type === "textarea-with-prompts" && field.prompts?.length ? (
+                        <div className="logo-questionnaire-prompts">
+                          {field.prompts.map((prompt) => (
+                            <button
+                              key={prompt}
+                              type="button"
+                              className="logo-questionnaire-prompt"
+                              onClick={() => appendPrompt(field.name, prompt)}
+                            >
+                              {prompt}
+                            </button>
+                          ))}
+                        </div>
+                      ) : null}
+                    </>
+                  ) : null}
+
+                  {field.type === "guided" ? (
+                    <>
+                      <div className="logo-questionnaire-checkboxes">
+                        {field.options.map((option) => (
+                          <label key={option} className="logo-questionnaire-checkbox">
+                            <input
+                              type="checkbox"
+                              checked={form[field.name].includes(option)}
+                              onChange={() => toggleCheckboxOption(field.name, option)}
+                            />
+                            <span>{option}</span>
+                          </label>
+                        ))}
+                      </div>
+                      <textarea
+                        id={field.detailsName}
+                        name={field.detailsName}
+                        rows={3}
+                        className="logo-questionnaire-details"
+                        value={form[field.detailsName]}
+                        placeholder={field.placeholder}
+                        onChange={(event) => updateField(field.detailsName, event.target.value)}
+                      />
+                    </>
+                  ) : null}
+
+                  {field.type === "select-with-other" ? (
+                    <>
+                      <select
+                        id={field.name}
+                        name={field.name}
+                        value={form[field.name]}
+                        onChange={(event) => updateField(field.name, event.target.value)}
+                      >
+                        <option value="">Select one</option>
+                        {field.options.map((option) => (
+                          <option key={option} value={option}>
+                            {option}
+                          </option>
+                        ))}
+                      </select>
+                      {form[field.name] === "Other" ? (
+                        <input
+                          id={field.otherName}
+                          name={field.otherName}
+                          type="text"
+                          className="logo-questionnaire-other-input"
+                          value={form[field.otherName]}
+                          placeholder={field.otherPlaceholder}
+                          onChange={(event) => updateField(field.otherName, event.target.value)}
+                        />
+                      ) : null}
+                    </>
                   ) : null}
 
                   {field.type === "select" ? (
@@ -189,8 +277,8 @@ export default function LogoQuestionnairePage() {
                         <label key={option} className="logo-questionnaire-checkbox">
                           <input
                             type="checkbox"
-                            checked={form.deliverables.includes(option)}
-                            onChange={() => toggleDeliverable(option)}
+                            checked={form[field.name].includes(option)}
+                            onChange={() => toggleCheckboxOption(field.name, option)}
                           />
                           <span>{option}</span>
                         </label>

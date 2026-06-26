@@ -81,6 +81,25 @@ function displayValue(data, key) {
   return "—";
 }
 
+function displayIndustry(data) {
+  const industry = displayValue(data, "industry");
+  if (industry === "Other") {
+    const other = displayValue(data, "industryOther");
+    return other === "—" ? industry : other;
+  }
+  return industry;
+}
+
+function displayGuided(data, selectionsKey, detailsKey) {
+  const selections = displayValue(data, selectionsKey);
+  const details = displayValue(data, detailsKey);
+
+  if (selections === "—" && details === "—") return "—";
+  if (selections === "—") return details;
+  if (details === "—") return selections;
+  return `${selections}\n\nAdditional notes: ${details}`;
+}
+
 function wrapText(text, maxChars = 88) {
   const words = String(text).split(/\s+/);
   const lines = [];
@@ -161,7 +180,19 @@ export async function generateLogoBriefPdf(data) {
     y -= 34;
 
     section.fields.forEach(([label, key]) => {
-      const value = displayValue(data, key);
+      let value = displayValue(data, key);
+
+      if (key === "industry") value = displayIndustry(data);
+      if (key === "targetAudience") value = displayGuided(data, "targetAudience", "targetAudienceDetails");
+      if (key === "brandGoals") value = displayGuided(data, "brandGoals", "brandGoalsDetails");
+      if (key === "brandMessage") value = displayGuided(data, "brandMessage", "brandMessageDetails");
+      if (key === "brandPersonality") value = displayGuided(data, "brandPersonality", "brandPersonalityDetails");
+      if (key === "preferredStyles") value = displayGuided(data, "preferredStyles", "preferredStylesDetails");
+      if (key === "colorPreferences") value = displayGuided(data, "colorPreferences", "colorPreferencesDetails");
+      if (key === "styleToAvoid") value = displayGuided(data, "styleToAvoid", "styleToAvoidDetails");
+      if (key === "competitors") value = displayGuided(data, "competitors", "competitorsDetails");
+      if (key === "differentiation") value = displayGuided(data, "differentiation", "differentiationDetails");
+
       if (value === "—" && key === "styleToAvoid") return;
       if (value === "—" && key === "deliverablesNotes") return;
       if (value === "—" && key === "additionalNotes") return;
@@ -191,29 +222,40 @@ export async function generateLogoBriefPdf(data) {
 }
 
 export function validateSubmission(data) {
-  const required = [
-    "fullName",
-    "email",
-    "company",
-    "industry",
-    "businessDescription",
-    "targetAudience",
-    "brandGoals",
-    "brandMessage",
-    "brandPersonality",
-    "preferredStyles",
-    "colorPreferences",
-    "competitors",
-    "differentiation",
-    "timeline",
-    "budgetRange",
+  const requiredText = ["fullName", "email", "company", "businessDescription", "timeline", "budgetRange"];
+
+  const requiredGuided = [
+    ["targetAudience", "targetAudienceDetails"],
+    ["brandGoals", "brandGoalsDetails"],
+    ["brandMessage", "brandMessageDetails"],
+    ["brandPersonality", "brandPersonalityDetails"],
+    ["preferredStyles", "preferredStylesDetails"],
+    ["colorPreferences", "colorPreferencesDetails"],
+    ["competitors", "competitorsDetails"],
+    ["differentiation", "differentiationDetails"],
   ];
 
   const errors = {};
-  required.forEach((field) => {
-    const value = data[field];
-    const empty = Array.isArray(value) ? !value.length : !String(value ?? "").trim();
-    if (empty) errors[field] = "This field is required.";
+
+  requiredText.forEach((field) => {
+    if (!String(data[field] ?? "").trim()) {
+      errors[field] = "This field is required.";
+    }
+  });
+
+  const industry = String(data.industry ?? "").trim();
+  if (!industry) {
+    errors.industry = "Select an industry.";
+  } else if (industry === "Other" && !String(data.industryOther ?? "").trim()) {
+    errors.industry = "Describe your industry.";
+  }
+
+  requiredGuided.forEach(([selectionsKey, detailsKey]) => {
+    const hasSelections = Array.isArray(data[selectionsKey]) && data[selectionsKey].length > 0;
+    const hasDetails = String(data[detailsKey] ?? "").trim().length > 0;
+    if (!hasSelections && !hasDetails) {
+      errors[selectionsKey] = "Select at least one option or add a short note.";
+    }
   });
 
   if (data.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
