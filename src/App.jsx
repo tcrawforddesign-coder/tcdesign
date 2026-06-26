@@ -9,6 +9,7 @@ import ProjectsPage from "./pages/Projects.jsx";
 import PostersPage from "./pages/Posters.jsx";
 import ExperimentsPage from "./pages/Experiments.jsx";
 import ProjectDetailsPage from "./pages/ProjectDetails.jsx";
+import LogoQuestionnairePage from "./pages/LogoQuestionnaire.jsx";
 
 export default function App() {
   return <AppRoutes />;
@@ -57,6 +58,10 @@ function AppRoutes() {
         title: "Experiments — Travis Crawford",
         description: "One-off, experimental, and abandoned visual design directions by Travis Crawford.",
       },
+      "/logo-questionnaire": {
+        title: "Logo Brief — Travis Crawford",
+        description: "Submit a new logo project brief to Travis Crawford with business, style, and deliverable details.",
+      },
     };
 
     const current = routeMeta[location.pathname] ?? {
@@ -102,6 +107,7 @@ function AppRoutes() {
           <Route path="/projects" element={<ProjectsPage />} />
           <Route path="/posters" element={<PostersPage />} />
           <Route path="/experiments" element={<ExperimentsPage />} />
+          <Route path="/logo-questionnaire" element={<LogoQuestionnairePage />} />
           <Route path="/projects/:slug" element={<ProjectDetailsPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
