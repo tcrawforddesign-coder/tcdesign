@@ -43,6 +43,13 @@ export const experimentEntries = [
     tone: "yellow",
   },
   {
+    id: "soul-queens-poster",
+    title: "Soul Queens",
+    label: "Typographic poster",
+    src: "/images/experiments/soul-queens-poster.png",
+    tone: "orange",
+  },
+  {
     id: "soul-queens",
     title: "Soul Queens Billboard",
     label: "Environmental concept",

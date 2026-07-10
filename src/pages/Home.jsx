@@ -99,7 +99,9 @@ export default function Home() {
           </p>
           <ul className="tc-skill-list">
             {skills.map((skill) => (
-              <li key={skill}>{skill}</li>
+              <li key={skill}>
+                <span>{skill}</span>
+              </li>
             ))}
           </ul>
         </PortfolioReveal>

@@ -3408,12 +3408,17 @@ html.lenis body {
 
 .portfolio-campaign-gallery {
   display: grid;
-  gap: 72px;
+  gap: clamp(36px, 5vw, 56px);
 }
 
 .portfolio-campaign-gallery-group {
   border-top: 1px solid var(--portfolio-line);
   padding-top: 28px;
+}
+
+.portfolio-campaign-gallery-group:first-child {
+  border-top: 0;
+  padding-top: 0;
 }
 
 .portfolio-campaign-gallery-heading {
@@ -3457,6 +3462,7 @@ html.lenis body {
 
 .portfolio-case-meta-section {
   padding-top: 0;
+  padding-bottom: clamp(28px, 3.5vw, 44px);
 }
 
 .portfolio-case-meta {
@@ -3724,7 +3730,8 @@ html.lenis body {
 }
 
 .portfolio-section {
-  padding: clamp(76px, 10vw, 132px) clamp(20px, 5vw, 64px);
+  padding-block: clamp(52px, 6.5vw, 88px);
+  padding-inline: clamp(20px, 5vw, 64px);
 }
 
 .portfolio-button {
@@ -3762,7 +3769,11 @@ html.lenis body {
 
 .portfolio-section-heading {
   grid-template-columns: 0.9fr 1.8fr;
+  gap: clamp(18px, 2.5vw, 28px);
+  margin-bottom: clamp(24px, 3vw, 36px);
+  padding-bottom: clamp(20px, 2.5vw, 32px);
   border-color: var(--tc-ink);
+  border-bottom: 1.5px solid var(--tc-ink);
 }
 
 .portfolio-section-heading p,
@@ -4213,6 +4224,7 @@ html.lenis body {
 }
 
 .tc-skill-list {
+  --skill-ease: cubic-bezier(0.16, 1, 0.3, 1);
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
@@ -4222,6 +4234,8 @@ html.lenis body {
 }
 
 .tc-skill-list li {
+  position: relative;
+  overflow: hidden;
   border: 1px solid var(--portfolio-line);
   border-radius: 999px;
   padding: 12px 16px;
@@ -4230,6 +4244,40 @@ html.lenis body {
   font-weight: 900;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+  cursor: default;
+}
+
+.tc-skill-list li::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--tc-lime);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s var(--skill-ease);
+  z-index: 0;
+}
+
+.tc-skill-list li:hover::before {
+  transform: scaleX(1);
+}
+
+.tc-skill-list li span {
+  position: relative;
+  z-index: 1;
+  display: block;
+  transition: transform 0.4s var(--skill-ease);
+}
+
+.tc-skill-list li:hover span {
+  transform: translateX(10px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tc-skill-list li::before,
+  .tc-skill-list li span {
+    transition: none;
+  }
 }
 
 .tc-playground-section {
@@ -4558,8 +4606,10 @@ html.lenis body {
 
 /* Brand refresh applied to secondary routes and case studies */
 .portfolio-subpage-hero {
-  min-height: 68vh;
-  border-bottom: 1px solid var(--tc-ink);
+  min-height: auto;
+  padding-top: clamp(112px, 12vw, 148px);
+  padding-bottom: clamp(32px, 4.5vw, 52px);
+  border-bottom: 1.5px solid var(--tc-ink);
   background:
     radial-gradient(circle at 82% 22%, rgba(195, 247, 58, 0.24), transparent 18rem),
     radial-gradient(circle at 14% 24%, rgba(167, 139, 250, 0.18), transparent 18rem);
@@ -4591,6 +4641,14 @@ html.lenis body {
 }
 
 .portfolio-work-section {
+  border-top: 0;
+  padding-block: clamp(44px, 5.5vw, 72px);
+}
+
+.portfolio-work-section .portfolio-mini-card-grid,
+.portfolio-work-section .portfolio-metric-grid,
+.portfolio-work-section .portfolio-asset-grid {
+  margin-top: 0;
   border-top: 0;
 }
 
@@ -4814,7 +4872,7 @@ html.lenis body {
 }
 
 .portfolio-case-hero {
-  padding: 0 clamp(20px, 5vw, 64px) clamp(58px, 7vw, 92px);
+  padding: 0 clamp(20px, 5vw, 64px) clamp(28px, 3.5vw, 44px);
   background: var(--tc-cream);
 }
 
@@ -4852,6 +4910,15 @@ html.lenis body {
 
 .portfolio-split-section {
   border-top: 1.5px solid var(--tc-ink);
+  padding-top: clamp(32px, 4vw, 52px);
+  padding-bottom: clamp(44px, 5.5vw, 72px);
+}
+
+.portfolio-case-meta-section + .portfolio-split-section,
+.portfolio-split-section + .portfolio-split-section,
+.portfolio-split-section + .portfolio-work-section,
+.portfolio-work-section + .portfolio-split-section {
+  padding-top: clamp(28px, 3.5vw, 44px);
 }
 
 .portfolio-split-content h2,
@@ -4907,8 +4974,13 @@ html.lenis body {
 }
 
 .portfolio-campaign-feature,
-.portfolio-campaign-gallery-group {
+.portfolio-campaign-gallery-group:not(:first-child) {
   border-top: 1.5px solid var(--tc-ink);
+}
+
+.portfolio-campaign-gallery-group:first-child {
+  border-top: 0;
+  padding-top: 0;
 }
 
 .portfolio-gallery-item img,
@@ -4924,7 +4996,7 @@ html.lenis body {
 .portfolio-guided-visuals {
   display: grid;
   gap: clamp(22px, 4vw, 48px);
-  margin-top: clamp(28px, 4vw, 52px);
+  margin-top: clamp(20px, 3vw, 36px);
 }
 
 .portfolio-guided-visual-feature {
@@ -5345,7 +5417,13 @@ html.lenis body {
 }
 
 .portfolio-next-section {
+  padding-top: clamp(32px, 4vw, 52px);
   border-top: 1.5px solid var(--tc-ink);
+}
+
+.portfolio-about-section,
+.portfolio-contact-section {
+  padding-top: clamp(40px, 5vw, 64px);
 }
 
 @media (max-width: 820px) {
