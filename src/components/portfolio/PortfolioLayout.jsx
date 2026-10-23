@@ -6,8 +6,12 @@ import HalftoneMark, { LogoPill } from "../../brand/HalftoneMark.jsx";
 const CONTACT_EMAIL = "tcrawford.design@gmail.com";
 const LINKEDIN_URL = "https://www.linkedin.com/in/travis-crawford-67759b24a";
 const DRIBBBLE_URL = "https://dribbble.com/tcrawforddesign";
+const RESUME_URL = "/TravisCrawford_Resume.pdf";
+const PROJECT_MAILTO = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent("New project")}&body=${encodeURIComponent(
+  "Hi Travis,\n\nWhat I'm making:\n\nWhen I need it:\n\nRough budget:\n\nLinks or examples:\n",
+)}`;
 
-export { CONTACT_EMAIL, LINKEDIN_URL, DRIBBBLE_URL };
+export { CONTACT_EMAIL, LINKEDIN_URL, DRIBBBLE_URL, RESUME_URL, PROJECT_MAILTO };
 
 const NAV_ITEMS = [
   { to: "/projects", label: "Work" },
@@ -110,6 +114,9 @@ function SiteFooter() {
           <Link to="/posters">Posters</Link>
           <Link to="/experiments">Experiments</Link>
           <Link to="/logo-questionnaire">Logo brief</Link>
+          <a href={RESUME_URL} target="_blank" rel="noreferrer">
+            Resume
+          </a>
           <a href={LINKEDIN_URL} target="_blank" rel="noreferrer">
             LinkedIn
           </a>
@@ -126,11 +133,6 @@ function SiteFooter() {
       </div>
     </footer>
   );
-}
-
-// Kept for compatibility with App.jsx; the new brand uses the normal cursor.
-export function PortfolioPointerEffects() {
-  return null;
 }
 
 export function PortfolioReveal({ as: Component = "div", className = "", children }) {
@@ -155,8 +157,11 @@ export function ContactSection() {
           <br />
           worth making<span className="tc-dot">?</span>
         </PortfolioReveal>
+        <PortfolioReveal as="p" className="tc-reach-lede">
+          Tell me what you're making and when you need it.
+        </PortfolioReveal>
         <PortfolioReveal className="tc-reach-actions">
-          <a className="tc-btn tc-btn-red tc-btn-lg" href={`mailto:${CONTACT_EMAIL}`}>
+          <a className="tc-btn tc-btn-red tc-btn-lg" href={PROJECT_MAILTO}>
             Start a project
           </a>
           <a className="tc-reach-email" href={`mailto:${CONTACT_EMAIL}`}>
@@ -169,10 +174,4 @@ export function ContactSection() {
       </div>
     </section>
   );
-}
-
-// The old services ticker. The new brand doesn't use a marquee, so this renders
-// nothing; it stays exported so older imports keep working.
-export function Marquee() {
-  return null;
 }

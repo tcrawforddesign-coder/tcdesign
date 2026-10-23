@@ -1,7 +1,15 @@
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import WaveField from "../brand/WaveField.jsx";
-import { ContactSection, PortfolioLayout, PortfolioReveal } from "../components/portfolio/PortfolioLayout.jsx";
+import {
+  ContactSection,
+  LINKEDIN_URL,
+  PortfolioLayout,
+  PortfolioReveal,
+  RESUME_URL,
+} from "../components/portfolio/PortfolioLayout.jsx";
 import { getProjectCover, splitProjectTitle } from "../components/portfolio/PortfolioCards.jsx";
 import { projects } from "../data/projects.js";
 import { posterProject } from "../data/posters.js";
@@ -12,7 +20,7 @@ const experimentsProject = {
   id: "experiments-archive",
   slug: "experiments",
   title: "Experiments & Abandoned Projects",
-  tag: "One-offs, Motion, Visual Studies",
+  tag: "One-offs, motion, visual studies",
   href: "/experiments",
   cover: "/images/experiments/comp-1-3.mp4",
   coverType: "video",
@@ -25,12 +33,12 @@ const selectedProjects = [
 ];
 
 const projectCategories = {
-  "civil-goat-coffee": "Branding, Identity",
-  "barbican-refresh": "Concept refresh, Wayfinding",
-  "yellow-bike": "UX/UI, App Design",
-  "atlas-coffee-club": "Paid Social, Campaign",
-  experiments: "One-offs, Motion",
-  "poster-archive": "Poster Series",
+  "civil-goat-coffee": "Brand identity",
+  "barbican-refresh": "Concept refresh, wayfinding",
+  "yellow-bike": "UX/UI design",
+  "atlas-coffee-club": "Paid social campaign",
+  experiments: "One-offs and motion",
+  "poster-archive": "Poster series",
 };
 
 const services = [
@@ -40,15 +48,13 @@ const services = [
   },
   {
     title: "Campaigns and paid social",
-    copy: "One clear idea carried through ads, social, email, events and print, built to perform.",
+    copy: "One clear idea carried through ads, social, email, events and print.",
   },
   {
     title: "Websites and motion",
     copy: "Sites, interactive moments and creative code that make a brand feel alive.",
   },
 ];
-
-const skills = ["Brand Identity", "Campaign Design", "Art Direction", "Paid Social Ads", "Print & Digital", "Marketing Systems"];
 
 export default function Home() {
   return (
@@ -58,12 +64,12 @@ export default function Home() {
         <div className="tc-wave-hero-inner">
           <div className="tc-wave-hero-card tc-glass portfolio-reveal">
             <h1 id="tc-wave-hero-title">
-              Visual designer and creative strategist<span className="tc-dot">.</span>
+              Brands, campaigns and websites<span className="tc-dot">.</span>
             </h1>
-            <p>Identity systems, campaigns and websites for brands that want to be remembered.</p>
+            <p>From first sketch to launch. I'm Travis Crawford, a visual designer and creative strategist in Texas, and I take on freelance projects.</p>
             <div className="tc-actions">
               <a href="#work" className="tc-btn tc-btn-ink tc-btn-lg">
-                View work
+                See the work
               </a>
               <a href="#contact" className="tc-btn tc-btn-ghost tc-btn-lg">
                 Start a project
@@ -73,21 +79,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="work" className="tc-selected" aria-labelledby="tc-selected-title">
-        <div className="tc-container tc-selected-head">
-          <h2 id="tc-selected-title" className="tc-h2">
-            Selected work
-          </h2>
-          <Link to="/projects" className="tc-text-link">
-            All projects
-          </Link>
-        </div>
-        <div className="tc-strip" tabIndex={0} aria-label="Selected projects, scroll sideways">
-          {selectedProjects.map((project) => (
-            <StripCard key={project.id} project={project} />
-          ))}
-        </div>
-      </section>
+      <SelectedWork />
 
       <section id="about" className="tc-container tc-bio" aria-labelledby="tc-about-title">
         <PortfolioReveal className="tc-bio-photo">
@@ -101,14 +93,18 @@ export default function Home() {
           <h2 id="tc-about-title" className="tc-h2">
             Hi, I'm Travis<span className="tc-dot">.</span>
           </h2>
-          <p className="tc-lede">
-            I'm a designer based in Texas. I create identity systems, campaign visuals and brand experiences that help ideas feel clear, useful and memorable.
+          <p className="tc-lede">I design identities, campaigns and websites that make ideas easy to understand and hard to forget.</p>
+          <p className="tc-bio-text">
+            By day I'm a creative marketing specialist at 3Sixty Integrated, where I turn technical security topics into emails, sales materials and social posts that are easy to follow. On my own, I take brands from the first logo sketch to the launch posts.
           </p>
-          <ul className="tc-skills" aria-label="Skills">
-            {skills.map((skill) => (
-              <li key={skill}>{skill}</li>
-            ))}
-          </ul>
+          <div className="tc-bio-links">
+            <a className="tc-text-link" href={RESUME_URL} target="_blank" rel="noreferrer">
+              Resume (PDF)
+            </a>
+            <a className="tc-text-link" href={LINKEDIN_URL} target="_blank" rel="noreferrer">
+              LinkedIn
+            </a>
+          </div>
         </PortfolioReveal>
       </section>
 
@@ -130,6 +126,67 @@ export default function Home() {
 
       <ContactSection />
     </PortfolioLayout>
+  );
+}
+
+function SelectedWork() {
+  const stripRef = useRef(null);
+  const [edges, setEdges] = useState({ start: true, end: false });
+
+  const updateEdges = useCallback(() => {
+    const strip = stripRef.current;
+    if (!strip) return;
+    const max = strip.scrollWidth - strip.clientWidth;
+    setEdges({ start: strip.scrollLeft <= 4, end: strip.scrollLeft >= max - 4 });
+  }, []);
+
+  useEffect(() => {
+    const strip = stripRef.current;
+    if (!strip) return undefined;
+    updateEdges();
+    strip.addEventListener("scroll", updateEdges, { passive: true });
+    window.addEventListener("resize", updateEdges);
+    return () => {
+      strip.removeEventListener("scroll", updateEdges);
+      window.removeEventListener("resize", updateEdges);
+    };
+  }, [updateEdges]);
+
+  const scrollByCard = (direction) => {
+    const strip = stripRef.current;
+    const card = strip?.querySelector(".tc-strip-card");
+    if (!strip || !card) return;
+    const gap = parseFloat(getComputedStyle(strip).columnGap) || 0;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    strip.scrollBy({ left: direction * (card.getBoundingClientRect().width + gap), behavior: reduce ? "auto" : "smooth" });
+  };
+
+  return (
+    <section id="work" className="tc-selected" aria-labelledby="tc-selected-title">
+      <div className="tc-container tc-selected-head">
+        <h2 id="tc-selected-title" className="tc-h2">
+          Selected work
+        </h2>
+        <div className="tc-selected-tools">
+          <div className="tc-strip-controls">
+            <button type="button" className="tc-strip-button" aria-label="Previous projects" aria-controls="tc-strip" disabled={edges.start} onClick={() => scrollByCard(-1)}>
+              <ChevronLeft aria-hidden="true" />
+            </button>
+            <button type="button" className="tc-strip-button" aria-label="Next projects" aria-controls="tc-strip" disabled={edges.end} onClick={() => scrollByCard(1)}>
+              <ChevronRight aria-hidden="true" />
+            </button>
+          </div>
+          <Link to="/projects" className="tc-text-link">
+            All projects
+          </Link>
+        </div>
+      </div>
+      <div id="tc-strip" ref={stripRef} className="tc-strip" tabIndex={0} aria-label="Selected projects, scroll sideways">
+        {selectedProjects.map((project) => (
+          <StripCard key={project.id} project={project} />
+        ))}
+      </div>
+    </section>
   );
 }
 

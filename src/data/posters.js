@@ -201,7 +201,7 @@ export const posterProject = {
   id: "poster-archive",
   slug: "poster-archive",
   title: "Poster Archive — Visual Experiments",
-  tag: "Poster Series",
+  tag: "Poster series",
   timeframe: "2019 — 2025",
   summary: "Personal poster lab exploring typographic heat, color, and motion cues when there’s no brief to obey.",
   cover: "/images/Poster_6.png",

@@ -1467,6 +1467,144 @@ html:has(.tc-brand) body {
 .tc-brand .portfolio-reveal:nth-child(3) {
   animation-delay: 0.12s;
 }
+/* ---------- Review fixes (Oct 2026) ---------- */
+
+/* Small labels: plain sentence-case text in the brand face, not tracked mono caps. */
+.tc-brand .portfolio-hero-kicker,
+.tc-brand .portfolio-section-heading p,
+.tc-brand .portfolio-sticky-label p,
+.tc-brand .portfolio-case-meta span,
+.tc-brand .portfolio-metric-card span,
+.tc-brand .portfolio-campaign-gallery-heading p,
+.tc-brand .tc-section-kicker,
+.tc-brand .tc-experiment-card span,
+.tc-brand .portfolio-yellow-survey-card > span,
+.tc-brand .portfolio-yellow-map span,
+.tc-brand .portfolio-yellow-swatch small,
+.tc-brand .portfolio-yellow-flow-grid figcaption,
+.tc-brand .logo-questionnaire-step-meta p {
+  font-family: var(--tc-font);
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+}
+.tc-brand .portfolio-hero-kicker {
+  font-size: 17px;
+}
+
+/* Projects grid: the old layer's negative margins made cards touch. */
+.tc-brand .tc-project-card {
+  margin: 0;
+  text-decoration: none;
+}
+.tc-brand .tc-project-card .tc-project-thumb::after {
+  content: none;
+}
+.tc-brand .tc-project-meta {
+  display: block;
+}
+.tc-brand .tc-project-meta p,
+.tc-brand .tc-project-card:hover .tc-project-meta p {
+  font-weight: 400;
+  color: var(--tc-slate);
+}
+.tc-brand .portfolio-subpage-hero .portfolio-hero-title {
+  max-width: 20ch;
+}
+
+/* Home hero: shorter, so the work starts to show on a laptop screen. */
+.tc-wave-hero {
+  min-height: max(560px, min(700px, 80svh));
+}
+.tc-wave-hero-card h1 {
+  font-size: clamp(2.4rem, 5.2vw, 4.5rem);
+  line-height: 0.96;
+}
+.tc-selected {
+  padding-top: clamp(56px, 7vw, 88px);
+}
+
+/* Selected work: previous / next buttons for mouse users. */
+.tc-selected-tools {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.tc-strip-controls {
+  display: flex;
+  gap: 8px;
+}
+.tc-strip-button {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: 1px solid var(--tc-line-strong);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.6);
+  color: var(--tc-ink);
+  transition: background-color 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
+}
+.tc-strip-button svg {
+  width: 20px;
+  height: 20px;
+}
+.tc-strip-button:hover:not(:disabled) {
+  border-color: var(--tc-ink);
+  background: var(--tc-white);
+}
+.tc-brand .tc-strip-button:disabled {
+  opacity: 0.35;
+  cursor: default !important;
+}
+@media (hover: none) and (pointer: coarse) {
+  .tc-strip-controls {
+    display: none;
+  }
+}
+
+/* About */
+.tc-bio-text {
+  margin: 0;
+  max-width: 58ch;
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--tc-slate);
+}
+.tc-bio-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 28px;
+}
+
+/* Services: easier to read */
+.tc-service p {
+  font-size: 18px;
+  color: var(--tc-graphite);
+}
+
+/* Contact */
+.tc-reach-lede {
+  margin: -12px 0 0;
+  max-width: 40ch;
+  font-size: clamp(18px, 1.8vw, 22px);
+  line-height: 1.45;
+  color: var(--tc-graphite);
+}
+
+/* 404 */
+.tc-brand .portfolio-subpage-hero.tc-not-found {
+  min-height: 70svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.tc-brand .tc-not-found .tc-actions {
+  margin-top: 32px;
+}
+
 @keyframes tc-rise {
   from {
     opacity: 0;
