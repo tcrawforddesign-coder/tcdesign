@@ -1567,6 +1567,26 @@ html:has(.tc-brand) body {
   position: absolute;
 }
 
+/* About: round headshot, red point sitting on the circle's lower-right edge. */
+.tc-bio-photo {
+  flex-basis: 400px;
+  max-width: 420px;
+}
+.tc-bio-photo img {
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  object-position: 50% 28%;
+}
+.tc-bio-point {
+  right: calc(14.6% - 22px);
+  bottom: calc(14.6% - 22px);
+}
+@media (max-width: 720px) {
+  .tc-bio-photo {
+    max-width: 300px;
+  }
+}
+
 /* About */
 .tc-bio-text {
   margin: 0;
