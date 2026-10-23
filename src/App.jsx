@@ -21,6 +21,13 @@ function AppRoutes() {
   const siteOrigin = "https://traviscrawforddesign.com";
   useSmoothScroll();
 
+  // Tell the logo intro in index.html that the app has rendered, so it can
+  // fly the lockup into the header and reveal the page.
+  useEffect(() => {
+    window.__tcAppReady = true;
+    window.dispatchEvent(new Event("tc:app-ready"));
+  }, []);
+
   useEffect(() => {
     if (location.hash) {
       const target = document.querySelector(location.hash);
