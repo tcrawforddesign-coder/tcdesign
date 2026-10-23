@@ -21,7 +21,7 @@ export default function ProjectDetailsPage() {
         <section className="portfolio-section portfolio-contact-section">
           <PortfolioReveal as="p">Project not found</PortfolioReveal>
           <PortfolioReveal as="h1" className="portfolio-contact-link">
-            This case study has moved off the grid.
+            That case study isn&apos;t here.
           </PortfolioReveal>
           <PortfolioReveal>
             <Link to="/projects" className="portfolio-button portfolio-primary">
@@ -44,7 +44,7 @@ export default function ProjectDetailsPage() {
   return (
     <PortfolioLayout>
       <section className="portfolio-hero portfolio-section portfolio-subpage-hero">
-        <PortfolioReveal className="portfolio-hero-kicker">{project.tag} / {project.timeframe}</PortfolioReveal>
+        <PortfolioReveal className="portfolio-hero-kicker">{project.tag}, {project.timeframe}</PortfolioReveal>
         <PortfolioReveal as="h1" className="portfolio-hero-title">
           {primary}
         </PortfolioReveal>
@@ -254,7 +254,6 @@ function GuidedVisualGroup({ items = [], label = "Lead visual", fallbackAlt = "P
               key={`${media.src}-${index}`}
               media={media}
               className="portfolio-gallery-item portfolio-reveal"
-              label={<span>{label}</span>}
               alt={media.alt || `${fallbackAlt} Meta ad visual ${index + 1}`}
             />
           ))}
@@ -366,8 +365,8 @@ function YellowBikeUXSections({ project }) {
   const futureState = research.future_state ?? {};
   const surveyResults = research.survey_results ?? {};
   const flowImages = [
-    { src: "/images/User Onboarding _ Event _ Route Summary Flow.png", title: "Onboarding, event, and route summary flow" },
-    { src: "/images/Event Challenges Flow.png", title: "Event challenges flow" },
+    { src: "/images/User Onboarding _ Event _ Route Summary Flow.webp", title: "Onboarding, event, and route summary flow" },
+    { src: "/images/Event Challenges Flow.webp", title: "Event challenges flow" },
   ];
 
   return (

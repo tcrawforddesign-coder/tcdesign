@@ -1,7 +1,7 @@
 const CIVIL_GOAT_PORTRAIT_SRCS = new Set([
-  "/images/Ad_1.png",
-  "/images/Ad_2.png",
-  "/images/Ad_3.png",
+  "/images/Ad_1.webp",
+  "/images/Ad_2.webp",
+  "/images/Ad_3.webp",
 ]);
 
 export function normalizeMediaItem(item, projectSlug) {

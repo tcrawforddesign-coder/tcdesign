@@ -1,36 +1,30 @@
 import { Link } from "react-router-dom";
 
 import WaveField from "../brand/WaveField.jsx";
-import { ContactSection, PortfolioLayout, PortfolioReveal } from "../components/portfolio/PortfolioLayout.jsx";
+import {
+  ContactSection,
+  LINKEDIN_URL,
+  PortfolioLayout,
+  PortfolioReveal,
+  RESUME_URL,
+} from "../components/portfolio/PortfolioLayout.jsx";
 import { getProjectCover, splitProjectTitle } from "../components/portfolio/PortfolioCards.jsx";
 import { projects } from "../data/projects.js";
 import { posterProject } from "../data/posters.js";
 
 const selectedProjectSlugs = ["civil-goat-coffee", "barbican-refresh", "yellow-bike", "atlas-coffee-club"];
 
-const experimentsProject = {
-  id: "experiments-archive",
-  slug: "experiments",
-  title: "Experiments & Abandoned Projects",
-  tag: "One-offs, Motion, Visual Studies",
-  href: "/experiments",
-  cover: "/images/experiments/comp-1-3.mp4",
-  coverType: "video",
-};
-
 const selectedProjects = [
   ...selectedProjectSlugs.map((slug) => projects.find((project) => project.slug === slug)).filter(Boolean),
-  experimentsProject,
   posterProject,
 ];
 
 const projectCategories = {
-  "civil-goat-coffee": "Branding, Identity",
-  "barbican-refresh": "Brand Refresh, Wayfinding",
-  "yellow-bike": "UX/UI, App Design",
-  "atlas-coffee-club": "Paid Social, Campaign",
-  experiments: "One-offs, Motion",
-  "poster-archive": "Poster Series",
+  "civil-goat-coffee": "Brand identity",
+  "barbican-refresh": "Concept refresh, wayfinding",
+  "yellow-bike": "UX/UI design",
+  "atlas-coffee-club": "Paid social campaign",
+  "poster-archive": "Poster series",
 };
 
 const services = [
@@ -40,15 +34,13 @@ const services = [
   },
   {
     title: "Campaigns and paid social",
-    copy: "One clear idea carried through ads, social, email, events and print, built to perform.",
+    copy: "One clear idea carried through ads, social, email, events and print.",
   },
   {
-    title: "Websites and motion",
-    copy: "Sites, interactive moments and creative code that make a brand feel alive.",
+    title: "Posters and motion",
+    copy: "Posters, animated pieces and visual experiments for launches, events and social.",
   },
 ];
-
-const skills = ["Brand Identity", "Campaign Design", "Art Direction", "Paid Social Ads", "Print & Digital", "Marketing Systems"];
 
 export default function Home() {
   return (
@@ -56,14 +48,14 @@ export default function Home() {
       <section className="tc-wave-hero" aria-labelledby="tc-wave-hero-title">
         <WaveField />
         <div className="tc-wave-hero-inner">
-          <div className="tc-wave-hero-card tc-glass portfolio-reveal">
+          <div className="tc-wave-hero-copy portfolio-reveal">
             <h1 id="tc-wave-hero-title">
-              Visual designer and creative strategist<span className="tc-dot">.</span>
+              Brands, campaigns and posters<span className="tc-dot">.</span>
             </h1>
-            <p>Identity systems, campaigns and websites for brands that want to be remembered.</p>
+            <p>From first sketch to launch. I'm Travis Crawford, a visual designer and creative strategist in Texas, and I take on freelance projects.</p>
             <div className="tc-actions">
               <a href="#work" className="tc-btn tc-btn-ink tc-btn-lg">
-                View work
+                See the work
               </a>
               <a href="#contact" className="tc-btn tc-btn-ghost tc-btn-lg">
                 Start a project
@@ -73,21 +65,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="work" className="tc-selected" aria-labelledby="tc-selected-title">
-        <div className="tc-container tc-selected-head">
-          <h2 id="tc-selected-title" className="tc-h2">
-            Selected work
-          </h2>
-          <Link to="/projects" className="tc-text-link">
-            All projects
-          </Link>
-        </div>
-        <div className="tc-strip" tabIndex={0} aria-label="Selected projects, scroll sideways">
-          {selectedProjects.map((project) => (
-            <StripCard key={project.id} project={project} />
-          ))}
-        </div>
-      </section>
+      <SelectedWork />
 
       <section id="about" className="tc-container tc-bio" aria-labelledby="tc-about-title">
         <PortfolioReveal className="tc-bio-photo">
@@ -101,14 +79,18 @@ export default function Home() {
           <h2 id="tc-about-title" className="tc-h2">
             Hi, I'm Travis<span className="tc-dot">.</span>
           </h2>
-          <p className="tc-lede">
-            I'm a designer based in Texas. I create identity systems, campaign visuals and brand experiences that help ideas feel clear, useful and memorable.
+          <p className="tc-lede">I design identities, campaigns and posters that make ideas easy to understand and hard to forget.</p>
+          <p className="tc-bio-text">
+            By day I'm a creative marketing specialist at 3Sixty Integrated, where I turn technical security topics into emails, sales materials and social posts that are easy to follow. On my own, I take brands from the first logo sketch to the launch posts.
           </p>
-          <ul className="tc-skills" aria-label="Skills">
-            {skills.map((skill) => (
-              <li key={skill}>{skill}</li>
-            ))}
-          </ul>
+          <div className="tc-bio-links">
+            <a className="tc-text-link" href={RESUME_URL} target="_blank" rel="noreferrer">
+              Resume (PDF)
+            </a>
+            <a className="tc-text-link" href={LINKEDIN_URL} target="_blank" rel="noreferrer">
+              LinkedIn
+            </a>
+          </div>
         </PortfolioReveal>
       </section>
 
@@ -133,22 +115,47 @@ export default function Home() {
   );
 }
 
-function StripCard({ project }) {
+function SelectedWork() {
+  const [feature, ...rest] = selectedProjects;
+
+  return (
+    <section id="work" className="tc-selected" aria-labelledby="tc-selected-title">
+      <div className="tc-container">
+        <div className="tc-selected-head">
+          <h2 id="tc-selected-title" className="tc-h2">
+            Selected work
+          </h2>
+          <Link to="/projects" className="tc-text-link">
+            All projects
+          </Link>
+        </div>
+        <div className="tc-work-grid">
+          <WorkCard project={feature} featured />
+          {rest.map((project) => (
+            <WorkCard key={project.id} project={project} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function WorkCard({ project, featured = false }) {
   const title = splitProjectTitle(project.title).primary;
   const category = projectCategories[project.slug] ?? project.tag;
-  const cover = getProjectCover(project);
+  const cover = featured && project.heroImage ? project.heroImage : getProjectCover(project);
   const isVideo = project.coverType === "video" || /\.mp4$/i.test(cover ?? "");
 
   return (
-    <Link className="tc-strip-card" to={project.href ?? `/projects/${project.slug}`}>
-      <div className="tc-strip-media">
+    <Link className={`tc-work-card ${featured ? "is-featured" : ""}`} to={project.href ?? `/projects/${project.slug}`}>
+      <div className="tc-work-media">
         {isVideo ? (
           <video src={cover} autoPlay muted loop playsInline preload="metadata" aria-hidden="true" />
         ) : (
-          <img src={cover} alt="" loading="lazy" decoding="async" />
+          <img src={cover} alt="" loading={featured ? "eager" : "lazy"} decoding="async" />
         )}
       </div>
-      <div className="tc-strip-meta">
+      <div className="tc-work-meta">
         <h3>{title}</h3>
         <p>{category}</p>
       </div>

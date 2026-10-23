@@ -12,7 +12,7 @@ export default function PageTransition({ children, routeKey }) {
           key={routeKey}
           className="min-h-full"
           initial={reduceMotion ? { opacity: 1 } : { opacity: 0, filter: "blur(0.18rem)" }}
-          animate={{ opacity: 1, y: 0, filter: "blur(0rem)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0rem)", transitionEnd: { filter: "none" } }}
           exit={reduceMotion ? { opacity: 1 } : { opacity: 0, filter: "blur(0.18rem)" }}
           transition={{ duration: 0.28, ease }}
         >

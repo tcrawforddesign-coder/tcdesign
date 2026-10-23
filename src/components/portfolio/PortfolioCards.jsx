@@ -141,16 +141,18 @@ export function splitProjectTitle(title = "") {
 }
 
 export function getProjectCover(project = {}) {
+  // Card covers, picked as the strongest still from each project and
+  // checked at the cards' 4:3 crop.
   const preferredCovers = {
     "3sixty-integrated-marketing": "/images/3Sixty Socials /1768231836946.jpeg",
-    "yellow-bike": "/images/yellow-bike-card-cover.png",
-    "civil-goat-coffee": "/images/civil-goat-card-cover.png",
-    "atlas-coffee-club": "/images/atlas-card-cover.png",
-    "barbican-refresh": "/images/barbican-card-cover.mp4",
+    "yellow-bike": "/images/yellow-bike-header.png",
+    "civil-goat-coffee": "/images/CG_6.webp",
+    "atlas-coffee-club": "/images/atlas-cover.jpg",
+    "barbican-refresh": "/images/B_11.webp",
     "aluma-skincare": "/images/A_1.png",
-    "data-dog-analytics": "/images/datadog-card-cover.png",
-    "ritual-coffee": "/images/ritual-card-cover.png",
-    "poster-archive": "/images/poster-card-cover.png",
+    "data-dog-analytics": "/images/DD_11.webp",
+    "ritual-coffee": "/images/hdh.png",
+    "poster-archive": "/images/poster-card-cover.jpg",
   };
 
   return preferredCovers[project.slug] ?? project.heroImage ?? project.cover;
@@ -159,17 +161,17 @@ export function getProjectCover(project = {}) {
 function getProjectAlternateCover(project = {}, title = "") {
   const alternateCovers = {
     "3sixty-integrated-marketing": "/images/3Sixty Socials /1755111849129.jpeg",
-    "yellow-bike": "/images/yellow-bike-onboarding-flow.png",
-    "civil-goat-coffee": "/images/CG_9.png",
-    "atlas-coffee-club": "/images/Flavor_Journey_Ad2_1080x1350.png",
+    "yellow-bike": "/images/yellow-bike-onboarding-flow.webp",
+    "civil-goat-coffee": "/images/CG_9.webp",
+    "atlas-coffee-club": "/images/Flavor_Journey_Ad2_1080x1350.webp",
     "barbican-refresh": "/images/B_1.png",
-    "aluma-skincare": "/images/A_2.png",
-    "data-dog-analytics": "/images/DD_12.png",
+    "aluma-skincare": "/images/A_2.webp",
+    "data-dog-analytics": "/images/DD_12.webp",
     "ritual-coffee": "/images/Instagram post - 10.png",
-    "poster-archive": "/images/Poster_1.png",
+    "poster-archive": "/images/Poster_1.webp",
   };
 
-  if (title === "Poster Archive") return "/images/Poster_1.png";
+  if (title === "Poster Archive") return "/images/Poster_1.webp";
 
   return alternateCovers[project.slug];
 }

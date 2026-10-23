@@ -29,7 +29,8 @@ const TONES = {
   white: { from: "#FFFFFF", to: "#FFFFFF", point: "#111214" },
 };
 
-export default function HalftoneMark({ size = 40, tone = "light", weight = "heavy", title, className = "", style }) {
+// `animated` builds the mark dot by dot: the C, then the T, then the red point.
+export default function HalftoneMark({ size = 40, tone = "light", weight = "heavy", title, className = "", style, animated = false }) {
   const id = useId().replace(/:/g, "");
   const colors = TONES[tone] ?? TONES.light;
   const labelled = Boolean(title);
@@ -53,11 +54,25 @@ export default function HalftoneMark({ size = 40, tone = "light", weight = "heav
         </linearGradient>
       </defs>
       <g fill={`url(#tc-mark-${id})`}>
-        {POINTS.map((p) => (
-          <circle key={`${p[0].toFixed(1)}-${p[1].toFixed(1)}`} cx={p[0].toFixed(1)} cy={p[1].toFixed(1)} r={radiusFor(p, weight).toFixed(1)} />
+        {POINTS.map((p, index) => (
+          <circle
+            key={`${p[0].toFixed(1)}-${p[1].toFixed(1)}`}
+            className={animated ? "tc-mark-dot" : undefined}
+            style={animated ? { "--i": index } : undefined}
+            cx={p[0].toFixed(1)}
+            cy={p[1].toFixed(1)}
+            r={radiusFor(p, weight).toFixed(1)}
+          />
         ))}
       </g>
-      <circle cx="174" cy="100" r={weight === "heavy" ? 12 : 11} fill={colors.point} />
+      <circle
+        className={animated ? "tc-mark-point" : undefined}
+        style={animated ? { "--i": POINTS.length } : undefined}
+        cx="174"
+        cy="100"
+        r={weight === "heavy" ? 12 : 11}
+        fill={colors.point}
+      />
     </svg>
   );
 }

@@ -1,11 +1,15 @@
 import { useEffect } from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Link, Routes, Route, useLocation } from "react-router-dom";
 
 import PageTransition from "./components/animations/PageTransition.jsx";
-import { PortfolioPointerEffects } from "./components/portfolio/PortfolioLayout.jsx";
+import { PortfolioLayout } from "./components/portfolio/PortfolioLayout.jsx";
 import { useSmoothScroll } from "./hooks/useSmoothScroll.js";
 import Home from "./pages/Home.jsx";
+import IntroOverlay from "./brand/IntroOverlay.jsx";
 import ProjectsPage from "./pages/Projects.jsx";
+import BrandingPage from "./pages/Branding.jsx";
+import LogosPage from "./pages/Logos.jsx";
+import PhotographyPage from "./pages/Photography.jsx";
 import PostersPage from "./pages/Posters.jsx";
 import ExperimentsPage from "./pages/Experiments.jsx";
 import ProjectDetailsPage from "./pages/ProjectDetails.jsx";
@@ -52,11 +56,23 @@ function AppRoutes() {
       "/": {
         title: "Travis Crawford",
         description:
-          "Portfolio of Travis Crawford, a Texas-based visual designer focused on branding, campaign creative, and digital experiences.",
+          "Portfolio of Travis Crawford, a Texas-based visual designer focused on branding, campaign creative, and poster design.",
       },
       "/projects": {
-        title: "Projects — Travis Crawford",
+        title: "Featured work — Travis Crawford",
         description: "Selected branding, campaign, and product design projects by Travis Crawford.",
+      },
+      "/branding": {
+        title: "Branding — Travis Crawford",
+        description: "Brand identity projects by Travis Crawford: logos, color, type, packaging and guidelines.",
+      },
+      "/logos": {
+        title: "Logos — Travis Crawford",
+        description: "Logos, marks and wordmarks designed by Travis Crawford.",
+      },
+      "/photography": {
+        title: "Photography — Travis Crawford",
+        description: "Photography by Travis Crawford. Coming soon.",
       },
       "/posters": {
         title: "Poster Archive — Travis Crawford",
@@ -110,11 +126,14 @@ function AppRoutes() {
 
   return (
     <div className="min-h-full">
-      <PortfolioPointerEffects />
+      <IntroOverlay />
       <PageTransition routeKey={location.pathname}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/projects" element={<ProjectsPage />} />
+          <Route path="/branding" element={<BrandingPage />} />
+          <Route path="/logos" element={<LogosPage />} />
+          <Route path="/photography" element={<PhotographyPage />} />
           <Route path="/posters" element={<PostersPage />} />
           <Route path="/experiments" element={<ExperimentsPage />} />
           <Route path="/logo-questionnaire" element={<LogoQuestionnairePage />} />
@@ -128,14 +147,21 @@ function AppRoutes() {
 
 function NotFound() {
   return (
-    <div className="studio-page min-h-screen bg-stone-50 text-black grid place-items-center px-gutter py-24">
-      <div className="studio-case-panel max-w-md w-full p-10 text-center space-y-6">
-        <p className="text-lg font-bold text-stone-500 opsz-lg">404</p>
-        <h1 className="text-[2rem]/9 font-bold opsz-5xl">That page drifted off-grid.</h1>
-        <a href="/" className="inline-flex items-center justify-center rounded-[1.25rem] bg-black px-6 py-3 text-lg font-bold text-cloud-dancer squircle" data-cursor="default">
-          Back to home
-        </a>
-      </div>
-    </div>
+    <PortfolioLayout>
+      <section className="portfolio-hero portfolio-section portfolio-subpage-hero tc-not-found">
+        <h1 className="portfolio-hero-title">
+          This page doesn't exist<span className="tc-dot">.</span>
+        </h1>
+        <p className="portfolio-hero-copy">The link may be old, or the page has moved. The work is still here.</p>
+        <div className="tc-actions">
+          <Link to="/projects" className="tc-btn tc-btn-ink tc-btn-lg">
+            See the work
+          </Link>
+          <Link to="/" className="tc-btn tc-btn-ghost tc-btn-lg">
+            Go to the home page
+          </Link>
+        </div>
+      </section>
+    </PortfolioLayout>
   );
 }

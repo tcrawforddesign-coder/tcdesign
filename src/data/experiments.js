@@ -39,7 +39,7 @@ export const experimentEntries = [
     id: "outlook",
     title: "Outlook Said So",
     label: "One-off poster",
-    src: "/images/experiments/outlook-poster.png",
+    src: "/images/experiments/outlook-poster.webp",
     tone: "yellow",
   },
   {
@@ -81,7 +81,7 @@ export const experimentEntries = [
     id: "dead-smoking",
     title: "Midnight Cowboy Character",
     label: "Illustration study",
-    src: "/images/experiments/dead-smoking.png",
+    src: "/images/experiments/dead-smoking.webp",
     tone: "yellow",
   },
   {
@@ -95,7 +95,7 @@ export const experimentEntries = [
     id: "bad-bunny",
     title: "Bad Bunny Poster",
     label: "Fan art study",
-    src: "/images/experiments/bad-bunny-poster.png",
+    src: "/images/experiments/bad-bunny-poster.webp",
     tone: "lavender",
   },
   {
@@ -109,14 +109,14 @@ export const experimentEntries = [
     id: "wavy-studio",
     title: "Wavy Studio Green",
     label: "Brand mark",
-    src: "/images/experiments/wavy-studio-green.png",
+    src: "/images/experiments/wavy-studio-green.webp",
     tone: "lime",
   },
   {
     id: "space-between-us",
     title: "The Space Between Us",
     label: "Poster concept",
-    src: "/images/experiments/space-between-us.png",
+    src: "/images/experiments/space-between-us.webp",
     tone: "orange",
   },
   {
@@ -130,7 +130,7 @@ export const experimentEntries = [
     id: "never-meant-to-stay",
     title: "You Were Never Meant To Stay",
     label: "Texture poster",
-    src: "/images/experiments/never-meant-to-stay.png",
+    src: "/images/experiments/never-meant-to-stay.webp",
     tone: "sage",
   },
 ];
