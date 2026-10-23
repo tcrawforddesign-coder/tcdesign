@@ -1627,6 +1627,328 @@ html:has(.tc-brand) body {
   margin-top: 32px;
 }
 
+/* ---------- Intro: the logo builds itself on the first visit ---------- */
+.tc-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle at 50% 45%, #ffffff 0%, var(--tc-paper, #f4f8fb) 60%, #eaf2f9 100%);
+  transition: opacity 0.55s ease, transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.tc-intro.is-leaving {
+  opacity: 0;
+  transform: translateY(-2%);
+  pointer-events: none;
+}
+.tc-intro-lockup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+.tc-intro-word {
+  font-family: "Geist Variable", Geist, system-ui, sans-serif;
+  font-weight: 600;
+  font-size: clamp(22px, 3vw, 30px);
+  letter-spacing: -0.045em;
+  color: #111214;
+  opacity: 0;
+  animation: tc-intro-word 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.95s forwards;
+}
+.tc-mark-dot,
+.tc-mark-point {
+  transform-box: fill-box;
+  transform-origin: center;
+  transform: scale(0);
+  animation: tc-dot-in 0.42s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  animation-delay: calc(var(--i) * 32ms);
+}
+.tc-mark-point {
+  animation: tc-point-in 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  animation-delay: calc(var(--i) * 32ms + 90ms);
+}
+@keyframes tc-dot-in {
+  to {
+    transform: scale(1);
+  }
+}
+@keyframes tc-point-in {
+  0% {
+    transform: translate(40px, -60px) scale(0.4);
+  }
+  100% {
+    transform: none;
+  }
+}
+@keyframes tc-intro-word {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+html.tc-intro-active,
+html.tc-intro-active body {
+  overflow: hidden;
+}
+
+/* ---------- Reveal on scroll ---------- */
+/* Only hidden once the script is running (html.tc-reveal-ready), so the page
+   never goes blank if scripts fail. */
+html.tc-reveal-ready .tc-brand .portfolio-reveal {
+  animation: none;
+  opacity: 0;
+  transform: translateY(26px);
+  filter: none;
+  transition: opacity 0.7s ease, transform 0.9s var(--tc-ease);
+}
+html.tc-reveal-ready .tc-brand .portfolio-reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+html.tc-reveal-ready .tc-brand .portfolio-reveal:nth-child(2) {
+  transition-delay: 0.07s;
+}
+html.tc-reveal-ready .tc-brand .portfolio-reveal:nth-child(3) {
+  transition-delay: 0.14s;
+}
+html.tc-reveal-ready .tc-brand .portfolio-reveal:nth-child(4) {
+  transition-delay: 0.21s;
+}
+/* Hold everything while the intro is up, then let it rise as the intro lifts. */
+html.tc-intro-active .tc-brand .portfolio-reveal.is-in {
+  opacity: 0;
+  transform: translateY(26px);
+}
+html.tc-reveal-ready .tc-wave-hero-copy.portfolio-reveal {
+  transition-delay: 0.1s;
+}
+
+/* ---------- Work menu (header) ---------- */
+.tc-work-menu {
+  position: relative;
+}
+.tc-work-trigger {
+  gap: 6px;
+  border: 0;
+  background: transparent;
+  font-family: var(--tc-font);
+  cursor: pointer;
+}
+.tc-work-chevron {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.25s var(--tc-ease);
+}
+.tc-work-trigger[aria-expanded="true"] .tc-work-chevron {
+  transform: rotate(180deg);
+}
+.tc-work-panel {
+  position: absolute;
+  top: calc(100% + 14px);
+  left: -8px;
+  width: 340px;
+  padding: 8px;
+  border-radius: var(--tc-radius-lg);
+  background: rgba(255, 255, 255, 0.86);
+  animation: tc-panel-in 0.28s var(--tc-ease);
+}
+/* Bridge the gap so the menu stays open while the pointer moves down to it. */
+.tc-work-panel::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -16px;
+  height: 16px;
+}
+.tc-work-panel[hidden] {
+  display: none;
+}
+.tc-work-panel ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.tc-work-panel-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 52px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  box-sizing: border-box;
+  color: var(--tc-ink) !important;
+  text-decoration: none;
+  transition: background-color 0.18s ease;
+}
+.tc-work-panel li + li .tc-work-panel-row {
+  border-top: 1px solid var(--tc-line);
+  border-radius: 0 0 16px 16px;
+}
+.tc-work-panel-row:hover,
+.tc-work-panel-row:focus-visible {
+  background: var(--tc-ice-deep);
+  border-radius: 16px;
+}
+.tc-work-panel-row.active {
+  background: var(--tc-ice);
+  border-radius: 16px;
+}
+.tc-work-panel-row .tc-work-row-label {
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+.tc-work-row-note {
+  font-size: 14px;
+  color: var(--tc-slate);
+  white-space: nowrap;
+}
+.is-soon .tc-work-row-label {
+  color: var(--tc-slate);
+}
+.is-soon .tc-work-row-note {
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--tc-blush);
+  color: var(--tc-red-deep);
+  font-size: 13px;
+  font-weight: 500;
+}
+@keyframes tc-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Mobile menu: the work rows sit under a small "Work" heading. */
+.tc-mobile-group {
+  margin: 6px 16px 2px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--tc-slate);
+}
+.tc-mobile-sublink {
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 48px;
+  font-size: 18px;
+}
+.tc-mobile-divider {
+  height: 1px;
+  margin: 8px 16px;
+  background: var(--tc-line);
+}
+
+/* ---------- Stacked rows at the bottom of work pages ---------- */
+.tc-work-index {
+  display: grid;
+  grid-template-columns: minmax(200px, 1fr) minmax(0, 2fr);
+  gap: 24px 48px;
+  align-items: start;
+}
+.tc-work-rows {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--tc-line-strong);
+}
+.tc-work-rows li {
+  border-bottom: 1px solid var(--tc-line-strong);
+}
+.tc-work-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 22px 4px;
+  color: var(--tc-ink) !important;
+  text-decoration: none;
+  transition: padding 0.3s var(--tc-ease), color 0.2s ease;
+}
+.tc-work-row .tc-work-row-label {
+  font-size: clamp(24px, 3vw, 36px);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+}
+.tc-work-row:hover {
+  padding-left: 14px;
+}
+.tc-work-row:hover .tc-work-row-label {
+  color: var(--tc-red);
+}
+@media (max-width: 760px) {
+  .tc-work-index {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- Logo wall ---------- */
+.tc-logo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
+  gap: clamp(32px, 4vw, 48px) clamp(20px, 3vw, 32px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.tc-logo-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  color: var(--tc-ink) !important;
+  text-decoration: none;
+}
+.tc-logo-tile-media {
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: var(--tc-radius-lg);
+  box-shadow: inset 0 0 0 1px var(--tc-line);
+}
+.tc-logo-tile-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 0.9s var(--tc-ease);
+}
+a.tc-logo-tile:hover .tc-logo-tile-media img {
+  transform: scale(1.04);
+}
+.tc-logo-tile-meta h3 {
+  margin: 0;
+  font-weight: 500;
+  font-size: 21px;
+  letter-spacing: -0.03em;
+}
+.tc-logo-tile-meta p {
+  margin: 4px 0 0;
+  font-size: 15px;
+  color: var(--tc-slate);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tc-work-panel,
+  .tc-work-chevron,
+  .tc-work-row,
+  .tc-logo-tile-media img {
+    animation: none;
+    transition: none;
+  }
+}
+
 @keyframes tc-rise {
   from {
     opacity: 0;

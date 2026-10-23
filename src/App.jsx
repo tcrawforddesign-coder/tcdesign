@@ -5,7 +5,11 @@ import PageTransition from "./components/animations/PageTransition.jsx";
 import { PortfolioLayout } from "./components/portfolio/PortfolioLayout.jsx";
 import { useSmoothScroll } from "./hooks/useSmoothScroll.js";
 import Home from "./pages/Home.jsx";
+import IntroOverlay from "./brand/IntroOverlay.jsx";
 import ProjectsPage from "./pages/Projects.jsx";
+import BrandingPage from "./pages/Branding.jsx";
+import LogosPage from "./pages/Logos.jsx";
+import PhotographyPage from "./pages/Photography.jsx";
 import PostersPage from "./pages/Posters.jsx";
 import ExperimentsPage from "./pages/Experiments.jsx";
 import ProjectDetailsPage from "./pages/ProjectDetails.jsx";
@@ -48,8 +52,20 @@ function AppRoutes() {
           "Portfolio of Travis Crawford, a Texas-based visual designer focused on branding, campaign creative, and digital experiences.",
       },
       "/projects": {
-        title: "Work — Travis Crawford",
+        title: "Featured work — Travis Crawford",
         description: "Selected branding, campaign, and product design projects by Travis Crawford.",
+      },
+      "/branding": {
+        title: "Branding — Travis Crawford",
+        description: "Brand identity projects by Travis Crawford: logos, color, type, packaging and guidelines.",
+      },
+      "/logos": {
+        title: "Logos — Travis Crawford",
+        description: "Logos, marks and wordmarks designed by Travis Crawford.",
+      },
+      "/photography": {
+        title: "Photography — Travis Crawford",
+        description: "Photography by Travis Crawford. Coming soon.",
       },
       "/posters": {
         title: "Poster Archive — Travis Crawford",
@@ -103,10 +119,14 @@ function AppRoutes() {
 
   return (
     <div className="min-h-full">
+      <IntroOverlay />
       <PageTransition routeKey={location.pathname}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/projects" element={<ProjectsPage />} />
+          <Route path="/branding" element={<BrandingPage />} />
+          <Route path="/logos" element={<LogosPage />} />
+          <Route path="/photography" element={<PhotographyPage />} />
           <Route path="/posters" element={<PostersPage />} />
           <Route path="/experiments" element={<ExperimentsPage />} />
           <Route path="/logo-questionnaire" element={<LogoQuestionnairePage />} />
