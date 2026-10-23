@@ -503,101 +503,6 @@ html:has(.tc-brand) body {
   box-sizing: border-box;
   pointer-events: none;
 }
-.tc-wave-hero-card {
-  pointer-events: auto;
-  width: min(660px, 100%);
-  box-sizing: border-box;
-  padding: clamp(26px, 4vw, 44px);
-  border-radius: var(--tc-radius-lg);
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-.tc-wave-hero-card h1 {
-  margin: 0;
-  font-weight: 600;
-  font-size: clamp(2.6rem, 6.2vw, 5.25rem);
-  line-height: 0.93;
-  letter-spacing: -0.055em;
-}
-.tc-wave-hero-card p {
-  margin: 0;
-  max-width: 36ch;
-  font-size: clamp(17px, 1.6vw, 19px);
-  line-height: 1.5;
-  color: var(--tc-graphite);
-}
-
-/* ---------- Selected work strip ---------- */
-.tc-selected {
-  padding: clamp(72px, 10vw, 120px) 0 clamp(56px, 8vw, 96px);
-  background: linear-gradient(180deg, var(--tc-paper) 0%, var(--tc-ice-deep) 100%);
-}
-.tc-selected-head {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 16px 24px;
-  margin-bottom: 32px;
-}
-.tc-strip {
-  display: flex;
-  gap: 24px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scroll-padding-inline: max(var(--tc-gutter), calc((100% - var(--tc-max)) / 2 + var(--tc-gutter)));
-  padding: 8px max(var(--tc-gutter), calc((100% - var(--tc-max)) / 2 + var(--tc-gutter))) 28px;
-  scrollbar-width: thin;
-  scrollbar-color: var(--tc-sky) transparent;
-}
-.tc-strip:focus-visible {
-  outline-offset: -3px;
-}
-.tc-strip-card {
-  flex: 0 0 min(440px, 80vw);
-  scroll-snap-align: start;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  color: var(--tc-ink) !important;
-  text-decoration: none;
-}
-.tc-strip-media {
-  aspect-ratio: 4 / 5;
-  overflow: hidden;
-  border-radius: 24px;
-  background: var(--tc-ice);
-  transition: transform 0.5s var(--tc-ease), box-shadow 0.5s var(--tc-ease);
-}
-.tc-strip-media img,
-.tc-strip-media video {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.8s var(--tc-ease);
-}
-.tc-strip-card:hover .tc-strip-media {
-  transform: translateY(-6px);
-  box-shadow: 0 30px 60px -30px rgba(47, 93, 140, 0.45);
-}
-.tc-strip-card:hover .tc-strip-media img,
-.tc-strip-card:hover .tc-strip-media video {
-  transform: scale(1.03);
-}
-.tc-strip-meta h3 {
-  margin: 0;
-  font-weight: 500;
-  font-size: 21px;
-  letter-spacing: -0.03em;
-}
-.tc-strip-meta p {
-  margin: 4px 0 0;
-  font-size: 15px;
-  color: var(--tc-slate);
-}
-
 /* ---------- About ---------- */
 .tc-bio {
   display: flex;
@@ -1513,56 +1418,153 @@ html:has(.tc-brand) body {
   max-width: 20ch;
 }
 
-/* Home hero: shorter, so the work starts to show on a laptop screen. */
+/* Home hero: no card. The dot field fades out behind the type so it reads
+   cleanly, and stays full strength on the open side of the screen. */
 .tc-wave-hero {
-  min-height: max(560px, min(700px, 80svh));
+  min-height: max(560px, min(720px, 82svh));
 }
-.tc-wave-hero-card h1 {
-  font-size: clamp(2.4rem, 5.2vw, 4.5rem);
-  line-height: 0.96;
+.tc-wave-field {
+  -webkit-mask-image: radial-gradient(ellipse 62% 78% at 18% 72%, transparent 0%, transparent 34%, rgba(0, 0, 0, 0.35) 58%, #000 82%);
+  mask-image: radial-gradient(ellipse 62% 78% at 18% 72%, transparent 0%, transparent 34%, rgba(0, 0, 0, 0.35) 58%, #000 82%);
 }
-.tc-selected {
-  padding-top: clamp(56px, 7vw, 88px);
+.tc-wave-hero-copy {
+  pointer-events: auto;
+  width: min(720px, 100%);
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  padding-bottom: clamp(8px, 2vw, 24px);
+}
+.tc-wave-hero-copy h1 {
+  margin: 0;
+  font-weight: 600;
+  font-size: clamp(2.75rem, 6vw, 5.5rem);
+  line-height: 0.94;
+  letter-spacing: -0.055em;
+  max-width: 11ch;
+}
+.tc-wave-hero-copy p {
+  margin: 0;
+  max-width: 40ch;
+  font-size: clamp(17px, 1.6vw, 20px);
+  line-height: 1.5;
+  color: var(--tc-graphite);
+}
+.tc-wave-hero-copy .tc-actions {
+  margin-top: 6px;
+}
+.tc-wave-hero-copy .tc-btn-ghost {
+  background: rgba(255, 255, 255, 0.7);
+}
+@media (max-width: 720px) {
+  /* On phones the text spans the width, so fade the lower part instead. */
+  .tc-wave-field {
+    -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 22%, rgba(0, 0, 0, 0.25) 42%, transparent 58%);
+    mask-image: linear-gradient(180deg, #000 0%, #000 22%, rgba(0, 0, 0, 0.25) 42%, transparent 58%);
+  }
 }
 
-/* Selected work: previous / next buttons for mouse users. */
-.tc-selected-tools {
-  display: flex;
-  align-items: center;
-  gap: 20px;
+/* Selected work: one featured project, then a two-up grid. */
+.tc-selected {
+  padding-block: clamp(64px, 8vw, 104px);
+  background: none;
 }
-.tc-strip-controls {
+.tc-selected-head {
   display: flex;
-  gap: 8px;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px 24px;
+  margin-bottom: clamp(28px, 4vw, 44px);
 }
-.tc-strip-button {
+.tc-work-grid {
   display: grid;
-  place-items: center;
-  width: 48px;
-  height: 48px;
-  padding: 0;
-  border: 1px solid var(--tc-line-strong);
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.6);
-  color: var(--tc-ink);
-  transition: background-color 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(40px, 5vw, 64px) clamp(20px, 3vw, 40px);
 }
-.tc-strip-button svg {
-  width: 20px;
-  height: 20px;
+.tc-work-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  color: var(--tc-ink) !important;
+  text-decoration: none;
 }
-.tc-strip-button:hover:not(:disabled) {
-  border-color: var(--tc-ink);
-  background: var(--tc-white);
+.tc-work-card.is-featured {
+  grid-column: 1 / -1;
 }
-.tc-brand .tc-strip-button:disabled {
-  opacity: 0.35;
-  cursor: default !important;
+.tc-work-media {
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: var(--tc-radius-lg);
+  background: var(--tc-ice);
 }
-@media (hover: none) and (pointer: coarse) {
-  .tc-strip-controls {
-    display: none;
+.tc-work-card.is-featured .tc-work-media {
+  aspect-ratio: 16 / 9;
+}
+.tc-work-media img,
+.tc-work-media video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.9s var(--tc-ease);
+}
+.tc-work-card:hover .tc-work-media img,
+.tc-work-card:hover .tc-work-media video {
+  transform: scale(1.025);
+}
+.tc-work-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 4px 16px;
+}
+.tc-work-meta h3 {
+  margin: 0;
+  font-weight: 500;
+  font-size: clamp(20px, 2vw, 26px);
+  letter-spacing: -0.03em;
+}
+.tc-work-card:hover .tc-work-meta h3 {
+  text-decoration: underline;
+  text-decoration-color: var(--tc-red);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 5px;
+}
+.tc-work-meta p {
+  margin: 0;
+  font-size: 15px;
+  color: var(--tc-slate);
+}
+@media (max-width: 720px) {
+  .tc-work-grid {
+    grid-template-columns: 1fr;
   }
+  .tc-work-card.is-featured .tc-work-media {
+    aspect-ratio: 4 / 3;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tc-work-media img,
+  .tc-work-media video {
+    transition: none;
+  }
+  .tc-work-card:hover .tc-work-media img,
+  .tc-work-card:hover .tc-work-media video {
+    transform: none;
+  }
+}
+
+/* Work page: more room between cards. */
+.tc-brand .tc-project-grid {
+  gap: clamp(40px, 5vw, 64px) clamp(24px, 3vw, 40px);
+}
+
+/* The skip link sat in the page flow and pushed everything down,
+   leaving a blank strip at the top of every page. */
+.tc-brand.portfolio-site > .tc-skip-link {
+  position: absolute;
 }
 
 /* About */
@@ -1618,9 +1620,6 @@ html:has(.tc-brand) body {
 
 @media (prefers-reduced-motion: reduce) {
   .tc-brand .portfolio-reveal,
-  .tc-brand .tc-strip-media,
-  .tc-brand .tc-strip-media img,
-  .tc-brand .tc-strip-media video,
   .tc-brand .tc-project-thumb,
   .tc-brand .tc-project-thumb img,
   .tc-brand .tc-project-thumb video,
@@ -1628,7 +1627,6 @@ html:has(.tc-brand) body {
     animation: none !important;
     transition: none !important;
   }
-  .tc-brand .tc-strip-card:hover .tc-strip-media,
   .tc-brand .tc-project-card:hover .tc-project-thumb,
   .tc-brand .portfolio-poster-card:hover {
     transform: none;

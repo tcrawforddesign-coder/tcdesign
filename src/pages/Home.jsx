@@ -1,6 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import WaveField from "../brand/WaveField.jsx";
 import {
@@ -16,19 +14,8 @@ import { posterProject } from "../data/posters.js";
 
 const selectedProjectSlugs = ["civil-goat-coffee", "barbican-refresh", "yellow-bike", "atlas-coffee-club"];
 
-const experimentsProject = {
-  id: "experiments-archive",
-  slug: "experiments",
-  title: "Experiments & Abandoned Projects",
-  tag: "One-offs, motion, visual studies",
-  href: "/experiments",
-  cover: "/images/experiments/comp-1-3.mp4",
-  coverType: "video",
-};
-
 const selectedProjects = [
   ...selectedProjectSlugs.map((slug) => projects.find((project) => project.slug === slug)).filter(Boolean),
-  experimentsProject,
   posterProject,
 ];
 
@@ -37,7 +24,6 @@ const projectCategories = {
   "barbican-refresh": "Concept refresh, wayfinding",
   "yellow-bike": "UX/UI design",
   "atlas-coffee-club": "Paid social campaign",
-  experiments: "One-offs and motion",
   "poster-archive": "Poster series",
 };
 
@@ -62,7 +48,7 @@ export default function Home() {
       <section className="tc-wave-hero" aria-labelledby="tc-wave-hero-title">
         <WaveField />
         <div className="tc-wave-hero-inner">
-          <div className="tc-wave-hero-card tc-glass portfolio-reveal">
+          <div className="tc-wave-hero-copy portfolio-reveal">
             <h1 id="tc-wave-hero-title">
               Brands, campaigns and websites<span className="tc-dot">.</span>
             </h1>
@@ -130,82 +116,46 @@ export default function Home() {
 }
 
 function SelectedWork() {
-  const stripRef = useRef(null);
-  const [edges, setEdges] = useState({ start: true, end: false });
-
-  const updateEdges = useCallback(() => {
-    const strip = stripRef.current;
-    if (!strip) return;
-    const max = strip.scrollWidth - strip.clientWidth;
-    setEdges({ start: strip.scrollLeft <= 4, end: strip.scrollLeft >= max - 4 });
-  }, []);
-
-  useEffect(() => {
-    const strip = stripRef.current;
-    if (!strip) return undefined;
-    updateEdges();
-    strip.addEventListener("scroll", updateEdges, { passive: true });
-    window.addEventListener("resize", updateEdges);
-    return () => {
-      strip.removeEventListener("scroll", updateEdges);
-      window.removeEventListener("resize", updateEdges);
-    };
-  }, [updateEdges]);
-
-  const scrollByCard = (direction) => {
-    const strip = stripRef.current;
-    const card = strip?.querySelector(".tc-strip-card");
-    if (!strip || !card) return;
-    const gap = parseFloat(getComputedStyle(strip).columnGap) || 0;
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    strip.scrollBy({ left: direction * (card.getBoundingClientRect().width + gap), behavior: reduce ? "auto" : "smooth" });
-  };
+  const [feature, ...rest] = selectedProjects;
 
   return (
     <section id="work" className="tc-selected" aria-labelledby="tc-selected-title">
-      <div className="tc-container tc-selected-head">
-        <h2 id="tc-selected-title" className="tc-h2">
-          Selected work
-        </h2>
-        <div className="tc-selected-tools">
-          <div className="tc-strip-controls">
-            <button type="button" className="tc-strip-button" aria-label="Previous projects" aria-controls="tc-strip" disabled={edges.start} onClick={() => scrollByCard(-1)}>
-              <ChevronLeft aria-hidden="true" />
-            </button>
-            <button type="button" className="tc-strip-button" aria-label="Next projects" aria-controls="tc-strip" disabled={edges.end} onClick={() => scrollByCard(1)}>
-              <ChevronRight aria-hidden="true" />
-            </button>
-          </div>
+      <div className="tc-container">
+        <div className="tc-selected-head">
+          <h2 id="tc-selected-title" className="tc-h2">
+            Selected work
+          </h2>
           <Link to="/projects" className="tc-text-link">
             All projects
           </Link>
         </div>
-      </div>
-      <div id="tc-strip" ref={stripRef} className="tc-strip" tabIndex={0} aria-label="Selected projects, scroll sideways">
-        {selectedProjects.map((project) => (
-          <StripCard key={project.id} project={project} />
-        ))}
+        <div className="tc-work-grid">
+          <WorkCard project={feature} featured />
+          {rest.map((project) => (
+            <WorkCard key={project.id} project={project} />
+          ))}
+        </div>
       </div>
     </section>
   );
 }
 
-function StripCard({ project }) {
+function WorkCard({ project, featured = false }) {
   const title = splitProjectTitle(project.title).primary;
   const category = projectCategories[project.slug] ?? project.tag;
-  const cover = getProjectCover(project);
+  const cover = featured && project.heroImage ? project.heroImage : getProjectCover(project);
   const isVideo = project.coverType === "video" || /\.mp4$/i.test(cover ?? "");
 
   return (
-    <Link className="tc-strip-card" to={project.href ?? `/projects/${project.slug}`}>
-      <div className="tc-strip-media">
+    <Link className={`tc-work-card ${featured ? "is-featured" : ""}`} to={project.href ?? `/projects/${project.slug}`}>
+      <div className="tc-work-media">
         {isVideo ? (
           <video src={cover} autoPlay muted loop playsInline preload="metadata" aria-hidden="true" />
         ) : (
-          <img src={cover} alt="" loading="lazy" decoding="async" />
+          <img src={cover} alt="" loading={featured ? "eager" : "lazy"} decoding="async" />
         )}
       </div>
-      <div className="tc-strip-meta">
+      <div className="tc-work-meta">
         <h3>{title}</h3>
         <p>{category}</p>
       </div>
