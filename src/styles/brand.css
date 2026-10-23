@@ -321,6 +321,7 @@ html:has(.tc-brand) body {
 }
 
 .tc-logo-pill {
+  transition: opacity 0.25s ease;
   display: inline-flex;
   align-items: center;
   gap: 10px;
