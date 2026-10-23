@@ -1,16 +1,28 @@
-# React + Vite
+# Travis Crawford — portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Source for [traviscrawforddesign.com](https://traviscrawforddesign.com). React + Vite, deployed on Vercel.
 
-Currently, two official plugins are available:
+## Run it
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+```bash
+npm install
+npm run dev      # local dev server
+npm run build    # production build in dist/
+npm run preview  # serve the build locally
+```
 
-## React Compiler
+## Where things live
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- `src/pages/` — one file per route (Home, Projects, Posters, Experiments, Logo brief, case studies)
+- `src/data/projects.js` — case study content: titles, tags, copy, images
+- `src/data/posters.js`, `src/data/experiments.js` — archive content
+- `src/styles/brand.css` — the Travis Crawford brand layer (colors, type, components)
+- `src/index.css` — base styles from the earlier site that pages still use
+- `api/` — Vercel function that emails the logo brief as a PDF
+- `public/images/` — project images
 
-## Expanding the ESLint configuration
+## Adding images
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Export images at most 2400px wide, as WebP for gallery images or JPEG for
+covers that may be used as social previews. Keep single files under about
+1 MB so pages load quickly on phones.

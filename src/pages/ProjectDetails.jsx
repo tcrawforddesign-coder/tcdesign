@@ -365,8 +365,8 @@ function YellowBikeUXSections({ project }) {
   const futureState = research.future_state ?? {};
   const surveyResults = research.survey_results ?? {};
   const flowImages = [
-    { src: "/images/User Onboarding _ Event _ Route Summary Flow.png", title: "Onboarding, event, and route summary flow" },
-    { src: "/images/Event Challenges Flow.png", title: "Event challenges flow" },
+    { src: "/images/User Onboarding _ Event _ Route Summary Flow.webp", title: "Onboarding, event, and route summary flow" },
+    { src: "/images/Event Challenges Flow.webp", title: "Event challenges flow" },
   ];
 
   return (

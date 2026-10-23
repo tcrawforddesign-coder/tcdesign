@@ -4,7 +4,7 @@ import { projects } from "../data/projects.js";
 export const DEFAULT_OG_IMAGE = "/brand/og-image.png";
 
 const ROUTE_OG_IMAGES = {
-  "/posters": "/images/poster-card-cover.png",
+  "/posters": "/images/poster-card-cover.jpg",
   "/experiments": "/images/experiments/isolate-poster.png",
   "/logo-questionnaire": "/brand/og-image.png",
 };
