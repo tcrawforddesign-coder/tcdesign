@@ -1692,8 +1692,7 @@ html:has(.tc-brand) body {
     transform: none;
   }
 }
-html.tc-intro-active,
-html.tc-intro-active body {
+html.tc-intro-active {
   overflow: hidden;
 }
 
@@ -1730,9 +1729,6 @@ html.tc-reveal-ready .tc-wave-hero-copy.portfolio-reveal {
 }
 
 /* ---------- Work menu (header) ---------- */
-.tc-work-menu {
-  position: relative;
-}
 .tc-work-trigger {
   gap: 6px;
   border: 0;
@@ -1748,63 +1744,128 @@ html.tc-reveal-ready .tc-wave-hero-copy.portfolio-reveal {
 .tc-work-trigger[aria-expanded="true"] .tc-work-chevron {
   transform: rotate(180deg);
 }
-.tc-work-panel {
-  position: absolute;
-  top: calc(100% + 14px);
-  left: -8px;
-  width: 340px;
-  padding: 8px;
-  border-radius: var(--tc-radius-lg);
-  background: rgba(255, 255, 255, 0.86);
-  animation: tc-panel-in 0.28s var(--tc-ease);
+.tc-work-trigger[aria-expanded="true"] {
+  background: var(--tc-ice);
+  color: var(--tc-ink) !important;
 }
-/* Bridge the gap so the menu stays open while the pointer moves down to it. */
-.tc-work-panel::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: -16px;
-  height: 16px;
+
+/* Full Work menu: covers the screen under the header. Rows on the left,
+   a preview of the hovered section on the right. */
+.tc-header-inner {
+  position: relative;
+  z-index: 1;
 }
-.tc-work-panel[hidden] {
+.tc-work-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: auto;
+  overflow-y: auto;
+  background: rgba(244, 248, 251, 0.95);
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+  animation: tc-overlay-in 0.3s ease;
+}
+.tc-work-overlay[hidden] {
   display: none;
 }
-.tc-work-panel ul {
+.tc-work-overlay-inner {
+  max-width: var(--tc-max);
+  min-height: 100%;
+  margin: 0 auto;
+  padding: calc(var(--tc-header-h) + clamp(32px, 6vh, 72px)) var(--tc-gutter) clamp(32px, 6vh, 64px);
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: clamp(28px, 5vw, 72px);
+  align-items: start;
+}
+.tc-work-overlay-rows {
   margin: 0;
   padding: 0;
   list-style: none;
+  border-top: 1px solid var(--tc-line-strong);
 }
-.tc-work-panel-row {
+.tc-work-overlay-rows li {
+  border-bottom: 1px solid var(--tc-line-strong);
+}
+.tc-work-overlay-row {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
   gap: 16px;
-  min-height: 52px;
-  padding: 14px 16px;
-  border-radius: 16px;
-  box-sizing: border-box;
+  padding: clamp(14px, 2.2vh, 22px) 4px;
   color: var(--tc-ink) !important;
   text-decoration: none;
-  transition: background-color 0.18s ease;
+  transition: padding 0.3s var(--tc-ease);
 }
-.tc-work-panel li + li .tc-work-panel-row {
-  border-top: 1px solid var(--tc-line);
-  border-radius: 0 0 16px 16px;
-}
-.tc-work-panel-row:hover,
-.tc-work-panel-row:focus-visible {
-  background: var(--tc-ice-deep);
-  border-radius: 16px;
-}
-.tc-work-panel-row.active {
-  background: var(--tc-ice);
-  border-radius: 16px;
-}
-.tc-work-panel-row .tc-work-row-label {
-  font-size: 18px;
+.tc-work-overlay-row .tc-work-row-label {
+  font-size: clamp(28px, 3.4vw, 48px);
   font-weight: 500;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.045em;
+  line-height: 1.05;
+  transition: color 0.2s ease;
+}
+.tc-work-overlay-row:hover,
+.tc-work-overlay-row:focus-visible {
+  padding-left: 16px;
+}
+.tc-work-overlay-row:hover .tc-work-row-label,
+.tc-work-overlay-row:focus-visible .tc-work-row-label,
+.tc-work-overlay-row.active .tc-work-row-label {
+  color: var(--tc-red);
+}
+.tc-work-overlay-row:focus-visible {
+  outline-offset: -3px;
+}
+.tc-work-preview {
+  position: sticky;
+  top: calc(var(--tc-header-h) + 32px);
+  aspect-ratio: 4 / 3;
+  max-width: 100%;
+  overflow: hidden;
+  border-radius: var(--tc-radius-lg);
+  background: var(--tc-ice);
+}
+.tc-work-preview img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transform: scale(1.03);
+  transition: opacity 0.35s ease, transform 0.6s var(--tc-ease);
+}
+.tc-work-preview img.is-on {
+  opacity: 1;
+  transform: none;
+}
+.tc-work-preview-empty {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  padding: 24px;
+  color: var(--tc-slate);
+  font-size: 18px;
+  text-align: center;
+}
+/* Lock scrolling on the root only: overflow on body would make it the
+   scroll container and break the sticky header. */
+html.tc-work-open {
+  overflow: hidden;
+}
+@keyframes tc-overlay-in {
+  from {
+    opacity: 0;
+  }
+}
+@media (max-width: 1080px) {
+  .tc-work-overlay {
+    display: none !important;
+  }
 }
 .tc-work-row-note {
   font-size: 14px;
@@ -1822,17 +1883,6 @@ html.tc-reveal-ready .tc-wave-hero-copy.portfolio-reveal {
   font-size: 13px;
   font-weight: 500;
 }
-@keyframes tc-panel-in {
-  from {
-    opacity: 0;
-    transform: translateY(-6px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
 /* Mobile menu: the work rows sit under a small "Work" heading. */
 .tc-mobile-group {
   margin: 6px 16px 2px;
@@ -1940,7 +1990,9 @@ a.tc-logo-tile:hover .tc-logo-tile-media img {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .tc-work-panel,
+  .tc-work-overlay,
+  .tc-work-preview img,
+  .tc-work-overlay-row,
   .tc-work-chevron,
   .tc-work-row,
   .tc-logo-tile-media img {

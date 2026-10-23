@@ -88,78 +88,123 @@ function isWorkPath(pathname) {
   return WORK_SECTIONS.some((section) => pathname === section.to) || pathname.startsWith("/projects/");
 }
 
-function WorkMenu() {
+// "Work" opens a panel across the screen: big rows on the left, and a preview
+// of each section's work on the right that changes as you hover or tab.
+// The panel renders outside the nav pill: the pill's backdrop blur would
+// otherwise trap a fixed-position panel inside it.
+function useWorkMenu() {
   const [open, setOpen] = useState(false);
+  const buttonRef = useRef(null);
+  return { open, setOpen, buttonRef };
+}
+
+function WorkButton({ open, setOpen, buttonRef }) {
   const location = useLocation();
-  const wrapRef = useRef(null);
-  const closeTimer = useRef(0);
   const active = isWorkPath(location.pathname);
+  return (
+    <button
+      ref={buttonRef}
+      type="button"
+      className={`tc-nav-link tc-work-trigger ${active ? "active" : ""}`}
+      aria-expanded={open}
+      aria-controls="tc-work-panel"
+      onClick={() => setOpen((value) => !value)}
+    >
+      Work
+      <ChevronDown aria-hidden="true" className="tc-work-chevron" />
+    </button>
+  );
+}
+
+function WorkMenu({ open, setOpen, buttonRef }) {
+  const [preview, setPreview] = useState(WORK_SECTIONS[0].to);
+  const location = useLocation();
+  const panelRef = useRef(null);
+
+  const close = (returnFocus = false) => {
+    setOpen(false);
+    if (returnFocus) buttonRef.current?.focus();
+  };
 
   useEffect(() => {
     setOpen(false);
-  }, [location.pathname, location.hash]);
+  }, [location.pathname, location.hash, setOpen]);
 
   useEffect(() => {
     if (!open) return undefined;
+    // Start the preview on the page you're on, if it's one of the sections.
+    const current = WORK_SECTIONS.find((section) => section.to === location.pathname);
+    setPreview(current?.preview ? current.to : WORK_SECTIONS[0].to);
+
     const onKey = (event) => {
-      if (event.key === "Escape") {
-        setOpen(false);
-        wrapRef.current?.querySelector("button")?.focus();
-      }
-    };
-    const onPointer = (event) => {
-      if (!wrapRef.current?.contains(event.target)) setOpen(false);
+      if (event.key === "Escape") close(true);
     };
     window.addEventListener("keydown", onKey);
-    window.addEventListener("pointerdown", onPointer);
+    window.__studioLenis?.stop();
+    document.documentElement.classList.add("tc-work-open");
+    panelRef.current?.querySelector("a")?.focus({ preventScroll: true });
     return () => {
       window.removeEventListener("keydown", onKey);
-      window.removeEventListener("pointerdown", onPointer);
+      window.__studioLenis?.start();
+      document.documentElement.classList.remove("tc-work-open");
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
-  // Hover opens it for mouse users; clicking works everywhere.
-  const hoverable = () => window.matchMedia("(hover: hover) and (pointer: fine)").matches;
-  const onEnter = () => {
-    if (!hoverable()) return;
-    window.clearTimeout(closeTimer.current);
-    setOpen(true);
-  };
-  const onLeave = () => {
-    if (!hoverable()) return;
-    closeTimer.current = window.setTimeout(() => setOpen(false), 180);
-  };
+  const shown = WORK_SECTIONS.find((section) => section.to === preview);
 
   return (
-    <div className="tc-work-menu" ref={wrapRef} onPointerEnter={onEnter} onPointerLeave={onLeave}>
-      <button
-        type="button"
-        className={`tc-nav-link tc-work-trigger ${active ? "active" : ""}`}
-        aria-expanded={open}
-        aria-controls="tc-work-panel"
-        onClick={() => setOpen((value) => (hoverable() ? true : !value))}
+    <>
+      <div
+        id="tc-work-panel"
+        ref={panelRef}
+        className="tc-work-overlay"
+        hidden={!open}
+        onClick={(event) => {
+          if (event.target === event.currentTarget) close();
+        }}
       >
-        Work
-        <ChevronDown aria-hidden="true" className="tc-work-chevron" />
-      </button>
-      <div id="tc-work-panel" className="tc-work-panel tc-glass" hidden={!open}>
-        <ul>
-          {WORK_SECTIONS.map((section) => (
-            <li key={section.to}>
-              <NavLink to={section.to} end className={`tc-work-panel-row ${section.soon ? "is-soon" : ""}`}>
-                <span className="tc-work-row-label">{section.label}</span>
-                <span className="tc-work-row-note">{section.note}</span>
-              </NavLink>
-            </li>
-          ))}
-        </ul>
+        <div className="tc-work-overlay-inner" onClick={(event) => {
+          if (!event.target.closest("a, .tc-work-preview")) close();
+        }}>
+          <ul className="tc-work-overlay-rows">
+            {WORK_SECTIONS.map((section) => (
+              <li key={section.to}>
+                <NavLink
+                  to={section.to}
+                  end
+                  className={`tc-work-overlay-row ${section.soon ? "is-soon" : ""}`}
+                  onPointerEnter={() => setPreview(section.to)}
+                  onFocus={() => setPreview(section.to)}
+                >
+                  <span className="tc-work-row-label">{section.label}</span>
+                  <span className="tc-work-row-note">{section.note}</span>
+                </NavLink>
+              </li>
+            ))}
+          </ul>
+          <div className="tc-work-preview" aria-hidden="true">
+            {WORK_SECTIONS.filter((section) => section.preview).map((section) => (
+              <img
+                key={section.to}
+                src={section.preview}
+                alt=""
+                loading={open ? "eager" : "lazy"}
+                decoding="async"
+                className={shown?.to === section.to ? "is-on" : ""}
+              />
+            ))}
+            {shown && !shown.preview ? <p className="tc-work-preview-empty">{shown.label} is coming soon.</p> : null}
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
 function SiteHeader() {
   const [open, setOpen] = useState(false);
+  const work = useWorkMenu();
   const location = useLocation();
 
   useEffect(() => {
@@ -180,7 +225,7 @@ function SiteHeader() {
       <div className="tc-header-inner">
         <LogoPill to="/" aria-label="Travis Crawford, home" />
         <nav className="tc-nav tc-glass" aria-label="Primary navigation">
-          <WorkMenu />
+          <WorkButton {...work} />
           {NAV_ITEMS.map((item) =>
             item.to.includes("#") ? (
               <Link key={item.label} to={item.to} className="tc-nav-link">
@@ -207,6 +252,7 @@ function SiteHeader() {
           <span>{open ? "Close" : "Menu"}</span>
         </button>
       </div>
+      <WorkMenu {...work} />
       <div id="tc-mobile-menu" className="tc-mobile-menu tc-glass" hidden={!open}>
         <p className="tc-mobile-group">Work</p>
         {WORK_SECTIONS.map((section) => (
