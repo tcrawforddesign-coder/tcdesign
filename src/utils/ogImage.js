@@ -1,12 +1,12 @@
 import { getProjectCover } from "../components/portfolio/PortfolioCards.jsx";
 import { projects } from "../data/projects.js";
 
-export const DEFAULT_OG_IMAGE = "/hero-logo.png";
+export const DEFAULT_OG_IMAGE = "/brand/og-image.png";
 
 const ROUTE_OG_IMAGES = {
   "/posters": "/images/poster-card-cover.png",
   "/experiments": "/images/experiments/isolate-poster.png",
-  "/logo-questionnaire": "/hero-logo.png",
+  "/logo-questionnaire": "/brand/og-image.png",
 };
 
 function isVideoSrc(src = "") {

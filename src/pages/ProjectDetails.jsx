@@ -52,7 +52,7 @@ export default function ProjectDetailsPage() {
 
       <section className="portfolio-case-hero">
         {project.heroVideo ? (
-          <video autoPlay muted loop playsInline>
+          <video autoPlay muted loop playsInline poster={heroImage}>
             <source src={project.heroVideo} type="video/mp4" />
           </video>
         ) : heroImage ? (

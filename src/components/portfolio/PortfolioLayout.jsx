@@ -1,5 +1,7 @@
-import { useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, NavLink, useLocation } from "react-router-dom";
+
+import HalftoneMark, { LogoPill } from "../../brand/HalftoneMark.jsx";
 
 const CONTACT_EMAIL = "tcrawford.design@gmail.com";
 const LINKEDIN_URL = "https://www.linkedin.com/in/travis-crawford-67759b24a";
@@ -7,119 +9,128 @@ const DRIBBBLE_URL = "https://dribbble.com/tcrawforddesign";
 
 export { CONTACT_EMAIL, LINKEDIN_URL, DRIBBBLE_URL };
 
-export function PortfolioLayout({ children }) {
+const NAV_ITEMS = [
+  { to: "/projects", label: "Work" },
+  { to: "/#about", label: "About" },
+  { to: "/posters", label: "Posters" },
+  { to: "/experiments", label: "Experiments" },
+  { to: "/logo-questionnaire", label: "Logo brief" },
+];
+
+export function PortfolioLayout({ children, overlayHeader = false }) {
   return (
-    <div className="portfolio-site">
-      <header className="portfolio-header">
-        <Link to="/" className="portfolio-logo" aria-label="Travis Crawford home">
-          <img src="/travis-logo.png" alt="Travis Crawford" />
-        </Link>
-        <nav aria-label="Primary navigation">
-          <Link to="/#work">Work</Link>
-          <Link to="/#about">About</Link>
-          <Link to="/experiments">Experiments</Link>
-          <Link to="/posters">Posters</Link>
-          <Link to="/logo-questionnaire">Logo Brief</Link>
-          <Link to="/#contact">Contact</Link>
-        </nav>
-      </header>
-      <main>{children}</main>
-      <footer className="portfolio-footer">
-        <Link to="/" className="portfolio-footer-logo" aria-label="Travis Crawford home">
-          <img src="/travis-logo.png" alt="Travis Crawford" />
-        </Link>
-        <div className="portfolio-footer-contact">
-          <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
-          <p>© 2026 Travis Crawford. All rights reserved.</p>
-        </div>
-        <div className="portfolio-footer-social">
-          <a href={LINKEDIN_URL} target="_blank" rel="noreferrer">LinkedIn</a>
-          <a href={DRIBBBLE_URL} target="_blank" rel="noreferrer">Dribbble</a>
-        </div>
-      </footer>
+    <div className={`portfolio-site tc-brand ${overlayHeader ? "tc-has-overlay-header" : ""}`}>
+      <a className="tc-skip-link" href="#main">
+        Skip to content
+      </a>
+      <SiteHeader />
+      <main id="main">{children}</main>
+      <SiteFooter />
     </div>
   );
 }
 
-export function PortfolioPointerEffects() {
+function SiteHeader() {
+  const [open, setOpen] = useState(false);
+  const location = useLocation();
+
+  useEffect(() => {
+    setOpen(false);
+  }, [location.pathname, location.hash]);
+
+  useEffect(() => {
+    if (!open) return undefined;
+    const onKey = (event) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
+
   return (
-    <>
-      <PortfolioCursorSpotlight />
-      <PortfolioClickDrops />
-    </>
+    <header className="tc-header">
+      <div className="tc-header-inner">
+        <LogoPill to="/" aria-label="Travis Crawford, home" />
+        <nav className="tc-nav tc-glass" aria-label="Primary navigation">
+          {NAV_ITEMS.map((item) =>
+            item.to.includes("#") ? (
+              <Link key={item.label} to={item.to} className="tc-nav-link">
+                {item.label}
+              </Link>
+            ) : (
+              <NavLink key={item.label} to={item.to} className="tc-nav-link">
+                {item.label}
+              </NavLink>
+            ),
+          )}
+          <Link to="/#contact" className="tc-btn tc-btn-red tc-btn-sm">
+            Start a project
+          </Link>
+        </nav>
+        <button
+          type="button"
+          className="tc-menu-button tc-glass"
+          aria-expanded={open}
+          aria-controls="tc-mobile-menu"
+          onClick={() => setOpen((value) => !value)}
+        >
+          <span className="tc-menu-icon" aria-hidden="true" data-open={open} />
+          <span>{open ? "Close" : "Menu"}</span>
+        </button>
+      </div>
+      <div id="tc-mobile-menu" className="tc-mobile-menu tc-glass" hidden={!open}>
+        {NAV_ITEMS.map((item) => (
+          <Link key={item.label} to={item.to} className="tc-mobile-link">
+            {item.label}
+          </Link>
+        ))}
+        <Link to="/#contact" className="tc-btn tc-btn-red">
+          Start a project
+        </Link>
+      </div>
+    </header>
   );
 }
 
-function PortfolioCursorSpotlight() {
-  const spotlightRef = useRef(null);
-
-  useEffect(() => {
-    const spotlight = spotlightRef.current;
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const usesCoarsePointer = window.matchMedia("(pointer: coarse)").matches;
-
-    if (!spotlight || prefersReducedMotion || usesCoarsePointer) return undefined;
-
-    let animationFrame = 0;
-
-    const updateSpotlight = (event) => {
-      window.cancelAnimationFrame(animationFrame);
-      animationFrame = window.requestAnimationFrame(() => {
-        spotlight.style.transform = `translate3d(${event.clientX}px, ${event.clientY}px, 0)`;
-        spotlight.classList.add("is-visible");
-      });
-    };
-
-    const hideSpotlight = () => {
-      spotlight.classList.remove("is-visible");
-    };
-
-    window.addEventListener("pointermove", updateSpotlight);
-    document.addEventListener("mouseleave", hideSpotlight);
-
-    return () => {
-      window.cancelAnimationFrame(animationFrame);
-      window.removeEventListener("pointermove", updateSpotlight);
-      document.removeEventListener("mouseleave", hideSpotlight);
-    };
-  }, []);
-
-  return <div ref={spotlightRef} className="portfolio-cursor-spotlight" aria-hidden="true" />;
+function SiteFooter() {
+  return (
+    <footer className="tc-footer">
+      <div className="tc-footer-inner">
+        <div className="tc-footer-brand">
+          <Link to="/" className="tc-footer-mark" aria-label="Travis Crawford, home">
+            <HalftoneMark size={40} />
+            <span>
+              Travis Crawford<span className="tc-dot">.</span>
+            </span>
+          </Link>
+          <p>Visual designer and creative strategist.</p>
+        </div>
+        <nav className="tc-footer-links" aria-label="Footer">
+          <Link to="/projects">Work</Link>
+          <Link to="/posters">Posters</Link>
+          <Link to="/experiments">Experiments</Link>
+          <Link to="/logo-questionnaire">Logo brief</Link>
+          <a href={LINKEDIN_URL} target="_blank" rel="noreferrer">
+            LinkedIn
+          </a>
+          <a href={DRIBBBLE_URL} target="_blank" rel="noreferrer">
+            Dribbble
+          </a>
+        </nav>
+      </div>
+      <div className="tc-footer-base">
+        <span>
+          © {new Date().getFullYear()} Travis Crawford<span className="tc-dot">.</span>
+        </span>
+        <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+      </div>
+    </footer>
+  );
 }
 
-function PortfolioClickDrops() {
-  const dropsRef = useRef(null);
-
-  useEffect(() => {
-    const drops = dropsRef.current;
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    if (!drops || prefersReducedMotion) return undefined;
-
-    const createDrop = (event) => {
-      if (event.button !== 0) return;
-
-      const drop = document.createElement("span");
-      drop.className = "portfolio-click-drop";
-      drop.style.setProperty("--drop-x", `${event.clientX}px`);
-      drop.style.setProperty("--drop-y", `${event.clientY}px`);
-      drop.innerHTML = "<span></span><span></span><span></span>";
-      drops.appendChild(drop);
-
-      window.setTimeout(() => {
-        drop.remove();
-      }, 900);
-    };
-
-    window.addEventListener("pointerdown", createDrop, { capture: true });
-
-    return () => {
-      window.removeEventListener("pointerdown", createDrop, { capture: true });
-      drops.replaceChildren();
-    };
-  }, []);
-
-  return <div ref={dropsRef} className="portfolio-click-drops" aria-hidden="true" />;
+// Kept for compatibility with App.jsx; the new brand uses the normal cursor.
+export function PortfolioPointerEffects() {
+  return null;
 }
 
 export function PortfolioReveal({ as: Component = "div", className = "", children }) {
@@ -129,7 +140,7 @@ export function PortfolioReveal({ as: Component = "div", className = "", childre
 export function SectionHeading({ eyebrow, title }) {
   return (
     <PortfolioReveal className="portfolio-section-heading">
-      <p>{eyebrow}</p>
+      {eyebrow ? <p>{eyebrow}</p> : null}
       <h2>{title}</h2>
     </PortfolioReveal>
   );
@@ -137,34 +148,31 @@ export function SectionHeading({ eyebrow, title }) {
 
 export function ContactSection() {
   return (
-    <section id="contact" className="portfolio-section portfolio-contact-section">
-      <PortfolioReveal as="p">Have a project, collaboration, or creative opportunity in mind? I’d love to hear from you.</PortfolioReveal>
-      <a className="portfolio-contact-link portfolio-reveal" href={`mailto:${CONTACT_EMAIL}`}>
-        Email Me
-      </a>
-      <div className="portfolio-contact-meta portfolio-reveal">
-        <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
-        <a href={LINKEDIN_URL} target="_blank" rel="noreferrer">LinkedIn</a>
+    <section id="contact" className="tc-reach">
+      <div className="tc-reach-inner">
+        <PortfolioReveal as="h2" className="tc-reach-title">
+          Have something
+          <br />
+          worth making<span className="tc-dot">?</span>
+        </PortfolioReveal>
+        <PortfolioReveal className="tc-reach-actions">
+          <a className="tc-btn tc-btn-red tc-btn-lg" href={`mailto:${CONTACT_EMAIL}`}>
+            Start a project
+          </a>
+          <a className="tc-reach-email" href={`mailto:${CONTACT_EMAIL}`}>
+            {CONTACT_EMAIL}
+          </a>
+        </PortfolioReveal>
+        <PortfolioReveal as="p" className="tc-reach-note">
+          Need a logo? <Link to="/logo-questionnaire">Fill out the logo brief</Link> and I'll follow up.
+        </PortfolioReveal>
       </div>
     </section>
   );
 }
 
+// The old services ticker. The new brand doesn't use a marquee, so this renders
+// nothing; it stays exported so older imports keep working.
 export function Marquee() {
-  return (
-    <section className="portfolio-marquee" aria-label="Services">
-      <div className="portfolio-marquee-track">
-        <span>Paid Social</span>
-        <span>Brand Systems</span>
-        <span>Campaign Design</span>
-        <span>Poster Design</span>
-        <span>Art Direction</span>
-        <span>Typography</span>
-        <span>Paid Social</span>
-        <span>Brand Systems</span>
-        <span>Campaign Design</span>
-        <span>Poster Design</span>
-      </div>
-    </section>
-  );
+  return null;
 }
