@@ -19,8 +19,10 @@ function toAbsoluteUrl(src, siteOrigin) {
   return `${siteOrigin}${src.startsWith("/") ? src : `/${src}`}`;
 }
 
+// Link previews (LinkedIn, iMessage, Slack) don't all show WebP, so share
+// images must be JPEG or PNG.
 function firstImageSrc(...candidates) {
-  return candidates.find((src) => src && !isVideoSrc(src));
+  return candidates.find((src) => src && !isVideoSrc(src) && /\.(jpe?g|png)(\?|$)/i.test(src));
 }
 
 export function resolveOgImage(pathname, siteOrigin) {

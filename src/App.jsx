@@ -49,7 +49,7 @@ function AppRoutes() {
       "/": {
         title: "Travis Crawford",
         description:
-          "Portfolio of Travis Crawford, a Texas-based visual designer focused on branding, campaign creative, and digital experiences.",
+          "Portfolio of Travis Crawford, a Texas-based visual designer focused on branding, campaign creative, and poster design.",
       },
       "/projects": {
         title: "Featured work — Travis Crawford",

@@ -37,8 +37,8 @@ const services = [
     copy: "One clear idea carried through ads, social, email, events and print.",
   },
   {
-    title: "Websites and motion",
-    copy: "Sites, interactive moments and creative code that make a brand feel alive.",
+    title: "Posters and motion",
+    copy: "Posters, animated pieces and visual experiments for launches, events and social.",
   },
 ];
 
@@ -50,7 +50,7 @@ export default function Home() {
         <div className="tc-wave-hero-inner">
           <div className="tc-wave-hero-copy portfolio-reveal">
             <h1 id="tc-wave-hero-title">
-              Brands, campaigns and websites<span className="tc-dot">.</span>
+              Brands, campaigns and posters<span className="tc-dot">.</span>
             </h1>
             <p>From first sketch to launch. I'm Travis Crawford, a visual designer and creative strategist in Texas, and I take on freelance projects.</p>
             <div className="tc-actions">
@@ -79,7 +79,7 @@ export default function Home() {
           <h2 id="tc-about-title" className="tc-h2">
             Hi, I'm Travis<span className="tc-dot">.</span>
           </h2>
-          <p className="tc-lede">I design identities, campaigns and websites that make ideas easy to understand and hard to forget.</p>
+          <p className="tc-lede">I design identities, campaigns and posters that make ideas easy to understand and hard to forget.</p>
           <p className="tc-bio-text">
             By day I'm a creative marketing specialist at 3Sixty Integrated, where I turn technical security topics into emails, sales materials and social posts that are easy to follow. On my own, I take brands from the first logo sketch to the launch posts.
           </p>

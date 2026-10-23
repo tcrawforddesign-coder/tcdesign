@@ -141,15 +141,17 @@ export function splitProjectTitle(title = "") {
 }
 
 export function getProjectCover(project = {}) {
+  // Card covers, picked as the strongest still from each project and
+  // checked at the cards' 4:3 crop.
   const preferredCovers = {
     "3sixty-integrated-marketing": "/images/3Sixty Socials /1768231836946.jpeg",
-    "yellow-bike": "/images/yellow-bike-card-cover.jpg",
-    "civil-goat-coffee": "/images/civil-goat-card-cover.jpg",
-    "atlas-coffee-club": "/images/atlas-card-cover.jpg",
-    "barbican-refresh": "/images/barbican-card-cover.mp4",
+    "yellow-bike": "/images/yellow-bike-header.png",
+    "civil-goat-coffee": "/images/CG_6.webp",
+    "atlas-coffee-club": "/images/atlas-cover.jpg",
+    "barbican-refresh": "/images/B_11.webp",
     "aluma-skincare": "/images/A_1.png",
-    "data-dog-analytics": "/images/datadog-card-cover.png",
-    "ritual-coffee": "/images/ritual-card-cover.png",
+    "data-dog-analytics": "/images/DD_11.webp",
+    "ritual-coffee": "/images/hdh.png",
     "poster-archive": "/images/poster-card-cover.jpg",
   };
 

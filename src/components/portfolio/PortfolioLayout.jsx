@@ -137,7 +137,7 @@ function WorkMenu() {
         className={`tc-nav-link tc-work-trigger ${active ? "active" : ""}`}
         aria-expanded={open}
         aria-controls="tc-work-panel"
-        onClick={() => setOpen((value) => !value)}
+        onClick={() => setOpen((value) => (hoverable() ? true : !value))}
       >
         Work
         <ChevronDown aria-hidden="true" className="tc-work-chevron" />
