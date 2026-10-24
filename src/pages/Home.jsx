@@ -15,8 +15,8 @@ import { usePrefersReducedMotion } from "../hooks/usePrefersReducedMotion.js";
 import { projects } from "../data/projects.js";
 import { posterProject } from "../data/posters.js";
 
-const showcaseProject = projects.find((project) => project.slug === "civil-goat-coffee");
-const selectedProjectSlugs = ["barbican-refresh", "yellow-bike", "atlas-coffee-club"];
+const showcaseProject = projects.find((project) => project.slug === "atlas-coffee-club");
+const selectedProjectSlugs = ["civil-goat-coffee", "barbican-refresh", "yellow-bike"];
 
 const selectedProjects = [
   ...selectedProjectSlugs.map((slug) => projects.find((project) => project.slug === slug)).filter(Boolean),
@@ -68,11 +68,11 @@ export default function Home() {
       </HeroParallax>
 
       <ShowcaseReveal
-        project="Civil Goat Coffee"
-        label={showcaseProject?.tag ?? "Brand system"}
-        image="/images/CG_6.webp"
-        alt={showcaseProject?.heroAlt ?? "Civil Goat Coffee brand system"}
-        to="/projects/civil-goat-coffee"
+        project="Atlas Coffee Club"
+        label={showcaseProject?.tag ?? "Paid social ads"}
+        image="/images/atlas-showcase.jpg"
+        alt="Atlas+ static ads fanned in an arc: Blends with Benefits, Replace Your Supplement Stack, Replace Your Latte and more"
+        to="/projects/atlas-coffee-club"
       />
 
       <section className="tc-statement" aria-label="How I work">
