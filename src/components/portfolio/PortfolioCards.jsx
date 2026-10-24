@@ -144,7 +144,7 @@ export function getProjectCover(project = {}) {
   // Card covers, picked as the strongest still from each project and
   // checked at the cards' 4:3 crop.
   const preferredCovers = {
-    "3sixty-integrated-marketing": "/images/3Sixty Socials /1768231836946.jpeg",
+    "3sixty-integrated-marketing": "/images/3sixty-cover.jpg",
     "yellow-bike": "/images/yellow-bike-header.png",
     "civil-goat-coffee": "/images/CG_6.webp",
     "atlas-coffee-club": "/images/atlas-cover.jpg",
@@ -160,7 +160,7 @@ export function getProjectCover(project = {}) {
 
 function getProjectAlternateCover(project = {}, title = "") {
   const alternateCovers = {
-    "3sixty-integrated-marketing": "/images/3Sixty Socials /1755111849129.jpeg",
+    "3sixty-integrated-marketing": "/images/3sixty-cover.jpg",
     "yellow-bike": "/images/yellow-bike-onboarding-flow.webp",
     "civil-goat-coffee": "/images/CG_9.webp",
     "atlas-coffee-club": "/images/Flavor_Journey_Ad2_1080x1350.webp",

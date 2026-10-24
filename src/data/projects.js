@@ -9,9 +9,9 @@ export const projects = [
       "I handle 3Sixty Integrated's marketing day to day: the LinkedIn feed, client email, sales materials and company events. Most of the job is turning technical security topics into something clients and prospects can follow.",
     roles: ["Creative Marketing Specialist"],
     tools: ["Figma", "Photoshop", "Mailchimp", "HubSpot", "LinkedIn"],
-    cover: "/images/Gemini_Generated_Image_c6x6a5c6x6a5c6x6.webp",
-    heroImage: "/images/Gemini_Generated_Image_c6x6a5c6x6a5c6x6.webp",
-    heroAlt: "A white hard hat with the 3Sixty logo on a desk beside a technician's hands",
+    cover: "/images/3sixty-cover.jpg",
+    heroImage: "/images/3sixty-cover.jpg",
+    heroAlt: "Five 3Sixty Integrated LinkedIn posts fanned in an arc, led by the red Who's There? video intercom post",
     socialPostGroups: [
       {
         title: "Security education",

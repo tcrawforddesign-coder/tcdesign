@@ -16,7 +16,7 @@ import { projects } from "../data/projects.js";
 import { posterProject } from "../data/posters.js";
 
 const showcaseProject = projects.find((project) => project.slug === "atlas-coffee-club");
-const selectedProjectSlugs = ["civil-goat-coffee", "barbican-refresh", "yellow-bike"];
+const selectedProjectSlugs = ["3sixty-integrated-marketing", "civil-goat-coffee", "barbican-refresh", "yellow-bike"];
 
 const selectedProjects = [
   ...selectedProjectSlugs.map((slug) => projects.find((project) => project.slug === slug)).filter(Boolean),
