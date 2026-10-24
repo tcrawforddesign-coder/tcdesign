@@ -772,6 +772,7 @@ export const projects = [
     textureCopy: null,
     galleryAspect: "4 / 5",
     galleryObjectFit: "contain",
+    galleryDisplay: "ring",
     galleryLayout: "meta",
     galleryNote:
       "Meta placements ship as 4:5 static frames built for in-feed clarity and promo legibility.",

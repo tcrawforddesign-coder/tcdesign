@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { CaseCover, ReadingProgress } from "../components/motion/ScrollMotion.jsx";
+import AdRing from "../components/portfolio/AdRing.jsx";
 import { usePrefersReducedMotion } from "../hooks/usePrefersReducedMotion.js";
 import { Link, useParams } from "react-router-dom";
 
@@ -218,6 +219,14 @@ function ProjectVisuals({ project, galleryItems }) {
     project.slug === "atlas-coffee-club"
       ? "Static ad work grouped by campaign and concept set."
       : "The work";
+
+  if (project.galleryDisplay === "ring" && project.galleryGroups?.length) {
+    return (
+      <div className="portfolio-section portfolio-work-section">
+        <AdRing groups={project.galleryGroups} title="The ads, every set." />
+      </div>
+    );
+  }
 
   if (project.galleryGroups?.length) {
     return (

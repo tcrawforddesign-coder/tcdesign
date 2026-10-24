@@ -2559,3 +2559,262 @@ a.tc-logo-tile:hover .tc-logo-tile-media img {
 .tc-brand .tc-case-hero + .tc-case-cover {
   margin-top: clamp(-40px, -3vw, -16px);
 }
+
+/* ==========================================================================
+   Ad ring: static ads on a turning ring, with an up-close viewer.
+   ========================================================================== */
+.tc-adring-section {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(20px, 3vw, 32px);
+}
+.tc-adring-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 8px 24px;
+}
+.tc-adring-head .tc-h2 {
+  margin: 0;
+}
+.tc-adring-hint {
+  margin: 0;
+  font-size: 15px;
+  color: var(--tc-slate);
+}
+.tc-adring {
+  position: relative;
+}
+.tc-adring-sets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: clamp(8px, 2vw, 16px);
+}
+.tc-adring-chip {
+  min-height: 40px;
+  padding: 0 16px;
+  border: 1px solid rgba(47, 93, 140, 0.18);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.6);
+  color: var(--tc-graphite);
+  font: 500 14px/1 var(--tc-font);
+  cursor: pointer;
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease, transform 0.2s var(--tc-ease);
+}
+.tc-adring-chip:hover {
+  border-color: rgba(47, 93, 140, 0.4);
+}
+.tc-adring-chip:active {
+  transform: scale(0.96);
+}
+.tc-adring-chip.is-active {
+  background: var(--tc-ink);
+  border-color: var(--tc-ink);
+  color: #fff;
+}
+.tc-adring-stage {
+  position: relative;
+  height: calc(var(--card-w) * 1.25 + 110px);
+  margin-inline: calc(-1 * var(--tc-gutter));
+  perspective: 950px;
+  perspective-origin: 50% 50%;
+  overflow: hidden;
+  touch-action: pan-y;
+  cursor: grab;
+  user-select: none;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 12%, #000 88%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, #000 12%, #000 88%, transparent 100%);
+}
+.tc-adring-stage:active {
+  cursor: grabbing;
+}
+.tc-adring-track {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  transform-style: preserve-3d;
+}
+.tc-adring-item {
+  position: absolute;
+  left: calc(var(--card-w) / -2);
+  top: calc(var(--card-w) * -0.625);
+  width: var(--card-w);
+  aspect-ratio: 4 / 5;
+  transform: rotateY(var(--a)) translateZ(var(--r));
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.tc-adring-card {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: 18px;
+  overflow: hidden;
+  background: var(--tc-ice);
+  cursor: pointer;
+  box-shadow: 0 18px 40px -24px rgba(17, 18, 20, 0.45);
+  transform: translateZ(0);
+  transition: transform 0.5s var(--tc-ease), box-shadow 0.5s var(--tc-ease);
+}
+.tc-adring-card img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+.tc-adring-card:hover,
+.tc-adring-card:focus-visible {
+  transform: translateZ(70px) scale(1.06);
+  box-shadow: 0 34px 60px -26px rgba(47, 93, 140, 0.6);
+}
+.tc-adring-card:focus-visible {
+  outline: 3px solid var(--tc-blue);
+  outline-offset: 4px;
+}
+.tc-adring-card:active {
+  transform: translateZ(40px) scale(1.02);
+  transition-duration: 0.15s;
+}
+.tc-adring-controls {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 4px;
+}
+.tc-adring-arrow,
+.tc-viewer-nav,
+.tc-viewer-close {
+  display: inline-grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: 1px solid rgba(47, 93, 140, 0.18);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.72);
+  -webkit-backdrop-filter: blur(14px) saturate(1.4);
+  backdrop-filter: blur(14px) saturate(1.4);
+  color: var(--tc-ink);
+  cursor: pointer;
+  transition: transform 0.25s var(--tc-ease), background-color 0.2s ease;
+}
+.tc-adring-arrow:hover,
+.tc-viewer-nav:hover,
+.tc-viewer-close:hover {
+  background: #fff;
+}
+.tc-adring-arrow:active,
+.tc-viewer-nav:active,
+.tc-viewer-close:active {
+  transform: scale(0.92);
+}
+.tc-adring-arrow svg,
+.tc-viewer-nav svg,
+.tc-viewer-close svg {
+  width: 20px;
+  height: 20px;
+}
+.tc-adring-flat {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.tc-adring-flat .tc-adring-card {
+  aspect-ratio: 4 / 5;
+}
+
+/* Viewer */
+html.tc-viewer-open {
+  overflow: hidden;
+}
+.tc-viewer {
+  position: fixed;
+  z-index: 200;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: clamp(56px, 7vh, 88px) clamp(16px, 8vw, 120px);
+  background: rgba(17, 18, 20, 0.72);
+  -webkit-backdrop-filter: blur(24px) saturate(1.2);
+  backdrop-filter: blur(24px) saturate(1.2);
+  box-sizing: border-box;
+}
+.tc-viewer-figure {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  margin: 0;
+  max-height: 100%;
+}
+.tc-viewer-figure img {
+  display: block;
+  max-width: min(100%, 560px);
+  max-height: calc(100svh - 2 * clamp(56px, 7vh, 88px) - 40px);
+  width: auto;
+  height: auto;
+  border-radius: 20px;
+  box-shadow: 0 40px 100px -30px rgba(0, 0, 0, 0.7);
+}
+.tc-viewer-figure figcaption {
+  display: flex;
+  font-family: var(--tc-font);
+  gap: 16px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.82);
+}
+.tc-viewer-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+.tc-viewer-nav {
+  position: absolute;
+  top: 50%;
+  translate: 0 -50%;
+}
+.tc-viewer-nav.is-prev {
+  left: clamp(12px, 3vw, 40px);
+}
+.tc-viewer-nav.is-next {
+  right: clamp(12px, 3vw, 40px);
+}
+@media (max-width: 720px) {
+  .tc-viewer-nav {
+    top: auto;
+    bottom: 20px;
+    translate: none;
+  }
+  .tc-viewer {
+    padding-bottom: 88px;
+  }
+  .tc-viewer-figure img {
+    max-height: calc(100svh - 190px);
+  }
+}
+@media (max-width: 720px) {
+  .tc-adring-sets {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    margin-inline: calc(-1 * var(--tc-gutter));
+    padding-inline: var(--tc-gutter);
+    scrollbar-width: none;
+  }
+  .tc-adring-chip {
+    flex: none;
+  }
+}
