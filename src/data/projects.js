@@ -11,7 +11,7 @@ export const projects = [
     tools: ["Figma", "Photoshop", "Mailchimp", "HubSpot", "LinkedIn"],
     cover: "/images/3sixty-cover.jpg",
     heroImage: "/images/3sixty-cover.jpg",
-    heroAlt: "Five 3Sixty Integrated LinkedIn posts fanned in an arc, led by the red Who's There? video intercom post",
+    heroAlt: "A wall of 3Sixty Integrated LinkedIn posts in staggered columns: Who's There?, Access Granted, the Chili Cook-Off, hiring and security education posts",
     socialPostGroups: [
       {
         title: "Security education",
