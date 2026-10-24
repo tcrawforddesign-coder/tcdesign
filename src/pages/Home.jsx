@@ -9,6 +9,8 @@ import {
   RESUME_URL,
 } from "../components/portfolio/PortfolioLayout.jsx";
 import { getProjectCover, splitProjectTitle } from "../components/portfolio/PortfolioCards.jsx";
+import { ProjectLabel } from "../components/portfolio/WorkPages.jsx";
+import { usePrefersReducedMotion } from "../hooks/usePrefersReducedMotion.js";
 import { projects } from "../data/projects.js";
 import { posterProject } from "../data/posters.js";
 
@@ -19,26 +21,25 @@ const selectedProjects = [
   posterProject,
 ];
 
-const projectCategories = {
-  "civil-goat-coffee": "Brand identity",
-  "barbican-refresh": "Concept refresh, wayfinding",
-  "yellow-bike": "UX/UI design",
-  "atlas-coffee-club": "Paid social campaign",
-  "poster-archive": "Poster series",
-};
-
+// Each service links to the work that proves it.
 const services = [
   {
     title: "Brand identity",
     copy: "Logos, marks, color, type and the guidelines that keep them consistent everywhere they show up.",
+    to: "/branding",
+    proof: "See the branding work",
   },
   {
     title: "Campaigns and paid social",
     copy: "One clear idea carried through ads, social, email, events and print.",
+    to: "/projects/atlas-coffee-club",
+    proof: "See the Atlas Coffee Club ads",
   },
   {
     title: "Posters and motion",
     copy: "Posters, animated pieces and visual experiments for launches, events and social.",
+    to: "/posters",
+    proof: "See the poster archive",
   },
 ];
 
@@ -52,13 +53,13 @@ export default function Home() {
             <h1 id="tc-wave-hero-title">
               Brands, campaigns and posters<span className="tc-dot">.</span>
             </h1>
-            <p>From first sketch to launch. I'm Travis Crawford, a visual designer and creative strategist in Texas, and I take on freelance projects.</p>
+            <p>I'm Travis Crawford, a visual designer and creative strategist in San Antonio, looking for a full-time design role. I also take on select freelance projects.</p>
             <div className="tc-actions">
               <a href="#work" className="tc-btn tc-btn-ink tc-btn-lg">
                 See the work
               </a>
-              <a href="#contact" className="tc-btn tc-btn-ghost tc-btn-lg">
-                Start a project
+              <a href={RESUME_URL} className="tc-btn tc-btn-ghost tc-btn-lg" target="_blank" rel="noreferrer">
+                Download resume
               </a>
             </div>
           </div>
@@ -104,6 +105,9 @@ export default function Home() {
               <PortfolioReveal key={service.title} className="tc-service">
                 <h3>{service.title}</h3>
                 <p>{service.copy}</p>
+                <Link to={service.to} className="tc-text-link tc-service-link">
+                  {service.proof}
+                </Link>
               </PortfolioReveal>
             ))}
           </div>
@@ -126,7 +130,7 @@ function SelectedWork() {
             Selected work
           </h2>
           <Link to="/projects" className="tc-text-link">
-            All projects
+            All featured work
           </Link>
         </div>
         <div className="tc-work-grid">
@@ -142,22 +146,22 @@ function SelectedWork() {
 
 function WorkCard({ project, featured = false }) {
   const title = splitProjectTitle(project.title).primary;
-  const category = projectCategories[project.slug] ?? project.tag;
   const cover = featured && project.heroImage ? project.heroImage : getProjectCover(project);
   const isVideo = project.coverType === "video" || /\.mp4$/i.test(cover ?? "");
+  const reduceMotion = usePrefersReducedMotion();
 
   return (
     <Link className={`tc-work-card ${featured ? "is-featured" : ""}`} to={project.href ?? `/projects/${project.slug}`}>
       <div className="tc-work-media">
         {isVideo ? (
-          <video src={cover} autoPlay muted loop playsInline preload="metadata" aria-hidden="true" />
+          <video src={cover} autoPlay={!reduceMotion} muted loop playsInline preload="metadata" aria-hidden="true" />
         ) : (
           <img src={cover} alt="" loading={featured ? "eager" : "lazy"} decoding="async" />
         )}
       </div>
       <div className="tc-work-meta">
         <h3>{title}</h3>
-        <p>{category}</p>
+        <ProjectLabel project={project} />
       </div>
     </Link>
   );

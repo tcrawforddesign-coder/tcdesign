@@ -1636,7 +1636,7 @@ html:has(.tc-brand) body {
   display: grid;
   place-items: center;
   background: radial-gradient(circle at 50% 45%, #ffffff 0%, var(--tc-paper, #f4f8fb) 60%, #eaf2f9 100%);
-  transition: opacity 0.55s ease, transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 0.45s ease, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .tc-intro.is-leaving {
   opacity: 0;
@@ -1656,7 +1656,7 @@ html:has(.tc-brand) body {
   letter-spacing: -0.045em;
   color: #111214;
   opacity: 0;
-  animation: tc-intro-word 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.95s forwards;
+  animation: tc-intro-word 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
 }
 .tc-mark-dot,
 .tc-mark-point {
@@ -1664,11 +1664,11 @@ html:has(.tc-brand) body {
   transform-origin: center;
   transform: scale(0);
   animation: tc-dot-in 0.42s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-  animation-delay: calc(var(--i) * 32ms);
+  animation-delay: calc(var(--i) * 20ms);
 }
 .tc-mark-point {
   animation: tc-point-in 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-  animation-delay: calc(var(--i) * 32ms + 90ms);
+  animation-delay: calc(var(--i) * 20ms + 60ms);
 }
 @keyframes tc-dot-in {
   to {
@@ -2000,6 +2000,238 @@ a.tc-logo-tile:hover .tc-logo-tile-media img {
     animation: none;
     transition: none;
   }
+}
+
+/* ---------- Impeccable pass (Oct 2026) ---------- */
+
+/* Project label: one category, plus a Concept tag in the brand cobalt. */
+.tc-brand .tc-project-label {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+  margin: 4px 0 0;
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--tc-slate);
+}
+.tc-brand .tc-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 22px;
+  padding: 0 9px;
+  border: 1px solid rgba(47, 93, 140, 0.35);
+  border-radius: 999px;
+  color: var(--tc-cobalt);
+  font-size: 12.5px;
+  font-weight: 500;
+  line-height: 1;
+}
+
+/* Card titles are h2 now (they sit straight under the page h1). */
+.tc-brand .tc-project-meta h2,
+.tc-brand .tc-logo-tile-meta h2 {
+  margin: 0;
+  font-weight: 500;
+  font-size: 21px;
+  letter-spacing: -0.03em;
+  text-transform: none;
+}
+
+/* Home hero: shorter so the first project shows on the first screen. */
+.tc-wave-hero {
+  min-height: max(500px, min(640px, 74svh));
+}
+@media (max-width: 720px) {
+  .tc-wave-hero {
+    min-height: 0;
+  }
+  .tc-wave-hero-inner {
+    padding-top: calc(var(--tc-header-h) + 120px);
+  }
+}
+.tc-selected {
+  padding-top: clamp(40px, 5vw, 72px);
+}
+
+/* Services link to the work that proves them. */
+.tc-service-link {
+  margin-top: 6px;
+  font-size: 15px;
+}
+
+/* Case study header: label and year sit under the title, not above it. */
+.tc-brand .tc-case-subline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 18px;
+  margin-top: 18px;
+  font-size: 17px;
+  color: var(--tc-slate);
+}
+.tc-brand .tc-case-subline .tc-project-label {
+  margin: 0;
+  font-size: 17px;
+}
+
+/* Case study section labels: a halftone dot in the brand cobalt marks each one. */
+.tc-brand .portfolio-sticky-label p {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--tc-cobalt);
+  font-weight: 500;
+}
+.tc-brand .portfolio-sticky-label p::before {
+  content: "";
+  flex: none;
+  width: 14px;
+  height: 14px;
+  background:
+    radial-gradient(circle, var(--tc-red) 2.6px, transparent 3px) 9px 4.5px / 6px 6px no-repeat,
+    radial-gradient(circle, var(--tc-cobalt) 1.5px, transparent 1.9px) 0 0 / 5px 5px;
+  -webkit-mask: radial-gradient(circle at 45% 50%, #000 62%, transparent 64%);
+  mask: radial-gradient(circle at 45% 50%, #000 62%, transparent 64%);
+}
+
+/* Comfortable reading width for case study text. */
+.tc-brand .portfolio-split-content p,
+.tc-brand .portfolio-split-content ul,
+.tc-brand .portfolio-split-content ol,
+.tc-brand .portfolio-rich-content p,
+.tc-brand .portfolio-rich-content li,
+.tc-brand .portfolio-campaign-feature p {
+  max-width: 56ch;
+}
+.tc-bio-text {
+  max-width: 52ch;
+}
+/* No single words stranded on the last line of a paragraph or list item. */
+.tc-brand main p,
+.tc-brand main li {
+  text-wrap: pretty;
+}
+.tc-brand .portfolio-split-content h2,
+.tc-brand .portfolio-section-heading h2 {
+  text-wrap: balance;
+}
+.tc-brand .portfolio-split-content p,
+.tc-brand .portfolio-hero-copy {
+  text-wrap: pretty;
+}
+
+/* "Show all images" under long galleries. */
+.tc-gallery-more {
+  display: flex;
+  justify-content: center;
+  margin-top: clamp(28px, 4vw, 44px);
+}
+
+/* Next project: the next case study as a large teaser. */
+.tc-next {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+}
+.tc-next-link {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(20px, 4vw, 56px);
+  width: 100%;
+  color: var(--tc-ink) !important;
+  text-decoration: none;
+}
+.tc-next-media {
+  display: block;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-radius: var(--tc-radius-lg);
+  background: var(--tc-ice);
+}
+.tc-next-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.9s var(--tc-ease);
+}
+.tc-next-link:hover .tc-next-media img {
+  transform: scale(1.03);
+}
+.tc-next-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.tc-next-title {
+  font-weight: 600;
+  font-size: clamp(2.2rem, 4.6vw, 4rem);
+  line-height: 0.98;
+  letter-spacing: -0.05em;
+  text-wrap: balance;
+}
+.tc-next-link:hover .tc-next-title {
+  text-decoration: underline;
+  text-decoration-color: var(--tc-red);
+  text-decoration-thickness: 3px;
+  text-underline-offset: 8px;
+}
+@media (max-width: 760px) {
+  .tc-next-link {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Tap targets: contact and footer links get a 44px hit area. */
+.tc-reach-email,
+.tc-reach-note a,
+.tc-footer-links a,
+.tc-footer-base a,
+.tc-footer-mark {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+/* Logo brief: placeholder text dark enough to read (about 5:1 on white). */
+.tc-brand input::placeholder,
+.tc-brand textarea::placeholder {
+  color: #6a6f78;
+  opacity: 1;
+}
+
+/* Mobile menu: solid enough that the page behind doesn't show through. */
+.tc-brand .tc-mobile-menu.tc-glass {
+  background: rgba(255, 255, 255, 0.94);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tc-next-media img {
+    transition: none;
+  }
+  .tc-next-link:hover .tc-next-media img {
+    transform: none;
+  }
+}
+
+/* Key decisions: an open row of notes divided by hairlines, not floating cards. */
+.tc-brand .portfolio-mini-card-grid {
+  gap: 0 clamp(20px, 3vw, 40px);
+  border: 0;
+}
+.tc-brand .portfolio-mini-card {
+  padding: 22px 0 0;
+  border: 0;
+  border-top: 2px solid var(--tc-ink);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.tc-brand .portfolio-mini-card h3 {
+  margin: 0 0 10px;
 }
 
 @keyframes tc-rise {

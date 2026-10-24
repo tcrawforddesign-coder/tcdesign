@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 import { ContactSection, PortfolioLayout, PortfolioReveal, SectionHeading } from "../components/portfolio/PortfolioLayout.jsx";
 import { experimentEntries } from "../data/experiments.js";
+import { usePrefersReducedMotion } from "../hooks/usePrefersReducedMotion.js";
 
 export default function ExperimentsPage() {
   const [activeExperiment, setActiveExperiment] = useState(null);
@@ -28,17 +29,16 @@ export default function ExperimentsPage() {
   return (
     <PortfolioLayout>
       <section className="portfolio-hero portfolio-section portfolio-subpage-hero">
-        <PortfolioReveal className="portfolio-hero-kicker">Experiments / Abandoned Directions</PortfolioReveal>
         <PortfolioReveal as="h1" className="portfolio-hero-title">
-          One-offs, strange starts, and ideas that still have a pulse.
+          Experiments<span className="tc-dot">.</span>
         </PortfolioReveal>
         <PortfolioReveal as="p" className="portfolio-hero-copy">
-          A loose archive of visual directions, poster studies, unused identities, spec pieces, and experiments that usually stay tucked away.
+          One-offs, strange starts, and ideas that still have a pulse. A loose archive of visual directions, poster studies, unused identities, spec pieces, and experiments that usually stay tucked away.
         </PortfolioReveal>
       </section>
 
       <section className="portfolio-section portfolio-work-section tc-experiments-section">
-        <SectionHeading eyebrow="Unreleased Work" title="Some of the side roads are where the most interesting visual decisions happen." />
+        <SectionHeading title="Some of the side roads are where the most interesting visual decisions happen." />
 
         <div className="tc-experiment-feature">
           <ExperimentCard experiment={leadExperiment} onSelect={setActiveExperiment} isFeature />
@@ -92,12 +92,13 @@ function ExperimentCard({ experiment, onSelect, isFeature = false }) {
 }
 
 function ExperimentMedia({ experiment, isFeature = false, isPreview = false }) {
+  const reduceMotion = usePrefersReducedMotion();
   if (experiment.mediaType === "video") {
     return (
       <video
         src={experiment.src}
         aria-label={experiment.title}
-        autoPlay
+        autoPlay={!reduceMotion || isPreview}
         muted
         loop
         playsInline

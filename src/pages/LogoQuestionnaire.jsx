@@ -141,9 +141,8 @@ export default function LogoQuestionnairePage() {
   return (
     <PortfolioLayout>
       <section className="portfolio-section portfolio-subpage-hero logo-questionnaire-hero">
-        <PortfolioReveal className="portfolio-hero-kicker">New Logo Project / Client Brief</PortfolioReveal>
         <PortfolioReveal as="h1" className="portfolio-hero-title">
-          Logo Discovery Questionnaire
+          Logo brief<span className="tc-dot">.</span>
         </PortfolioReveal>
         <PortfolioReveal as="p" className="portfolio-hero-copy">
           A guided brief to capture your business, goals, style, and project needs. Select what fits — you don&apos;t

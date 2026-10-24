@@ -17,8 +17,33 @@ export { CONTACT_EMAIL, LINKEDIN_URL, DRIBBBLE_URL, RESUME_URL, PROJECT_MAILTO }
 
 const NAV_ITEMS = [
   { to: "/#about", label: "About" },
+  { href: RESUME_URL, label: "Resume" },
   { to: "/logo-questionnaire", label: "Logo brief" },
 ];
+const HELLO_MAILTO = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent("Hello Travis")}`;
+
+// Header links: a route, an in-page anchor, or a file that opens in a new tab.
+function NavItem({ item, className }) {
+  if (item.href) {
+    return (
+      <a href={item.href} className={className} target="_blank" rel="noreferrer">
+        {item.label}
+      </a>
+    );
+  }
+  if (item.to.includes("#")) {
+    return (
+      <Link to={item.to} className={className}>
+        {item.label}
+      </Link>
+    );
+  }
+  return (
+    <NavLink to={item.to} className={className}>
+      {item.label}
+    </NavLink>
+  );
+}
 
 export function PortfolioLayout({ children, overlayHeader = false }) {
   useRevealOnScroll();
@@ -142,11 +167,19 @@ function WorkMenu({ open, setOpen, buttonRef }) {
     window.addEventListener("keydown", onKey);
     window.__studioLenis?.stop();
     document.documentElement.classList.add("tc-work-open");
+    // The page behind the menu can't take focus or be read while it's open.
+    const behind = [document.getElementById("main"), document.querySelector(".tc-footer")].filter(Boolean);
+    behind.forEach((el) => {
+      el.inert = true;
+    });
     panelRef.current?.querySelector("a")?.focus({ preventScroll: true });
     return () => {
       window.removeEventListener("keydown", onKey);
       window.__studioLenis?.start();
       document.documentElement.classList.remove("tc-work-open");
+      behind.forEach((el) => {
+        el.inert = false;
+      });
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
@@ -158,6 +191,9 @@ function WorkMenu({ open, setOpen, buttonRef }) {
       <div
         id="tc-work-panel"
         ref={panelRef}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Work"
         className="tc-work-overlay"
         hidden={!open}
         onClick={(event) => {
@@ -226,19 +262,11 @@ function SiteHeader() {
         <LogoPill to="/" aria-label="Travis Crawford, home" />
         <nav className="tc-nav tc-glass" aria-label="Primary navigation">
           <WorkButton {...work} />
-          {NAV_ITEMS.map((item) =>
-            item.to.includes("#") ? (
-              <Link key={item.label} to={item.to} className="tc-nav-link">
-                {item.label}
-              </Link>
-            ) : (
-              <NavLink key={item.label} to={item.to} className="tc-nav-link">
-                {item.label}
-              </NavLink>
-            ),
-          )}
+          {NAV_ITEMS.map((item) => (
+            <NavItem key={item.label} item={item} className="tc-nav-link" />
+          ))}
           <Link to="/#contact" className="tc-btn tc-btn-red tc-btn-sm">
-            Start a project
+            Get in touch
           </Link>
         </nav>
         <button
@@ -263,12 +291,10 @@ function SiteHeader() {
         ))}
         <span className="tc-mobile-divider" aria-hidden="true" />
         {NAV_ITEMS.map((item) => (
-          <Link key={item.label} to={item.to} className="tc-mobile-link">
-            {item.label}
-          </Link>
+          <NavItem key={item.label} item={item} className="tc-mobile-link" />
         ))}
         <Link to="/#contact" className="tc-btn tc-btn-red">
-          Start a project
+          Get in touch
         </Link>
       </div>
     </header>
@@ -339,11 +365,14 @@ export function ContactSection() {
           worth making<span className="tc-dot">?</span>
         </PortfolioReveal>
         <PortfolioReveal as="p" className="tc-reach-lede">
-          Tell me what you're making and when you need it.
+          Hiring for a design role, or have a project in mind? Email me.
         </PortfolioReveal>
         <PortfolioReveal className="tc-reach-actions">
-          <a className="tc-btn tc-btn-red tc-btn-lg" href={PROJECT_MAILTO}>
-            Start a project
+          <a className="tc-btn tc-btn-red tc-btn-lg" href={HELLO_MAILTO}>
+            Email me
+          </a>
+          <a className="tc-btn tc-btn-ghost tc-btn-lg" href={RESUME_URL} target="_blank" rel="noreferrer">
+            Download resume
           </a>
           <a className="tc-reach-email" href={`mailto:${CONTACT_EMAIL}`}>
             {CONTACT_EMAIL}

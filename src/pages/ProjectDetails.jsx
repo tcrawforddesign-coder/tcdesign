@@ -1,9 +1,29 @@
 import { useMemo, useState } from "react";
+import { usePrefersReducedMotion } from "../hooks/usePrefersReducedMotion.js";
 import { Link, useParams } from "react-router-dom";
 
 import { ContactSection, PortfolioLayout, PortfolioReveal, SectionHeading } from "../components/portfolio/PortfolioLayout.jsx";
-import { splitProjectTitle } from "../components/portfolio/PortfolioCards.jsx";
-import { findProjectBySlug, getAdjacentProjects } from "../data/projects.js";
+import { getProjectCover, splitProjectTitle } from "../components/portfolio/PortfolioCards.jsx";
+import { ProjectLabel } from "../components/portfolio/WorkPages.jsx";
+import { findProjectBySlug, projects } from "../data/projects.js";
+
+// Reading order for "Next project": strongest case studies first, then the
+// rest. Hidden projects are skipped and the sequence wraps around.
+const CASE_STUDY_ORDER = [
+  "civil-goat-coffee",
+  "barbican-refresh",
+  "yellow-bike",
+  "atlas-coffee-club",
+  "3sixty-integrated-marketing",
+  "ritual-coffee",
+  "data-dog-analytics",
+];
+
+function getNextProject(slug) {
+  const index = CASE_STUDY_ORDER.indexOf(slug);
+  const nextSlug = CASE_STUDY_ORDER[(index + 1) % CASE_STUDY_ORDER.length];
+  return projects.find((project) => project.slug === nextSlug);
+}
 import {
   getGroupGalleryVariant,
   getProjectGalleryVariant,
@@ -13,21 +33,25 @@ import {
 export default function ProjectDetailsPage() {
   const { slug } = useParams();
   const project = useMemo(() => findProjectBySlug(slug), [slug]);
-  const { prev, next } = useMemo(() => getAdjacentProjects(slug), [slug]);
+  const next = useMemo(() => getNextProject(slug), [slug]);
+  const reduceMotion = usePrefersReducedMotion();
 
   if (!project) {
     return (
       <PortfolioLayout>
-        <section className="portfolio-section portfolio-contact-section">
-          <PortfolioReveal as="p">Project not found</PortfolioReveal>
-          <PortfolioReveal as="h1" className="portfolio-contact-link">
-            That case study isn&apos;t here.
-          </PortfolioReveal>
-          <PortfolioReveal>
-            <Link to="/projects" className="portfolio-button portfolio-primary">
-              Back to projects
+        <section className="portfolio-hero portfolio-section portfolio-subpage-hero tc-not-found">
+          <h1 className="portfolio-hero-title">
+            That case study isn&apos;t here<span className="tc-dot">.</span>
+          </h1>
+          <p className="portfolio-hero-copy">The link may be old, or the project has moved. The rest of the work is still here.</p>
+          <div className="tc-actions">
+            <Link to="/projects" className="tc-btn tc-btn-ink tc-btn-lg">
+              See featured work
             </Link>
-          </PortfolioReveal>
+            <Link to="/" className="tc-btn tc-btn-ghost tc-btn-lg">
+              Go to the home page
+            </Link>
+          </div>
         </section>
       </PortfolioLayout>
     );
@@ -43,20 +67,24 @@ export default function ProjectDetailsPage() {
 
   return (
     <PortfolioLayout>
-      <section className="portfolio-hero portfolio-section portfolio-subpage-hero">
-        <PortfolioReveal className="portfolio-hero-kicker">{project.tag}, {project.timeframe}</PortfolioReveal>
+      <section className="portfolio-hero portfolio-section portfolio-subpage-hero tc-case-hero">
         <PortfolioReveal as="h1" className="portfolio-hero-title">
           {primary}
+          <span className="tc-dot">.</span>
+        </PortfolioReveal>
+        <PortfolioReveal className="tc-case-subline">
+          <ProjectLabel project={project} as="span" />
+          <span>{project.timeframe}</span>
         </PortfolioReveal>
       </section>
 
       <section className="portfolio-case-hero">
         {project.heroVideo ? (
-          <video autoPlay muted loop playsInline poster={heroImage}>
+          <video autoPlay={!reduceMotion} muted loop playsInline poster={heroImage} aria-label={project.heroAlt ?? `${primary} project video`}>
             <source src={project.heroVideo} type="video/mp4" />
           </video>
         ) : heroImage ? (
-          <img src={heroImage} alt={`${project.title} hero`} />
+          <img src={heroImage} alt={project.heroAlt ?? `${primary}: key image from the project`} />
         ) : null}
       </section>
 
@@ -90,17 +118,18 @@ export default function ProjectDetailsPage() {
         </PortfolioReveal>
       </section>
 
+      {/* The thinking comes first: problem and approach, then the work. */}
+      {!isAtlasCoffee && project.challenge ? <CopySection block={project.challenge} /> : null}
+      {project.approach ? <CopySection block={project.approach} /> : null}
+
       {hasStandardVisuals ? <ProjectVisuals project={project} galleryItems={galleryItems} /> : null}
       {isYellowBike ? <YellowBikeUXSections project={project} /> : null}
       {isThreeSixty ? <ThreeSixtyVisualPreview project={project} /> : null}
-
-      {!isAtlasCoffee && project.challenge ? <CopySection block={project.challenge} /> : null}
-      {project.approach ? <CopySection block={project.approach} /> : null}
       {isThreeSixty ? <ThreeSixtyMarketingSections project={project} /> : null}
 
       {!isAtlasCoffee && project.highlights?.length ? (
         <section className="portfolio-section portfolio-work-section">
-          <SectionHeading eyebrow="System Highlights" title="A closer look at the thinking behind the work." />
+          <SectionHeading title="Key decisions" />
           <div className="portfolio-mini-card-grid">
             {project.highlights.map((item) => (
               <article key={item.title} className="portfolio-mini-card portfolio-reveal">
@@ -114,17 +143,55 @@ export default function ProjectDetailsPage() {
 
       {project.outcomes ? <CopySection block={project.outcomes} /> : null}
 
-      <section className="portfolio-section portfolio-next-section">
-        <Link to={prev ? `/projects/${prev.slug}` : "/projects"} className="portfolio-button portfolio-secondary">
-          Previous
-        </Link>
-        <Link to={next ? `/projects/${next.slug}` : "/projects"} className="portfolio-button portfolio-primary">
-          Next Project
-        </Link>
-      </section>
+      {next ? <NextProjectTeaser project={next} /> : null}
 
       <ContactSection />
     </PortfolioLayout>
+  );
+}
+
+// The next case study as a big teaser at the end of the page.
+function NextProjectTeaser({ project }) {
+  const { primary } = splitProjectTitle(project.title ?? "");
+  const cover = getProjectCover(project);
+  const isVideo = /\.mp4$/i.test(cover ?? "");
+  return (
+    <section className="portfolio-section tc-next" aria-labelledby="tc-next-title">
+      <Link to={`/projects/${project.slug}`} className="tc-next-link">
+        <span className="tc-next-media" aria-hidden="true">
+          {isVideo ? null : <img src={cover} alt="" loading="lazy" decoding="async" />}
+        </span>
+        <span className="tc-next-copy">
+          <span id="tc-next-title" className="tc-next-title">
+            Up next: {primary}
+            <span className="tc-dot">.</span>
+          </span>
+          <ProjectLabel project={project} as="span" />
+        </span>
+      </Link>
+      <Link to="/projects" className="tc-text-link tc-next-all">
+        All featured work
+      </Link>
+    </section>
+  );
+}
+
+// Long galleries show the first few images, with a button for the rest.
+function GalleryWithMore({ items, initial = 8, children }) {
+  const [showAll, setShowAll] = useState(false);
+  const hidden = items.length - initial;
+  const visible = showAll || hidden <= 2 ? items : items.slice(0, initial);
+  return (
+    <>
+      {children(visible)}
+      {hidden > 2 ? (
+        <div className="tc-gallery-more">
+          <button type="button" className="tc-btn tc-btn-ghost" aria-expanded={showAll} onClick={() => setShowAll((value) => !value)}>
+            {showAll ? "Show fewer images" : `Show all ${items.length} images`}
+          </button>
+        </div>
+      ) : null}
+    </>
   );
 }
 
@@ -148,12 +215,12 @@ function ProjectVisuals({ project, galleryItems }) {
   const visualsTitle =
     project.slug === "atlas-coffee-club"
       ? "Static ad work grouped by campaign and concept set."
-      : "Project frames, campaign assets, and supporting material.";
+      : "The work";
 
   if (project.galleryGroups?.length) {
     return (
       <section className="portfolio-section portfolio-work-section">
-        <SectionHeading eyebrow="Selected Visuals" title={visualsTitle} />
+        <SectionHeading title={visualsTitle} />
         <div className="portfolio-campaign-gallery">
           {project.galleryGroups.map((group) => {
             const items = (group.items ?? []).map((item) => normalizeMediaItem(item, project.slug)).filter(Boolean);
@@ -184,19 +251,22 @@ function ProjectVisuals({ project, galleryItems }) {
     return (
       <>
         <section className="portfolio-section portfolio-work-section">
-          <SectionHeading eyebrow="Selected Visuals" title="Project frames, campaign assets, and supporting material." />
-          <GuidedVisualGroup
-            items={galleryItems}
-            label="Lead visual"
-            fallbackAlt={project.title}
-            projectSlug={project.slug}
-            variant="adaptive"
-          />
+          <SectionHeading title="The work" />
+          <GalleryWithMore items={galleryItems}>
+            {(visible) => (
+              <GuidedVisualGroup
+                items={visible}
+                label="Lead visual"
+                fallbackAlt={project.title}
+                projectSlug={project.slug}
+                variant="adaptive"
+              />
+            )}
+          </GalleryWithMore>
         </section>
         {project.socialPosts?.length ? (
           <section className="portfolio-section portfolio-work-section">
             <SectionHeading
-              eyebrow="Social & Campaign"
               title="Paid social frames and feed posts built from the core identity system."
             />
             <GuidedVisualGroup
@@ -213,14 +283,18 @@ function ProjectVisuals({ project, galleryItems }) {
 
   return (
     <section className="portfolio-section portfolio-work-section">
-      <SectionHeading eyebrow="Selected Visuals" title="Project frames, campaign assets, and supporting material." />
-      <GuidedVisualGroup
-        items={galleryItems}
-        label="Lead visual"
-        fallbackAlt={project.title}
-        projectSlug={project.slug}
-        variant={getProjectGalleryVariant(project)}
-      />
+      <SectionHeading title="The work" />
+      <GalleryWithMore items={galleryItems}>
+        {(visible) => (
+          <GuidedVisualGroup
+            items={visible}
+            label="Lead visual"
+            fallbackAlt={project.title}
+            projectSlug={project.slug}
+            variant={getProjectGalleryVariant(project)}
+          />
+        )}
+      </GalleryWithMore>
     </section>
   );
 }
@@ -235,7 +309,7 @@ function ThreeSixtyVisualPreview({ project }) {
 
   return (
     <section className="portfolio-section portfolio-work-section">
-      <SectionHeading eyebrow="Social Media Work" title="A compact look at the day-to-day content supporting 3Sixty's LinkedIn presence." />
+      <SectionHeading title="A compact look at the day-to-day content supporting 3Sixty's LinkedIn presence." />
       <GuidedVisualGroup items={items} label="Social post" fallbackAlt={`${project.title} social post`} projectSlug={project.slug} variant="social" />
     </section>
   );
@@ -322,7 +396,6 @@ function GuidedVisualGroup({ items = [], label = "Lead visual", fallbackAlt = "P
       <GalleryFigure
         media={lead}
         className="portfolio-guided-visual-feature portfolio-reveal"
-        label={<span>{label}</span>}
         alt={lead.alt || `${fallbackAlt} lead visual`}
       />
       {supporting.length ? (
@@ -384,7 +457,7 @@ function YellowBikeUXSections({ project }) {
       ) : null}
 
       <section className="portfolio-section portfolio-work-section">
-        <SectionHeading eyebrow="Research Findings" title="Survey responses shaped the app around safety, access, and confidence." />
+        <SectionHeading title="Survey responses shaped the app around safety, access, and confidence." />
         <div className="portfolio-yellow-survey-grid">
           {Object.values(surveyResults).map((result) => (
             <SurveyResultCard key={result.question} result={result} />
@@ -400,7 +473,7 @@ function YellowBikeUXSections({ project }) {
       </MarketingSection>
 
       <section className="portfolio-section portfolio-work-section">
-        <SectionHeading eyebrow="UX Flows" title="Core screens and flows translate the mission into repeatable product behavior." />
+        <SectionHeading title="Core screens and flows translate the mission into repeatable product behavior." />
         <div className="portfolio-asset-grid portfolio-yellow-flow-grid">
           {flowImages.map((item) => {
             const media = normalizeMediaItem(item.src, project.slug);
@@ -418,7 +491,7 @@ function YellowBikeUXSections({ project }) {
 
       {project.communitySections?.length ? (
         <section className="portfolio-section portfolio-work-section">
-          <SectionHeading eyebrow="Product Moments" title="Community and gamification became the core interaction model." />
+          <SectionHeading title="Community and gamification became the core interaction model." />
           <div className="portfolio-mini-card-grid portfolio-two-up">
             {project.communitySections.map((item) => (
               <article key={item.title} className="portfolio-mini-card portfolio-reveal">
@@ -552,7 +625,7 @@ function ThreeSixtyMarketingSections({ project }) {
       </MarketingSection>
 
       <section className="portfolio-section portfolio-work-section">
-        <SectionHeading eyebrow="Sales and Technical Support" title="Turning operational complexity into clearer client and sales communication." />
+        <SectionHeading title="Turning operational complexity into clearer client and sales communication." />
         <div className="portfolio-mini-card-grid portfolio-two-up">
           <article className="portfolio-mini-card portfolio-reveal">
             <h3>Technical Translation</h3>
@@ -578,7 +651,7 @@ function ThreeSixtyMarketingSections({ project }) {
       </MarketingSection>
 
       <section className="portfolio-section portfolio-work-section">
-        <SectionHeading eyebrow="Execution Support" title="Planning, coordination, and content production across active initiatives." />
+        <SectionHeading title="Planning, coordination, and content production across active initiatives." />
         <div className="portfolio-mini-card-grid portfolio-two-up">
           <article className="portfolio-mini-card portfolio-reveal">
             <h3>Operations, Planning, and Coordination</h3>
@@ -621,7 +694,7 @@ function PerformanceSnapshot({ snapshot }) {
 
   return (
     <section className="portfolio-section portfolio-work-section">
-      <SectionHeading eyebrow="Performance snapshot" title="Directional lift across channels I led or co-owned." />
+      <SectionHeading title="Directional lift across channels I led or co-owned." />
       <PortfolioReveal as="p" className="portfolio-section-intro">
         {snapshot.intro}
       </PortfolioReveal>

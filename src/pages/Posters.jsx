@@ -28,12 +28,11 @@ export default function PostersPage() {
   return (
     <PortfolioLayout>
       <section className="portfolio-hero portfolio-section portfolio-subpage-hero">
-        <PortfolioReveal className="portfolio-hero-kicker">Poster Work / Visual Experiments</PortfolioReveal>
         <PortfolioReveal as="h1" className="portfolio-hero-title">
-          Where typography, composition, and mood get more expressive.
+          Posters<span className="tc-dot">.</span>
         </PortfolioReveal>
         <PortfolioReveal as="p" className="portfolio-hero-copy">
-          Posters are where I push scale, contrast, and visual rhythm. They give the portfolio a sharper edge and show how I think through
+          Where typography, composition and mood get more expressive. Posters are where I push scale, contrast, and visual rhythm. They give the portfolio a sharper edge and show how I think through
           hierarchy, atmosphere, and composition in a single frame.
         </PortfolioReveal>
       </section>
