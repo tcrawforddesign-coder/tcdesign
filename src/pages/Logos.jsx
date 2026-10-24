@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
 
 import { ContactSection, PortfolioLayout } from "../components/portfolio/PortfolioLayout.jsx";
-import { PageHero, WorkIndex } from "../components/portfolio/WorkPages.jsx";
+import { PageHero, ProjectLabel, WorkIndex } from "../components/portfolio/WorkPages.jsx";
 import { logos } from "../data/logos.js";
+import { projects } from "../data/projects.js";
 
 export default function LogosPage() {
   return (
@@ -26,14 +27,15 @@ export default function LogosPage() {
 }
 
 function LogoTile({ logo }) {
+  const project = logo.project ? projects.find((entry) => entry.slug === logo.project) : null;
   const content = (
     <>
       <div className="tc-logo-tile-media" style={{ background: logo.background }}>
         <img src={logo.src} alt={`${logo.name} logo`} loading="lazy" decoding="async" />
       </div>
       <div className="tc-logo-tile-meta">
-        <h3>{logo.name}</h3>
-        <p>{logo.note}</p>
+        <h2>{logo.name}</h2>
+        {project ? <ProjectLabel project={project} /> : <p className="tc-project-label">{logo.note}</p>}
       </div>
     </>
   );

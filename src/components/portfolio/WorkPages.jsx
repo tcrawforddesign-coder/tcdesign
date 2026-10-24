@@ -3,6 +3,18 @@ import { Link } from "react-router-dom";
 import { getProjectCover, splitProjectTitle } from "./PortfolioCards.jsx";
 import { PortfolioReveal } from "./PortfolioLayout.jsx";
 import { WORK_SECTIONS } from "../../data/workSections.js";
+import { usePrefersReducedMotion } from "../../hooks/usePrefersReducedMotion.js";
+
+// A project's one category, plus a Concept tag for concept or student work.
+// Every card and case study reads it from the project data, so labels match.
+export function ProjectLabel({ project, as: Tag = "p", className = "" }) {
+  return (
+    <Tag className={`tc-project-label ${className}`.trim()}>
+      <span>{project.tag}</span>
+      {project.concept ? <span className="tc-chip">Concept</span> : null}
+    </Tag>
+  );
+}
 
 export function PageHero({ title, copy }) {
   return (
@@ -36,19 +48,20 @@ function ProjectGridCard({ project }) {
   const title = splitProjectTitle(project.title).primary;
   const cover = getProjectCover(project);
   const isVideo = project.coverType === "video" || /\.mp4$/i.test(cover ?? "");
+  const reduceMotion = usePrefersReducedMotion();
 
   return (
     <Link className={`tc-project-card tc-project-card-${project.slug} portfolio-reveal`} to={project.href ?? `/projects/${project.slug}`}>
       <div className="tc-project-thumb">
         {isVideo ? (
-          <video src={cover} autoPlay muted loop playsInline preload="metadata" aria-hidden="true" />
+          <video src={cover} autoPlay={!reduceMotion} muted loop playsInline preload="metadata" aria-hidden="true" />
         ) : (
           <img src={cover} alt="" loading="lazy" decoding="async" />
         )}
       </div>
       <div className="tc-project-meta">
-        <h3>{title}</h3>
-        <p>{project.tag}</p>
+        <h2>{title}</h2>
+        <ProjectLabel project={project} />
       </div>
     </Link>
   );

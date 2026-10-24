@@ -1,37 +1,39 @@
 // Logo wall. `background` matches the image's own background so each mark
 // sits edge to edge in its tile. `href` links to the full case study.
+// Logos tied to a case study take their label from that project (`project`),
+// so the category and Concept tag match everywhere else on the site.
 export const logos = [
   {
     name: "Civil Goat Coffee",
-    note: "Coffee brand",
+    project: "civil-goat-coffee",
     src: "/images/CG_1.png",
     background: "#fffae7",
     href: "/projects/civil-goat-coffee",
   },
   {
     name: "Barbican Centre",
-    note: "Concept refresh",
+    project: "barbican-refresh",
     src: "/images/B_3.png",
     background: "#000000",
     href: "/projects/barbican-refresh",
   },
   {
     name: "Yellow Bike",
-    note: "Nonprofit rebrand",
+    project: "yellow-bike",
     src: "/images/Proposed Logo.jpg",
     background: "#ffd800",
     href: "/projects/yellow-bike",
   },
   {
     name: "Ritual Coffee",
-    note: "Coffee shop",
+    project: "ritual-coffee",
     src: "/images/Smile.png",
     background: "#ff3000",
     href: "/projects/ritual-coffee",
   },
   {
     name: "Data Dog",
-    note: "Concept product brand",
+    project: "data-dog-analytics",
     src: "/images/DD_2.png",
     background: "#0048ff",
     href: "/projects/data-dog-analytics",

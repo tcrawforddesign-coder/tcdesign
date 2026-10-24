@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import HalftoneMark from "./HalftoneMark.jsx";
 
 const SEEN_KEY = "tc-intro-seen";
-const HOLD_MS = 1750; // logo builds, red point lands, name appears
-const EXIT_MS = 550;
+const HOLD_MS = 1150; // logo builds, red point lands, name appears
+const EXIT_MS = 450;
 
 function shouldPlay() {
   if (typeof window === "undefined") return false;

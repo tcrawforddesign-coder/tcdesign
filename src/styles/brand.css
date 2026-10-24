@@ -1636,7 +1636,7 @@ html:has(.tc-brand) body {
   display: grid;
   place-items: center;
   background: radial-gradient(circle at 50% 45%, #ffffff 0%, var(--tc-paper, #f4f8fb) 60%, #eaf2f9 100%);
-  transition: opacity 0.55s ease, transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 0.45s ease, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .tc-intro.is-leaving {
   opacity: 0;
@@ -1656,7 +1656,7 @@ html:has(.tc-brand) body {
   letter-spacing: -0.045em;
   color: #111214;
   opacity: 0;
-  animation: tc-intro-word 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.95s forwards;
+  animation: tc-intro-word 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
 }
 .tc-mark-dot,
 .tc-mark-point {
@@ -1664,11 +1664,11 @@ html:has(.tc-brand) body {
   transform-origin: center;
   transform: scale(0);
   animation: tc-dot-in 0.42s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-  animation-delay: calc(var(--i) * 32ms);
+  animation-delay: calc(var(--i) * 20ms);
 }
 .tc-mark-point {
   animation: tc-point-in 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-  animation-delay: calc(var(--i) * 32ms + 90ms);
+  animation-delay: calc(var(--i) * 20ms + 60ms);
 }
 @keyframes tc-dot-in {
   to {
@@ -2002,6 +2002,238 @@ a.tc-logo-tile:hover .tc-logo-tile-media img {
   }
 }
 
+/* ---------- Impeccable pass (Oct 2026) ---------- */
+
+/* Project label: one category, plus a Concept tag in the brand cobalt. */
+.tc-brand .tc-project-label {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+  margin: 4px 0 0;
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--tc-slate);
+}
+.tc-brand .tc-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 22px;
+  padding: 0 9px;
+  border: 1px solid rgba(47, 93, 140, 0.35);
+  border-radius: 999px;
+  color: var(--tc-cobalt);
+  font-size: 12.5px;
+  font-weight: 500;
+  line-height: 1;
+}
+
+/* Card titles are h2 now (they sit straight under the page h1). */
+.tc-brand .tc-project-meta h2,
+.tc-brand .tc-logo-tile-meta h2 {
+  margin: 0;
+  font-weight: 500;
+  font-size: 21px;
+  letter-spacing: -0.03em;
+  text-transform: none;
+}
+
+/* Home hero: shorter so the first project shows on the first screen. */
+.tc-wave-hero {
+  min-height: max(500px, min(640px, 74svh));
+}
+@media (max-width: 720px) {
+  .tc-wave-hero {
+    min-height: 0;
+  }
+  .tc-wave-hero-inner {
+    padding-top: calc(var(--tc-header-h) + 120px);
+  }
+}
+.tc-selected {
+  padding-top: clamp(40px, 5vw, 72px);
+}
+
+/* Services link to the work that proves them. */
+.tc-service-link {
+  margin-top: 6px;
+  font-size: 15px;
+}
+
+/* Case study header: label and year sit under the title, not above it. */
+.tc-brand .tc-case-subline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 18px;
+  margin-top: 18px;
+  font-size: 17px;
+  color: var(--tc-slate);
+}
+.tc-brand .tc-case-subline .tc-project-label {
+  margin: 0;
+  font-size: 17px;
+}
+
+/* Case study section labels: a halftone dot in the brand cobalt marks each one. */
+.tc-brand .portfolio-sticky-label p {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--tc-cobalt);
+  font-weight: 500;
+}
+.tc-brand .portfolio-sticky-label p::before {
+  content: "";
+  flex: none;
+  width: 14px;
+  height: 14px;
+  background:
+    radial-gradient(circle, var(--tc-red) 2.6px, transparent 3px) 9px 4.5px / 6px 6px no-repeat,
+    radial-gradient(circle, var(--tc-cobalt) 1.5px, transparent 1.9px) 0 0 / 5px 5px;
+  -webkit-mask: radial-gradient(circle at 45% 50%, #000 62%, transparent 64%);
+  mask: radial-gradient(circle at 45% 50%, #000 62%, transparent 64%);
+}
+
+/* Comfortable reading width for case study text. */
+.tc-brand .portfolio-split-content p,
+.tc-brand .portfolio-split-content ul,
+.tc-brand .portfolio-split-content ol,
+.tc-brand .portfolio-rich-content p,
+.tc-brand .portfolio-rich-content li,
+.tc-brand .portfolio-campaign-feature p {
+  max-width: 56ch;
+}
+.tc-bio-text {
+  max-width: 52ch;
+}
+/* No single words stranded on the last line of a paragraph or list item. */
+.tc-brand main p,
+.tc-brand main li {
+  text-wrap: pretty;
+}
+.tc-brand .portfolio-split-content h2,
+.tc-brand .portfolio-section-heading h2 {
+  text-wrap: balance;
+}
+.tc-brand .portfolio-split-content p,
+.tc-brand .portfolio-hero-copy {
+  text-wrap: pretty;
+}
+
+/* "Show all images" under long galleries. */
+.tc-gallery-more {
+  display: flex;
+  justify-content: center;
+  margin-top: clamp(28px, 4vw, 44px);
+}
+
+/* Next project: the next case study as a large teaser. */
+.tc-next {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+}
+.tc-next-link {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(20px, 4vw, 56px);
+  width: 100%;
+  color: var(--tc-ink) !important;
+  text-decoration: none;
+}
+.tc-next-media {
+  display: block;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-radius: var(--tc-radius-lg);
+  background: var(--tc-ice);
+}
+.tc-next-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.9s var(--tc-ease);
+}
+.tc-next-link:hover .tc-next-media img {
+  transform: scale(1.03);
+}
+.tc-next-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.tc-next-title {
+  font-weight: 600;
+  font-size: clamp(2.2rem, 4.6vw, 4rem);
+  line-height: 0.98;
+  letter-spacing: -0.05em;
+  text-wrap: balance;
+}
+.tc-next-link:hover .tc-next-title {
+  text-decoration: underline;
+  text-decoration-color: var(--tc-red);
+  text-decoration-thickness: 3px;
+  text-underline-offset: 8px;
+}
+@media (max-width: 760px) {
+  .tc-next-link {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Tap targets: contact and footer links get a 44px hit area. */
+.tc-reach-email,
+.tc-reach-note a,
+.tc-footer-links a,
+.tc-footer-base a,
+.tc-footer-mark {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+/* Logo brief: placeholder text dark enough to read (about 5:1 on white). */
+.tc-brand input::placeholder,
+.tc-brand textarea::placeholder {
+  color: #6a6f78;
+  opacity: 1;
+}
+
+/* Mobile menu: solid enough that the page behind doesn't show through. */
+.tc-brand .tc-mobile-menu.tc-glass {
+  background: rgba(255, 255, 255, 0.94);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tc-next-media img {
+    transition: none;
+  }
+  .tc-next-link:hover .tc-next-media img {
+    transform: none;
+  }
+}
+
+/* Key decisions: an open row of notes divided by hairlines, not floating cards. */
+.tc-brand .portfolio-mini-card-grid {
+  gap: 0 clamp(20px, 3vw, 40px);
+  border: 0;
+}
+.tc-brand .portfolio-mini-card {
+  padding: 22px 0 0;
+  border: 0;
+  border-top: 2px solid var(--tc-ink);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.tc-brand .portfolio-mini-card h3 {
+  margin: 0 0 10px;
+}
+
 @keyframes tc-rise {
   from {
     opacity: 0;
@@ -2026,4 +2258,304 @@ a.tc-logo-tile:hover .tc-logo-tile-media img {
   .tc-brand .portfolio-poster-card:hover {
     transform: none;
   }
+}
+
+/* ==========================================================================
+   Apple polish: scroll-driven depth and small physical responses.
+   Motion values come from framer-motion (ScrollMotion.jsx); this block holds
+   the layout those values move. Reduced motion gets still versions.
+   ========================================================================== */
+
+/* Hero: the dot field sits on its own layer so it can drift slower than the copy. */
+.tc-parallax-field {
+  position: absolute;
+  inset: -40px 0 0;
+  will-change: transform;
+}
+.tc-wave-hero .tc-wave-hero-inner {
+  will-change: transform, opacity;
+}
+.tc-wave-hero-copy h1 {
+  font-size: clamp(3rem, 7.4vw, 6.75rem);
+  letter-spacing: -0.06em;
+  line-height: 0.92;
+}
+
+/* Magnetic wrapper keeps the button's own press feedback. */
+.tc-magnetic {
+  display: inline-flex;
+  will-change: transform;
+}
+
+/* Showcase: a tall section with a pinned frame that grows to fill the screen. */
+.tc-showcase {
+  position: relative;
+  height: 210svh;
+  margin-top: clamp(-80px, -6vw, -32px);
+}
+.tc-showcase-sticky {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+.tc-showcase-frame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--tc-ink);
+  will-change: transform;
+}
+.tc-showcase-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+  color: #fff !important;
+  text-decoration: none;
+}
+.tc-showcase-frame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  will-change: transform;
+}
+.tc-showcase-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(17, 18, 20, 0) 45%, rgba(17, 18, 20, 0.62) 100%);
+  pointer-events: none;
+}
+.tc-showcase-caption {
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  max-width: var(--tc-max);
+  margin: 0 auto;
+  padding: 0 var(--tc-gutter) clamp(32px, 6vw, 72px);
+  box-sizing: border-box;
+}
+.tc-showcase-label {
+  font-size: 15px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.82);
+}
+.tc-showcase-title {
+  font-size: clamp(2.5rem, 7vw, 6rem);
+  font-weight: 600;
+  letter-spacing: -0.055em;
+  line-height: 0.95;
+}
+.tc-showcase-cta {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-top: 8px;
+  padding: 0 22px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.34);
+  -webkit-backdrop-filter: blur(14px) saturate(1.4);
+  backdrop-filter: blur(14px) saturate(1.4);
+  font-size: 15px;
+  font-weight: 500;
+  transition: background-color 0.25s ease, transform 0.25s var(--tc-ease);
+}
+.tc-showcase-link:hover .tc-showcase-cta {
+  background: rgba(255, 255, 255, 0.28);
+  transform: translateX(4px);
+}
+.tc-showcase.is-static {
+  height: auto;
+  margin-top: 0;
+  padding: 0 var(--tc-gutter);
+}
+.tc-showcase.is-static .tc-showcase-frame {
+  display: block;
+  max-width: var(--tc-max);
+  height: min(78svh, 760px);
+  margin: 0 auto;
+  border-radius: var(--tc-radius-lg);
+  color: #fff !important;
+}
+
+/* Statement: words light up as they scroll through. */
+.tc-statement {
+  padding-block: clamp(96px, 14vw, 200px);
+}
+.tc-statement-text {
+  margin: 0;
+  max-width: 22ch;
+  font-size: clamp(2rem, 4.6vw, 4.25rem);
+  font-weight: 600;
+  line-height: 1.06;
+  letter-spacing: -0.045em;
+  color: var(--tc-ink);
+  text-wrap: balance;
+}
+.tc-word {
+  display: inline;
+}
+
+/* Selected work: a staggered two-up grid, each image a window that drifts. */
+.tc-work-grid {
+  gap: clamp(48px, 6vw, 88px) clamp(20px, 3vw, 44px);
+}
+@media (min-width: 721px) {
+  .tc-work-grid > .tc-work-card:nth-child(even) {
+    margin-top: clamp(64px, 9vw, 140px);
+  }
+}
+.tc-work-card .tc-work-media {
+  aspect-ratio: 1 / 1;
+  transition: transform 0.6s var(--tc-ease), box-shadow 0.6s var(--tc-ease);
+  box-shadow: 0 1px 0 rgba(47, 93, 140, 0.04);
+}
+.tc-parallax-media {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.tc-parallax-inner {
+  position: absolute;
+  inset: 0;
+  will-change: transform;
+}
+.tc-parallax-inner > img,
+.tc-parallax-inner > video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.tc-work-card:hover .tc-work-media {
+  transform: translateY(-6px);
+  box-shadow: 0 30px 60px -30px rgba(47, 93, 140, 0.45);
+}
+.tc-work-card:active .tc-work-media {
+  transform: translateY(-2px) scale(0.985);
+  transition-duration: 0.15s;
+}
+
+/* Nav: one soft pill slides between links. */
+.tc-nav {
+  position: relative;
+}
+.tc-nav-pill {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  height: 44px;
+  width: var(--pill-w, 0px);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.78);
+  box-shadow: 0 1px 2px rgba(47, 93, 140, 0.12);
+  transform: translate(var(--pill-x, 0px), -50%);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.45s var(--tc-ease), width 0.45s var(--tc-ease), opacity 0.2s ease;
+}
+.tc-nav.has-pill .tc-nav-pill {
+  opacity: 1;
+}
+.tc-nav .tc-nav-link,
+.tc-nav .tc-btn {
+  position: relative;
+  z-index: 1;
+}
+.tc-nav .tc-nav-link:hover {
+  background: transparent;
+}
+
+/* Case studies: the cover settles into place, and a thin line tracks reading. */
+.tc-brand .tc-case-cover {
+  will-change: transform;
+  transform-origin: 50% 0%;
+}
+.tc-case-cover-clip {
+  overflow: hidden;
+  border-radius: var(--tc-radius-lg);
+  background: var(--tc-ice);
+}
+.tc-case-cover-inner {
+  will-change: transform;
+}
+.tc-brand .tc-case-cover img,
+.tc-brand .tc-case-cover video {
+  border-radius: 0;
+}
+.tc-reading-progress {
+  position: fixed;
+  z-index: 60;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--tc-blue);
+  transform-origin: 0% 50%;
+  pointer-events: none;
+}
+
+/* Buttons: a touch more physical. */
+.tc-btn {
+  transition: transform 0.35s var(--tc-ease), background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.35s var(--tc-ease);
+}
+.tc-brand .tc-btn-ink:hover,
+.tc-brand .tc-btn-red:hover {
+  box-shadow: 0 14px 28px -14px rgba(17, 18, 20, 0.55);
+}
+.tc-btn:active {
+  transform: scale(0.96);
+  transition-duration: 0.12s;
+}
+
+@media (max-width: 720px) {
+  .tc-showcase {
+    height: 170svh;
+    margin-top: 0;
+  }
+  .tc-statement-text {
+    max-width: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tc-work-card:hover .tc-work-media,
+  .tc-work-card:active .tc-work-media {
+    transform: none;
+  }
+  .tc-nav-pill {
+    transition: opacity 0.2s ease;
+  }
+}
+
+/* Sub-page and case-study headers: the tinted background and dot pattern fade
+   into the page instead of ending in a hard line above the cover image. */
+.tc-brand .portfolio-subpage-hero.portfolio-section,
+.tc-brand .portfolio-subpage-hero {
+  background:
+    linear-gradient(180deg, rgba(244, 248, 251, 0) 45%, var(--tc-paper) 100%),
+    radial-gradient(circle at 85% 0%, rgba(127, 176, 224, 0.45), transparent 42%),
+    radial-gradient(circle at 100% 100%, rgba(240, 138, 126, 0.25), transparent 40%),
+    linear-gradient(120deg, #eaf2f9 0%, var(--tc-paper) 60%, var(--tc-blush) 100%);
+  padding-bottom: clamp(64px, 8vw, 112px);
+}
+.tc-brand .portfolio-subpage-hero::after {
+  -webkit-mask-image: linear-gradient(105deg, transparent 35%, #000 85%), linear-gradient(180deg, #000 30%, transparent 92%);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(105deg, transparent 35%, #000 85%), linear-gradient(180deg, #000 30%, transparent 92%);
+  mask-composite: intersect;
+}
+.tc-brand .tc-case-hero + .tc-case-cover {
+  margin-top: clamp(-40px, -3vw, -16px);
 }
