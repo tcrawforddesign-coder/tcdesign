@@ -82,6 +82,14 @@ export const projects = [
         ],
       },
       {
+        title: "Video posts",
+        items: [
+          { src: "/images/3sixty-social/alert-247am-poster.webp", video: "/images/3sixty-social/alert-247am.mp4", alt: "The Friday Check, episode 2: a door forced open alert at 2:47 AM Saturday" },
+          { src: "/images/3sixty-social/friday-5pm-poster.webp", video: "/images/3sixty-social/friday-5pm.mp4", alt: "The Friday Check, episode 1: Friday at 5 PM, your building sits empty" },
+          { src: "/images/3sixty-social/school-security-layers-poster.webp", video: "/images/3sixty-social/school-security-layers.mp4", alt: "School security as connected layers, from the perimeter in" },
+        ],
+      },
+      {
         title: "Hiring and moments",
         items: [
           { src: "/images/3sixty-social/hiring-project-manager.webp", alt: "We're hiring a Project Manager in San Antonio" },

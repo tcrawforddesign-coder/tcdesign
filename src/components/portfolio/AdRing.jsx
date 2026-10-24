@@ -15,7 +15,8 @@ function flatten(groups) {
       const src = typeof item === "string" ? item : item.preview ?? item.src ?? item.full;
       const full = typeof item === "string" ? item : item.full ?? src;
       const alt = (typeof item === "string" ? "" : item.alt) || `${group.title}, ad ${index + 1}`;
-      return { src, full, alt, set: group.title };
+      const video = typeof item === "string" ? null : item.video ?? null;
+      return { src, full, alt, video, set: group.title };
     }),
   );
 }
@@ -50,6 +51,7 @@ export default function AdRing({ groups, title, aspect = 1.25 }) {
             <li key={ad.src + index}>
               <button type="button" className="tc-adring-card" onClick={() => setOpen(index)} aria-label={`Open ${ad.alt}`}>
                 <img src={ad.src} alt="" loading="lazy" decoding="async" />
+                {ad.video ? <span className="tc-adring-play" aria-hidden="true" /> : null}
               </button>
             </li>
           ))}
@@ -201,6 +203,7 @@ function Ring({ ads, sets, onOpen, paused, aspect }) {
                 }}
               >
                 <img src={ad.src} alt="" loading="lazy" decoding="async" draggable="false" />
+                {ad.video ? <span className="tc-adring-play" aria-hidden="true" /> : null}
               </button>
             </li>
           ))}
@@ -283,7 +286,11 @@ function Viewer({ ads, index, setIndex }) {
               exit={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.94 }}
               transition={{ type: "spring", stiffness: 220, damping: 26 }}
             >
-              <img src={ad.full} alt={ad.alt} />
+              {ad.video ? (
+                <video src={ad.video} poster={ad.src} controls autoPlay={!reduce} playsInline aria-label={ad.alt} />
+              ) : (
+                <img src={ad.full} alt={ad.alt} />
+              )}
               <figcaption>
                 <span>{ad.set}</span>
                 <span>
