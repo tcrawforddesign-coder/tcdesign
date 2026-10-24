@@ -311,18 +311,11 @@ function ProjectVisuals({ project, galleryItems }) {
 }
 
 function ThreeSixtyVisualPreview({ project }) {
-  const items = getFeaturedSocialPosts(project.socialPosts)
-    .slice(0, 6)
-    .map((item) => normalizeMediaItem(item, project.slug))
-    .filter(Boolean);
-
-  if (!items.length) return null;
-
+  if (!project.socialPostGroups?.length) return null;
   return (
-    <section className="portfolio-section portfolio-work-section">
-      <SectionHeading title="A compact look at the day-to-day content supporting 3Sixty's LinkedIn presence." />
-      <GuidedVisualGroup items={items} label="Social post" fallbackAlt={`${project.title} social post`} projectSlug={project.slug} variant="social" />
-    </section>
+    <div className="portfolio-section portfolio-work-section">
+      <AdRing groups={project.socialPostGroups} title="Posts from the 3Sixty LinkedIn." aspect={1} />
+    </div>
   );
 }
 
@@ -627,12 +620,6 @@ function ThreeSixtyMarketingSections({ project }) {
         <p>{socialStrategy.copy}</p>
         <BulletList items={socialStrategy.pillars} />
         <AssetStrip title={thoughtLeadership.title} copy={thoughtLeadership.copy} items={thoughtLeadership.images} />
-        <AssetStrip
-          title="Social media content support"
-          copy="A set of social posts showing how educational, promotional, company culture, and urgency-focused content stayed consistent across the 3Sixty feed."
-          items={getFeaturedSocialPosts(project.socialPosts)}
-          initialVisible={8}
-        />
       </MarketingSection>
 
       <section className="portfolio-section portfolio-work-section">
@@ -763,30 +750,6 @@ function AssetStrip({ title, copy, items = [], initialVisible }) {
       ) : null}
     </div>
   );
-}
-
-function getFeaturedSocialPosts(posts = []) {
-  const preferred = [
-    "1751997917122",
-    "1752166685026",
-    "1753125856967",
-    "1754451545290",
-    "1757425395881",
-    "1759161916665",
-    "1766530556230",
-    "1772635628723",
-  ];
-  const seen = new Set();
-  const featured = preferred
-    .map((token) => posts.find((src) => src.includes(token)))
-    .filter(Boolean);
-  const ordered = [...featured, ...posts].filter((src) => {
-    if (!src || seen.has(src)) return false;
-    seen.add(src);
-    return true;
-  });
-
-  return ordered;
 }
 
 function AssetGrid({ items = [], title = "Asset", projectSlug }) {

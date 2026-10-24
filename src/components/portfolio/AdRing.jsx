@@ -30,7 +30,7 @@ function useCardWidth() {
   return width;
 }
 
-export default function AdRing({ groups, title }) {
+export default function AdRing({ groups, title, aspect = 1.25 }) {
   const ads = useMemo(() => flatten(groups), [groups]);
   const sets = useMemo(() => groups.map((group) => group.title), [groups]);
   const reduce = useReducedMotion();
@@ -42,10 +42,10 @@ export default function AdRing({ groups, title }) {
         <h2 id="tc-adring-title" className="tc-h2">
           {title}
         </h2>
-        <p className="tc-adring-hint">{reduce ? "Select an ad to see it up close." : "Drag to turn. Click an ad to see it up close."}</p>
+        <p className="tc-adring-hint">{reduce ? "Select one to see it up close." : "Drag to turn. Click one to see it up close."}</p>
       </div>
       {reduce ? (
-        <ul className="tc-adring-flat">
+        <ul className="tc-adring-flat" style={{ "--card-ar": aspect }}>
           {ads.map((ad, index) => (
             <li key={ad.src + index}>
               <button type="button" className="tc-adring-card" onClick={() => setOpen(index)} aria-label={`Open ${ad.alt}`}>
@@ -55,14 +55,14 @@ export default function AdRing({ groups, title }) {
           ))}
         </ul>
       ) : (
-        <Ring ads={ads} sets={sets} onOpen={setOpen} paused={open !== null} />
+        <Ring ads={ads} sets={sets} onOpen={setOpen} paused={open !== null} aspect={aspect} />
       )}
       <Viewer ads={ads} index={open} setIndex={setOpen} />
     </section>
   );
 }
 
-function Ring({ ads, sets, onOpen, paused }) {
+function Ring({ ads, sets, onOpen, paused, aspect }) {
   const count = ads.length;
   const step = 360 / count;
   const cardWidth = useCardWidth();
@@ -167,7 +167,7 @@ function Ring({ ads, sets, onOpen, paused }) {
 
       <div
         className="tc-adring-stage"
-        style={{ "--card-w": `${cardWidth}px` }}
+        style={{ "--card-w": `${cardWidth}px`, "--card-ar": aspect }}
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}

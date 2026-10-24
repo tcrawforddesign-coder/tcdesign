@@ -2616,7 +2616,7 @@ a.tc-logo-tile:hover .tc-logo-tile-media img {
 }
 .tc-adring-stage {
   position: relative;
-  height: calc(var(--card-w) * 1.25 + 110px);
+  height: calc(var(--card-w) * var(--card-ar, 1.25) + 110px);
   margin-inline: calc(-1 * var(--tc-gutter));
   perspective: 950px;
   perspective-origin: 50% 50%;
@@ -2644,9 +2644,9 @@ a.tc-logo-tile:hover .tc-logo-tile-media img {
 .tc-adring-item {
   position: absolute;
   left: calc(var(--card-w) / -2);
-  top: calc(var(--card-w) * -0.625);
+  top: calc(var(--card-w) * var(--card-ar, 1.25) / -2);
   width: var(--card-w);
-  aspect-ratio: 4 / 5;
+  height: calc(var(--card-w) * var(--card-ar, 1.25));
   transform: rotateY(var(--a)) translateZ(var(--r));
   transform-style: preserve-3d;
   backface-visibility: hidden;
@@ -2734,7 +2734,7 @@ a.tc-logo-tile:hover .tc-logo-tile-media img {
   list-style: none;
 }
 .tc-adring-flat .tc-adring-card {
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 1 / var(--card-ar, 1.25);
 }
 
 /* Viewer */
