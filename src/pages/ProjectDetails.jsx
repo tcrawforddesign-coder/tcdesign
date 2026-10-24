@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { CaseCover, ReadingProgress } from "../components/motion/ScrollMotion.jsx";
 import { usePrefersReducedMotion } from "../hooks/usePrefersReducedMotion.js";
 import { Link, useParams } from "react-router-dom";
 
@@ -67,6 +68,7 @@ export default function ProjectDetailsPage() {
 
   return (
     <PortfolioLayout>
+      <ReadingProgress />
       <section className="portfolio-hero portfolio-section portfolio-subpage-hero tc-case-hero">
         <PortfolioReveal as="h1" className="portfolio-hero-title">
           {primary}
@@ -78,7 +80,7 @@ export default function ProjectDetailsPage() {
         </PortfolioReveal>
       </section>
 
-      <section className="portfolio-case-hero">
+      <CaseCover>
         {project.heroVideo ? (
           <video autoPlay={!reduceMotion} muted loop playsInline poster={heroImage} aria-label={project.heroAlt ?? `${primary} project video`}>
             <source src={project.heroVideo} type="video/mp4" />
@@ -86,7 +88,7 @@ export default function ProjectDetailsPage() {
         ) : heroImage ? (
           <img src={heroImage} alt={project.heroAlt ?? `${primary}: key image from the project`} />
         ) : null}
-      </section>
+      </CaseCover>
 
       <section className="portfolio-section portfolio-case-meta-section">
         <div className="portfolio-case-meta portfolio-reveal">

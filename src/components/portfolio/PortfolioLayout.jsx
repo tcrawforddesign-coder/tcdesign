@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { ChevronDown } from "lucide-react";
-
 import HalftoneMark, { LogoPill } from "../../brand/HalftoneMark.jsx";
 import { WORK_SECTIONS } from "../../data/workSections.js";
+import { Magnetic } from "../motion/ScrollMotion.jsx";
 
 const CONTACT_EMAIL = "tcrawford.design@gmail.com";
 const LINKEDIN_URL = "https://www.linkedin.com/in/travis-crawford-67759b24a";
@@ -241,6 +241,22 @@ function WorkMenu({ open, setOpen, buttonRef }) {
 function SiteHeader() {
   const [open, setOpen] = useState(false);
   const work = useWorkMenu();
+  const navRef = useRef(null);
+
+  // One soft pill slides between nav links as you hover or tab, instead of
+  // each link lighting up on its own. Set straight on the element, no state.
+  const moveNavPill = (event) => {
+    const nav = navRef.current;
+    const link = event.target.closest?.(".tc-nav-link");
+    if (!nav || !link || !nav.contains(link)) return;
+    nav.style.setProperty("--pill-x", `${link.offsetLeft}px`);
+    nav.style.setProperty("--pill-w", `${link.offsetWidth}px`);
+    nav.classList.add("has-pill");
+  };
+  const hideNavPill = (event) => {
+    if (event.type === "blur" && navRef.current?.contains(event.relatedTarget)) return;
+    navRef.current?.classList.remove("has-pill");
+  };
   const location = useLocation();
 
   useEffect(() => {
@@ -260,7 +276,8 @@ function SiteHeader() {
     <header className="tc-header">
       <div className="tc-header-inner">
         <LogoPill to="/" aria-label="Travis Crawford, home" />
-        <nav className="tc-nav tc-glass" aria-label="Primary navigation">
+        <nav ref={navRef} className="tc-nav tc-glass" aria-label="Primary navigation" onPointerOver={moveNavPill} onPointerLeave={hideNavPill} onFocus={moveNavPill} onBlur={hideNavPill}>
+          <span className="tc-nav-pill" aria-hidden="true" />
           <WorkButton {...work} />
           {NAV_ITEMS.map((item) => (
             <NavItem key={item.label} item={item} className="tc-nav-link" />
@@ -368,9 +385,11 @@ export function ContactSection() {
           Hiring for a design role, or have a project in mind? Email me.
         </PortfolioReveal>
         <PortfolioReveal className="tc-reach-actions">
+<Magnetic>
           <a className="tc-btn tc-btn-red tc-btn-lg" href={HELLO_MAILTO}>
             Email me
           </a>
+          </Magnetic>
           <a className="tc-btn tc-btn-ghost tc-btn-lg" href={RESUME_URL} target="_blank" rel="noreferrer">
             Download resume
           </a>
