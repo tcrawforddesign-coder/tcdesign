@@ -801,18 +801,6 @@ export const projects = [
         ],
       },
       {
-        title: "Longevity benefit set",
-        description: "Longevity-forward Atlas+ frames for prospecting, built for thumb-stop clarity in-feed.",
-        carousel: true,
-        items: [
-          "/images/Longevity_Ad_1080x1350.webp",
-          "/images/Longevity_Ad1_1080x1350.webp",
-          "/images/Longevity_Ad_1080x1350-1.webp",
-          "/images/Longevity_Ad_1080x1350-2.webp",
-          "/images/Longevity_Ad_1080x1350-3.webp",
-        ],
-      },
-      {
         title: "All-in-One comparison set",
         description: "Static frames comparing Atlas+ Superblend pricing versus buying individual supplements. Launched with refreshed pricing modules.",
         carousel: true,
@@ -837,19 +825,27 @@ export const projects = [
         ],
       },
       {
-        title: "Black Friday acquisition set",
-        description: "Nine-variant push testing urgency copy, limited-roast messaging, and loyalty perks at 4:5.",
+        title: "Supplement stack set",
+        description: "Atlas+ Superblend frames that position one scoop as a replacement for a shelf of supplements.",
         carousel: true,
         items: [
-          "/images/Atlas_bogo_1.webp",
-          "/images/Atlas_bogo_2.webp",
-          "/images/Atlas_bogo_3.webp",
-          "/images/Atlas_bogo_4.webp",
-          "/images/Atlas_bogo_5.webp",
-          "/images/Atlas_bogo_6.webp",
-          "/images/Atlas_bogo_7.webp",
-          "/images/Atlas_bogo_7-1.webp",
-          "/images/Atlas_bogo_8.webp",
+          { preview: "/images/Atlas_Stack_1_1080x1350.webp", full: "/images/Atlas_Stack_1_1080x1920.webp", alt: "Atlas+ Replace Your Supplement Stack ad 1" },
+          { preview: "/images/Atlas_Stack_2_1080x1350.webp", full: "/images/Atlas_Stack_2_1080x1920.webp", alt: "Atlas+ Replace Your Supplement Stack ad 2" },
+          { preview: "/images/Atlas_Stack_3_1080x1350.webp", full: "/images/Atlas_Stack_3_1080x1920.webp", alt: "Atlas+ Replace Your Multivitamin ad" },
+          { preview: "/images/Atlas_Stack_4_1080x1350.webp", full: "/images/Atlas_Stack_4_1080x1920.webp", alt: "Atlas+ Replace Your Supplement Stack ad 4" },
+          { preview: "/images/Atlas_Stack_5_1080x1350.webp", full: "/images/Atlas_Stack_5_1080x1920.webp", alt: "Atlas+ Replace Your Latte ad" },
+        ],
+      },
+      {
+        title: "Blends with Benefits set",
+        description: "Review-led frames pairing customer quotes with both Superblend flavors and a clear shop CTA.",
+        carousel: true,
+        items: [
+          { preview: "/images/Atlas_Blends_1_1080x1350.webp", full: "/images/Atlas_Blends_1_1080x1920.webp", alt: "Atlas+ Blends with Benefits ad 1" },
+          { preview: "/images/Atlas_Blends_2_1080x1350.webp", full: "/images/Atlas_Blends_2_1080x1920.webp", alt: "Atlas+ Blends with Benefits ad 2" },
+          { preview: "/images/Atlas_Blends_3_1080x1350.webp", full: "/images/Atlas_Blends_3_1080x1920.webp", alt: "Atlas+ Blends with Benefits ad 3" },
+          { preview: "/images/Atlas_Blends_4_1080x1350.webp", full: "/images/Atlas_Blends_4_1080x1920.webp", alt: "Atlas+ Blends with Benefits ad 4" },
+          { preview: "/images/Atlas_Blends_5_1080x1350.webp", full: "/images/Atlas_Blends_5_1080x1920.webp", alt: "Atlas+ Blends with Benefits ad 5" },
         ],
       },
     ],
@@ -863,8 +859,8 @@ export const projects = [
         description: "Five static 4:5 placements for evening coffee storytelling and routine-based hooks.",
       },
       {
-        title: "Longevity benefit set",
-        description: "Five longevity-focused static frames supporting Atlas+ benefit education and conversion.",
+        title: "Supplement stack set",
+        description: "Five 9:16 and 4:5 frames positioning Atlas+ Superblend as a replacement for a supplement stack, a multivitamin or a latte.",
       },
       {
         title: "All-in-One comparison set",
@@ -875,8 +871,8 @@ export const projects = [
         description: "Five-variant wanted-style static set for thumb-stop creative in Meta feeds.",
       },
       {
-        title: "Black Friday sale ad set",
-        description: "Nine Meta ad variants focused on the limited-time sale offer, urgency messaging, and first-bag incentives.",
+        title: "Blends with Benefits set",
+        description: "Five review-led variants pairing customer quotes with both Superblend flavors.",
       },
       {
         title: "Price comparison series",
@@ -910,7 +906,7 @@ export const projects = [
       {
         icon: "PenTool",
         title: "Meta Variant Set",
-        copy: "Five static 4:5 frames covering urgency, limited drops, and loyalty perks for the Black Friday acquisition push.",
+        copy: "Static frames across 4:5 and 9:16 covering benefits, reviews and price comparisons for Atlas+.",
       },
       {
         icon: "Cpu",
