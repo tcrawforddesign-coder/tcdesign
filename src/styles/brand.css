@@ -2857,3 +2857,57 @@ html.tc-viewer-open {
   background: #000;
   box-shadow: 0 40px 100px -30px rgba(0, 0, 0, 0.7);
 }
+
+/* 3Sixty: short text blocks and the owned list. */
+.tc-3s-blocks {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(24px, 3vw, 48px);
+}
+.tc-3s-block {
+  border-top: 1px solid rgba(47, 93, 140, 0.18);
+  padding-top: 20px;
+}
+.tc-3s-block h3 {
+  margin: 0 0 10px;
+  font-size: clamp(19px, 1.6vw, 22px);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--tc-ink);
+}
+.tc-3s-block p {
+  margin: 0;
+  max-width: 44ch;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--tc-graphite);
+}
+.tc-3s-owned {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 14px;
+}
+.tc-3s-owned li {
+  position: relative;
+  padding-left: 22px;
+  font-size: clamp(17px, 1.5vw, 20px);
+  line-height: 1.45;
+  color: var(--tc-ink);
+}
+.tc-3s-owned li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--tc-blue);
+}
+@media (max-width: 900px) {
+  .tc-3s-blocks {
+    grid-template-columns: 1fr;
+  }
+}

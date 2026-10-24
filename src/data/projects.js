@@ -2,57 +2,16 @@ export const projects = [
   {
     id: 9,
     slug: "3sixty-integrated-marketing",
-    title: "3Sixty Integrated - Marketing Coordinator Work",
+    title: "3Sixty Integrated - In-house marketing",
     tag: "In-house marketing",
     timeframe: "2024-Present",
-    summary: "Marketing coordination work across social media management, email communication, sales support, internal engagement, event planning, and day-to-day execution.",
-    roles: ["Marketing Coordination", "Social Media Management", "Sales Enablement", "Internal Communications"],
-    team: ["Worked with sales, operations, leadership, and vendor partners"],
-    tools: ["LinkedIn", "Mailchimp", "HubSpot", "Figma", "Photoshop"],
+    summary:
+      "I handle 3Sixty Integrated's marketing day to day: the LinkedIn feed, client email, sales materials and company events. Most of the job is turning technical security topics into something clients and prospects can follow.",
+    roles: ["Creative Marketing Specialist"],
+    tools: ["Figma", "Photoshop", "Mailchimp", "HubSpot", "LinkedIn"],
     cover: "/images/Gemini_Generated_Image_c6x6a5c6x6a5c6x6.webp",
     heroImage: "/images/Gemini_Generated_Image_c6x6a5c6x6a5c6x6.webp",
     heroAlt: "A white hard hat with the 3Sixty logo on a desk beside a technician's hands",
-    whatIDo: [
-      "Coordinate marketing communication across social, email, events, sales support, and internal updates.",
-      "Manage day-to-day social content planning, post development, scheduling support, and message consistency.",
-      "Translate technical security topics into clearer materials for clients, prospects, and internal teams.",
-      "Support lead generation and follow-up workflows by keeping forms, assets, lists, and handoffs organized.",
-    ],
-    communicationStrategyExecution: {
-      statement:
-        "As Marketing Coordinator, I helped keep 3Sixty's marketing activity organized, clear, and moving. The work connected social media, email, events, sales materials, and internal communication so different teams had the information and assets they needed.",
-      examples: [
-        "LinkedIn content planning, post development, and social media management support",
-        "Lunch and Learn coordination, vendor communication, and education-led event support",
-        "Monthly Security Tech Spotlight email series to keep operations teams informed on emerging technology",
-        "Messaging and asset coordination for pricing updates, technology spotlights, and sales follow-up",
-      ],
-      visuals: ["Communication flow: Concept to Messaging to Assets to Execution", "Email, LinkedIn, and deck previews grouped as one system"],
-    },
-    socialStrategy: {
-      title: "3Sixty social strategy",
-      copy:
-        "I supported 3Sixty's social presence by keeping posts consistent, clear, and aligned with what the sales and operations teams needed to communicate. The focus was not just making posts look good; it was making technical updates, company moments, and service messages easier to understand.",
-      pillars: [
-        "Message hierarchy first: what happened, why it matters, and what the audience should do next",
-        "Repeatable post structure for educational, promotional, company culture, and announcement content",
-        "Planned cadence to support awareness, trust, recruiting, events, and sales conversations",
-      ],
-    },
-    thoughtLeadershipSeries: {
-      title: "Security facts carousel post",
-      copy:
-        "An example of turning security knowledge into concise social content that helps operations audiences understand practical risks, tools, and next steps.",
-      images: [
-        "/images/3fact1.jpg",
-        "/images/3fact2.webp",
-        "/images/3fact3.webp",
-        "/images/3fact4.webp",
-        "/images/3fact5.jpg",
-      ],
-    },
-    socialAccountName: "3Sixty Integrated",
-    socialCaptionCopy: "Building awareness through clear, consistent communication.",
     socialPostGroups: [
       {
         title: "Security education",
@@ -113,280 +72,26 @@ export const projects = [
       "/images/3sixty-social/hiring-project-manager.webp",
       "/images/3sixty-social/patriot-day.webp",
     ],
-    securityPricingCampaign: {
-      title: "Security prices are rising communication push",
-      copy:
-        "A communication push built to help clients and internal teams understand hardware and memory price increases, plan ahead, and avoid reactive decision-making.",
-      assets: [
-        { src: "/images/Instagram post - 201.png", label: "Social post" },
-        { src: "/images/Marketing Event Survey Banner.png", label: "Banner asset" },
-      ],
-    },
-    emailCampaignMockup: {
-      title: "Security Tech Spotlight Email Series",
-      subtitle:
-        "A monthly educational email series built to keep operations teams informed on emerging security technology and how each solution maps to 3Sixty offerings. I supported the content, layout, and HTML build so the email could be sent as a polished client-facing touchpoint.",
-      subject: "Turn cameras into proactive campus sensors",
-      iframeSrc: "/images/Upgrade%20Your%20Subscription-2/email.html",
-      greeting: "Hi [First Name],",
-      intro: [
-        "I wanted to share a quick look at how AI video analytics is helping campuses turn existing camera systems into proactive tools for safety, operations, and decision-making.",
-        "Across Texas, many organizations are still dealing with limited visibility across buildings and systems, which makes it harder to detect issues early, respond quickly, and confidently plan upgrades.",
-        "In most cases, the issue is not a lack of cameras - it is a lack of usable insight.",
-      ],
-      riskList: ["Higher project cost", "Budget rework", "Approval delays", "Reactive decision-making"],
-      featureList: [
-        "Real-Time Threat Detection: identifies intrusion, loitering, and unusual behavior.",
-        "Object Classification: distinguishes people, vehicles, and movement patterns.",
-        "Automated Alerts: triggers notifications based on defined rules.",
-        "Smart Search and Forensics: quickly locate incidents using metadata filters.",
-      ],
-      featuredTech: {
-        name: "Axis Object Analytics",
-        copy:
-          "AI-powered analytics built into supported Axis cameras to classify people and vehicles, detect movement patterns, and create smarter event-based awareness.",
+    workBlocks: [
+      {
+        title: "Client email",
+        copy: "The Security Tech Spotlight is a monthly email that explains one emerging security technology and how it fits what 3Sixty installs. I write the content and design and build the HTML. I also ran the \"Security prices are rising\" push, which helped clients plan for hardware and memory price increases before they hit.",
       },
-      additionalSolutions: [
-        "Hanwha Vision - Wisenet AI Cameras",
-        "Bosch - Intelligent Video Analytics",
-        "i-PRO - Active Guard",
-      ],
-      cta: "Want to explore where AI analytics could fit on your campus? We can help evaluate opportunities across parking, perimeter, dorms, and public areas.",
-      signature: [
-        "Best,",
-        "Brenda Constantine",
-        "Account Manager",
-        "3Sixty Integrated",
-        "San Antonio",
-        "(713) 447-3619",
-        "bconstantin@3sixtyintegrated.com",
-      ],
-    },
-    technicalTranslationStorytelling: {
-      statement:
-        "I turn technical systems and operational details into structured messaging that both technical and non-technical audiences can understand.",
-      examples: [
-        "HEB SiteOwl proposal and pitch deck communication",
-        "System and service one-pagers for fast stakeholder understanding",
-      ],
-      visuals: ["System diagram treatment for SiteOwl", "ROI comparison visual", "Complex to simplified slide narrative"],
-    },
-    salesEnablementBusinessCommunication: {
-      statement:
-        "I support sales opportunities by organizing information, improving client-facing materials, and helping technical details become easier to present and understand.",
-      examples: [
-        "Bid proposal writing, structuring, and formatting",
-        "Sales pitch deck development for SiteOwl opportunities",
-        "One-pagers and bid portal sourcing support for active pursuits",
-      ],
-      visuals: ["Proposal page structure", "Sales deck communication slides", "Messaging callout sections for client-facing content"],
-    },
-    salesEnablementLibrary: {
-      title: "Sales Enablement Library",
-      copy: "A working set of one-pagers used to support sales conversations, simplify technical offerings, and give the team clear leave-behind assets.",
-      assets: [
-        "/images/Service_Offerings_One-pager.jpg",
-        "/images/Unlock Funding For Your Next Security Project.webp",
-        "/images/AI_Video_Analytics_ONEPAGE.webp",
-        "/images/GC_Case_Study.webp",
-        "/images/Healthcare_casestudy.webp",
-      ],
-    },
-    internalCommunicationsEngagement: {
-      statement:
-        "I create and coordinate internal communication that keeps teams informed, aligned, and engaged across company initiatives.",
-      examples: [
-        "Served as the branch onboarding champion, guiding new employees through onboarding and cross-team introduction",
-        "Led company-wide new-hire introduction emails to ensure visibility and team alignment from day one",
-        "Published new-employee introduction posts on social channels to reinforce visibility beyond internal email",
-        "Internal email communication and updates",
-        "Posters and flyer collateral for team initiatives",
-        "Managed communication, budgeting, and collateral for a company-wide chili cook-off event to drive engagement and participation",
-        "Survey communication for internal and client feedback loops",
-      ],
-      visuals: ["Event flyer", "Internal email layout", "Survey communication snapshot"],
-    },
-    internalCommsFeatureImages: ["/images/Welcome to the Team.png", "/images/Field:Tech.webp"],
-    internalSocialAnnouncementImage: "/images/Welcome_post.webp",
-    internalCommsAdditionalImages: [
-      "/images/Halloween_contest_poster.webp",
-      "/images/Family-day flyer.webp",
+      {
+        title: "Sales materials",
+        copy: "A library of one-pagers the sales team leaves behind after a meeting, each explaining one system or service in plain language. I also structure and format bid proposals and pitch decks for active pursuits.",
+      },
+      {
+        title: "Events and internal communication",
+        copy: "I planned the company Chili Cook-Off & Cornbread Contest, from budget to every post promoting it, and coordinate Lunch and Learns and trade show logistics. I'm also the branch onboarding lead and write the company-wide new-hire introductions.",
+      },
     ],
-    onboardingEmailTemplate: [
-      "Hi Team,",
-      "",
-      "We're excited to welcome [Full Name] to the team as our new [Job Title].",
-      "",
-      "[Name] joins us with experience in [brief background or previous role/industry], and will be supporting [team/department or key responsibilities].",
-      "",
-      "Get to Know [Name]",
-      "- Role: [Job Title]",
-      "- Team: [Department]",
-      "- Location: [Office/City]",
-      "- Start Date: [Date]",
-      "",
-      "When you get a chance, feel free to reach out, introduce yourself, and help make them feel welcome.",
-      "Welcome to the team, [Name] - we're glad to have you here.",
-      "",
-      "Thanks,",
-      "Travis",
-    ],
-    operationsPlanningCoordination: {
-      statement:
-        "I manage communication timelines, coordinate cross-functional details, and support execution across social, events, and sales initiatives.",
-      examples: [
-        "Trade show sourcing and coordination communication",
-        "Lunch and Learn planning and delivery timeline management",
-        "Content coordination across stakeholders and deadlines",
-        "Survey rollout and response tracking support",
-      ],
-      visuals: ["Timeline and calendar planning view", "Event planning flow", "Execution checklist structure"],
-    },
-    designContentExecution: {
-      statement:
-        "Design supported the role by making communication clearer, more organized, and easier to use across social, email, sales, and internal materials.",
-      examples: [
-        "HTML Outlook email layouts",
-        "Website page content and structure support",
-        "One-pagers and social visuals for marketing communication",
-      ],
-    },
-    impact: [
-      "Helped keep marketing communication organized across social, email, sales support, and internal updates.",
-      "Gave sales and operations teams clearer materials for client conversations, technical topics, and follow-up.",
-      "Used design as a support tool to make information easier to understand, not as the primary focus of the role.",
-    ],
-    performanceSnapshot: {
-      intro:
-        "Directional lift across channels I supported or coordinated, including organic social, nurture email, lead handoff, and internal communication.",
-      footnote:
-        "Figures represent initiative-period performance vs. prior internal baselines for comparable initiatives; illustrative of trajectory rather than audited reporting.",
-      groups: [
-        {
-          title: "Organic social",
-          context: "LinkedIn-first B2B audience",
-          metrics: [
-            {
-              label: "Avg. engagement rate",
-              value: "4.6%",
-              comparison: "+142% vs. prior 90-day baseline",
-              barBaseline: 38,
-              barCurrent: 92,
-              barBaselineLabel: "1.9%",
-              barCurrentLabel: "4.6%",
-            },
-            {
-              label: "Follower growth",
-              value: "+38%",
-              comparison: "YoY with sustained posting cadence",
-              note: "Consistency-led lift from repeatable templates",
-            },
-            {
-              label: "Carousel completion",
-              value: "61%",
-              comparison: "Security education series",
-              note: "Thought-leadership frames held attention through slide 4+",
-            },
-          ],
-        },
-        {
-          title: "Email — Security Tech Spotlight",
-          context: "Monthly ops nurture",
-          metrics: [
-            {
-              label: "Average open rate",
-              value: "43%",
-              comparison: "+11 pts vs. company newsletter avg.",
-              barBaseline: 74,
-              barCurrent: 100,
-              barBaselineLabel: "32%",
-              barCurrentLabel: "43%",
-            },
-            {
-              label: "Click-to-open",
-              value: "26%",
-              comparison: "Technical CTAs and deep links",
-            },
-            {
-              label: "List health",
-              value: "0.06%",
-              comparison: "Unsubscribe rate — low churn vs. sends",
-              note: "Strong relevance signal for technical audiences",
-              showTrend: false,
-            },
-          ],
-        },
-        {
-          title: "Demand & pipeline touchpoints",
-          context: "LinkedIn forms, lists, and follow-up support",
-          metrics: [
-            {
-              label: "Lead form completion",
-              value: "17%",
-              comparison: "Sponsored thought-leadership placements",
-            },
-            {
-              label: "MQL → SQL handoffs",
-              value: "+24%",
-              comparison: "QoQ attributed to nurtured inbound",
-            },
-            {
-              label: "Sales asset utilization",
-              value: "340+",
-              comparison: "One-pager & deck views (6 mo.)",
-              note: "Enablement library supporting active pursuits",
-            },
-          ],
-        },
-        {
-          title: "Internal communications",
-          context: "Onboarding & culture initiatives",
-          metrics: [
-            {
-              label: "New-hire announcement opens",
-              value: "71%",
-              comparison: "vs. 51% company-wide email avg.",
-              barBaseline: 72,
-              barCurrent: 100,
-              barBaselineLabel: "51%",
-              barCurrentLabel: "71%",
-            },
-            {
-              label: "Internal event participation",
-              value: "+44%",
-              comparison: "YoY for flagship culture programs",
-            },
-            {
-              label: "Survey completion",
-              value: "58%",
-              comparison: "Engagement & feedback loops",
-              note: "Clear asks + single-purpose sends",
-            },
-          ],
-        },
-      ],
-    },
-    highlights: [
-      {
-        icon: "Megaphone",
-        title: "Marketing Coordination",
-        copy: "Kept social, email, events, sales support, and internal communication moving with clearer structure and follow-through.",
-      },
-      {
-        icon: "PenTool",
-        title: "Social and Email Support",
-        copy: "Developed posts, email layouts, and content assets that helped technical messages become easier to publish and understand.",
-      },
-      {
-        icon: "Cpu",
-        title: "Lead and Sales Support",
-        copy: "Supported form flows, follow-up materials, one-pagers, and handoff-ready communication for sales conversations.",
-      },
-      {
-        icon: "Camera",
-        title: "Reporting and Insights",
-        copy: "Translated channel data into practical recommendations for creative, audience, and spend direction.",
-      },
+    owned: [
+      "The LinkedIn feed: planning, writing and designing posts, carousels and short videos",
+      "The monthly Security Tech Spotlight email, from copy to HTML build",
+      "Sales one-pagers, bid proposals and pitch decks",
+      "Event planning, including the annual Chili Cook-Off and trade shows",
+      "New-hire onboarding and internal announcements",
     ],
     gallery: [],
   },

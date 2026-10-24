@@ -101,14 +101,18 @@ export default function ProjectDetailsPage() {
             <span>Tools</span>
             <p>{project.tools?.join(", ")}</p>
           </div>
-          <div>
-            <span>Timeline</span>
-            <p>{project.timeframe}</p>
-          </div>
-          <div>
-            <span>Team</span>
-            <p>{project.team?.join(", ") || "Solo designer"}</p>
-          </div>
+          {isThreeSixty ? null : (
+            <>
+              <div>
+                <span>Timeline</span>
+                <p>{project.timeframe}</p>
+              </div>
+              <div>
+                <span>Team</span>
+                <p>{project.team?.join(", ") || "Solo designer"}</p>
+              </div>
+            </>
+          )}
         </div>
       </section>
 
@@ -128,9 +132,9 @@ export default function ProjectDetailsPage() {
       {hasStandardVisuals ? <ProjectVisuals project={project} galleryItems={galleryItems} /> : null}
       {isYellowBike ? <YellowBikeUXSections project={project} /> : null}
       {isThreeSixty ? <ThreeSixtyVisualPreview project={project} /> : null}
-      {isThreeSixty ? <ThreeSixtyMarketingSections project={project} /> : null}
+      {isThreeSixty ? <ThreeSixtyWork project={project} /> : null}
 
-      {!isAtlasCoffee && project.highlights?.length ? (
+      {!isAtlasCoffee && !isThreeSixty && project.highlights?.length ? (
         <section className="portfolio-section portfolio-work-section">
           <SectionHeading title="Key decisions" />
           <div className="portfolio-mini-card-grid">
@@ -578,95 +582,37 @@ function JourneyMap({ title, map }) {
   );
 }
 
-function ThreeSixtyMarketingSections({ project }) {
-  const communication = project.communicationStrategyExecution ?? {};
-  const socialStrategy = project.socialStrategy ?? {};
-  const thoughtLeadership = project.thoughtLeadershipSeries ?? {};
-  const pricingCampaign = project.securityPricingCampaign ?? {};
-  const emailCampaign = project.emailCampaignMockup ?? {};
-  const technical = project.technicalTranslationStorytelling ?? {};
-  const sales = project.salesEnablementBusinessCommunication ?? {};
-  const salesLibrary = project.salesEnablementLibrary ?? {};
-  const internal = project.internalCommunicationsEngagement ?? {};
-  const operations = project.operationsPlanningCoordination ?? {};
-  const designExecution = project.designContentExecution ?? {};
-
+// 3Sixty: three short blocks on the work behind the posts, then what I own.
+function ThreeSixtyWork({ project }) {
   return (
     <>
-      <PerformanceSnapshot snapshot={project.performanceSnapshot} />
-
-      <MarketingSection eyebrow="Marketing Coordinator Role" title="Keeping social, email, sales support, and internal communication organized.">
-        <BulletList items={project.whatIDo} />
-      </MarketingSection>
-
-      <MarketingSection eyebrow="Coordination and Communication" title="Planning, writing, organizing, and moving marketing work forward.">
-        <p>{communication.statement}</p>
-        <BulletList items={communication.examples} />
-        <AssetStrip title={pricingCampaign.title} copy={pricingCampaign.copy} items={pricingCampaign.assets} />
-        {emailCampaign.title ? (
-          <div className="portfolio-campaign-feature">
-            <h3>{emailCampaign.title}</h3>
-            <p>{emailCampaign.subtitle}</p>
-            {emailCampaign.iframeSrc ? (
-              <div className="portfolio-email-frame">
-                <iframe src={emailCampaign.iframeSrc} title={`${emailCampaign.title} email mockup`} loading="lazy" />
-              </div>
-            ) : null}
+      {project.workBlocks?.length ? (
+        <section className="portfolio-section portfolio-work-section">
+          <SectionHeading title="Beyond the feed" />
+          <div className="tc-3s-blocks">
+            {project.workBlocks.map((block) => (
+              <article key={block.title} className="tc-3s-block portfolio-reveal">
+                <h3>{block.title}</h3>
+                <p>{block.copy}</p>
+              </article>
+            ))}
           </div>
-        ) : null}
-      </MarketingSection>
-
-      <MarketingSection eyebrow="Social Media Management" title={socialStrategy.title}>
-        <p>{socialStrategy.copy}</p>
-        <BulletList items={socialStrategy.pillars} />
-        <AssetStrip title={thoughtLeadership.title} copy={thoughtLeadership.copy} items={thoughtLeadership.images} />
-      </MarketingSection>
-
-      <section className="portfolio-section portfolio-work-section">
-        <SectionHeading title="Turning operational complexity into clearer client and sales communication." />
-        <div className="portfolio-mini-card-grid portfolio-two-up">
-          <article className="portfolio-mini-card portfolio-reveal">
-            <h3>Technical Translation</h3>
-            <p>{technical.statement}</p>
-            <BulletList items={technical.examples} />
-          </article>
-          <article className="portfolio-mini-card portfolio-reveal">
-            <h3>Sales Enablement</h3>
-            <p>{sales.statement}</p>
-            <BulletList items={sales.examples} />
-          </article>
-        </div>
-      </section>
-
-      <MarketingSection eyebrow={salesLibrary.title ?? "Sales Enablement Library"} title="Reusable leave-behind assets for faster sales conversations.">
-        <p>{salesLibrary.copy}</p>
-        <AssetGrid items={salesLibrary.assets} title={salesLibrary.title} />
-      </MarketingSection>
-
-      <MarketingSection eyebrow="Internal Communications" title="Keeping teams informed, visible, and aligned.">
-        <p>{internal.statement}</p>
-        <BulletList items={internal.examples} />
-      </MarketingSection>
-
-      <section className="portfolio-section portfolio-work-section">
-        <SectionHeading title="Planning, coordination, and content production across active initiatives." />
-        <div className="portfolio-mini-card-grid portfolio-two-up">
-          <article className="portfolio-mini-card portfolio-reveal">
-            <h3>Operations, Planning, and Coordination</h3>
-            <p>{operations.statement}</p>
-            <BulletList items={operations.examples} />
-          </article>
-          <article className="portfolio-mini-card portfolio-reveal">
-            <h3>Design as Communication Support</h3>
-            <p>{designExecution.statement}</p>
-            <BulletList items={designExecution.examples} />
-          </article>
-        </div>
-      </section>
-
-      <MarketingSection eyebrow="Impact" title="A marketing coordination role supporting social, sales, and internal initiatives.">
-        <BulletList items={project.impact} />
-      </MarketingSection>
+        </section>
+      ) : null}
+      {project.owned?.length ? (
+        <section className="portfolio-section portfolio-split-section">
+          <PortfolioReveal className="portfolio-sticky-label">
+            <p>What I own</p>
+          </PortfolioReveal>
+          <PortfolioReveal className="portfolio-split-content">
+            <ul className="tc-3s-owned">
+              {project.owned.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </PortfolioReveal>
+        </section>
+      ) : null}
     </>
   );
 }
@@ -684,89 +630,6 @@ function MarketingSection({ eyebrow, title, children }) {
         {children}
       </PortfolioReveal>
     </section>
-  );
-}
-
-function PerformanceSnapshot({ snapshot }) {
-  if (!snapshot?.groups?.length) return null;
-
-  return (
-    <section className="portfolio-section portfolio-work-section">
-      <SectionHeading title="Directional lift across channels I led or co-owned." />
-      <PortfolioReveal as="p" className="portfolio-section-intro">
-        {snapshot.intro}
-      </PortfolioReveal>
-      <div className="portfolio-metric-grid">
-        {snapshot.groups.flatMap((group) =>
-          group.metrics.map((metric) => (
-            <article key={`${group.title}-${metric.label}`} className="portfolio-metric-card portfolio-reveal">
-              <span>{group.title}</span>
-              <h3>{metric.value}</h3>
-              <p>{metric.label}</p>
-              {metric.comparison ? <small>{metric.comparison}</small> : null}
-            </article>
-          )),
-        )}
-      </div>
-      {snapshot.footnote ? <p className="portfolio-footnote">{snapshot.footnote}</p> : null}
-    </section>
-  );
-}
-
-function BulletList({ items = [] }) {
-  if (!items.length) return null;
-
-  return (
-    <ul className="portfolio-bullet-list">
-      {items.map((item) => (
-        <li key={item}>{item}</li>
-      ))}
-    </ul>
-  );
-}
-
-function AssetStrip({ title, copy, items = [], initialVisible }) {
-  const [expanded, setExpanded] = useState(false);
-  const normalized = items.map(normalizeMediaItem).filter(Boolean);
-  if (!title && !copy && !normalized.length) return null;
-  const hasToggle = initialVisible && normalized.length > initialVisible;
-  const visibleItems = hasToggle && !expanded ? normalized.slice(0, initialVisible) : normalized;
-
-  return (
-    <div className="portfolio-campaign-feature">
-      {title ? <h3>{title}</h3> : null}
-      {copy ? <p>{copy}</p> : null}
-      {normalized.length ? (
-        <div className="portfolio-asset-strip">
-          {visibleItems.map((item, index) => (
-            <img key={`${item.src}-${index}`} src={item.src} alt={item.alt || `${title ?? "Marketing asset"} ${index + 1}`} loading="lazy" decoding="async" />
-          ))}
-        </div>
-      ) : null}
-      {hasToggle ? (
-        <button type="button" className="portfolio-view-more-button" onClick={() => setExpanded((current) => !current)}>
-          {expanded ? "Show fewer" : `View more (${normalized.length - initialVisible})`}
-        </button>
-      ) : null}
-    </div>
-  );
-}
-
-function AssetGrid({ items = [], title = "Asset", projectSlug }) {
-  const normalized = items.map((item) => normalizeMediaItem(item, projectSlug)).filter(Boolean);
-  if (!normalized.length) return null;
-
-  return (
-    <div className="portfolio-asset-grid">
-      {normalized.map((item, index) => (
-        <GalleryFigure
-          key={`${item.src}-${index}`}
-          media={item}
-          className="portfolio-gallery-item"
-          alt={item.alt || `${title} ${index + 1}`}
-        />
-      ))}
-    </div>
   );
 }
 
