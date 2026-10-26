@@ -1,9 +1,10 @@
-import { useEffect } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 
 import PageTransition from "./components/animations/PageTransition.jsx";
 import { PortfolioPointerEffects } from "./components/portfolio/PortfolioLayout.jsx";
 import { useSmoothScroll } from "./hooks/useSmoothScroll.js";
+import { useScrollReveal } from "./hooks/useScrollReveal.js";
 import Home from "./pages/Home.jsx";
 import ProjectsPage from "./pages/Projects.jsx";
 import PostersPage from "./pages/Posters.jsx";
@@ -20,6 +21,7 @@ function AppRoutes() {
   const location = useLocation();
   const siteOrigin = "https://traviscrawforddesign.com";
   useSmoothScroll();
+  useScrollReveal();
 
   // Tell the logo intro in index.html that the app has rendered, so it can
   // fly the lockup into the header and reveal the page.
@@ -28,24 +30,39 @@ function AppRoutes() {
     window.dispatchEvent(new Event("tc:app-ready"));
   }, []);
 
-  useEffect(() => {
+  // Scroll handling. A change of page waits for the transition curtain to
+  // cover the screen (onSwap); a hash change on the same page scrolls at once.
+  const lastPath = useRef(location.pathname);
+  const scrollForLocation = useCallback(() => {
+    const lenis = window.__studioLenis;
     if (location.hash) {
-      const target = document.querySelector(location.hash);
-      if (!target) return;
-
-      requestAnimationFrame(() => {
-        window.__studioLenis?.scrollTo(target, { offset: -96 });
-      });
+      const go = () => {
+        const target = document.querySelector(location.hash);
+        if (!target) return;
+        if (lenis) lenis.scrollTo(target, { offset: -96 });
+        else target.scrollIntoView({ block: "start" });
+      };
+      requestAnimationFrame(() => requestAnimationFrame(go));
       return;
     }
+    if (lenis) lenis.scrollTo(0, { immediate: true });
+    else window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  }, [location.hash]);
 
-    if (window.__studioLenis) {
-      window.__studioLenis.scrollTo(0, { immediate: true });
+  const handleSwap = useCallback(() => {
+    const lenis = window.__studioLenis;
+    if (lenis) lenis.scrollTo(0, { immediate: true });
+    else window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    if (location.hash) scrollForLocation();
+  }, [location.hash, scrollForLocation]);
+
+  useEffect(() => {
+    if (lastPath.current !== location.pathname) {
+      lastPath.current = location.pathname;
       return;
     }
-
-    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
-  }, [location.pathname, location.hash]);
+    scrollForLocation();
+  }, [location.pathname, location.hash, scrollForLocation]);
 
   useEffect(() => {
     const routeMeta = {
@@ -111,8 +128,8 @@ function AppRoutes() {
   return (
     <div className="min-h-full">
       <PortfolioPointerEffects />
-      <PageTransition routeKey={location.pathname}>
-        <Routes>
+      <PageTransition routeKey={location.pathname} onSwap={handleSwap}>
+        <Routes location={location}>
           <Route path="/" element={<Home />} />
           <Route path="/projects" element={<ProjectsPage />} />
           <Route path="/posters" element={<PostersPage />} />

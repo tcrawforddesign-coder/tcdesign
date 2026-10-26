@@ -1455,27 +1455,139 @@ html:has(.tc-brand) body {
   background: rgba(255, 255, 255, 0.6);
 }
 
-/* Reveal: a gentle rise. Content is never hidden without motion. */
+/* =========================================================
+   Motion: scroll reveals, page curtain, scroll-linked depth.
+   Content is only hidden when JS has added html.tc-motion, which
+   never happens under reduced motion.
+   ========================================================= */
 .tc-brand .portfolio-reveal {
   opacity: 1;
   transform: none;
   filter: none;
-  animation: tc-rise 0.9s var(--tc-ease) both;
+  animation: none;
 }
-.tc-brand .portfolio-reveal:nth-child(2) {
-  animation-delay: 0.06s;
+
+.tc-brand [data-tc-reveal] {
+  transition:
+    opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 1.1s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.tc-brand .portfolio-reveal:nth-child(3) {
-  animation-delay: 0.12s;
+html.tc-motion .tc-brand [data-tc-reveal]:not(.is-in) {
+  opacity: 0;
+  transform: translate3d(0, 32px, 0);
 }
-@keyframes tc-rise {
-  from {
-    opacity: 0;
-    transform: translateY(16px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
+
+/* Project media unmasks and settles as its card arrives */
+.tc-brand [data-tc-reveal] .tc-strip-media,
+.tc-brand [data-tc-reveal] .tc-project-thumb {
+  clip-path: inset(0 0 0 0 round 24px);
+  transition:
+    clip-path 1.2s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.5s var(--tc-ease),
+    box-shadow 0.5s var(--tc-ease);
+  transition-delay: inherit;
+}
+html.tc-motion .tc-brand [data-tc-reveal]:not(.is-in) .tc-strip-media,
+html.tc-motion .tc-brand [data-tc-reveal]:not(.is-in) .tc-project-thumb {
+  clip-path: inset(16% 0 0 0 round 24px);
+}
+.tc-brand [data-tc-reveal] .tc-strip-media :is(img, video),
+.tc-brand [data-tc-reveal] .tc-project-thumb :is(img, video) {
+  transition: transform 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+html.tc-motion .tc-brand [data-tc-reveal]:not(.is-in) .tc-strip-media :is(img, video),
+html.tc-motion .tc-brand [data-tc-reveal]:not(.is-in) .tc-project-thumb :is(img, video) {
+  transform: scale(1.14);
+}
+
+/* Page transition curtain */
+.tc-curtain {
+  position: fixed;
+  inset: 0;
+  z-index: 2147482000;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  transform: translateY(100%);
+  background:
+    radial-gradient(circle at 24% 20%, rgba(127, 176, 224, 0.42), transparent 44%),
+    radial-gradient(circle at 80% 86%, rgba(242, 126, 114, 0.3), transparent 42%),
+    linear-gradient(120deg, #dce9f3 0%, #f4f8fb 52%, #fbe9e6 100%);
+  will-change: transform;
+}
+.route-blur-swipe {
+  display: none !important;
+}
+
+/* Case study reading progress */
+.tc-progress {
+  display: none;
+}
+
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    /* Hero card drifts up and softens as you scroll past the wave field */
+    .tc-wave-hero-inner {
+      animation: tc-hero-leave linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 70vh;
+    }
+    @keyframes tc-hero-leave {
+      to {
+        translate: 0 -72px;
+        opacity: 0.3;
+      }
+    }
+
+    /* About photo floats slightly against the red point */
+    .tc-bio-photo img {
+      animation: tc-drift linear both;
+      animation-timeline: view();
+      animation-range: cover;
+    }
+    @keyframes tc-drift {
+      from {
+        translate: 0 28px;
+      }
+      to {
+        translate: 0 -28px;
+      }
+    }
+
+    /* Case study hero settles back as the story starts */
+    .tc-brand .portfolio-case-hero :is(img, video) {
+      transform-origin: 50% 0;
+      animation: tc-case-settle linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 80vh;
+    }
+    @keyframes tc-case-settle {
+      to {
+        scale: 0.94;
+      }
+    }
+
+    .tc-progress {
+      display: block;
+      position: fixed;
+      left: 0;
+      top: 0;
+      z-index: 60;
+      width: 100%;
+      height: 3px;
+      transform-origin: 0 50%;
+      background: linear-gradient(90deg, var(--tc-sky), var(--tc-cobalt) 70%, var(--tc-red));
+      animation: tc-progress linear both;
+      animation-timeline: scroll(root);
+    }
+    @keyframes tc-progress {
+      from {
+        transform: scaleX(0);
+      }
+      to {
+        transform: scaleX(1);
+      }
+    }
   }
 }
 

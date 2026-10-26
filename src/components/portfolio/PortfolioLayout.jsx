@@ -18,8 +18,11 @@ const NAV_ITEMS = [
 ];
 
 export function PortfolioLayout({ children, overlayHeader = false }) {
+  const { pathname } = useLocation();
+  const isCaseStudy = pathname.startsWith("/projects/");
   return (
     <div className={`portfolio-site tc-brand ${overlayHeader ? "tc-has-overlay-header" : ""}`}>
+      {isCaseStudy ? <div className="tc-progress" aria-hidden="true" /> : null}
       <a className="tc-skip-link" href="#main">
         Skip to content
       </a>

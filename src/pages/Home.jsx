@@ -43,8 +43,8 @@ const services = [
     copy: "One clear idea carried through ads, social, email, events and print, built to perform.",
   },
   {
-    title: "Websites and motion",
-    copy: "Sites, interactive moments and creative code that make a brand feel alive.",
+    title: "Art direction and content",
+    copy: "Photography, video and social content directed so every piece looks and sounds like the same brand.",
   },
 ];
 
@@ -60,7 +60,7 @@ export default function Home() {
             <h1 id="tc-wave-hero-title">
               Visual designer and creative strategist<span className="tc-dot">.</span>
             </h1>
-            <p>Identity systems, campaigns and websites for brands that want to be remembered.</p>
+            <p>Identity systems, paid ads and art direction for brands that want to be remembered.</p>
             <div className="tc-actions">
               <a href="#work" className="tc-btn tc-btn-ink tc-btn-lg">
                 View work

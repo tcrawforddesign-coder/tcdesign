@@ -126,6 +126,8 @@
           window.removeEventListener("keydown", skip);
           h.classList.remove("tc-intro-on");
           if (el.parentNode) el.parentNode.removeChild(el);
+          window.__tcIntroDone = true;
+          window.dispatchEvent(new Event("tc:intro-done"));
         }
         function fade() {
           el.style.transition = "opacity .35s ease";
